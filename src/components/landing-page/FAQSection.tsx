@@ -73,7 +73,7 @@ const FAQSection = () => {
 
     return (
         <div className="bg-white border-black border-2 p-10 mt-12 md:mt-16">
-            <h1 className="font-h1 text-5xl md:text-7xl text-[#49B2F8] text-center mb-[2rem]">
+            <h1 className="font-h1 text-5xl md:text-7xl text-[#49B2F8] text-center mb-8">
                 FAQ
             </h1>
             <div className="w-full mx-auto">
@@ -98,8 +98,8 @@ const FAQSection = () => {
                             <div
                                 className={`grid transition-[grid-template_rows_300ms] ease-in-out overflow-hidden ${
                                     isOpen
-                                        ? "[grid-template-rows:1fr]"
-                                        : "[grid-template-rows:0fr]"
+                                        ? "grid-rows-[1fr]"
+                                        : "grid-rows-[0fr]"
                                 }`}
                             >
                                 <div className="overflow-hidden">

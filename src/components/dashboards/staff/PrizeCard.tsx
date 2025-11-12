@@ -51,7 +51,7 @@ export default function PrizeCard({
     };
 
     return (
-        <div className="flex flex-col items-center p-6 bg-neutral-200 rounded-lg border-[4px] border-black shadow-comic">
+        <div className="flex flex-col items-center p-6 bg-neutral-200 rounded-lg border-4 border-black shadow-comic">
             {/* Product Name */}
             <h2 className="text-center text-2xl font-comic text-black mb-4">
                 {prize.name}
@@ -72,12 +72,12 @@ export default function PrizeCard({
                 {/* Stock. It's hidden on public pages, but we always show out of stock to avoid annoying people. */}
                 {prizeStock > 0 ? (
                     showStock && (
-                        <div className="flex items-center justify-center bg-[#66B0F2] text-black font-comic rounded-md p-2 w-1/2 border-[2px] border-black">
+                        <div className="flex items-center justify-center bg-[#66B0F2] text-black font-comic rounded-md p-2 w-1/2 border-2 border-black">
                             <p className="text-sm">{`${prizeStock} Left!`}</p>
                         </div>
                     )
                 ) : (
-                    <div className="flex items-center justify-center bg-red-400 text-black font-comic rounded-md p-2 w-1/2 border-[2px] border-black">
+                    <div className="flex items-center justify-center bg-red-400 text-black font-comic rounded-md p-2 w-1/2 border-2 border-black">
                         <p className="text-sm">{`Out of Stock!`}</p>
                     </div>
                 )}
@@ -85,7 +85,7 @@ export default function PrizeCard({
                 {/* Price. No point displaying if we're out of stock. */}
 
                 {prizeStock > 0 && (
-                    <div className="flex items-center justify-center bg-[#F7CC58] text-black font-comic rounded-md p-2 w-1/2 border-[2px] border-black">
+                    <div className="flex items-center justify-center bg-[#F7CC58] text-black font-comic rounded-md p-2 w-1/2 border-2 border-black">
                         <p className="text-sm">{`${prize.price} Hackeroons`}</p>
                     </div>
                 )}
@@ -94,7 +94,7 @@ export default function PrizeCard({
             {/* Buy/Remove Button */}
             {enablePurchasing && (
                 <button
-                    className={`py-2 px-6 rounded-md text-white font-comic border-[2px] border-black ${
+                    className={`py-2 px-6 rounded-md text-white font-comic border-2 border-black ${
                         isItemBought
                             ? "bg-red-500 hover:bg-red-600"
                             : "bg-green-500 hover:bg-green-600"

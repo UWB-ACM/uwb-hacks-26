@@ -1,13 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-}
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 html,
 body {
@@ -87,6 +79,11 @@ body {
     }
     body {
         @apply bg-background text-foreground;
+    }
+    /* Enable cursor on pointer (https://github.com/shadcn-ui/ui/issues/6843#issuecomment-2698105214) */
+    button:not([disabled]),
+    [role="button"]:not([disabled]) {
+        cursor: pointer;
     }
 }
 

@@ -33,10 +33,10 @@ export default function Selector<T>(props: SelectorProps<T>) {
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
-            <DialogTrigger className="bg-blue-300 border-[1px] border-black rounded-xl p-4">
+            <DialogTrigger className="bg-blue-300 border border-black rounded-xl p-4">
                 {props.buttonName}
             </DialogTrigger>
-            <DialogContent className="z-[1000] max-w-[90%] sm:max-w-[425px] max-h-[80%] overflow-hidden flex flex-col">
+            <DialogContent className="z-1000 max-w-[90%] sm:max-w-[425px] max-h-[80%] overflow-hidden flex flex-col">
                 <DialogHeader>
                     <DialogTitle>{props.dialogName}</DialogTitle>
                 </DialogHeader>
@@ -116,7 +116,7 @@ function Card<T>(
             </div>
 
             <button
-                className="bg-blue-500 border-[1px] border-black rounded-xl p-4 h-min my-auto"
+                className="bg-blue-500 border border-black rounded-xl p-4 h-min my-auto"
                 onClick={() => {
                     props.onClick(props.item);
                     props.setIsOpen(false);

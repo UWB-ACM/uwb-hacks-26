@@ -24,7 +24,7 @@ async function UserDashboard({ user }: { user: SessionUser }) {
 
     return (
         // User Dashboard Container
-        <div className="w-[90%] mx-auto rounded-md sm:mt-[3rem]">
+        <div className="w-[90%] mx-auto rounded-md sm:mt-12">
             {/* General User Information */}
             <div className="w-full flex flex-col gap-y-8 md:flex-row justify-around items-center md:px-14 lg:px-20">
                 {/* User PFP, First and Last Name, & Hackeroon Amount */}
@@ -58,7 +58,7 @@ async function UserDashboard({ user }: { user: SessionUser }) {
                 <div>
                     <Suspense
                         fallback={
-                            <div className="w-[150px] h-[150px] border-[1px] border-black bg-gray-400" />
+                            <div className="w-[150px] h-[150px] border border-black bg-gray-400" />
                         }
                     >
                         <QRCode

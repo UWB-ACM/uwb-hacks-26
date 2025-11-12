@@ -5,7 +5,7 @@ function SponsorInfo() {
     return (
         <>
             <div className="mt-10 grow bg-white border-[3px] border-black flex flex-col p-4  items-center">
-                <p className="font-bold text-center font-h2 [font-size:calc(0.1rem_+_3vw)]">
+                <p className="font-bold text-center font-h2 text-[calc(0.1rem+3vw)]">
                     2025 UWB Hacks: Save the World!
                 </p>
                 <p className="text-center mt-5 mb-5 font-h3">
@@ -27,7 +27,7 @@ function SponsorInfo() {
                 </Button>
             </div>
             <div className="mt-10 grow bg-white border-[3px] border-black flex flex-col p-4 items-center">
-                <p className="font-bold text-center font-h2 [font-size:calc(0.1rem_+_3vw)]">
+                <p className="font-bold text-center font-h2 text-[calc(0.1rem+3vw)]">
                     Month of Hacking
                 </p>
                 <p className="text-center mt-5 mb-5 font-h3">

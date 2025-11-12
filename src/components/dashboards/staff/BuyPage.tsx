@@ -165,7 +165,7 @@ export default function BuyPage({
                     - Person you're buying prizes for
                     - Person's current total hackeroon amount
             */}
-            <div className="h-[15vh] flex flex-col justify-center bg-neutral-100 py-4 px-6 border-b-[1px] border-black">
+            <div className="h-[15vh] flex flex-col justify-center bg-neutral-100 py-4 px-6 border-b border-black">
                 <h1 className="text-center text-2xl md:text-3xl pb-4">
                     Prizes
                 </h1>
@@ -205,7 +205,7 @@ export default function BuyPage({
                 </div>
 
                 {/* Shopping Cart / Selected Items */}
-                <div className="h-screen w-[30vw] md:w-[20vw] lg:w-[15vw] flex flex-col justify-between bg-neutral-100 border-l-[1px] border-black sticky top-0">
+                <div className="h-screen w-[30vw] md:w-[20vw] lg:w-[15vw] flex flex-col justify-between bg-neutral-100 border-l border-black sticky top-0">
                     {/* Selected Items */}
                     <div className="p-4">
                         <h2 className="text-center text-xl md:text-2xl">
@@ -221,7 +221,7 @@ export default function BuyPage({
                     <div className="flex flex-col">
                         {/* Complete Button */}
                         <button
-                            className="p-4 bg-green-500 hover:bg-green-600/90 duration-300 border-[1px] border-black text-white"
+                            className="p-4 bg-green-500 hover:bg-green-600/90 duration-300 border border-black text-white"
                             onClick={handleSubmit}
                         >
                             Complete
@@ -229,7 +229,7 @@ export default function BuyPage({
 
                         {/* exit button that returns user back to staff dashboard */}
                         <Link
-                            className="p-4 bg-red-500 hover:bg-red-600/90 duration-300 border-[1px] border-black text-center text-white"
+                            className="p-4 bg-red-500 hover:bg-red-600/90 duration-300 border border-black text-center text-white"
                             href={`/dashboard/${user.id}`}
                         >
                             Exit

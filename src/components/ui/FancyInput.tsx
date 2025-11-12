@@ -25,7 +25,7 @@ const FancyInput: FC<FancyInputProps> = ({
                 onPaste={(e) => e.preventDefault()}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder || "Enter Code #"}
-                className="text-[11px] sm:text-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-full border-2 border-black bg-white px-4 py-2 text-base text-black outline-none transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] translate-z-[10px] z-10 font-opensans placeholder:uppercase placeholder:font-bold placeholder:text-[#666] hover:bg-[#f0f0f0] focus:bg-[#f0f0f0] hover:-translate-x-px hover:shadow-[3px_3px_0_0_#000]"
+                className="text-base sm:text-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-full border-2 border-black bg-white px-4 py-2 text-black outline-none transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] translate-z-[10px] z-10 font-opensans placeholder:uppercase placeholder:font-bold placeholder:text-[#666] hover:bg-[#f0f0f0] focus:bg-[#f0f0f0] hover:-translate-x-px hover:shadow-[3px_3px_0_0_#000]"
             />
 
             {button && (

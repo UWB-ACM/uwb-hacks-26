@@ -84,7 +84,7 @@ function ConsentModalInner({
     return (
         <Dialog open>
             <DialogContent
-                className="max-w-[90%] sm:max-w-[425px] z-[1000]"
+                className="max-w-[90%] sm:max-w-[425px] z-1000"
                 hideClose
             >
                 <DialogHeader>
@@ -137,13 +137,13 @@ function ConsentModalInner({
                 {/* Buttons Section */}
                 <DialogFooter className="gap-2">
                     <button
-                        className="bg-red-500 border-[1px] border-black rounded-xl p-4"
+                        className="bg-red-500 border border-black rounded-xl p-4"
                         onClick={handleDelete}
                     >
                         Delete Account
                     </button>
                     <button
-                        className="bg-green-500 border-[1px] border-black rounded-xl p-4"
+                        className="bg-green-500 border border-black rounded-xl p-4"
                         onClick={handleAgree}
                     >
                         I Agree

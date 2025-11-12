@@ -124,7 +124,7 @@ export default function TransferHackaroonsPage({
         <>
             <div className="h-screen grid place-content-center">
                 {/* Container for "Transfer Hackeroons" Content */}
-                <div className="h-[80vh] w-[80vw] max-w-[70vh] rounded-xl p-5 border-[1px] border-black shadow-xl grid place-content-center">
+                <div className="h-[80vh] w-[80vw] max-w-[70vh] rounded-xl p-5 border border-black shadow-xl grid place-content-center">
                     <form onSubmit={handleSubmit}>
                         <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">
                             Transferring Hackeroons to{" "}
@@ -166,7 +166,7 @@ export default function TransferHackaroonsPage({
                                             min={0}
                                             step={5}
                                             value={amount.toString()}
-                                            className="px-4 py-3 border-[1px] border-black rounded-md"
+                                            className="px-4 py-3 border border-black rounded-md"
                                             onChange={(e) =>
                                                 setAmount(
                                                     Number(e.target.value),
@@ -181,7 +181,7 @@ export default function TransferHackaroonsPage({
                                 <select
                                     id="reason"
                                     value={reason}
-                                    className="px-4 py-3 border-[1px] border-black rounded-md"
+                                    className="px-4 py-3 border border-black rounded-md"
                                     onChange={(e) =>
                                         setReason(
                                             e.target
@@ -208,13 +208,13 @@ export default function TransferHackaroonsPage({
                                 </select>
                             </div>
                             <input
-                                className="mt-4 py-3 bg-green-500 hover:bg-green-600 duration-200 rounded-md border-[1px] border-black text-white cursor-pointer"
+                                className="mt-4 py-3 bg-green-500 hover:bg-green-600 duration-200 rounded-md border border-black text-white cursor-pointer"
                                 type="submit"
                             />
 
                             {/* exit button that returns user back to staff dashboard */}
                             <Link
-                                className="mt-4 py-3 bg-red-500 hover:bg-red-600 duration-200 rounded-md border-[1px] border-black text-white text-center cursor-pointer"
+                                className="mt-4 py-3 bg-red-500 hover:bg-red-600 duration-200 rounded-md border border-black text-white text-center cursor-pointer"
                                 href={`/dashboard/${user.id}`}
                             >
                                 Exit

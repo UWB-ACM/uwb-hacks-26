@@ -189,8 +189,7 @@ function TransactionItem({
                 {canRevert && (
                     <button
                         className={
-                            buttonColor +
-                            " border-[1px] border-black rounded-xl p-2"
+                            buttonColor + " border border-black rounded-xl p-2"
                         }
                         onClick={async () => {
                             if (!canRevert || !canRevertWithBalance) return;

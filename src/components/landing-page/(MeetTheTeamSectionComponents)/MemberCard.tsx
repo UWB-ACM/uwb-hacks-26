@@ -14,7 +14,7 @@ interface MemberCardProps {
 
 const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
     const cardContent = (
-        <div className="relative flex flex-col sm:flex-row items-center sm:items-start p-4 border-4 border-black shadow-lg bg-white transition-transform transform group hover:scale-105 cursor-pointer duration-300 w-[130px] h-[180px] sm:w-[340px] sm:h-[160px] flex-shrink-0">
+        <div className="relative flex flex-col sm:flex-row items-center sm:items-start p-4 border-4 border-black shadow-lg bg-white transition-transform transform group hover:scale-105 cursor-pointer duration-300 w-[130px] h-[180px] sm:w-[340px] sm:h-[160px] shrink-0">
             {/* Profile Image */}
             <Image
                 src={member.photo}
@@ -26,7 +26,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
             />
 
             {/* Member Info (Increased Spacing) */}
-            <div className="flex flex-col flex-grow min-w-0 text-center sm:text-left mt-2 sm:mt-0 sm:ml-4">
+            <div className="flex flex-col grow min-w-0 text-center sm:text-left mt-2 sm:mt-0 sm:ml-4">
                 <h3 className="text-sm sm:text-lg font-bold truncate leading-tight text-wrap">
                     {member.name}
                 </h3>

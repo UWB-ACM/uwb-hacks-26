@@ -38,7 +38,7 @@ export default function Header({
         <>
             <div className="hidden lg:block">
                 {/* Heading spacer */}
-                <div className="h-[7rem]" />
+                <div className="h-28" />
                 <HeaderDesktop links={links} wrapH1={wrapH1} banner={banner} />
             </div>
             <div className="block lg:hidden">
@@ -137,7 +137,7 @@ function HeaderDesktop({
     const [bannerVisible, setBannerVisible] = useState(banner || false);
 
     return (
-        <nav className="fixed z-[999] top-0 w-full">
+        <nav className="fixed z-999 top-0 w-full">
             <div className="flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full bg-white/25 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]">
                 <UWBHacksButton wrapH1={wrapH1} />
 
@@ -266,7 +266,7 @@ function HeaderSidebar({
 }) {
     return (
         <div
-            className={`bg-orange-300 fixed top-0 w-full h-screen p-5 font-h1 text-3xl transition-transform [z-index:1000]`}
+            className={`bg-orange-300 fixed top-0 w-full h-screen p-5 font-h1 text-3xl transition-transform z-1000`}
             style={{
                 transform: sideNav ? undefined : "translate(100%, 0)",
             }}
@@ -277,7 +277,7 @@ function HeaderSidebar({
             >
                 X
             </button>
-            <div className="flex flex-col gap-y-5 justify-around h-1/2 pt-[5rem]">
+            <div className="flex flex-col gap-y-5 justify-around h-1/2 pt-20">
                 {links.map((link) => (
                     <HeaderSidebarLink
                         key={link.id}

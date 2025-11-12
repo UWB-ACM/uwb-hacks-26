@@ -3,3 +3,4 @@ onlyBuiltDependencies:
   - prisma
   - sharp
   - supabase
+  - unrs-resolver

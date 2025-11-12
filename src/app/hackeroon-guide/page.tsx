@@ -54,7 +54,7 @@ export default async function GuidePage() {
                 ]}
             />
 
-            <main className="flex-grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
+            <main className="grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
                 <h1 className="font-san-marino-beach text-5xl md:text-6xl text-[#2886c4] text-center mb-4">
                     Hackeroon Guide
                 </h1>
@@ -71,7 +71,7 @@ export default async function GuidePage() {
                     </h2>
 
                     {/* All Days Card */}
-                    <div className="bg-neutral-200 border-[4px] border-black shadow-comic overflow-hidden mb-8">
+                    <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
                             <h3 className="font-rubik-mono-one text-xl font-comic text-white">
                                 All Month Long (including the Hackathon)
@@ -105,7 +105,7 @@ export default async function GuidePage() {
                     </h2>
 
                     {/* Friday Card */}
-                    <div className="bg-neutral-200 border-[4px] border-black shadow-comic overflow-hidden mb-8">
+                    <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
                             <h3 className="font-rubik-mono-one text-xl font-comic text-white">
                                 Friday
@@ -153,7 +153,7 @@ export default async function GuidePage() {
                     </div>
 
                     {/* Saturday Card */}
-                    <div className="bg-neutral-200 border-[4px] border-black shadow-comic overflow-hidden mb-8">
+                    <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
                             <h3 className="font-rubik-mono-one text-xl font-comic text-white">
                                 Saturday
@@ -225,7 +225,7 @@ export default async function GuidePage() {
                     </div>
 
                     {/* Sunday Card */}
-                    <div className="bg-neutral-200 border-[4px] border-black shadow-comic overflow-hidden mb-8">
+                    <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
                             <h3 className="font-rubik-mono-one text-xl font-comic text-white">
                                 Sunday
@@ -278,7 +278,7 @@ export default async function GuidePage() {
                     <h2 className="font-rubik-mono-one text-3xl font-comic text-black mb-6 text-center md:text-left">
                         Receiving Your Hackeroons
                     </h2>
-                    <div className="bg-neutral-200 border-[4px] border-black shadow-comic p-6 text-center">
+                    <div className="bg-neutral-200 border-4 border-black shadow-comic p-6 text-center">
                         <p className="text-black mb-4">
                             There are a few different ways you can receive
                             Hackeroons. If in doubt, you can always ask a staff
@@ -321,7 +321,7 @@ export default async function GuidePage() {
                     <h2 className="font-rubik-mono-one text-3xl font-comic text-black mb-6 text-center md:text-left">
                         Redeeming Your Hackeroons
                     </h2>
-                    <div className="bg-neutral-200 border-[4px] border-black shadow-comic p-6 text-center">
+                    <div className="bg-neutral-200 border-4 border-black shadow-comic p-6 text-center">
                         <p className="text-black mb-4">
                             The Hackeroon Shop will be open on Saturday, April
                             26th from 6:00 PM to 8:00 PM and Sunday, April 27th

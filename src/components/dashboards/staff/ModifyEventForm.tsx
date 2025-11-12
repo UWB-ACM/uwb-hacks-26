@@ -134,7 +134,7 @@ export default function ModifyEventForm({ eventId }: ModifyEventFormProps) {
                             value={eventName}
                             onChange={(e) => setEventName(e.target.value)}
                             required
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Event Description */}
@@ -151,7 +151,7 @@ export default function ModifyEventForm({ eventId }: ModifyEventFormProps) {
                                 setEventDescription(e.target.value)
                             }
                             required
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Event Start Time */}
@@ -169,7 +169,7 @@ export default function ModifyEventForm({ eventId }: ModifyEventFormProps) {
                                 handleDateChange(e.target.value, setEventStart);
                             }}
                             required
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Event End Time */}
@@ -186,7 +186,7 @@ export default function ModifyEventForm({ eventId }: ModifyEventFormProps) {
                             onChange={(e) => {
                                 handleDateChange(e.target.value, setEventEnd);
                             }}
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Event Location */}
@@ -200,7 +200,7 @@ export default function ModifyEventForm({ eventId }: ModifyEventFormProps) {
                             id="eventLocation"
                             value={eventLocation || ""}
                             onChange={(e) => setEventLocation(e.target.value)}
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Event Attendance Amount */}
@@ -220,7 +220,7 @@ export default function ModifyEventForm({ eventId }: ModifyEventFormProps) {
                             onChange={(e) =>
                                 setEventAttendanceAmount(Number(e.target.value))
                             }
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
                     </div>
                     {error && (
@@ -237,7 +237,7 @@ export default function ModifyEventForm({ eventId }: ModifyEventFormProps) {
                         </Link>
                         <button
                             type="submit"
-                            className="min-w-[30%] mt-4 py-2 px-4 rounded-md bg-green-600 hover:bg-green-500 text-white duration-200 border-black border-[1px]"
+                            className="min-w-[30%] mt-4 py-2 px-4 rounded-md bg-green-600 hover:bg-green-500 text-white duration-200 border-black border"
                         >
                             Submit
                         </button>

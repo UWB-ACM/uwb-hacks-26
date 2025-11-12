@@ -20,11 +20,11 @@ function DeleteAccountButton() {
     return (
         <>
             <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
-                <DialogTrigger className="bg-red-500 border-[1px] border-black rounded-xl p-4">
+                <DialogTrigger className="bg-red-500 border border-black rounded-xl p-4">
                     Delete Account
                 </DialogTrigger>
 
-                <DialogContent className="max-w-[90%] sm:max-w-[425px] z-[1000]">
+                <DialogContent className="max-w-[90%] sm:max-w-[425px] z-1000">
                     <DialogHeader>
                         <DialogTitle className="text-xl">
                             Are You Sure?
@@ -39,7 +39,7 @@ function DeleteAccountButton() {
                     {/* Buttons Section */}
                     <DialogFooter className="gap-2">
                         <button
-                            className="bg-red-500 border-[1px] border-black rounded-xl p-4"
+                            className="bg-red-500 border border-black rounded-xl p-4"
                             onClick={async () => {
                                 await actionDeleteUserSelf();
                                 router.refresh();
@@ -48,7 +48,7 @@ function DeleteAccountButton() {
                             Delete Account
                         </button>
                         <button
-                            className="bg-green-500 border-[1px] border-black rounded-xl p-4"
+                            className="bg-green-500 border border-black rounded-xl p-4"
                             onClick={() => setIsOpen(false)}
                         >
                             Go Back

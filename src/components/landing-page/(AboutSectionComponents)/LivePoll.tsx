@@ -23,10 +23,10 @@ const LivePoll = ({ livePollRef }: LivePollProps) => {
             ref={livePollRef}
             className="relative p-6 md:p-10 border-black border-t-4"
         >
-            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] top-[10%] left-[8%] rotate-[19deg]" />
-            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] top-[20%] right-[14%] -rotate-[15deg]" />
-            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] bottom-[10%] left-[16%] rotate-[28deg]" />
-            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] bottom-[3%] right-[20%] -rotate-[40deg]" />
+            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] top-[10%] left-[8%] rotate-19" />
+            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] top-[20%] right-[14%] -rotate-15" />
+            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] bottom-[10%] left-[16%] rotate-28" />
+            <QuestionMark className="z-0 w-[65px] md:w-[80px] lg:w-[100px] xl:w-[125px] bottom-[3%] right-[20%] -rotate-40" />
 
             <div
                 className="strawpoll-embed z-10 relative"

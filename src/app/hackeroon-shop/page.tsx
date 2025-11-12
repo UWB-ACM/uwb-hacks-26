@@ -85,7 +85,7 @@ export default async function PrizesPage() {
 
             <LinkButton href="/hackeroon-guide" text="Hackeroon Guide" />
 
-            <div className="w-full flex-grow p-8 overflow-scroll overflow-x-hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="w-full grow p-8 overflow-scroll overflow-x-hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {prizes.map((prize, index) => (
                     <PrizeCard key={index} prize={prize} />
                 ))}

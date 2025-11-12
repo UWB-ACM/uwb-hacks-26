@@ -122,7 +122,7 @@ export default function ModifyPrizeForm({ prizeId }: ModifyPrizeFormProps) {
                             value={prizeName}
                             onChange={(e) => setPrizeName(e.target.value)}
                             required
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Prize Description */}
@@ -139,7 +139,7 @@ export default function ModifyPrizeForm({ prizeId }: ModifyPrizeFormProps) {
                                 setPrizeDescription(e.target.value)
                             }
                             required
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Prize Initial Stock */}
@@ -158,7 +158,7 @@ export default function ModifyPrizeForm({ prizeId }: ModifyPrizeFormProps) {
                                 setPrizeInitialStock(Number(e.target.value));
                             }}
                             required
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Prize Price */}
@@ -178,7 +178,7 @@ export default function ModifyPrizeForm({ prizeId }: ModifyPrizeFormProps) {
                                 setPrizePrice(Number(e.target.value));
                             }}
                             required
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
 
                         {/* Prize Image Name */}
@@ -192,7 +192,7 @@ export default function ModifyPrizeForm({ prizeId }: ModifyPrizeFormProps) {
                             id="prizeImageName"
                             value={prizeImageName}
                             onChange={(e) => setPrizeImageName(e.target.value)}
-                            className="border-black border-[1px] p-2 rounded-md bg-neutral-100"
+                            className="border-black border p-2 rounded-md bg-neutral-100"
                         />
                     </div>
                     {error && (
@@ -207,7 +207,7 @@ export default function ModifyPrizeForm({ prizeId }: ModifyPrizeFormProps) {
                         </Link>
                         <button
                             type="submit"
-                            className="min-w-[30%] mt-4 py-2 px-4 rounded-md bg-green-600 hover:bg-green-500 text-white duration-200 border-black border-[1px]"
+                            className="min-w-[30%] mt-4 py-2 px-4 rounded-md bg-green-600 hover:bg-green-500 text-white duration-200 border-black border"
                         >
                             Submit
                         </button>

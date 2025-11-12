@@ -32,7 +32,7 @@ const PolygonArea: React.FC<
             </svg>
 
             <div
-                className={`absolute z-20 [width:100%] [height:100%]`}
+                className={`absolute z-20 w-full h-full`}
                 style={{ clipPath: `polygon(${clipPath})` }}
             >
                 {children}

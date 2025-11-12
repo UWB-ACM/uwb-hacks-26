@@ -69,7 +69,7 @@ export default function HomePage({
             <div ref={scrollTopRef}></div>
             <button
                 onClick={scrollToTop}
-                className={`fixed z-[100] w-12 h-12 bottom-4 bg-white border-black border-2 right-4 scroll-up-animation ${
+                className={`fixed z-100 w-12 h-12 bottom-4 bg-white border-black border-2 right-4 scroll-up-animation ${
                     showGoTop ? "" : "hidden"
                 }`}
             >
@@ -84,7 +84,7 @@ export default function HomePage({
                 <div
                     id="main"
                     ref={mainRef}
-                    className="w-full min-h-[100vh] bg-blue flex flex-col relative overflow-hidden"
+                    className="w-full min-h-screen bg-blue flex flex-col relative overflow-hidden"
                 >
                     {/* Wrap H1 is used for the main page. */}
                     <Header
@@ -143,18 +143,18 @@ export default function HomePage({
                     </Parallax>
                     <Parallax
                         speed={-20}
-                        className="absolute w-full h-full z-[-2] bottom-[0] overflow-hidden"
+                        className="absolute w-full h-full z-[-2] bottom-0 overflow-hidden"
                     >
                         <Image
                             src={MidgroundImage || "/placeholder.svg"}
                             priority
                             alt=""
-                            className="absolute object-cover w-full h-full bottom-[0]"
+                            className="absolute object-cover w-full h-full bottom-0"
                         />
                     </Parallax>
                     <Parallax
                         speed={-5}
-                        className="absolute w-full h-full z-[-1] bottom-[0] overflow-hidden"
+                        className="absolute w-full h-full z-[-1] bottom-0 overflow-hidden"
                     >
                         <Image
                             src={ForegroundImage || "/placeholder.svg"}
@@ -173,7 +173,7 @@ export default function HomePage({
                             "linear-gradient(180deg, rgba(198,61,23,1) 0%, rgba(255,230,162,1) 100%)",
                     }}
                 >
-                    <div className="z-[5] w-[90%] mx-auto">
+                    <div className="z-5 w-[90%] mx-auto">
                         <div id="about" ref={aboutRef} className="w-full">
                             <AboutSection
                                 hackeroonPrizes={hackeroonPrizes}

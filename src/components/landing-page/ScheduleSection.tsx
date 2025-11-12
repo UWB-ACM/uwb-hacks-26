@@ -313,7 +313,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
             <div className="border-t border-black mb-4"></div>
 
             {events.length > 0 ? (
-                <div className="flex-grow space-y-2 mb-2">
+                <div className="grow space-y-2 mb-2">
                     <p className="text-base md:text-2xl font-san-marino-beach text-yellow-500 text-center my-2">
                         {spirit}
                     </p>
@@ -325,7 +325,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
                         >
                             <div className="flex w-full">
                                 <div className="justify-items-center w-full bg-orange-400 flex shadow-sm p-2 px-4">
-                                    <span className="grow text-xs text-white font-opensans font-bold w-[45%] pr-2 flex-shrink-0">
+                                    <span className="grow text-xs text-white font-opensans font-bold w-[45%] pr-2 shrink-0">
                                         {event.time}
                                     </span>
                                     <span className="text-xs self-end font-opensans font-bold text-white ">

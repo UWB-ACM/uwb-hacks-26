@@ -23,7 +23,7 @@ const TransactionTable = ({ transactions }: TransactionTableProps) => {
     const [showMore, setShowMore] = useState(false);
 
     return (
-        <div className="rounded-xl border border-gray-300 overflow-hidden shadow-sm mt-[2rem]">
+        <div className="rounded-xl border border-gray-300 overflow-hidden shadow-sm mt-8">
             <h3 className="bg-white p-3 font-bold"> Transaction History </h3>
             <div className="overflow-x-auto">
                 <Table className="w-full bg-white">

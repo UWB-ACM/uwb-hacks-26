@@ -48,7 +48,7 @@ const AboutSection: React.FC<{
                     parentPanelId="aboutPanel"
                     as="h2"
                     isSectionHeader
-                    className="z-[5] lg:absolute"
+                    className="z-5 lg:absolute"
                 >
                     About
                 </PanelHeader>
@@ -56,12 +56,12 @@ const AboutSection: React.FC<{
                 {/* UWBHacks About Section Content */}
                 <PanelContent
                     parentPanelId="aboutPanel"
-                    className="z-[5] flex flex-col md:flex-row justify-center items-center gap-x-8 gap-y-4 overflow-hidden"
+                    className="z-5 flex flex-col md:flex-row justify-center items-center gap-x-8 gap-y-4 overflow-hidden"
                 >
                     <FlyingHusky />
 
                     {/* UWBHacks About Section Description */}
-                    <div className="z-[5] w-full md:w-1/2 lg:w-1/3">
+                    <div className="z-5 w-full md:w-1/2 lg:w-1/3">
                         <h3 className="font-h1 text-xl lg:text-2xl text-center md:text-left text-blue-500">
                             UWB Hacks: Save the World!
                         </h3>
@@ -148,7 +148,7 @@ const AboutSection: React.FC<{
                     parentPanelId="uwbacmDescriptionPanel"
                     className="flex justify-center items-center"
                 >
-                    <div className="z-[5] w-4/5 md:w-3/4 lg:w-3/5 flex flex-col xl:flex-row xl:gap-x-4 self-center p-6 bg-white border-2 border-black">
+                    <div className="z-5 w-4/5 md:w-3/4 lg:w-3/5 flex flex-col xl:flex-row xl:gap-x-4 self-center p-6 bg-white border-2 border-black">
                         <p className="font-semibold text-center md:text-left">
                             UWB ACM is a chapter of the Association of Computing
                             Machinery at UWB dedicated to creating events and

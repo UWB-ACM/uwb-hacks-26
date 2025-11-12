@@ -8,7 +8,7 @@ function Page() {
         <div className="p-10 w-full flex justify-center">
             <Image
                 src={MohSchedule}
-                className="max-w-[calc(min(1200px,100vw_-_20px))] rounded-md"
+                className="max-w-[calc(min(1200px,100vw-20px))] rounded-md"
                 alt="image of schedule"
             />
         </div>
