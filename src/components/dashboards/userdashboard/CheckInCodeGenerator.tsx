@@ -8,6 +8,19 @@ import {
 import StaffEventSelector from "@/src/components/dashboards/staff/StaffEventSelector";
 import { Event } from "@/src/util/dataTypes";
 
+const getRemainingSeconds = (): number => {
+    const cachedTimestamp =
+        typeof window !== "undefined"
+            ? sessionStorage.getItem("startingTimestamp")
+            : null;
+    if (cachedTimestamp == null) return 0;
+
+    return Math.max(
+        Math.floor((Date.parse(cachedTimestamp) - Date.now()) / 1000),
+        0,
+    );
+};
+
 export default function CheckInCodeGenerator({
     events,
 }: {
@@ -24,18 +37,13 @@ export default function CheckInCodeGenerator({
 
     // Load the cached code once we're on the browser.
     useEffect(() => {
-        setCode(sessionStorage.getItem("currentCode"));
+        // An immediate setState is required here because the server doesn't have access to sessionStorage.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setCode(() => sessionStorage.getItem("currentCode"));
     }, []);
 
-    const timestampToRemainingSeconds = (time: string): number =>
-        Math.max(Math.floor((Date.parse(time) - Date.now()) / 1000), 0);
-
-    const cachedTimestamp =
-        typeof window !== "undefined"
-            ? sessionStorage.getItem("startingTimestamp")
-            : null;
-    const [countdown, setCountdown] = useState<number>(
-        cachedTimestamp ? timestampToRemainingSeconds(cachedTimestamp) : 0,
+    const [countdown, setCountdown] = useState<number>(() =>
+        getRemainingSeconds(),
     );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,11 +58,7 @@ export default function CheckInCodeGenerator({
 
         // Invalidate the previous code, if it exists and
         // is still active.
-        if (
-            currentCode &&
-            cachedTimestamp &&
-            timestampToRemainingSeconds(cachedTimestamp) > 0
-        ) {
+        if (currentCode && getRemainingSeconds() > 0) {
             await actionInvalidateCode(currentCode);
 
             sessionStorage.removeItem("startingTimestamp");
@@ -89,8 +93,8 @@ export default function CheckInCodeGenerator({
         if (countdown > 0 && !intervalRef.current) {
             // Start the countdown
             intervalRef.current = setInterval(() => {
-                setCountdown((prev) => Math.max(prev - 1, 0));
-            }, 1000);
+                setCountdown(getRemainingSeconds());
+            }, 500);
         }
 
         return () => {
