@@ -17,11 +17,15 @@ This is the website for UWB Hacks 2025. It uses the following technologies:
 
 ## Getting Started
 
+Before getting started, make sure you have the `pnpm` package manager installed. See instructions here: https://pnpm.io/installation.
+
 First, install all dependencies:
 
 ```bash
 pnpm install .
 ```
+
+If you get a message like "Ignored build scripts", you may have to run `pnpm approve-builds`.
 
 Second, in the root directory, create a .env.local file. If you are part of the Hackathon planning team, ask the Digital Experience lead for the contents of that file to paste in.
 

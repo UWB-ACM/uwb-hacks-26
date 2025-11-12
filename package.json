@@ -31,8 +31,7 @@
         "react-spring": "npm:@react-spring/web@9.0.0-rc.1",
         "supabase": "^2.2.1",
         "tailwind-merge": "^2.6.0",
-        "tailwindcss-animate": "^1.0.7",
-        "uwb-hacks-website-25": "link:"
+        "tailwindcss-animate": "^1.0.7"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
