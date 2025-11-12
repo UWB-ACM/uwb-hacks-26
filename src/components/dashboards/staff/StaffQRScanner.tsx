@@ -11,7 +11,6 @@ import {
     DialogTrigger,
 } from "@/src/components/ui/dialog";
 
-// @ts-expect-error The library doesn't exactly conform to what NextJS expects.
 const Scanner = dynamic(() => import("react-qr-barcode-scanner"));
 
 function StaffQRScanner() {
