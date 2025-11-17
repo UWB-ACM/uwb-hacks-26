@@ -8,7 +8,7 @@ import {
 } from "@/src/util/staff";
 
 export const metadata: Metadata = {
-    title: "Give Hackaroons | UWB Hacks 25",
+    title: "Give Hackaroons | UWB Hacks 26",
 };
 
 export default async function Page({

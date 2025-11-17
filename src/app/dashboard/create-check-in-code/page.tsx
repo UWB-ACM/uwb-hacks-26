@@ -7,7 +7,7 @@ import CheckInCodeGenerator from "@/src/components/dashboards/userdashboard/Chec
 import { getEvents } from "@/src/util/db/event";
 
 export const metadata: Metadata = {
-    title: "Create Check-In Code | UWB Hacks 25",
+    title: "Create Check-In Code | UWB Hacks 26",
 };
 
 export default async function Page() {

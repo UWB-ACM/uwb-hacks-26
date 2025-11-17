@@ -10,7 +10,7 @@ import {
 } from "@/src/util/staff";
 
 export const metadata: Metadata = {
-    title: "Buy Prizes | UWB Hacks 25",
+    title: "Buy Prizes | UWB Hacks 26",
 };
 
 export default async function Page({

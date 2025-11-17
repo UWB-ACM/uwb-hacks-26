@@ -1,8 +1,8 @@
-# UWB Hacks 2025 Website
+# UWB Hacks 2026 Website
 
 https://uwbhacks.com
 
-This is the website for UWB Hacks 2025. It uses the following technologies:
+This is the website for UWB Hacks 2026. It uses the following technologies:
 
 - Next.js
 - React

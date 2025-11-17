@@ -13,7 +13,7 @@ import { redirect } from "next/navigation";
 import { ModifyUserPage } from "@/src/app/dashboard/modify-user/[id]/ModifyUserPage";
 
 export const metadata: Metadata = {
-    title: "Modify User | UWB Hacks 25",
+    title: "Modify User | UWB Hacks 26",
 };
 
 export default async function Page({

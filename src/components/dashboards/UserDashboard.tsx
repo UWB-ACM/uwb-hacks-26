@@ -108,7 +108,7 @@ async function UserDashboard({ user }: { user: SessionUser }) {
             amount: 100,
             event: "ai workshop",
             prize: "pat on the head",
-            time: "4/27/2025",
+            time: "4/27/2026",
             */}
             <TransactionTable transactions={transactions} />
         </div>

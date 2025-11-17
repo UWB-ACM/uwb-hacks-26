@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 const faqItems = [
     {
-        question: "1. How will UWB Hacks 2025 be run?",
+        question: "1. How will UWB Hacks 2026 be run?",
         answer: "The hackathon will take place over a weekend, where participants will form teams, brainstorm ideas, and build projects that align with this year’s theme: Save the World You will have access to mentors, workshops, and networking opportunities to help bring your ideas to life.",
     },
     {
         question: "2. Do I have to be a UWB student to participate?",
-        answer: "No! UWB Hacks 2025 is open to all students aged 18 and over, including those from any university or high school seniors who are 18+.",
+        answer: "No! UWB Hacks 2026 is open to all students aged 18 and over, including those from any university or high school seniors who are 18+.",
     },
     {
         question: "3. Does it cost money to enter the hackathon?",
@@ -26,7 +26,7 @@ const faqItems = [
         question:
             "6. How do you sign up as a team on Devpost once you have found a team?",
         answer: [
-            "Create a Devpost account and register individually – This not only allows you to participate in UWB Hacks 2025, but also makes it easier to join future hackathons. Plus, it helps us plan ahead to ensure we have enough food, seating, and resources for everyone.",
+            "Create a Devpost account and register individually – This not only allows you to participate in UWB Hacks 2026, but also makes it easier to join future hackathons. Plus, it helps us plan ahead to ensure we have enough food, seating, and resources for everyone.",
             "Wait until hacking officially begins on April 25th – Following the Opening Ceremony, you’ll be able to start working on your project.",
             "Begin your project submission on Devpost – Once submissions open, you can list your teammates and save your project as a draft while you continue building.",
         ],
@@ -37,8 +37,8 @@ const faqItems = [
     },
     {
         question:
-            "8. Is UWB Hacks 2025 open to students from non-technical or non-CS backgrounds?",
-        answer: "Yes! UWB Hacks 2025 welcomes students from all academic backgrounds — not just computer science. Whether you're studying business, design, engineering, biology, or anything else, your perspective is valuable. You’re also encouraged to explore no-code or low-code solutions, create mockups, or pitch well-developed concepts — creativity, collaboration, and innovation are what matter most!",
+            "8. Is UWB Hacks 2026 open to students from non-technical or non-CS backgrounds?",
+        answer: "Yes! UWB Hacks 2026 welcomes students from all academic backgrounds — not just computer science. Whether you're studying business, design, engineering, biology, or anything else, your perspective is valuable. You’re also encouraged to explore no-code or low-code solutions, create mockups, or pitch well-developed concepts — creativity, collaboration, and innovation are what matter most!",
     },
 ];
 

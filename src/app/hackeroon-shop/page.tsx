@@ -6,7 +6,7 @@ import Header from "@/src/components/header/Header";
 import LinkButton from "@/src/components/dashboards/userdashboard/LinkButton";
 
 export const metadata: Metadata = {
-    title: "Hackeroon Shop | UWB Hacks 25",
+    title: "Hackeroon Shop | UWB Hacks 26",
 };
 
 export default async function PrizesPage() {

@@ -3,7 +3,7 @@ import Header from "@/src/components/header/Header";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Privacy Policy | UWB Hacks 25",
+    title: "Privacy Policy | UWB Hacks 26",
 };
 
 const PrivacyPolicy = () => {
@@ -276,7 +276,7 @@ const PrivacyPolicy = () => {
                     </h2>
                     <p>
                         If you have questions or comments about this Privacy
-                        Policy, please contact us at: uwbhacks2025@gmail.com.
+                        Policy, please contact us at: uwbhacks2026@gmail.com.
                     </p>
                 </section>
             </div>
