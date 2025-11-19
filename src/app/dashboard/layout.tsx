@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Dashboard | UWB Hacks 25",
+    title: "Dashboard | UWB Hacks 26",
 };
 
 export default function RootLayout({
