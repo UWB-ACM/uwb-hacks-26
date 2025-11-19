@@ -23,9 +23,9 @@ const rubikMonoOne = Rubik_Mono_One({
     weight: ["400"],
 });
 
-const title = "UWB Hacks 2025";
+const title = "UWB Hacks 2026";
 const description =
-    "Students assemble! We need your skills, NOW! Combine forces and push your potential to the limit at the 9th annual UW Bothell Hackathon, UWB Hacks: Save the World!";
+    "Students assemble! We need your skills, NOW! Combine forces and push your potential to the limit at the 10th annual UW Bothell Hackathon, UWB Hacks: The Future 2026!";
 const url = "https://uwbhacks.com/";
 
 export const metadata: Metadata = {
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-    themeColor: "#f36a1a",
+    themeColor: "#11c4f8",
 };
 
 export default function RootLayout({
