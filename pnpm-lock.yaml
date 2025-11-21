@@ -75,6 +75,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.1.17)
+      uwb-hacks-website-25:
+        specifier: 'link:'
+        version: 'link:'
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.1
