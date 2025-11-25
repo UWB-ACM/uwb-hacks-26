@@ -6,7 +6,7 @@ const LogoContainer = () => {
         <div className="w-full">
             <Image
                 src={UwbHacksLogo}
-                alt="UWB Hacks 2025 - Save the World"
+                alt="UWB Hacks 2026 - The Future"
                 layout="responsive"
                 priority
                 className="rounded-lg"

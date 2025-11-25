@@ -3,7 +3,7 @@ import Header from "@/src/components/header/Header";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Terms of Service | UWB Hacks 25",
+    title: "Terms of Service | UWB Hacks 26",
 };
 
 const TermsOfService = () => {
@@ -242,7 +242,7 @@ const TermsOfService = () => {
                     </h2>
                     <p>
                         If you have any questions about these Terms, please
-                        contact us at uwbhacks2025@gmail.com.
+                        contact us at uwbhacks2026@gmail.com.
                     </p>
                 </section>
             </div>
