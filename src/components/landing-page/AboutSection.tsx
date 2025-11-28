@@ -63,7 +63,7 @@ const AboutSection: React.FC<{
                     {/* UWBHacks About Section Description */}
                     <div className="z-5 w-full md:w-1/2 lg:w-1/3">
                         <h3 className="font-h1 text-xl lg:text-2xl text-center md:text-left text-blue-500">
-                            UWB Hacks: Save the World!
+                            UWB Hacks: The Future!
                         </h3>
                         <p className="text-center md:text-left text-white text-lg">
                             This exciting annual hackathon teaches students

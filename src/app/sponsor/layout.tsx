@@ -3,7 +3,7 @@ import Header from "@/src/components/header/Header";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Staff Dashboard | UWB Hacks 25",
+    title: "Staff Dashboard | UWB Hacks 26",
 };
 
 export default function RootLayout({

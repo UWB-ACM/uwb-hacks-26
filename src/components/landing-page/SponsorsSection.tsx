@@ -21,7 +21,7 @@ const SponsorsSection = () => {
                 className="text-[#49B2F8] border-none lg:w-full pb-0 bg-transparent"
                 isSectionHeader
             >
-                UWB HACKS 2025 SPONSORS
+                UWB HACKS 2026 SPONSORS
             </PanelHeader>
 
             <PanelContent

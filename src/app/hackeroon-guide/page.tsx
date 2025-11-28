@@ -4,7 +4,7 @@ import Header from "@/src/components/header/Header";
 import LinkButton from "@/src/components/dashboards/userdashboard/LinkButton";
 
 export const metadata: Metadata = {
-    title: "Hackeroon Guide | UWB Hacks 25",
+    title: "Hackeroon Guide | UWB Hacks 26",
 };
 
 const PointItem = ({
