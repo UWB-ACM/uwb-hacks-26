@@ -526,3 +526,13 @@ export interface Track {
      */
     lowCodeExample: string;
 }
+
+/**
+ * Data about a user's application, excluding the user ID.
+ * I.e., this is all the data a user entered themselves on the form.
+ */
+export interface ApplicationData {
+    // TODO: Implement this.
+    //       Remove testData from the interface (I added it for ESLint).
+    testData: string;
+}
