@@ -4,8 +4,8 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import "../../styles/header.css";
 import Image from "next/image";
-import DesktopBanner from "./DesktopBanner";
-import MobileBanner from "./MobileBanner";
+// import DesktopBanner from "./DesktopBanner";
+// import MobileBanner from "./MobileBanner";
 
 export type HeaderLinkData = { id: string; name: string } & (
     | { url: string }
@@ -128,13 +128,13 @@ function HeaderLink({ link }: { link: HeaderLinkData }) {
 function HeaderDesktop({
     links,
     wrapH1,
-    banner,
+    // banner,
 }: {
     links: HeaderLinkData[];
     wrapH1?: boolean;
     banner?: boolean;
 }) {
-    const [bannerVisible, setBannerVisible] = useState(banner || false);
+    // const [bannerVisible, setBannerVisible] = useState(banner || false);
 
     return (
         <nav className="fixed z-999 top-0 w-full">
@@ -148,10 +148,10 @@ function HeaderDesktop({
                 </div>
             </div>
 
-            <DesktopBanner
+            {/* <DesktopBanner
                 bannerVisible={bannerVisible}
                 setBannerVisible={setBannerVisible}
-            />
+            /> */}
         </nav>
     );
 }
@@ -159,17 +159,17 @@ function HeaderDesktop({
 function HeaderMobile({
     wrapH1,
     setSideNav,
-    banner,
+    // banner,
 }: {
     wrapH1?: boolean;
     setSideNav: Dispatch<SetStateAction<boolean>>;
     banner?: boolean;
 }) {
-    const [bannerVisible] = useState(banner || false);
+    // const [bannerVisible] = useState(banner || false);
 
     return (
         <nav className="">
-            <MobileBanner bannerVisible={bannerVisible} />
+            {/* <MobileBanner bannerVisible={bannerVisible} /> */}
             <div className="flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full min-w-72">
                 <UWBHacksButton wrapH1={wrapH1} mobile />
                 <HeaderSidebarButton setSideNav={setSideNav} />

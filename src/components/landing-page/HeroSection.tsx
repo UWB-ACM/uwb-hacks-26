@@ -1,36 +1,7 @@
-import HackathonDates from "@/src/components/landing-page/(HeroSectionComponents)/HackathonDates";
-// import VolunteerSection from "@/src/components/landing-page/(HeroSectionComponents)/VolunteerSection";
-import Countdown from "@/src/components/landing-page/(HeroSectionComponents)/Countdown";
-import SponsorUsSection from "./(HeroSectionComponents)/SponsorUsSection";
-import RegisterSection from "./(HeroSectionComponents)/RegisterSection";
-
-const HeroSection = () => {
+export default function HeroSection() {
     return (
-        <div className="flex w-full justify-center bg-cover bg-center sm:mt-20">
-            <div className="relative z-10 container px-4 py-8 w-full max-w-[90vw] sm:max-w-[70vw]">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-8 mx-auto">
-                    {/* Left Column - Logo and Volunteer */}
-                    <div className="flex flex-col gap-y-12 max-w-md">
-                        <RegisterSection />
-                        <div className="hidden md:block">
-                            <SponsorUsSection />
-                        </div>
-                    </div>
-
-                    {/* Right Column - Dates and Countdown */}
-                    <div className="flex flex-col gap-x-6">
-                        <div className="bg-white/40 rounded-lg p-8">
-                            <HackathonDates />
-                            <Countdown />
-                        </div>
-                    </div>
-                    <div className="block md:hidden">
-                        <SponsorUsSection />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <section className="h-screen grid place-content-center bg-blue-300">
+            HERO SECTION !!!
+        </section>
     );
-};
-
-export default HeroSection;
+}
