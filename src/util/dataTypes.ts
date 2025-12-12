@@ -528,8 +528,8 @@ export interface Track {
 }
 
 /**
- * Whether the applicant plans to attend the "Week of Hacking" events
- * leading up to the main hackathon.
+ * Represents the student's class standing.
+ * These values correspond to the IDs in the `Class Standing` database table.
  */
 export enum ClassStanding {
     Freshman = 1,
@@ -613,7 +613,10 @@ export interface ApplicationData {
     /**
      * The applicant's preference for how they want to be judged.
      */
-    judgingPreference: string;
+    judgingPreference:
+        | "PRESENTATION STYLE"
+        | "CONFERENCE STYLE"
+        | "NO PREFERENCE";
 
     /**
      * The applicant's personal goals for attending the hackathon.
