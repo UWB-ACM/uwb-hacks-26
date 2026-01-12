@@ -645,7 +645,7 @@ export interface ApplicationData {
     /**
      * The applicant's interest in a no-code option
      */
-    noCodePreference: string;
+    noCodePreference: "CODE" | "NO CODE" | "NO PREFERENCE";
 
     /**
      * A description of the applicant's previous hackathon experience.
