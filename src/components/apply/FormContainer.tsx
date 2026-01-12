@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Bubble from "./Bubble";
 import QuestionBubble from "./QuestionBubble";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
@@ -183,7 +183,14 @@ export default function ApplicationForm({
 
                                     <button
                                         className="ml-auto"
-                                        onClick={() => {
+                                        onClick={(e) => {
+                                            // Something (either react-hook-form or the browser) is
+                                            // moving focus to the next input field when this button is clicked.
+                                            // This breaks the animation, so disable it.
+                                            e.preventDefault();
+
+                                            // TODO: Do our own focus on the next form element + scroll-down effect.
+
                                             // Don't allow continuing while there are errors.
                                             // TODO: Maybe display the error?
                                             if (errors[q] != null) return;
