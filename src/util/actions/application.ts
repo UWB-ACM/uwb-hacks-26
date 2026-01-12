@@ -10,4 +10,5 @@ import { ApplicationData } from "@/src/util/dataTypes";
  */
 export async function actionSaveApplication(data: ApplicationData) {
     // TODO: Implement.
+    console.log("application", data);
 }

@@ -1,26 +1,23 @@
 import Bubble from "./Bubble";
-import UserInput from "./UserInput";
+import { PropsWithChildren } from "react";
 
 type QuestionBubbleProps = {
     question: string;
-    onSubmit: (value: string | number | boolean) => void;
+    hidden: boolean;
 };
 
 export default function QuestionBubble({
     question,
-    onSubmit,
-}: QuestionBubbleProps) {
+    hidden,
+    children,
+}: PropsWithChildren<QuestionBubbleProps>) {
     return (
         <>
-            <Bubble>
-                <div>
-                    <p>{question}</p>
-                </div>
+            <Bubble side="left" hidden={hidden}>
+                <p>{question}</p>
             </Bubble>
-            <Bubble>
-                <div>
-                    <UserInput onValSubmit={onSubmit} />
-                </div>
+            <Bubble side="right" hidden={hidden}>
+                {children}
             </Bubble>
         </>
     );
