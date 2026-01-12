@@ -1,30 +1,174 @@
 "use client";
-import { useState } from "react";
-import type { InputHTMLAttributes } from "react";
+import React from "react";
+import { Path, UseFormRegister } from "react-hook-form";
+import {
+    ApplicationData,
+    Major,
+    ClassStanding,
+    ReferralSource,
+} from "@/src/util/dataTypes";
+import { QuestionTypeMap } from "@/src/components/apply/FormContainer";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    onValSubmit: (value: string | number | boolean) => void;
+export interface InputProps<
+    T extends keyof ApplicationData = keyof ApplicationData,
+> {
+    name: T;
+    register: UseFormRegister<ApplicationData>;
+    defaultValue?: ApplicationData[T];
+    required: boolean;
 }
 
-export default function UserInput({ onValSubmit, ...inputProps }: InputProps) {
-    const [value, setValue] = useState("");
+const MAJOR_LABELS: Record<Major, string> = {
+    [Major.ComputerScience]: "Computer Science",
+    [Major.AppliedComputing]: "Applied Computing",
+    [Major.ComputerEngineering]: "Computer Engineering",
+    [Major.DataScienceVis]: "Data Science & Visualization",
+    [Major.Business]: "Business",
+    [Major.OtherSTEM]: "Other STEM",
+    [Major.OtherNonSTEM]: "Other Non-STEM",
+};
 
-    const handleSubmit = () => {
-        onValSubmit(value);
-        // setValue("");
-    };
+const CLASS_STANDING_LABELS: Record<ClassStanding, string> = {
+    [ClassStanding.Freshman]: "Freshman",
+    [ClassStanding.Sophomore]: "Sophomore",
+    [ClassStanding.Junior]: "Junior",
+    [ClassStanding.Senior]: "Senior",
+    [ClassStanding.Masters]: "Masters",
+    [ClassStanding.RunningStart]: "Running Start",
+};
 
+const REFERRAL_SOURCE_LABELS: Record<ReferralSource, string> = {
+    [ReferralSource.Discord]: "Discord",
+    [ReferralSource.Email]: "Email",
+    [ReferralSource.WordOfMouth]: "Word of Mouth",
+    [ReferralSource.PhysicalPoster]: "Physical Poster",
+    [ReferralSource.ACM]: "ACM",
+    [ReferralSource.OtherClub]: "Other Club",
+    [ReferralSource.Other]: "Other",
+};
+
+const JUDGING_PREFERENCE_LABELS: Record<
+    ApplicationData["judgingPreference"],
+    string
+> = {
+    "PRESENTATION STYLE": "Presentation Style",
+    "CONFERENCE STYLE": "Conference Style",
+    "NO PREFERENCE": "No Preference",
+};
+
+const NO_CODE_PREFERENCE_LABELS: Record<
+    ApplicationData["noCodePreference"],
+    string
+> = {
+    CODE: "Code",
+    "NO CODE": "No Code",
+    "NO PREFERENCE": "No Preference",
+};
+
+export const INPUT_TYPES: Record<
+    keyof QuestionTypeMap,
+    React.FC<InputProps>
+> = {
+    TEXT: TextInput,
+    BOOLEAN: BooleanInput,
+    MAJOR: SelectInput(MAJOR_LABELS, "Select your major", true),
+    CLASS_STANDING: SelectInput(
+        CLASS_STANDING_LABELS,
+        "Select your class standing",
+        true,
+    ),
+    REFERRAL_SOURCE: SelectInput(
+        REFERRAL_SOURCE_LABELS,
+        "Select how you heard about us",
+        true,
+    ),
+    JUDGING_PREFERENCE: SelectInput(
+        JUDGING_PREFERENCE_LABELS,
+        "Select your preference",
+        false,
+    ),
+    NO_CODE_PREFERENCE: SelectInput(
+        NO_CODE_PREFERENCE_LABELS,
+        "Select your preference",
+        false,
+    ),
+};
+
+function TextInput({ name, register, defaultValue, required }: InputProps) {
     return (
         <div className="flex gap-2">
             <input
+                defaultValue={(defaultValue as string) || ""}
                 placeholder={"Enter answer here"}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
                 className="flex-auto px-2 py-1"
+                {...register(name as Path<ApplicationData>, {
+                    required,
+                })}
             />
-            <button className="ml-auto" onClick={handleSubmit}>
-                Submit
-            </button>
         </div>
     );
+}
+
+function BooleanInput({ name, register, defaultValue, required }: InputProps) {
+    return (
+        <div className="flex gap-4">
+            <label className="flex items-center gap-2">
+                <input
+                    type="radio"
+                    value="true"
+                    defaultChecked={defaultValue === true}
+                    {...register(name as Path<ApplicationData>, {
+                        required,
+                    })}
+                />
+                Yes
+            </label>
+            <label className="flex items-center gap-2">
+                <input
+                    type="radio"
+                    value="false"
+                    defaultChecked={defaultValue === false}
+                    {...register(name as Path<ApplicationData>, {
+                        required,
+                    })}
+                />
+                No
+            </label>
+        </div>
+    );
+}
+
+function SelectInput<T extends string | number>(
+    items: Record<T, string>,
+    placeholder: string,
+    numeric: T extends string ? false : true,
+): React.FC<InputProps> {
+    function SelectInputInner({
+        name,
+        register,
+        defaultValue,
+        required,
+    }: InputProps) {
+        return (
+            <select
+                className="px-2 py-1"
+                defaultValue={(defaultValue as T) ?? ""}
+                {...register(name as Path<ApplicationData>, {
+                    required,
+                    valueAsNumber: numeric,
+                })}
+            >
+                <option value="" disabled>
+                    {placeholder}
+                </option>
+                {Object.entries(items).map(([value, label]) => (
+                    <option key={value} value={value}>
+                        {label as string}
+                    </option>
+                ))}
+            </select>
+        );
+    }
+
+    return SelectInputInner;
 }
