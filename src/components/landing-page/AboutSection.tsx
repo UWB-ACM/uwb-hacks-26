@@ -12,6 +12,7 @@ import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
 // For about panel
 import FlyingHusky from "./(AboutSectionComponents)/FlyingHusky";
+import FlyingCarWithBanner from "./(AboutSectionComponents)/FlyingCarWithBanner";
 
 // For fun stats panel
 import FunFactsContainer from "./(AboutSectionComponents)/FunFacts/FunFactsContainer";
@@ -26,6 +27,7 @@ import Leaderboard from "./(AboutSectionComponents)/leaderboard/Leaderboard";
 // For Last Years Winners panel
 import LastYearsWinnersRecord from "./(AboutSectionComponents)/LastYearsWinnersRecord";
 import { LeaderboardRecord, Prize } from "@/src/util/dataTypes";
+
 
 const AboutSection: React.FC<{
     hackeroonPrizes: Promise<Prize[]>;
@@ -98,9 +100,9 @@ const AboutSection: React.FC<{
             {/* Previous UWBHacks Fun Statistics Container */}
             <Panel
                 id="funFactsPanel"
-                className={`w-full border-none ${panelMargin}`}
+                className={`w-full border-none ${panelMargin} overflow-visible`}
             >
-                <div className="flex justify-center">
+                {/* <div className="flex justify-center">
                     <PanelHeader
                         parentPanelId="funFactsPanel"
                         as="h2"
@@ -109,27 +111,35 @@ const AboutSection: React.FC<{
                         Statistics from our previous hackathon <br /> UWB Hacks
                         AI 2024 !
                     </PanelHeader>
-                </div>
+                </div> */}
                 <FunFactsContainer>
                     <FunFact
-                        src={"/about/comic-bubbles/comic-bubble1.svg"}
-                        alt={"Prize total at UWB Hacks AI 2024"}
+                        src={"/about/Cloud1.png"}
+                        alt={"Number of Participants"}
+                        displayText="623 Participants"
+                        className="mr-100"
                     />
                     <FunFact
-                        src={"/about/comic-bubbles/comic-bubble2.svg"}
-                        alt={"Schools participated at UWB Hacks AI 2024"}
+                        src={"/about/Cloud1.png"}
+                        alt={"Number of Submitted Projects"}
+                        displayText="88 Submitted Projects"
+                        className="mr-100"
                     />
                     <FunFact
-                        src={"/about/comic-bubbles/comic-bubble3.svg"}
-                        alt={"Number of hackers at UWB Hacks AI 2024"}
+                        src={"/about/Cloud1.png"}
+                        alt={"Number of Hackathon Weekend Events"}
+                        displayText="11 Month of Hacking Events"
+                        className="ml-100"
                     />
                     <FunFact
-                        src={"/about/comic-bubbles/comic-bubble4.svg"}
+                        src={"/about/Cloud1.png"}
                         alt={
-                            "Number of submitted projects at UWB Hacks AI 2024"
-                        }
+                            "Number of Hackathon Weekend Events at UWB Hacks AI 2024"}
+                            displayText="14 Hackathon Weekend Events"
+                            className="ml-100"
                     />
                 </FunFactsContainer>
+                <FlyingCarWithBanner />
             </Panel>
 
             {/* UWB ACM Description Container */}
