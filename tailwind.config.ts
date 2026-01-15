@@ -21,11 +21,13 @@ export default {
                 "rubik-mono-one": ["var(--font-rubik-mono-one)"],
                 "edge-of-the-galaxy": ["edge-of-the-galaxy"],
                 "glacial-indifference": ["glacial-indifference"],
-              //  "san-marino-beach": ["san-marino-beach"],
+                //  "san-marino-beach": ["san-marino-beach"],
                 h1: ["edge-of-the-galaxy"],
                 h2: ["glacial-indifference"],
                 "h2-bold": ["glacial-indifference"],
                 h3: ["glacial-indifference"],
+                // This is the default font used by tailwind
+                sans: ["glacial-indifference", "Roboto", "sans-serif"],
             },
             colors: {
                 background: "hsl(var(--background))",

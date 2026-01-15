@@ -62,7 +62,7 @@ export default async function PrizesPage() {
                 ]}
             />
 
-            <h1 className="font-san-marino-beach text-5xl text-[#2886c4] text-center mt-8">
+            <h1 className="font-edge-of-the-galaxy text-5xl text-[#2886c4] text-center mt-8">
                 Hackeroon Shop
             </h1>
 

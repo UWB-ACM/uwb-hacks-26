@@ -9,7 +9,7 @@ function Sponsors() {
             <div className="max-w-[1200px] flex flex-col items-center">
                 {/* Header Section */}
                 <div className="text-center w-full mb-12">
-                    <h1 className="font-san-marino-beach text-5xl text-[#2886c4] pb-6">
+                    <h1 className="font-edge-of-the-galaxy text-5xl text-[#2886c4] pb-6">
                         Why Sponsor Us?
                     </h1>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
@@ -19,7 +19,7 @@ function Sponsors() {
                                 className="flex flex-col items-center text-center bg-white border-2 border-black p-6 shadow-md rounded-xl"
                             >
                                 <span className="text-3xl">{benefit.icon}</span>
-                                <h3 className="font-rubik-mono-one text-lg font-bold mt-2">
+                                <h3 className="font-glacial-indifference text-lg font-bold mt-2">
                                     {benefit.text}
                                 </h3>
                             </div>
@@ -27,7 +27,7 @@ function Sponsors() {
                     </div>
                 </div>
 
-                <h1 className="font-san-marino-beach text-5xl text-[#2886c4] pb-8">
+                <h1 className="font-edge-of-the-galaxy text-5xl text-[#2886c4] pb-8">
                     Sponsorship Opportunities
                 </h1>
 
@@ -38,7 +38,7 @@ function Sponsors() {
                             key={index}
                             className="flex flex-col items-center text-center bg-white border-2 border-black p-8 shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300"
                         >
-                            <h2 className="font-rubik-mono-one text-xl font-bold">
+                            <h2 className="font-glacial-indifference text-xl font-bold">
                                 {option.title}
                             </h2>
                             <p className="font-h3 text-base leading-6 my-4">

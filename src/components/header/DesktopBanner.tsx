@@ -10,7 +10,7 @@ function DesktopBanner({ bannerVisible, setBannerVisible }: BannerProps) {
     return (
         <>
             {bannerVisible && (
-                <div className="bg-orange-500 text-lg text-white font-rubik-mono-one justify-center items-center flex h-10">
+                <div className="bg-orange-500 text-lg text-white justify-center items-center flex h-10">
                     <p>Shape the Future of ACM!</p>
                     <div className="w-4"></div>
 

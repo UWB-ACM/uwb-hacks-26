@@ -12,10 +12,10 @@ function Page() {
                         {"Sponsor Our Hackeroon Prizes"}
                     </h1>
                     <div className="w-full border-2 border-black bg-white p-3 font-h3 text-sm md:text-base mt-4 md:mt-6">
-                        <h3 className="font-rubik-mono font-bold text-xl">
+                        <h3 className="font-glacial-indifference font-bold text-xl">
                             {"What's a Hackeroon?"}
                         </h3>
-                        <p className="font-rubik-mono w-full p-6 font-h3 text-sm md:text-base ">
+                        <p className="w-full p-6 font-h3 text-sm md:text-base ">
                             A Hackeroon is a playful, event-only currency given
                             to hackathon participants for active
                             involvement—like attending workshops or helping
@@ -25,10 +25,10 @@ function Page() {
                         </p>
                     </div>
                     <div className="w-full border-2 border-black bg-white p-3 font-h3 text-sm md:text-base mt-4 md:mt-6">
-                        <h3 className="font-rubik-mono font-bold text-xl">
+                        <h3 className="font-glacial-indifference font-bold text-xl">
                             {"Sponsor a Prize!"}
                         </h3>
-                        <p className="font-rubik-mono w-full p-6 font-h3 text-sm md:text-base ">
+                        <p className="w-full p-6 font-h3 text-sm md:text-base ">
                             We invite sponsors to help power these rewards by
                             contributing prizes, cool perks, or unique
                             experiences. Your support fuels innovation,
