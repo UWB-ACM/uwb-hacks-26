@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Bubble from "./Bubble";
 import QuestionBubble from "./QuestionBubble";
-import { Parallax, ParallaxProvider } from "react-scroll-parallax";
+import Image from "next/image";
+import GrassBackground from "@/public/Grass.png";
 import {
     ApplicationData,
     Major,
@@ -141,23 +142,13 @@ export default function ApplicationForm({
     };
 
     return (
-        <div className="w-full min-h-screen flex flex-col">
-            <main className="grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
-                <ParallaxProvider>
-                    <Parallax
-                        speed={-30}
-                        className="absolute w-full h-full z-[-3] bottom-[40px] overflow-hidden"
-                    >
-                        {/* <Image
-                            src={"/placeholder.svg"}
-                            priority
-                            alt=""
-                            className="absolute object-cover w-full h-full overflow-hidden"
-                        /> */}
-                    </Parallax>
-
+        <div className="bg-blue-300">
+            <div className="relative z-50 flex flex-ol w-full min-h-screen max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
+                <main className="flex-grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
+                    {/* Description always displays */}
                     <Bubble side="left">{DESCRIPTION}</Bubble>
 
+                    {/* Display each question */}
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {QUESTION_ORDER.map((q, i) => {
                             const QuestionComponent =
@@ -214,8 +205,17 @@ export default function ApplicationForm({
                             value="Submit"
                         />
                     </form>
-                </ParallaxProvider>
-            </main>
+                </main>
+            </div>
+
+            {/* Background grass */}
+            <div className="relative z-0 mt-4 md:mt-6 lg:mt-8">
+                <Image
+                    src={GrassBackground}
+                    alt=""
+                    className="absolute z-0 bottom-0 w-full pointer-events-none"
+                />
+            </div>
         </div>
     );
 }
