@@ -32,8 +32,9 @@ export default function HeroSection() {
                     <p className="text-white mt-4 text-sm sm:text-lg md:text-xl lg:text-2xl mx-auto">
                         Halle comes to us from the future, traveling back to our
                         time with a purpose: to help us build what comes next.
-                        She knows tomorrow is full of opportunities, but it's up
-                        to us to create it. Together, we can build our future.
+                        She knows tomorrow is full of opportunities, but
+                        it&apos;s up to us to create it. Together, we can build
+                        our future.
                     </p>
 
                     <h2 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl mt-4 font-sans">
