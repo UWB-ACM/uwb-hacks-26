@@ -19,7 +19,7 @@ export default function HomePage() {
                             url: "/dashboard",
                         },
                     ]}
-                    wrapH1
+                    mainPage
                     banner={true}
                 />
 

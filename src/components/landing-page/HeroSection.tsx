@@ -37,9 +37,9 @@ export default function HeroSection() {
                         our future.
                     </p>
 
-                    <h2 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl mt-4 font-glacial-indifference">
+                    <p className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl mt-4 font-glacial-indifference">
                         Friday, April 24 - Sunday, April 26, 2026
-                    </h2>
+                    </p>
 
                     {/* Buttons */}
                     <div className="flex flex-wrap justify-center gap-4 mt-6 w-full max-w-lg mx-auto">
