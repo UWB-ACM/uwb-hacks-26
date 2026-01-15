@@ -19,6 +19,7 @@
         "googleapis": "^166.0.0",
         "gsap": "^3.13.0",
         "lucide-react": "^0.553.0",
+        "motion": "^12.23.25",
         "next": "16.0.7",
         "postgres": "^3.4.7",
         "prisma": "^6.19.0",
