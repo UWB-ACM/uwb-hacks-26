@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Bubble from "./Bubble";
 import QuestionBubble from "./QuestionBubble";
 import Image from "next/image";
@@ -130,20 +130,41 @@ export default function ApplicationForm({
     const [currentIndex, setCurrentIndex] = useState(0);
     const isFinished = currentIndex >= QUESTION_ORDER.length;
 
+    // Used for dynamic scrolling
+    const scrollOffset = window.innerHeight * 0.1; // dynamic offset
+    const bottomRef = useRef<HTMLDivElement | null>(null); // references bottom of form
+    const prevIndex = useRef(currentIndex);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<ApplicationData>();
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+
+    // Auto-scroll form
+    useEffect(() => {
+        if (prevIndex.current < currentIndex) {
+            bottomRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+            prevIndex.current = currentIndex;
+        }
+    }, [currentIndex]);
+
     const onSubmit = async (data: ApplicationData) => {
         await actionSaveApplication(data);
+
         // TODO: Show success message.
     };
 
     return (
         <div className="bg-blue-300">
-            <div className="relative z-50 flex flex-ol w-full min-h-screen max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
+            <div className="relative z-50 flex flex-col w-full min-h-screen max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-12 pb-[35vh] md:pb-[40vh]">
                 <main className="flex-grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
                     {/* Description always displays */}
                     <Bubble side="left">{DESCRIPTION}</Bubble>
@@ -197,6 +218,9 @@ export default function ApplicationForm({
                                 </QuestionBubble>
                             );
                         })}
+
+                        {/* Dummy div used for autoscroll */}
+                        <div ref={bottomRef}></div>
 
                         {/* TODO: Replace with a Bubble */}
                         <input
