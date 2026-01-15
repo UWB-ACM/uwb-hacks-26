@@ -8,7 +8,7 @@ export default function HomePage() {
         <div className="flex flex-col items-center overflow-hidden">
             <div
                 id="main"
-                className="w-full min-h-screen flex flex-col relative overflow-hidden"
+                className="w-full min-h-screen flex flex-col relative overflow-hidden bg-[#0a84dc]"
             >
                 {/* Wrap H1 is used for the main page. */}
                 <Header
