@@ -38,11 +38,6 @@ body {
     font-style: italic;
 }
 
-@font-face {
-    font-family: san-marino-beach;
-    src: url("../../public/fonts/San Marino Beach.otf");
-}
-
 html,
 body {
     background-color: #ffe6a2;
