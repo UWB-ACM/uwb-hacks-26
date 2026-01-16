@@ -20,7 +20,7 @@ function Page() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-[1000px] mx-auto">
                 <div className="flex flex-col items-center text-center bg-white border-2 border-black p-4 w-full h-full">
-                    <h2 className="font-rubik-mono-one text-md md:text-lg">
+                    <h2 className="font-glacial-indifference text-md md:text-lg">
                         Why Be a Judge?
                     </h2>
                     <ul className="text-left font-h3 text-sm md:text-base list-disc pl-4">
@@ -34,7 +34,7 @@ function Page() {
                 </div>
 
                 <div className="flex flex-col items-center text-center bg-white border-2 border-black p-4 w-full h-full">
-                    <h2 className="font-rubik-mono-one text-md md:text-lg">
+                    <h2 className="font-glacial-indifference text-md md:text-lg">
                         How to Sign Up
                     </h2>
                     <ul className="text-left font-h3 text-sm md:text-base list-disc pl-4">

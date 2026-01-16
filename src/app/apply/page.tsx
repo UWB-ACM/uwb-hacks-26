@@ -20,7 +20,7 @@ export default async function ApplyPage() {
     const details = await getApplication(session.user.id);
 
     return (
-        <div className="font-opensans bg-blue-300 w-full min-h-screen flex flex-col">
+        <div className="bg-blue-300 w-full min-h-screen flex flex-col">
             <Header links={[{ id: "about", name: "About", url: "/#about" }]} />
 
             <main className="grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">

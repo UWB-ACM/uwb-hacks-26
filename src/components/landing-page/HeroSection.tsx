@@ -25,7 +25,7 @@ export default function HeroSection() {
                 />
 
                 <div className="z-[5] flex flex-col text-center px-6 pt-20 sm:px-12 md:px-20 max-w-4xl">
-                    <h1 className="text-white font-bold text-4xl font-sans">
+                    <h1 className="text-white font-bold text-4xl font-glacial-indifference">
                         UWB HACKS: The Future 2026
                     </h1>
 
@@ -37,9 +37,9 @@ export default function HeroSection() {
                         our future.
                     </p>
 
-                    <h2 className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl mt-4 font-sans">
+                    <p className="text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl mt-4 font-glacial-indifference">
                         Friday, April 24 - Sunday, April 26, 2026
-                    </h2>
+                    </p>
 
                     {/* Buttons */}
                     <div className="flex flex-wrap justify-center gap-4 mt-6 w-full max-w-lg mx-auto">

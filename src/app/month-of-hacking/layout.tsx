@@ -1,25 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import React from "react";
-import { Inter, Rubik_Mono_One, Open_Sans } from "next/font/google";
 import Header from "@/src/components/header/Header";
-
-const inter = Inter({
-    variable: "--font-inter",
-    subsets: ["latin"],
-    weight: ["400"],
-});
-
-const openSans = Open_Sans({
-    variable: "--font-opensans",
-    subsets: ["latin"],
-    weight: ["400"],
-});
-
-const rubikMonoOne = Rubik_Mono_One({
-    variable: "--font-rubik-mono-one",
-    subsets: ["latin"],
-    weight: ["400"],
-});
 
 const title = "UWB Hacks 2026";
 const description =
@@ -66,9 +47,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div
-            className={`${inter.variable} ${openSans.variable} ${rubikMonoOne.variable} antialiased w-full`}
-        >
+        <div className={`antialiased w-full`}>
             <Header links={[]} />
             {children}
         </div>

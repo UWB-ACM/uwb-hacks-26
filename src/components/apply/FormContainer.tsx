@@ -141,7 +141,7 @@ export default function ApplicationForm({
     };
 
     return (
-        <div className="font-opensans w-full min-h-screen flex flex-col">
+        <div className="w-full min-h-screen flex flex-col">
             <main className="grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
                 <ParallaxProvider>
                     <Parallax

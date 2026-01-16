@@ -38,7 +38,7 @@ const PointItem = ({
 
 export default async function GuidePage() {
     return (
-        <div className="font-opensans w-full min-h-screen flex flex-col">
+        <div className="w-full min-h-screen flex flex-col">
             <Header
                 links={[
                     {
@@ -55,7 +55,7 @@ export default async function GuidePage() {
             />
 
             <main className="grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
-                <h1 className="font-san-marino-beach text-5xl md:text-6xl text-[#2886c4] text-center mb-4">
+                <h1 className="font-edge-of-the-galaxy text-5xl md:text-6xl text-[#2886c4] text-center mb-4">
                     Hackeroon Guide
                 </h1>
 
@@ -66,14 +66,14 @@ export default async function GuidePage() {
 
                 {/* Section for Month of Hacking */}
                 <section className="mb-12">
-                    <h2 className="font-rubik-mono-one text-3xl font-comic text-black mb-6 text-center md:text-left">
+                    <h2 className="font-glacial-indifference text-3xl font-comic text-black mb-6 text-center md:text-left">
                         Month of Hacking
                     </h2>
 
                     {/* All Days Card */}
                     <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
-                            <h3 className="font-rubik-mono-one text-xl font-comic text-white">
+                            <h3 className="font-glacial-indifference text-xl font-comic text-white">
                                 All Month Long (including the Hackathon)
                             </h3>
                         </div>
@@ -100,14 +100,14 @@ export default async function GuidePage() {
 
                 {/* Section for During the Hackathon */}
                 <section className="mb-12">
-                    <h2 className="font-rubik-mono-one text-3xl font-comic text-black mb-6 text-center md:text-left">
+                    <h2 className="font-glacial-indifference text-3xl font-comic text-black mb-6 text-center md:text-left">
                         During the Hackathon
                     </h2>
 
                     {/* Friday Card */}
                     <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
-                            <h3 className="font-rubik-mono-one text-xl font-comic text-white">
+                            <h3 className="font-glacial-indifference text-xl font-comic text-white">
                                 Friday
                             </h3>
                         </div>
@@ -155,7 +155,7 @@ export default async function GuidePage() {
                     {/* Saturday Card */}
                     <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
-                            <h3 className="font-rubik-mono-one text-xl font-comic text-white">
+                            <h3 className="font-glacial-indifference text-xl font-comic text-white">
                                 Saturday
                             </h3>
                         </div>
@@ -227,7 +227,7 @@ export default async function GuidePage() {
                     {/* Sunday Card */}
                     <div className="bg-neutral-200 border-4 border-black shadow-comic overflow-hidden mb-8">
                         <div className="bg-orange-400 px-6 py-3">
-                            <h3 className="font-rubik-mono-one text-xl font-comic text-white">
+                            <h3 className="font-glacial-indifference text-xl font-comic text-white">
                                 Sunday
                             </h3>
                         </div>
@@ -275,7 +275,7 @@ export default async function GuidePage() {
 
                 {/* Prize Earning Info */}
                 <section className="mt-16">
-                    <h2 className="font-rubik-mono-one text-3xl font-comic text-black mb-6 text-center md:text-left">
+                    <h2 className="font-glacial-indifference text-3xl font-comic text-black mb-6 text-center md:text-left">
                         Receiving Your Hackeroons
                     </h2>
                     <div className="bg-neutral-200 border-4 border-black shadow-comic p-6 text-center">
@@ -318,7 +318,7 @@ export default async function GuidePage() {
 
                 {/* Prize Redemption Info */}
                 <section className="mt-16">
-                    <h2 className="font-rubik-mono-one text-3xl font-comic text-black mb-6 text-center md:text-left">
+                    <h2 className="font-glacial-indifference text-3xl font-comic text-black mb-6 text-center md:text-left">
                         Redeeming Your Hackeroons
                     </h2>
                     <div className="bg-neutral-200 border-4 border-black shadow-comic p-6 text-center">
