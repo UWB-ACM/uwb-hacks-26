@@ -1,15 +1,15 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger Deploy
-        env:
-          DEPLOY_WEBHOOK: ${{ secrets.DEPLOY_WEBHOOK }}
-        run: curl -X POST "$DEPLOY_WEBHOOK"
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Trigger Deploy
+              env:
+                  DEPLOY_WEBHOOK: ${{ secrets.DEPLOY_WEBHOOK }}
+              run: curl -X POST "$DEPLOY_WEBHOOK"

@@ -57,6 +57,7 @@ If you find that your local git environment has too many dead branches that are 
 ```bash
 git remote prune origin
 ```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
