@@ -6,15 +6,42 @@ body {
     width: 100%;
     height: 100%;
 }
-/* Custom Fonts */
 @font-face {
-    font-family: san-marino-beach;
-    src: url("../../public/fonts/San Marino Beach.otf");
+    font-family: "edge-of-the-galaxy";
+    src: url("../../public/fonts/EdgeOfTheGalaxyRegular-OVEa6.otf")
+        format("opentype");
+    font-weight: 400;
+    font-style: normal;
 }
 
+@font-face {
+    font-family: "glacial-indifference";
+    src: url("../../public/fonts/GlacialIndifference-Regular.otf")
+        format("opentype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "glacial-indifference";
+    src: url("../../public/fonts/GlacialIndifference-Bold.otf")
+        format("opentype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "glacial-indifference";
+    src: url("../../public/fonts/GlacialIndifference-Italic.otf")
+        format("opentype");
+    font-weight: 400;
+    font-style: italic;
+}
+
+html,
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #ffe6a2;
+    background-color: #84e1fb;
+    font-size: 1.1rem;
 }
 
 @layer base {

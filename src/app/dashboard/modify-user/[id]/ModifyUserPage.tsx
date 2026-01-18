@@ -178,7 +178,7 @@ function TransactionItem({
             <p
                 className={
                     (transaction.reverted ? "line-through" : "") +
-                    " font-opensans border-black border-2 p-1 bg-indigo-200"
+                    " border-black border-2 p-1 bg-indigo-200"
                 }
             >
                 [{typeNameMap[transaction.type as TransactionType]}] H$

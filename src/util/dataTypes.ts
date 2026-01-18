@@ -97,7 +97,25 @@ export enum PermissionLevel {
      * Something like managing the database.
      */
     Admin = 2,
+
+    /**
+     * Something like updating scores on projects, access to judge portal, and the ability to judge teams
+     */
+    Judge = 3,
 }
+
+// Define which capabilities each role has
+export const PermissionGrants: Record<PermissionLevel, PermissionLevel[]> = {
+    [PermissionLevel.User]: [PermissionLevel.User],
+    [PermissionLevel.Judge]: [PermissionLevel.Judge, PermissionLevel.User],
+    [PermissionLevel.Staff]: [PermissionLevel.Staff, PermissionLevel.User],
+    [PermissionLevel.Admin]: [
+        PermissionLevel.Admin,
+        PermissionLevel.Staff,
+        PermissionLevel.User,
+        PermissionLevel.Judge,
+    ],
+};
 
 /**
  * Determines whether a user meets the permission requirements.
@@ -108,7 +126,8 @@ export function hasPermissions(
     user: PermissionLevel,
     requires: { has: PermissionLevel },
 ): boolean {
-    return user >= requires.has;
+    const userCapabilities = PermissionGrants[user];
+    return userCapabilities.includes(requires.has);
 }
 
 /**
@@ -626,7 +645,7 @@ export interface ApplicationData {
     /**
      * The applicant's interest in a no-code option
      */
-    noCodePreference: string;
+    noCodePreference: "CODE" | "NO CODE" | "NO PREFERENCE";
 
     /**
      * A description of the applicant's previous hackathon experience.

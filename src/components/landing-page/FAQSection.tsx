@@ -84,7 +84,7 @@ const FAQSection = () => {
                         <div key={index}>
                             <button
                                 onClick={() => toggleAccordion(index)}
-                                className="w-full flex justify-between items-center py-5 font-rubik-mono-one text-xl"
+                                className="w-full flex justify-between items-center py-5 text-xl"
                             >
                                 <span className="text-left">
                                     {item.question}
