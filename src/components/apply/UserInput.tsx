@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Path, UseFormRegister } from "react-hook-form";
+import { Control, Controller, Path, UseFormRegister } from "react-hook-form";
 import {
     ApplicationData,
     Major,
@@ -14,6 +14,7 @@ export interface InputProps<
 > {
     name: T;
     register: UseFormRegister<ApplicationData>;
+    control: Control<ApplicationData>;
     defaultValue?: ApplicationData[T];
     required: boolean;
 }
@@ -109,32 +110,42 @@ function TextInput({ name, register, defaultValue, required }: InputProps) {
     );
 }
 
-function BooleanInput({ name, register, defaultValue, required }: InputProps) {
+function BooleanInput({ name, control, defaultValue, required }: InputProps) {
     return (
-        <div className="flex gap-4">
-            <label className="flex items-center gap-2">
-                <input
-                    type="radio"
-                    value="true"
-                    defaultChecked={defaultValue === true}
-                    {...register(name as Path<ApplicationData>, {
-                        required,
-                    })}
-                />
-                Yes
-            </label>
-            <label className="flex items-center gap-2">
-                <input
-                    type="radio"
-                    value="false"
-                    defaultChecked={defaultValue === false}
-                    {...register(name as Path<ApplicationData>, {
-                        required,
-                    })}
-                />
-                No
-            </label>
-        </div>
+        <Controller
+            name={name}
+            control={control}
+            rules={{
+                validate: (value) => !required || typeof value === "boolean",
+            }}
+            defaultValue={defaultValue}
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+                <div className="flex gap-4" ref={ref}>
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="true"
+                            checked={value === true}
+                            onBlur={onBlur}
+                            // We need to convert the string value to a real boolean.
+                            // For radio buttons, onChange is only called when they're checked (not unchecked).
+                            onChange={() => onChange(true)}
+                        />
+                        Yes
+                    </label>
+                    <label className="flex items-center gap-2">
+                        <input
+                            type="radio"
+                            value="false"
+                            checked={value === false}
+                            onBlur={onBlur}
+                            onChange={() => onChange(false)}
+                        />
+                        No
+                    </label>
+                </div>
+            )}
+        />
     );
 }
 

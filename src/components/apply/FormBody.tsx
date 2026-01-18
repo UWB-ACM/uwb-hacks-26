@@ -134,6 +134,7 @@ export default function FormBody({
 
     const {
         register,
+        control,
         handleSubmit,
         formState: { errors },
     } = useForm<ApplicationData>();
@@ -174,6 +175,7 @@ export default function FormBody({
                                     <QuestionComponent
                                         name={q}
                                         register={register}
+                                        control={control}
                                         defaultValue={initialApp?.[q]}
                                         required={
                                             "required" in QUESTIONS[q]
