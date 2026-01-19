@@ -83,7 +83,9 @@ function UWBHacksButton({
 }
 
 function HeaderLink({ link }: { link: HeaderLinkData }) {
-    const linkClassName = "font-h3 font-medium text-lg scale-up-animation";
+    // TODO: When selected, add border-3 border-white
+    const linkClassName =
+        "font-bold text-xl scale-up-animation rounded-full text-white p-[10px]";
     if ("customOnClick" in link) {
         return (
             <button className={linkClassName} onClick={link.customOnClick}>
