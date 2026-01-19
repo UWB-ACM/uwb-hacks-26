@@ -130,8 +130,7 @@ export default function FormBody({
     const isFinished = currentIndex >= QUESTION_ORDER.length;
 
     // Used for dynamic scrolling
-    const bottomRef = useRef<HTMLDivElement | null>(null); // references bottom of form
-    const prevIndex = useRef(currentIndex);
+    const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     const {
         register,
@@ -141,13 +140,11 @@ export default function FormBody({
 
     // Auto-scroll form
     useEffect(() => {
-        if (prevIndex.current < currentIndex) {
-            bottomRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-            });
-            prevIndex.current = currentIndex;
-        }
+        const el = questionRefs.current[currentIndex];
+        el?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
     }, [currentIndex]);
 
     return (
@@ -163,54 +160,61 @@ export default function FormBody({
                             INPUT_TYPES[QUESTIONS[q].type];
 
                         return (
-                            <QuestionBubble
+                            // Dummy div used for autoscroll
+                            <div
                                 key={q}
-                                question={QUESTIONS[q].text}
-                                hidden={i > currentIndex}
+                                ref={(el) => {
+                                    questionRefs.current[i] = el;
+                                }}
                             >
-                                <QuestionComponent
-                                    name={q}
-                                    register={register}
-                                    defaultValue={initialApp?.[q]}
-                                    required={
-                                        "required" in QUESTIONS[q]
-                                            ? (QUESTIONS[q].required as boolean)
-                                            : true
-                                    }
-                                />
-
-                                {errors[q] && (
-                                    <p className="text-red-500 text-sm m-3 mt-0">
-                                        Answer required
-                                    </p>
-                                )}
-
-                                <button
-                                    className="ml-auto"
-                                    onClick={(e) => {
-                                        // Something (either react-hook-form or the browser) is
-                                        // moving focus to the next input field when this button is clicked.
-                                        // This breaks the animation, so disable it.
-                                        e.preventDefault();
-
-                                        // Don't allow continuing while there are errors.
-                                        // TODO: Maybe display the error?
-                                        if (errors[q] != null) return;
-
-                                        // Make sure we don't go backwards.
-                                        setCurrentIndex((curIdx) =>
-                                            Math.max(curIdx, i + 1),
-                                        );
-                                    }}
+                                <QuestionBubble
+                                    question={QUESTIONS[q].text}
+                                    hidden={i > currentIndex}
                                 >
-                                    Next
-                                </button>
-                            </QuestionBubble>
+                                    <QuestionComponent
+                                        name={q}
+                                        register={register}
+                                        defaultValue={initialApp?.[q]}
+                                        required={
+                                            "required" in QUESTIONS[q]
+                                                ? (QUESTIONS[q]
+                                                      .required as boolean)
+                                                : true
+                                        }
+                                    />
+
+                                    {errors[q] && (
+                                        <p className="text-red-500 text-sm ml-3">
+                                            Answer required
+                                        </p>
+                                    )}
+                                </QuestionBubble>
+
+                                <Bubble side="right" hidden={i > currentIndex}>
+                                    <button
+                                        className="ml-auto"
+                                        onClick={(e) => {
+                                            // Something (either react-hook-form or the browser) is
+                                            // moving focus to the next input field when this button is clicked.
+                                            // This breaks the animation, so disable it.
+                                            e.preventDefault();
+
+                                            // Don't allow continuing while there are errors.
+                                            // TODO: Maybe display the error?
+                                            if (errors[q] != null) return;
+
+                                            // Make sure we don't go backwards.
+                                            setCurrentIndex((curIdx) =>
+                                                Math.max(curIdx, i + 1),
+                                            );
+                                        }}
+                                    >
+                                        Next
+                                    </button>
+                                </Bubble>
+                            </div>
                         );
                     })}
-
-                    {/* Dummy div used for autoscroll */}
-                    <div ref={bottomRef}></div>
 
                     <Bubble side="left" hidden={!isFinished}>
                         <input type="submit" value="Submit" />
