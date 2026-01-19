@@ -4,13 +4,7 @@ import { useState } from "react";
 import FormBody from "./FormBody";
 import Image from "next/image";
 import GrassBackground from "@/public/Grass.png";
-import {
-    ApplicationData,
-    Major,
-    ClassStanding,
-    ReferralSource,
-} from "@/src/util/dataTypes";
-import { useForm } from "react-hook-form";
+import { ApplicationData } from "@/src/util/dataTypes";
 import { actionSaveApplication } from "@/src/util/actions/application";
 import ConfirmSubmit from "./ConfirmSubmit";
 

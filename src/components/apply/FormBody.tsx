@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useRef, useEffect } from "react";
 import Bubble from "./Bubble";
 import QuestionBubble from "./QuestionBubble";
@@ -177,7 +175,7 @@ export default function FormBody({
                         // ESLint is confused here, since both onSubmit
                         // and onError are only called on user input, not during
                         // render (which the lint is worried about).
-
+                        // eslint-disable-next-line react-hooks/refs
                         handleSubmit(onSubmit, scrollToError)
                     }
                     ref={formRef}

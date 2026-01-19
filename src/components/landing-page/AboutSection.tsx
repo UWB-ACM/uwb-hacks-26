@@ -8,7 +8,7 @@ import WeekendEventsCloud from "@/public/about/WeekendEventsCloud.svg";
 import FlyingCarWithBanner from "@/src/components/landing-page/(AboutSectionComponents)/FlyingCarWithBanner";
 
 import CitySkyline from "@/public/about/skyline.png";
-import Grass from "@/public/about/Grass.png";
+import Grass from "@/public/Grass.png";
 
 const AboutSection = () => {
     const cloudDimensions = "w-[73%] md:w-[60%] lg:w-[55%] xl:w-[50%]";
