@@ -8,6 +8,7 @@ import City3 from "@/public/City-Background-3.png";
 import { Parallax } from "react-scroll-parallax";
 import React from "react";
 import { daysUntilEvent } from "@/src/util/date";
+import { motion } from "motion/react"
 
 export default function HeroSection() {
     const daysLeft = daysUntilEvent();
@@ -73,7 +74,17 @@ export default function HeroSection() {
                     translateY={[0, 30]}
                 >
                     {/* Train */}
-                    <div className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] mx-auto">
+                    <motion.div
+                        className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] mx-auto"
+                        initial={{ x: "120%" }} // initial starting point, set to 120% of the container's width, therefore start all the way to the right of the div
+                        animate={{ x: "-125%" }} // opposite of above code, animate going all the way to the left of the div
+                        transition={{
+                            duration: 5, // in seconds
+                            repeat: Infinity, // loop forever
+                            repeatType: "loop", // resets to start instantly
+                            ease: "linear", // constant speed
+                        }}
+                    >
                         <Image
                             src="/train.svg"
                             alt={
@@ -85,7 +96,7 @@ export default function HeroSection() {
                             height={88}
                             className="w-full h-auto"
                         />
-                    </div>
+                    </motion.div>
                     {/* Bridge */}
                     <div className="w-full">
                         <Image src={Bridge} alt="" className="w-full h-auto" />
