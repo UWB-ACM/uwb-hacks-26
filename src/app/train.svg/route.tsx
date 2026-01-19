@@ -4,7 +4,7 @@ export async function GET() {
     // Calculate days left.
     const daysLeft = 14;
 
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1099.68" height="87.62" viewBox="0 0 290.96 23.18">
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1100" height="88" viewBox="0 0 291 23">
   <defs>
     <path id="a" d="M449.08 576.65h180.68v68.27H449.08z"/>
     <path id="b" d="M449.08 576.65h180.68v68.27H449.08z"/>
