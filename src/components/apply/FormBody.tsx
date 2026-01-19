@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useRef, useEffect } from "react";
 import Bubble from "./Bubble";
 import QuestionBubble from "./QuestionBubble";
@@ -9,7 +7,7 @@ import {
     ClassStanding,
     ReferralSource,
 } from "@/src/util/dataTypes";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { INPUT_TYPES } from "@/src/components/apply/UserInput";
 
 const DESCRIPTION = "Welcome to UWB Hacks 2026!\n Please fill out this form!";
@@ -132,11 +130,29 @@ export default function FormBody({
     // Used for dynamic scrolling
     const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+    const formRef = useRef<HTMLFormElement>(null);
     const {
         register,
+        control,
+        trigger,
         handleSubmit,
         formState: { errors },
-    } = useForm<ApplicationData>();
+    } = useForm<ApplicationData>({ mode: "onBlur" });
+
+    const scrollToError = (errors: FieldErrors<ApplicationData>) => {
+        const first = QUESTION_ORDER.flatMap((q, i) =>
+            q in errors ? [i] : [],
+        )[0];
+        if (!first) return;
+
+        const el = questionRefs.current[first];
+        if (!el) return;
+
+        if (el instanceof HTMLElement) {
+            el.scrollIntoView({ behavior: "smooth", block: "end" });
+            el.focus();
+        }
+    };
 
     // Auto-scroll form
     useEffect(() => {
@@ -154,7 +170,16 @@ export default function FormBody({
                 <Bubble side="left">{DESCRIPTION}</Bubble>
 
                 {/* Display each question */}
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form
+                    onSubmit={
+                        // ESLint is confused here, since both onSubmit
+                        // and onError are only called on user input, not during
+                        // render (which the lint is worried about).
+                        // eslint-disable-next-line react-hooks/refs
+                        handleSubmit(onSubmit, scrollToError)
+                    }
+                    ref={formRef}
+                >
                     {QUESTION_ORDER.map((q, i) => {
                         const QuestionComponent =
                             INPUT_TYPES[QUESTIONS[q].type];
@@ -174,6 +199,7 @@ export default function FormBody({
                                     <QuestionComponent
                                         name={q}
                                         register={register}
+                                        control={control}
                                         defaultValue={initialApp?.[q]}
                                         required={
                                             "required" in QUESTIONS[q]
@@ -193,15 +219,31 @@ export default function FormBody({
                                 <Bubble side="right" hidden={i > currentIndex}>
                                     <button
                                         className="ml-auto"
-                                        onClick={(e) => {
+                                        onClick={async (e) => {
                                             // Something (either react-hook-form or the browser) is
                                             // moving focus to the next input field when this button is clicked.
                                             // This breaks the animation, so disable it.
                                             e.preventDefault();
 
-                                            // Don't allow continuing while there are errors.
-                                            // TODO: Maybe display the error?
-                                            if (errors[q] != null) return;
+                                            // Validate all currently shown fields so we can
+                                            // stop the user immediately if there's an error.
+                                            const formValid = await trigger(
+                                                QUESTION_ORDER.slice(
+                                                    0,
+                                                    currentIndex + 1,
+                                                ),
+                                            );
+                                            if (!formValid) {
+                                                // TODO: Maybe display the error?
+                                                // This isn't exactly right, since errors still points
+                                                // to the old list of errors. But the only item that should
+                                                // be missing is the last form input, so scrolling isn't a
+                                                // big deal.
+                                                // Maybe there's some way to request the latest errors from
+                                                // react-hook-form, though?
+                                                scrollToError(errors);
+                                                return;
+                                            }
 
                                             // Make sure we don't go backwards.
                                             setCurrentIndex((curIdx) =>

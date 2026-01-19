@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import Image from "next/image";
 import Cloud3Background from "@/public/Cloud3-Background.png";
 
