@@ -83,7 +83,9 @@ function UWBHacksButton({
 }
 
 function HeaderLink({ link }: { link: HeaderLinkData }) {
-    const linkClassName = "font-h3 font-medium text-lg scale-up-animation";
+    // TODO: When selected, add border-3 border-white
+    const linkClassName =
+        "font-bold text-xl scale-up-animation rounded-full text-white p-[10px]";
     if ("customOnClick" in link) {
         return (
             <button className={linkClassName} onClick={link.customOnClick}>
@@ -133,7 +135,7 @@ function HeaderDesktop({
     return (
         <nav className="fixed z-999 top-0 w-full">
             <div
-                className={`flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full ${mainPage ? "bg-[#0a84dc]" : "bg-[#84e1fb]"}`}
+                className={`flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full ${mainPage ? "bg-[#0a84dc]" : "bg-[#84c6ff]"}`}
             >
                 <UWBHacksButton mainPage={mainPage} />
 
@@ -167,7 +169,7 @@ function HeaderMobile({
         <nav className="">
             {/* <MobileBanner bannerVisible={bannerVisible} /> */}
             <div
-                className={`flex items-center justify-between lg:justify-between h-28 px-5 lg:px-20 w-full min-w-72 ${mainPage ? "bg-[#0a84dc]" : "bg-[#84e1fb]"}`}
+                className={`flex items-center justify-between lg:justify-between h-28 px-5 lg:px-20 w-full min-w-72 ${mainPage ? "bg-[#0a84dc]" : "bg-[#84c6ff]"}`}
             >
                 <UWBHacksButton mainPage={mainPage} mobile />
                 <HeaderSidebarButton setSideNav={setSideNav} />

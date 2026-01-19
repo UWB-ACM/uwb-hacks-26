@@ -1,7 +1,10 @@
+"use client";
+
 import Header from "@/src/components/header/Header";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
 import "../styles/globals.css";
+import { ParallaxProvider } from "react-scroll-parallax";
 
 export default function HomePage() {
     return (
@@ -10,21 +13,22 @@ export default function HomePage() {
                 id="main"
                 className="w-full min-h-screen flex flex-col relative overflow-hidden bg-[#0a84dc]"
             >
-                {/* Wrap H1 is used for the main page. */}
-                <Header
-                    links={[
-                        {
-                            id: "dashboard",
-                            name: "Dashboard",
-                            url: "/dashboard",
-                        },
-                    ]}
-                    mainPage
-                    banner={true}
-                />
+                <ParallaxProvider>
+                    <Header
+                        links={[
+                            {
+                                id: "dashboard",
+                                name: "Dashboard",
+                                url: "/dashboard",
+                            },
+                        ]}
+                        mainPage
+                        banner={true}
+                    />
 
-                <HeroSection />
-                <AboutSection />
+                    <HeroSection />
+                    <AboutSection />
+                </ParallaxProvider>
             </div>
         </div>
     );
