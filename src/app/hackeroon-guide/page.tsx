@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import Header from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 import LinkButton from "@/src/components/dashboards/userdashboard/LinkButton";
 
 export const metadata: Metadata = {
@@ -356,6 +357,8 @@ export default async function GuidePage() {
                     </div>
                 </section>
             </main>
+
+            <Footer />
         </div>
     );
 }

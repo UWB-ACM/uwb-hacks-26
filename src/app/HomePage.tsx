@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
 import "../styles/globals.css";
@@ -28,6 +29,8 @@ export default function HomePage() {
 
                     <HeroSection />
                     <AboutSection />
+
+                    <Footer blendWithGrass />
                 </ParallaxProvider>
             </div>
         </div>

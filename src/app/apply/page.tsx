@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import Footer from "@/src/components/Footer";
 import Header from "@/src/components/header/Header";
 import ApplicationForm from "../../components/apply/FormContainer";
 import { getSession } from "@/src/util/session";
@@ -25,6 +26,7 @@ export default async function ApplyPage() {
             <main>
                 <ApplicationForm initialApp={details} />
             </main>
+            <Footer blendWithGrass />
         </div>
     );
 }

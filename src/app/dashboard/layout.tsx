@@ -1,5 +1,6 @@
 import React from "react";
 import Header, { handleLogout } from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -35,6 +36,8 @@ export default function RootLayout({
             />
 
             {children}
+
+            <Footer />
         </div>
     );
 }
