@@ -1,9 +1,9 @@
 packages:
-  - '.'
+    - "."
 
 onlyBuiltDependencies:
-  - '@prisma/engines'
-  - prisma
-  - sharp
-  - supabase
-  - unrs-resolver
+    - "@prisma/engines"
+    - prisma
+    - sharp
+    - supabase
+    - unrs-resolver
