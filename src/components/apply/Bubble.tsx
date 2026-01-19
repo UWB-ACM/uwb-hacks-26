@@ -23,7 +23,7 @@ export default function Bubble({
     return (
         <div className={`w-full overflow-hidden ${hide}`}>
             <div
-                className={`bg-white text-black border-2 border-black rounded-full px-4 py-2 m-4 transition-transform duration-300 ease-in-out ${positioning} ${transform}`}
+                className={`bg-white text-black border-2 border-black rounded-full px-4 py-2 m-1 transition-transform duration-300 ease-in-out ${positioning} ${transform}`}
             >
                 {children}
             </div>

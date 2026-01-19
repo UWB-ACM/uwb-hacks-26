@@ -7,7 +7,7 @@ import {
     ClassStanding,
     ReferralSource,
 } from "@/src/util/dataTypes";
-import { QuestionTypeMap } from "@/src/components/apply/FormContainer";
+import { QuestionTypeMap } from "@/src/components/apply/FormBody";
 
 export interface InputProps<
     T extends keyof ApplicationData = keyof ApplicationData,
