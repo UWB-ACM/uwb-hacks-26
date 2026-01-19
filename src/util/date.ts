@@ -27,3 +27,23 @@ export function dateToDatetimeLocal(date: Date): string {
 export function datetimeLocalToDate(datetimeLocal: string): Date {
     return new Date(datetimeLocal);
 }
+
+/**
+ * Returns the number of days until the event.
+ */
+export function daysUntilEvent(): number {
+    const dayInMs = 24 * 60 * 60 * 1000;
+
+    // Midnight in Pacific Time
+    const eventDate = new Date("2026-04-24T00:00-07:00");
+    const now = new Date();
+
+    // Ceil (and max) are used so that on 11:59pm 4/23, it says one day left, and one minute later,
+    // it switches to 0 days left (and stays that way).
+    const days = Math.max(
+        0,
+        Math.ceil((eventDate.getTime() - now.getTime()) / dayInMs),
+    );
+
+    return days;
+}

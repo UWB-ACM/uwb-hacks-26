@@ -7,8 +7,11 @@ import City2 from "@/public/City-Background-2.png";
 import City3 from "@/public/City-Background-3.png";
 import { Parallax } from "react-scroll-parallax";
 import React from "react";
+import { daysUntilEvent } from "@/src/util/date";
 
 export default function HeroSection() {
+    const daysLeft = daysUntilEvent();
+
     return (
         // Gradient backgroup wrapper div
         <div className="bg-[linear-gradient(180deg,#0d83db,#14c5f8)]">
@@ -73,8 +76,11 @@ export default function HeroSection() {
                     <div className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] mx-auto">
                         <Image
                             src="/train.svg"
-                            // TODO: replace alt attribute with "XX days until hackathon"
-                            alt=""
+                            alt={
+                                daysLeft +
+                                (daysLeft === 1 ? " day " : " days ") +
+                                "left"
+                            }
                             width={1100}
                             height={88}
                             className="w-full h-auto"
