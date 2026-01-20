@@ -3,6 +3,7 @@ import React from "react";
 import { getPrizes } from "@/src/util/db/prize";
 import { Metadata } from "next";
 import Header from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 import LinkButton from "@/src/components/dashboards/userdashboard/LinkButton";
 
 export const metadata: Metadata = {
@@ -90,6 +91,8 @@ export default async function PrizesPage() {
                     <PrizeCard key={index} prize={prize} />
                 ))}
             </div>
+
+            <Footer />
         </div>
     );
 }

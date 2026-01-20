@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import React from "react";
 import Header from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 
 const title = "UWB Hacks 2026";
 const description =
@@ -50,6 +51,7 @@ export default function RootLayout({
         <div className={`antialiased w-full`}>
             <Header links={[]} />
             {children}
+            <Footer />
         </div>
     );
 }

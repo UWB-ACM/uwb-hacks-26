@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -246,6 +247,7 @@ const TermsOfService = () => {
                     </p>
                 </section>
             </div>
+            <Footer />
         </>
     );
 };
