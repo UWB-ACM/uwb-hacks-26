@@ -1,88 +1,25 @@
-"use client";
-
-import React from "react";
-import Button from "@/src/components/Button";
-
-function Sponsors() {
+export default function SponsorUsPage() {
     return (
-        <div className="flex flex-col w-full items-center px-6 md:px-12 py-12 sm:mt-12">
-            <div className="max-w-[1200px] flex flex-col items-center">
-                {/* Header Section */}
-                <div className="text-center w-full mb-12">
-                    <h1 className="font-edge-of-the-galaxy text-5xl text-[#2886c4] pb-6">
-                        Why Sponsor Us?
-                    </h1>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-                        {benefits.map((benefit, index) => (
-                            <div
-                                key={index}
-                                className="flex flex-col items-center text-center bg-white border-2 border-black p-6 shadow-md rounded-xl"
-                            >
-                                <span className="text-3xl">{benefit.icon}</span>
-                                <h3 className="font-glacial-indifference text-lg font-bold mt-2">
-                                    {benefit.text}
-                                </h3>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+        <main>
+            {/* Intro to UWBHacks */}
+            <section>
+                <h2>The UWB Hacks team is proud to hold UWB Hacks for our 10th year!</h2>
+            </section>
 
-                <h1 className="font-edge-of-the-galaxy text-5xl text-[#2886c4] pb-8">
-                    Sponsorship Opportunities
-                </h1>
+            {/* Why Sponsor ? */}
+            <section>
+                <h2>Why UWBHacks?</h2>
+            </section>
 
-                {/* Sponsorship Options */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-                    {sponsorshipOptions.map((option, index) => (
-                        <div
-                            key={index}
-                            className="flex flex-col items-center text-center bg-white border-2 border-black p-8 shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300"
-                        >
-                            <h2 className="font-glacial-indifference text-xl font-bold">
-                                {option.title}
-                            </h2>
-                            <p className="font-h3 text-base leading-6 my-4">
-                                {option.description}
-                            </p>
-                            <Button href={option.link}>Sponsor</Button>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+            {/* Sponsorship Packages */}
+            <section>
+                <h2>Sponsorship Tiers</h2>
+            </section>
+
+            {/* Contact */}
+            <section>
+                <h2>Interested in sponsoring?</h2>
+            </section>
+        </main>
     );
 }
-
-const benefits = [
-    { icon: "🎯", text: "Access Top Talent" },
-    { icon: "🚀", text: "Drive Innovation" },
-    { icon: "🎓", text: "Impact the Community" },
-];
-
-const sponsorshipOptions = [
-    {
-        title: "Luncheon",
-        description: "Support networking opportunities over a sponsored meal.",
-        link: "/sponsor/luncheon",
-    },
-    {
-        title: "Fun Activities",
-        description:
-            "Fund engaging activities to create memorable experiences.",
-        link: "/sponsor/activities",
-    },
-    {
-        title: "Prizes",
-        description:
-            "Support hackathon participants by sponsoring challenge tracks.",
-        link: "/sponsor/prizes",
-    },
-    {
-        title: "Workshops",
-        description:
-            "Host workshops, sponsor challenge tracks, or provide mentorship.",
-        link: "/sponsor/workshops",
-    },
-];
-
-export default Sponsors;
