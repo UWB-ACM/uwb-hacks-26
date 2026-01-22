@@ -1,5 +1,6 @@
 import UWBHacksIntroSection from "@/src/components/sponsor-page/UWBHacksIntroSection";
 import WhySponsorSection from "@/src/components/sponsor-page/WhySponsorSection";
+import ContactSection from "@/src/components/sponsor-page/ContactSection";
 
 export default function SponsorUsPage() {
     return (
@@ -12,10 +13,7 @@ export default function SponsorUsPage() {
                 <h2>Sponsorship Tiers</h2>
             </section>
 
-            {/* Contact */}
-            <section>
-                <h2>Interested in sponsoring?</h2>
-            </section>
+            <ContactSection />
         </main>
     );
 }
