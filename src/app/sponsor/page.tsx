@@ -1,15 +1,11 @@
 import UWBHacksIntroSection from "@/src/components/sponsor-page/UWBHacksIntroSection";
+import WhySponsorSection from "@/src/components/sponsor-page/WhySponsorSection";
 
 export default function SponsorUsPage() {
     return (
-        <main className="bg-[linear-gradient(180deg,#0d83db,#14c5f8)]">
-            {/* Intro to UWBHacks */}
+        <main className="bg-[linear-gradient(180deg,#0d83db,#14c5f8)] text-white">
             <UWBHacksIntroSection />
-
-            {/* Why Sponsor ? */}
-            <section>
-                <h2>Why UWBHacks?</h2>
-            </section>
+            <WhySponsorSection />
 
             {/* Sponsorship Packages */}
             <section>
