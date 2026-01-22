@@ -1,10 +1,10 @@
+import UWBHacksIntroSection from "@/src/components/sponsor-page/UWBHacksIntroSection";
+
 export default function SponsorUsPage() {
     return (
-        <main>
+        <main className="bg-[linear-gradient(180deg,#0d83db,#14c5f8)]">
             {/* Intro to UWBHacks */}
-            <section>
-                <h2>The UWB Hacks team is proud to hold UWB Hacks for our 10th year!</h2>
-            </section>
+            <UWBHacksIntroSection />
 
             {/* Why Sponsor ? */}
             <section>
