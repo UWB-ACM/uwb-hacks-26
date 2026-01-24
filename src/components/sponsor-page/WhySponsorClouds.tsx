@@ -8,9 +8,9 @@ import Hover from "./Hover";
 
 export default function WhySponsorClouds() {
     const cloudDimensions = "w-3/4 md:w-3/5 lg:w-1/2 xl:w-2/5"
-    
+
     return (
-        <div className="opacity-90 space-y-[13vh] lg:space-y-[15vh] xl:space-y-[18vh]">
+        <div className="opacity-90 space-y-[13vh] lg:space-y-[15vh] xl:space-y-[18vh] pb-[13vh] md:pb-[15vh] lg:pb-[20vh] xl:pb-[20vh]">
             <div className="w-full flex">
                 <div className="w-[5%] md:w-[10%]" />
                 <Hover duration={8} className={cloudDimensions}>

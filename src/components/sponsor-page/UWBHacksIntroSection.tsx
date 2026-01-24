@@ -8,6 +8,7 @@ import Image from "next/image"
 import UWBHacks2025Snapshot from "./UWBHacks2025Snapshot"
 
 import { motion } from "motion/react";
+import FileDownload from "./FileDownload";
 
 export default function UWBHacksIntroSection() {
     return (
@@ -18,7 +19,7 @@ export default function UWBHacksIntroSection() {
                     className="absolute top-1/5 lg:top-1/6 xl:top-1/8 left-0 w-1/2 md:w-1/3 xl:w-1/4"
                     initial={{ x: "-100%" }}
                     animate={{ x: "100vw" }}
-                    transition={{ duration: 25, repeat: Infinity, repeatDelay: 3, ease: "linear" }}
+                    transition={{ duration: 25, repeat: Infinity, repeatDelay: 2, ease: "linear" }}
                 >
                     <Image src={Cloud2} alt="" className="w-full opacity-35" />
                 </motion.div>
@@ -26,7 +27,7 @@ export default function UWBHacksIntroSection() {
                 <motion.div className="absolute bottom-1/6 lg:bottom-1/6 xl:bottom-1/8 right-0 w-1/2 md:w-1/3 xl:w-1/4"
                     initial={{ x: "100%" }}
                     animate={{ x: "-100vw" }}
-                    transition={{ duration: 23, repeat: Infinity, repeatDelay: 2, ease: "linear" }}
+                    transition={{ duration: 25, repeat: Infinity, repeatDelay: 2, ease: "linear" }}
                 >
                     <Image src={Cloud4} alt="" className="w-full opacity-35" />
                 </motion.div>
@@ -47,6 +48,10 @@ export default function UWBHacksIntroSection() {
 
             <div className="relative z-10 overflow-x-clip">
                 <Image src={BigCloud} alt="" className="h-auto max-w-none w-[150vw] md:w-[125vw] -translate-x-[25vw] md:-translate-x-[12.5vw]" />
+                <div className="absolute bottom-0 w-full h-1/3 flex">
+                    <FileDownload filePath="/sponsor-page/sponsorship-one-pager.pdf" fileName="UWB Hacks 2026 Sponsorship One Pager" content="Sponsorship One Pager" />
+                    <FileDownload filePath="/sponsor-page/sponsorship-packet.pdf" fileName="UWB Hacks 2026 Sponsorship Packet" content="Sponsorship Info Packet" />
+                </div>
             </div>
         </section>
     )
