@@ -563,7 +563,7 @@ export interface Project {
     projectStatus: boolean;
 
     /**
-     * ???
+     * Url where projects can be demonstrated.
      */
     tryURL: string;
     
