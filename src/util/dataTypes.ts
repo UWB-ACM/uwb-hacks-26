@@ -545,3 +545,42 @@ export interface Track {
      */
     lowCodeExample: string;
 }
+
+export interface Project {
+    /**
+     * Title of the project, pulled from devPost
+     */
+    projectTitle: string;
+
+    /**
+     * The Url for the project submission
+     */
+    submissionURL: string;
+
+    /**
+     * Status of the project completion. submitted or not 
+     */
+    projectStatus: boolean;
+
+    /**
+     * ???
+     */
+    tryURL: string;
+    
+
+    /**
+     *  
+     */
+    videoURL: string;
+
+    /**
+     * This is their main track 
+     */
+    mainTrack: number;
+
+    /**
+     * sideTrack number
+     */
+    sideTrack: number;
+}
+
