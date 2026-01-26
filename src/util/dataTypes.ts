@@ -679,4 +679,10 @@ export interface ApplicationData {
      * @see ReferralSource
      */
     referralSource: ReferralSource;
+
+    /**
+     * The file extension of the applicant's uploaded resume,
+     * or null if no resume was uploaded.
+     */
+    resumeType: string | null;
 }

@@ -1,6 +1,13 @@
 "use client";
 import React from "react";
-import { Control, Controller, Path, UseFormRegister } from "react-hook-form";
+import {
+    Control,
+    Controller,
+    Path,
+    UseFormClearErrors,
+    UseFormRegister,
+    UseFormSetError,
+} from "react-hook-form";
 import {
     ApplicationData,
     Major,
@@ -8,6 +15,7 @@ import {
     ReferralSource,
 } from "@/src/util/dataTypes";
 import { QuestionTypeMap } from "@/src/components/apply/FormBody";
+import ResumeInput from "@/src/components/apply/ResumeInput";
 
 export interface InputProps<
     T extends keyof ApplicationData = keyof ApplicationData,
@@ -15,8 +23,12 @@ export interface InputProps<
     name: T;
     register: UseFormRegister<ApplicationData>;
     control: Control<ApplicationData>;
+    setError: UseFormSetError<ApplicationData>;
+    clearErrors: UseFormClearErrors<ApplicationData>;
     defaultValue?: ApplicationData[T];
     required: boolean;
+    onFileSelect: (file: File | null) => void;
+    onDeleteResume: (deleted: boolean) => void;
 }
 
 const MAJOR_LABELS: Record<Major, string> = {
@@ -93,6 +105,7 @@ export const INPUT_TYPES: Record<
         "Select your preference",
         false,
     ),
+    RESUME_TYPE: ResumeInput,
 };
 
 function TextInput({ name, register, defaultValue, required }: InputProps) {

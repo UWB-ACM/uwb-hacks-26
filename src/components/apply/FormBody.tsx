@@ -75,6 +75,11 @@ const QUESTIONS = {
         text: "Please provide a link to your GitHub/portfolio.",
         type: "TEXT",
     },
+    resumeType: {
+        text: "Upload your resume (optional).",
+        type: "RESUME_TYPE",
+        required: false,
+    },
 } as const satisfies Record<
     keyof ApplicationData,
     { text: string; type: keyof QuestionTypeMap; required?: boolean }
@@ -100,6 +105,7 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
     "hackathonExperience",
     "goals",
     "portfolioLink",
+    "resumeType",
 ];
 
 /**
@@ -114,6 +120,7 @@ export type QuestionTypeMap = {
     REFERRAL_SOURCE: ReferralSource;
     JUDGING_PREFERENCE: ApplicationData["judgingPreference"];
     NO_CODE_PREFERENCE: ApplicationData["noCodePreference"];
+    RESUME_TYPE: string | null;
 };
 
 export default function FormBody({
@@ -121,11 +128,20 @@ export default function FormBody({
     onSubmit,
 }: {
     initialApp: ApplicationData | null;
-    onSubmit: (data: ApplicationData) => void;
+    onSubmit: (
+        data: ApplicationData,
+        resumeFile: File | null,
+        deleteResume: boolean,
+    ) => void;
 }) {
     // Used for displaying the next unanswered question
     const [currentIndex, setCurrentIndex] = useState(0);
     const isFinished = currentIndex >= QUESTION_ORDER.length;
+
+    // Holds the selected resume file until form submission
+    const resumeFileRef = useRef<File | null>(null);
+    // Whether the user explicitly cleared their resume
+    const deleteResumeRef = useRef(false);
 
     // Used for dynamic scrolling
     const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -136,6 +152,8 @@ export default function FormBody({
         control,
         trigger,
         handleSubmit,
+        setError,
+        clearErrors,
         formState: { errors },
     } = useForm<ApplicationData>({ mode: "onBlur" });
 
@@ -175,8 +193,17 @@ export default function FormBody({
                         // ESLint is confused here, since both onSubmit
                         // and onError are only called on user input, not during
                         // render (which the lint is worried about).
-                        // eslint-disable-next-line react-hooks/refs
-                        handleSubmit(onSubmit, scrollToError)
+                        handleSubmit(
+                            // eslint-disable-next-line react-hooks/refs
+                            (data) =>
+                                onSubmit(
+                                    data,
+                                    resumeFileRef.current,
+                                    deleteResumeRef.current,
+                                ),
+                            // eslint-disable-next-line react-hooks/refs
+                            scrollToError,
+                        )
                     }
                     ref={formRef}
                 >
@@ -200,6 +227,8 @@ export default function FormBody({
                                         name={q}
                                         register={register}
                                         control={control}
+                                        setError={setError}
+                                        clearErrors={clearErrors}
                                         defaultValue={initialApp?.[q]}
                                         required={
                                             "required" in QUESTIONS[q]
@@ -207,6 +236,12 @@ export default function FormBody({
                                                       .required as boolean)
                                                 : true
                                         }
+                                        onFileSelect={(file) => {
+                                            resumeFileRef.current = file;
+                                        }}
+                                        onDeleteResume={(deleted) => {
+                                            deleteResumeRef.current = deleted;
+                                        }}
                                     />
 
                                     {errors[q] && (

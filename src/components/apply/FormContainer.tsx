@@ -15,20 +15,26 @@ export default function ApplicationForm({
 }) {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const onSubmit = async (data: ApplicationData) => {
-        await actionSaveApplication(data);
+    const onSubmit = async (
+        data: ApplicationData,
+        resumeFile: File | null,
+        deleteResume: boolean,
+    ) => {
+        const formData = new FormData();
+        formData.set("applicationData", JSON.stringify(data));
+        if (resumeFile) formData.set("resume", resumeFile);
+        if (deleteResume) formData.set("deleteResume", "true");
+
+        await actionSaveApplication(formData);
         setIsSubmitted(true);
     };
 
     return (
         <div className="bg-blue-300">
             {!isSubmitted ? (
-                <FormBody
-                    initialApp={initialApp}
-                    onSubmit={onSubmit}
-                ></FormBody>
+                <FormBody initialApp={initialApp} onSubmit={onSubmit} />
             ) : (
-                <ConfirmSubmit></ConfirmSubmit>
+                <ConfirmSubmit />
             )}
 
             {/* Background grass */}

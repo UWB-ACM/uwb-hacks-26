@@ -3,6 +3,9 @@ import "server-only";
 import { PermissionLevel, User } from "@/src/util/dataTypes";
 import sql from "@/src/util/database";
 import crypto from "node:crypto";
+import { R2_BUCKET, r2Client } from "@/src/util/r2";
+import { getApplication } from "@/src/util/db/application";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 /**
  * Creates a user, returning the resulting user record.
@@ -178,6 +181,18 @@ export async function getUserConsent(
  * @param id - is the ID of the account to delete.
  */
 export async function deleteUser(id: number): Promise<void> {
+    // We need to delete the user's resume if they uploaded one.
+    const application = await getApplication(id);
+    const curResumeType = application?.resumeType ?? null;
+    if (curResumeType) {
+        await r2Client.send(
+            new DeleteObjectCommand({
+                Bucket: R2_BUCKET,
+                Key: `resumes/${id}.${curResumeType}`,
+            }),
+        );
+    }
+
     await sql`DELETE FROM users WHERE id=${id};`;
 }
 
