@@ -5,7 +5,7 @@ import SponsorshipPackagesSection from "@/src/components/sponsor-page/Sponsorshi
 
 export default function SponsorUsPage() {
     return (
-        <main className="bg-[linear-gradient(180deg,#0d83db,#14c5f8)] text-white">
+        <main className="bg-[linear-gradient(180deg,#0d83db,#53a7f5)] text-white">
             <UWBHacksIntroSection />
             <WhySponsorSection />
             <SponsorshipPackagesSection />

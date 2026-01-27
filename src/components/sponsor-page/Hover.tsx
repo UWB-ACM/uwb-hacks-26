@@ -9,6 +9,19 @@ interface HoverProps {
     className?: string;
 }
 
-export default function Hover({ children, duration = 10, className = "" }: HoverProps) {
-    return (<motion.div className={className} initial={{ y: 0 }} animate={{ y: [0, "-15px", 0] }} transition={{ repeat: Infinity, duration: duration }}>{children}</motion.div>);
+export default function Hover({
+    children,
+    duration = 10,
+    className = "",
+}: HoverProps) {
+    return (
+        <motion.div
+            initial={{ y: 0 }}
+            animate={{ y: [0, "-15px", 0] }}
+            transition={{ repeat: Infinity, duration: duration }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
 }
