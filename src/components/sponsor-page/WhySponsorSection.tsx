@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import BigCloud from "@/public/clouds/BigCloud.png";
 import WhySponsorClouds from "./WhySponsorClouds";
+import HallE from "@/public/HALL-E.png";
 
 export default function WhySponsorSection() {
     const containerRef = useRef<HTMLElement>(null);
@@ -47,7 +48,11 @@ export default function WhySponsorSection() {
 
             <WhySponsorClouds />
 
-            <div className="z-8 -translate-x-[25vw] md:-translate-x-[12.5vw]">
+            <div className="relative z-8 -translate-x-[25vw] md:-translate-x-[12.5vw]">
+                <motion.div className="z-[-5] absolute bottom-1/3 left-2/5 md:left-1/3 w-1/4 scale-x-[-1]">
+                    <Image src={HallE} alt="" className="w-full h-full" />
+                </motion.div>
+
                 <Image
                     src={BigCloud}
                     alt=""
