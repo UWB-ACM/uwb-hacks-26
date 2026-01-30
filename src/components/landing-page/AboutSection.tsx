@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import CloudSlideIn from "./(AboutSectionComponents)/CloudSlideIn";
 import ParticipantsCloud from "@/public/about/ParticipantsCloud.svg";
 import SubmittedProjectsCloud from "@/public/about/SubmittedProjectsCloud.svg";
 import MOHEventsCloud from "@/public/about/MOHEventsCloud.svg";
@@ -10,33 +11,33 @@ import FlyingCarWithBanner from "@/src/components/landing-page/(AboutSectionComp
 import CitySkyline from "@/public/about/skyline.png";
 import Grass from "@/public/Grass.png";
 
-const AboutSection = () => {
-    const cloudDimensions = "w-[73%] md:w-[60%] lg:w-[55%] xl:w-[50%]";
-    const topCloudGroupTransform = "-translate-x-[18%] md:-translate-x-[20%]";
-    const bottomCloudGroupTransform = "translate-x-[18%] md:translate-x-[20%]";
-
+export default function AboutSection() {
     return (
         <div className="bg-[linear-gradient(180deg,#1382DC_0%,#16C2F7_50%,#C3EFFE_100%)]">
-            <div className="grid grid-cols-2 place-items-center gap-[7vmin] lg:gap-y-[10vmin] mt-[10vmin] mx-5 md:mx-10">
-                <Image
-                    src={ParticipantsCloud}
-                    alt="623 Participants"
-                    className={`${cloudDimensions} ${topCloudGroupTransform}`}
+            <div className="mt-[10vmin] md:mt-[14vmin] space-y-[4vmin] md:space-y-[8vmin] lg:space-y-[10vmin]">
+                <CloudSlideIn
+                    cloudImage={ParticipantsCloud}
+                    alt={"300+ Hackers"}
+                    position={"left"}
+                    padding={"12%"}
                 />
-                <Image
-                    src={SubmittedProjectsCloud}
-                    alt="88 Submitted Projects"
-                    className={`${cloudDimensions} ${topCloudGroupTransform}`}
+                <CloudSlideIn
+                    cloudImage={SubmittedProjectsCloud}
+                    alt={"88 Submitted Projects"}
+                    position={"right"}
+                    padding={"15%"}
                 />
-                <Image
-                    src={MOHEventsCloud}
-                    alt="11 Month of Hacking Events"
-                    className={`${cloudDimensions} ${bottomCloudGroupTransform}`}
+                <CloudSlideIn
+                    cloudImage={MOHEventsCloud}
+                    alt={"11 Month of Hacking Events"}
+                    position={"left"}
+                    padding={"15%"}
                 />
-                <Image
-                    src={WeekendEventsCloud}
-                    alt="14 Hackathon Wekeend Events"
-                    className={`${cloudDimensions} ${bottomCloudGroupTransform}`}
+                <CloudSlideIn
+                    cloudImage={WeekendEventsCloud}
+                    alt={"14 Hackathon Weekend Events"}
+                    position={"right"}
+                    padding={"12%"}
                 />
             </div>
 
@@ -60,5 +61,3 @@ const AboutSection = () => {
         </div>
     );
 };
-
-export default AboutSection;
