@@ -112,9 +112,9 @@ function TextInput({ name, register, defaultValue, required }: InputProps) {
     return (
         <div className="flex gap-2">
             <input
+                className="field-sizing-content max-w-full overflow-clip"
                 defaultValue={(defaultValue as string) || ""}
                 placeholder={"Enter answer here"}
-                className="flex-auto px-2 py-1"
                 {...register(name as Path<ApplicationData>, {
                     required,
                 })}
