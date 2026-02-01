@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { FormEvent } from "react";
 import {
     Control,
     Controller,
@@ -109,10 +109,16 @@ export const INPUT_TYPES: Record<
 };
 
 function TextInput({ name, register, defaultValue, required }: InputProps) {
+    const updateSize = (e: FormEvent<HTMLTextAreaElement>) => {
+        e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+    };
+
     return (
         <div className="flex gap-2">
-            <input
-                className="field-sizing-content max-w-full overflow-clip"
+            <textarea
+                className="max-w-full overflow-clip resize-none"
+                onInput={updateSize}
+                onLoad={updateSize}
                 defaultValue={(defaultValue as string) || ""}
                 placeholder={"Enter answer here"}
                 {...register(name as Path<ApplicationData>, {

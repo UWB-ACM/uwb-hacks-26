@@ -36,7 +36,7 @@ export default function ApplicationForm({
     };
 
     return (
-        <div className="bg-blue-300">
+        <div className="bg-[#84c6ff] h-full flex-1 flex flex-col">
             {!isSubmitted ? (
                 // Use the latest application.
                 <FormBody initialApp={lastSubmitted} onSubmit={onSubmit} />
@@ -48,12 +48,14 @@ export default function ApplicationForm({
                 />
             )}
 
+            <div className="flex-1" />
+
             {/* Background grass */}
             <div className="relative z-0 mt-4 md:mt-6 lg:mt-8">
                 <Image
                     src={GrassBackground}
                     alt=""
-                    className="absolute z-0 bottom-0 w-full pointer-events-none"
+                    className="z-0 w-full pointer-events-none"
                 />
             </div>
         </div>

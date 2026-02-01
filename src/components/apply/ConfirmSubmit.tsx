@@ -24,12 +24,12 @@ export default function ConfirmSubmit({
                         onClick={togglePopUp} // let the user exit the popup easily
                     />
                     {/* The popup message */}
-                    <div className="z-50 text-center bg-white rounded-2xl w-9/10 md:w-1/2 py-6 px-8">
+                    <div className="z-50 text-center bg-white rounded-2xl w-9/10 md:w-1/2 lg:w-1/3 py-6 px-8">
                         <h1 className="sm:text-3xl md:text-4xl font-bold mb-4 font-sans">
-                            Onto Your Next Step:
+                            Onto Your Next Step
                         </h1>
                         <p className="sm:text-lg md:text-xl lg:text-2xl">
-                            Join on Devpost! Click{" "}
+                            Join on Devpost!{" "}
                             <Link
                                 className="underline text-red-500"
                                 onClick={togglePopUp}
@@ -37,7 +37,7 @@ export default function ConfirmSubmit({
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Here
+                                Click Here
                             </Link>
                         </p>
                         <p>
@@ -51,7 +51,7 @@ export default function ConfirmSubmit({
                     </div>
                 </div>
             )}
-            <div className="min-h-screen flex items-center justify-center relative">
+            <div className="relative">
                 {/* Left Cloud */}
                 <Image
                     src={Cloud3Background}
@@ -68,7 +68,7 @@ export default function ConfirmSubmit({
 
                 {/* Submission confirmation message */}
                 {/* A subcontainer is used to ensure the is displayed over the clouds */}
-                <div className="z-10 text-center">
+                <div className="z-10 text-center mt-20 sm:mt-15">
                     <h1 className="text-3xl md:text-4xl font-bold mb-4 font-sans">
                         Thank you for submitting your application!
                     </h1>

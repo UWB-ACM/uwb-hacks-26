@@ -9,6 +9,7 @@ import {
 } from "@/src/util/dataTypes";
 import { FieldErrors, useForm } from "react-hook-form";
 import { INPUT_TYPES } from "@/src/components/apply/UserInput";
+import { IoPaperPlaneSharp } from "react-icons/io5";
 
 const DESCRIPTION = "Welcome to UWB Hacks 2026!\n Please fill out this form!";
 
@@ -171,7 +172,7 @@ export default function FormBody({
         if (!el) return;
 
         if (el instanceof HTMLElement) {
-            el.scrollIntoView({ behavior: "smooth", block: "end" });
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
             el.focus();
         }
     };
@@ -227,72 +228,84 @@ export default function FormBody({
                                     question={QUESTIONS[q].text}
                                     hidden={i > currentIndex}
                                 >
-                                    <QuestionComponent
-                                        name={q}
-                                        register={register}
-                                        control={control}
-                                        setError={setError}
-                                        clearErrors={clearErrors}
-                                        defaultValue={initialApp?.[q]}
-                                        required={
-                                            "required" in QUESTIONS[q]
-                                                ? (QUESTIONS[q]
-                                                      .required as boolean)
-                                                : true
-                                        }
-                                        onFileSelect={(file) => {
-                                            resumeFileRef.current = file;
-                                        }}
-                                        onDeleteResume={(deleted) => {
-                                            deleteResumeRef.current = deleted;
-                                        }}
-                                    />
+                                    <div className="flex flex-row items-center">
+                                        <div className="flex flex-col flex-1 p-2">
+                                            <QuestionComponent
+                                                name={q}
+                                                register={register}
+                                                control={control}
+                                                setError={setError}
+                                                clearErrors={clearErrors}
+                                                defaultValue={initialApp?.[q]}
+                                                required={
+                                                    "required" in QUESTIONS[q]
+                                                        ? (QUESTIONS[q]
+                                                              .required as boolean)
+                                                        : true
+                                                }
+                                                onFileSelect={(file) => {
+                                                    resumeFileRef.current =
+                                                        file;
+                                                }}
+                                                onDeleteResume={(deleted) => {
+                                                    deleteResumeRef.current =
+                                                        deleted;
+                                                }}
+                                            />
 
-                                    {errors[q] && (
-                                        <p className="text-red-500 text-sm ml-3">
-                                            Answer required
-                                        </p>
-                                    )}
+                                            {errors[q] && (
+                                                <p className="text-red-500 text-sm ml-3">
+                                                    Answer required
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        {currentIndex === i && (
+                                            <button
+                                                aria-label="Next"
+                                                className="p-[5px] ml-[10px] rounded-full overflow-hidden bg-[#84c6ff]"
+                                                onClick={async (e) => {
+                                                    // Something (either react-hook-form or the browser) is
+                                                    // moving focus to the next input field when this button is clicked.
+                                                    // This breaks the animation, so disable it.
+                                                    e.preventDefault();
+
+                                                    // Validate all currently shown fields so we can
+                                                    // stop the user immediately if there's an error.
+                                                    const formValid =
+                                                        await trigger(
+                                                            QUESTION_ORDER.slice(
+                                                                0,
+                                                                currentIndex +
+                                                                    1,
+                                                            ),
+                                                        );
+                                                    if (!formValid) {
+                                                        // This isn't exactly right, since errors still points
+                                                        // to the old list of errors. But the only item that should
+                                                        // be missing is the last form input, so scrolling isn't a
+                                                        // big deal.
+                                                        // Maybe there's some way to request the latest errors from
+                                                        // react-hook-form, though?
+                                                        scrollToError(errors);
+                                                        return;
+                                                    }
+
+                                                    // Make sure we don't go backwards.
+                                                    setCurrentIndex((curIdx) =>
+                                                        Math.max(curIdx, i + 1),
+                                                    );
+                                                }}
+                                            >
+                                                <IoPaperPlaneSharp
+                                                    color="white"
+                                                    size={20}
+                                                    className="relative -left-[2px] -bottom-[1px]"
+                                                />
+                                            </button>
+                                        )}
+                                    </div>
                                 </QuestionBubble>
-
-                                <Bubble side="right" hidden={i > currentIndex}>
-                                    <button
-                                        className="ml-auto"
-                                        onClick={async (e) => {
-                                            // Something (either react-hook-form or the browser) is
-                                            // moving focus to the next input field when this button is clicked.
-                                            // This breaks the animation, so disable it.
-                                            e.preventDefault();
-
-                                            // Validate all currently shown fields so we can
-                                            // stop the user immediately if there's an error.
-                                            const formValid = await trigger(
-                                                QUESTION_ORDER.slice(
-                                                    0,
-                                                    currentIndex + 1,
-                                                ),
-                                            );
-                                            if (!formValid) {
-                                                // TODO: Maybe display the error?
-                                                // This isn't exactly right, since errors still points
-                                                // to the old list of errors. But the only item that should
-                                                // be missing is the last form input, so scrolling isn't a
-                                                // big deal.
-                                                // Maybe there's some way to request the latest errors from
-                                                // react-hook-form, though?
-                                                scrollToError(errors);
-                                                return;
-                                            }
-
-                                            // Make sure we don't go backwards.
-                                            setCurrentIndex((curIdx) =>
-                                                Math.max(curIdx, i + 1),
-                                            );
-                                        }}
-                                    >
-                                        Next
-                                    </button>
-                                </Bubble>
                             </div>
                         );
                     })}
