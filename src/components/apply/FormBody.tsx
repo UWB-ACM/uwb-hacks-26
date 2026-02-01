@@ -10,8 +10,11 @@ import {
 import { FieldErrors, useForm } from "react-hook-form";
 import { INPUT_TYPES } from "@/src/components/apply/UserInput";
 import { IoPaperPlaneSharp } from "react-icons/io5";
+import HallE from "@/public/HALL-E.png";
+import Image from "next/image";
 
-const DESCRIPTION = "Welcome to UWB Hacks 2026!\n Please fill out this form!";
+const DESCRIPTION =
+    "Welcome to UWB Hacks 2026!\n Please fill out this form to apply to participate in the hackathon.";
 
 /**
  * The details for each question.
@@ -227,9 +230,10 @@ export default function FormBody({
                                 <QuestionBubble
                                     question={QUESTIONS[q].text}
                                     hidden={i > currentIndex}
+                                    husky={i === currentIndex}
                                 >
                                     <div className="flex flex-row items-center">
-                                        <div className="flex flex-col flex-1 p-2">
+                                        <div className="flex flex-col flex-1 p-2 min-w-0">
                                             <QuestionComponent
                                                 name={q}
                                                 register={register}
@@ -311,8 +315,25 @@ export default function FormBody({
                     })}
 
                     <Bubble side="left" hidden={!isFinished}>
-                        <input type="submit" value="Submit" />
+                        {
+                            "That's it! Take a moment to review your application, then click the button below to submit."
+                        }
                     </Bubble>
+
+                    <Bubble side="left" hidden={!isFinished}>
+                        <input
+                            type="submit"
+                            value="Submit"
+                            className="cursor-pointer"
+                        />
+                    </Bubble>
+
+                    <Image
+                        src={HallE}
+                        alt=""
+                        className="w-1/2 sm:w-1/3 scale-x-[-1] move-around"
+                        hidden={!isFinished}
+                    />
                 </form>
             </div>
         </div>

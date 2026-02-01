@@ -165,3 +165,16 @@ body {
         transform: translateX(0);
     }
 }
+
+.move-around {
+    animation: move-around 1s ease-in-out infinite alternate;
+}
+
+@keyframes move-around {
+    from {
+        transform: translateY(-3%);
+    }
+    to {
+        transform: translateY(3%);
+    }
+}
