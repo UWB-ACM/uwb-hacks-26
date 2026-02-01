@@ -39,6 +39,7 @@ export async function getApplication(
         classStanding: row.class_standing as ClassStanding,
         major: row.major as Major,
         referralSource: row.referral_source as ReferralSource,
+        resumeType: row.resume_type ?? null,
     };
 }
 
@@ -59,14 +60,15 @@ export async function saveApplication(
             user_id, name, email, phone, discord_username, school,
             attending_week_of_hacking, team_members, judging_preference,
             goals, no_code_preference, hackathon_experience, previous_attendee,
-            portfolio_links, class_standing, major, referral_source
+            portfolio_links, class_standing, major, referral_source, resume_type
         ) VALUES (
             ${user}, ${data.name}, ${data.email}, ${data.phone},
             ${data.discordUsername}, ${data.school}, ${data.attendingWeekOfHacking},
             ${data.teamMembers}, ${data.judgingPreference}, ${data.goals},
             ${data.noCodePreference}, ${data.hackathonExperience},
             ${data.previousAttendee}, ${data.portfolioLink},
-            ${data.classStanding}, ${data.major}, ${data.referralSource}
+            ${data.classStanding}, ${data.major}, ${data.referralSource},
+            ${data.resumeType}
         )
         ON CONFLICT (user_id) DO UPDATE SET
             name = ${data.name},
@@ -84,6 +86,7 @@ export async function saveApplication(
             portfolio_links = ${data.portfolioLink},
             class_standing = ${data.classStanding},
             major = ${data.major},
-            referral_source = ${data.referralSource}
+            referral_source = ${data.referralSource},
+            resume_type = ${data.resumeType}
     `;
 }

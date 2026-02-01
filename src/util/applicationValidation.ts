@@ -5,6 +5,19 @@ import {
     ReferralSource,
 } from "./dataTypes";
 
+export const ALLOWED_RESUME_EXTENSIONS = [
+    "pdf",
+    "doc",
+    "docx",
+    "odt",
+    "txt",
+    "rtf",
+] as const;
+
+export type AllowedResumeExtension = (typeof ALLOWED_RESUME_EXTENSIONS)[number];
+
+export const MAX_RESUME_SIZE_BYTES = 5 * 1024 * 1024;
+
 /*
  * Maximum allowed length for responses in the sign-up form
  * Should be used on the frontend for Form UI constraints and on the backend for validation
@@ -42,9 +55,13 @@ const VALID_NO_CODE_PREFERENCES: ApplicationData["noCodePreference"][] = [
 /**
  * Validates application data to ensure all required fields are present and within length limits.
  * @param data - The application data to validate.
+ * @param resumeFile - The resume file uploaded by the user, if any.
  * @returns A string describing the errors found, or null if no errors are present.
  */
-export function validateApplicationData(data: ApplicationData): string | null {
+export function validateApplicationData(
+    data: ApplicationData,
+    resumeFile: File | null,
+): string | null {
     const errorsFound: string[] = [];
 
     const checkLength = (
@@ -126,6 +143,30 @@ export function validateApplicationData(data: ApplicationData): string | null {
 
     if (typeof data.previousAttendee !== "boolean") {
         errorsFound.push("Previous Attendee must be true or false");
+    }
+
+    // Validate newly uploaded resume.
+    if (resumeFile) {
+        if (resumeFile.size > MAX_RESUME_SIZE_BYTES) {
+            errorsFound.push(
+                `Resume must be less than ${MAX_RESUME_SIZE_BYTES / 1024 / 1024} MB`,
+            );
+        }
+
+        if (data.resumeType === null) {
+            errorsFound.push("Resume type is required alongside a resume file");
+        }
+    }
+
+    if (
+        data.resumeType !== null &&
+        !ALLOWED_RESUME_EXTENSIONS.includes(
+            data.resumeType as AllowedResumeExtension,
+        )
+    ) {
+        errorsFound.push(
+            `Resume type must be one of: ${ALLOWED_RESUME_EXTENSIONS.join(", ")}`,
+        );
     }
 
     return errorsFound.length > 0 ? errorsFound.join("; ") : null;
