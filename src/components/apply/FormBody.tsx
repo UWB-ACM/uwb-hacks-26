@@ -135,7 +135,11 @@ export default function FormBody({
     ) => void;
 }) {
     // Used for displaying the next unanswered question
-    const [currentIndex, setCurrentIndex] = useState(0);
+    // If they already have an application, no need to require clicking
+    // through all the buttons again.
+    const [currentIndex, setCurrentIndex] = useState(
+        initialApp == null ? 0 : QUESTION_ORDER.length,
+    );
     const isFinished = currentIndex >= QUESTION_ORDER.length;
 
     // Holds the selected resume file until form submission

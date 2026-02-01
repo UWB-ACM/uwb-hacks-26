@@ -13,7 +13,12 @@ export default function ApplicationForm({
 }: {
     initialApp: ApplicationData | null;
 }) {
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [lastSubmitted, setLastSubmitted] = useState<ApplicationData | null>(
+        initialApp,
+    );
+    // If the user previously submitted, show them the confirmation message
+    // first to make it obvious it was received.
+    const [isSubmitted, setIsSubmitted] = useState(initialApp != null);
 
     const onSubmit = async (
         data: ApplicationData,
@@ -27,14 +32,20 @@ export default function ApplicationForm({
 
         await actionSaveApplication(formData);
         setIsSubmitted(true);
+        setLastSubmitted(data);
     };
 
     return (
         <div className="bg-blue-300">
             {!isSubmitted ? (
-                <FormBody initialApp={initialApp} onSubmit={onSubmit} />
+                // Use the latest application.
+                <FormBody initialApp={lastSubmitted} onSubmit={onSubmit} />
             ) : (
-                <ConfirmSubmit />
+                <ConfirmSubmit
+                    onEdit={() => setIsSubmitted(false)}
+                    // Only show the popup on their first submission.
+                    showPopup={initialApp == null}
+                />
             )}
 
             {/* Background grass */}

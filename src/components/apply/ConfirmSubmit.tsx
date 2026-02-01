@@ -1,12 +1,16 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import Cloud3Background from "@/public/Cloud3-Background.png";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function ConfirmSubmit() {
-    const [viewPopUp, setViewPopUp] = useState(true);
+export default function ConfirmSubmit({
+    onEdit,
+    showPopup,
+}: {
+    onEdit: () => void;
+    showPopup: boolean;
+}) {
+    const [viewPopUp, setViewPopUp] = useState(showPopup);
     const togglePopUp = () => setViewPopUp(!viewPopUp);
 
     return (
@@ -14,12 +18,12 @@ export default function ConfirmSubmit() {
             {viewPopUp && (
                 // the z-index is +1 that of the header to have full-screen blur
                 <div className="fixed inset-0 flex items-center justify-center z-[1000]">
-                    {/** Blur the background */}
+                    {/* Blur the background */}
                     <div
                         className="absolute inset-0 bg-black opacity-50"
                         onClick={togglePopUp} // let the user exit the popup easily
-                    ></div>
-                    {/** The popup message */}
+                    />
+                    {/* The popup message */}
                     <div className="z-50 text-center bg-white rounded-2xl w-9/10 md:w-1/2 py-6 px-8">
                         <h1 className="sm:text-3xl md:text-4xl font-bold mb-4 font-sans">
                             Onto Your Next Step:
@@ -78,7 +82,6 @@ export default function ConfirmSubmit() {
                         Remember to sign up on{" "}
                         <Link
                             className="underline text-blue-500 font-bold"
-                            onClick={togglePopUp}
                             href="https://uwb-hacks-the-future.devpost.com/"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -87,6 +90,13 @@ export default function ConfirmSubmit() {
                         </Link>
                         !
                     </p>
+
+                    <button
+                        className="mx-auto mt-8 min-w-[120px] bg-white hover:bg-gray-100 text-[#0d83db] text-sm sm:text-base md:text-lg lg:text-xl font-bold py-3 px-6 sm:px-8 md:px-10 rounded-full flex items-center justify-center"
+                        onClick={onEdit}
+                    >
+                        Edit Application
+                    </button>
                 </div>
             </div>
         </>
