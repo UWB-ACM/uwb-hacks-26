@@ -14,30 +14,30 @@ import Grass from "@/public/Grass.png";
 export default function AboutSection() {
     return (
         <div className="bg-[linear-gradient(180deg,#1382DC_0%,#16C2F7_50%,#C3EFFE_100%)]">
-            <div className="mt-[10vmin] md:mt-[14vmin] space-y-[4vmin] md:space-y-[8vmin] lg:space-y-[10vmin]">
+            <div className="mt-[10vmin] space-y-[8vmin] xl:space-y-[4vmin]">
                 <CloudSlideIn
                     cloudImage={ParticipantsCloud}
                     alt={"300+ Hackers"}
                     position={"left"}
-                    padding={"12%"}
+                    padding={"15%"}
                 />
                 <CloudSlideIn
                     cloudImage={SubmittedProjectsCloud}
                     alt={"88 Submitted Projects"}
                     position={"right"}
-                    padding={"15%"}
+                    padding={"21%"}
                 />
                 <CloudSlideIn
                     cloudImage={MOHEventsCloud}
                     alt={"11 Month of Hacking Events"}
                     position={"left"}
-                    padding={"15%"}
+                    padding={"18%"}
                 />
                 <CloudSlideIn
                     cloudImage={WeekendEventsCloud}
                     alt={"14 Hackathon Weekend Events"}
                     position={"right"}
-                    padding={"12%"}
+                    padding={"16%"}
                 />
             </div>
 
@@ -60,4 +60,4 @@ export default function AboutSection() {
             </div>
         </div>
     );
-};
+}

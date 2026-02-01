@@ -10,9 +10,14 @@ export default function FlyingCarWithBanner() {
         <motion.div
             initial={{ x: "-100%" }}
             animate={{ x: "100%" }}
-            transition={{ duration: 16, repeat: Infinity, repeatDelay: 2.5, ease: "linear" }}
+            transition={{
+                duration: 16,
+                repeat: Infinity,
+                repeatDelay: 2.5,
+                ease: "linear",
+            }}
         >
-            <div className="flex items-center justify-center my-[10vmin] md:my-[14vmin]" >
+            <div className="flex items-center justify-center my-[10vmin] md:my-[14vmin]">
                 {/* Banner with text */}
                 <Image
                     src={Banner}
