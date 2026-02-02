@@ -4,6 +4,10 @@ import Header from "@/src/components/header/Header";
 import Footer from "@/src/components/Footer";
 import LinkButton from "@/src/components/dashboards/userdashboard/LinkButton";
 
+{
+    /* TODO: Update this page and change page_.tsx to page.tsx */
+}
+
 export const metadata: Metadata = {
     title: "Hackeroon Guide | UWB Hacks 26",
 };
