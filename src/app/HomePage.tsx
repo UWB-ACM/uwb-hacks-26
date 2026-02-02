@@ -30,7 +30,7 @@ export default function HomePage() {
                     <HeroSection />
                     <AboutSection />
 
-                    <Footer blendWithGrass />
+                    <Footer className={"bg-[#439531] text-white/80"} />
                 </ParallaxProvider>
             </div>
         </div>

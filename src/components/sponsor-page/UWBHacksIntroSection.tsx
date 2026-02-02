@@ -12,11 +12,8 @@ import FileDownload from "./FileDownload";
 
 export default function UWBHacksIntroSection() {
     return (
-        <section
-            className="flex flex-col justify-between"
-            style={{ height: "calc(100vh - 112px)" }}
-        >
-            <div className="relative h-full grid place-content-center overflow-x-hidden">
+        <section className="flex flex-col justify-between">
+            <div className="relative grid place-content-center overflow-x-hidden my-[13vmin]">
                 {/* Floating clouds */}
                 <motion.div
                     className="absolute top-1/5 lg:top-1/6 xl:top-1/8 left-0 w-1/2 md:w-1/3 xl:w-1/4"
@@ -29,7 +26,14 @@ export default function UWBHacksIntroSection() {
                         ease: "linear",
                     }}
                 >
-                    <Image src={Cloud2} alt="" className="w-full opacity-35" />
+                    <Image
+                        src={Cloud2}
+                        alt=""
+                        className="w-full opacity-35"
+                        sizes={
+                            "(min-width: 1200px) 25vw, (min-width: 800px) 33vw, 50vw"
+                        }
+                    />
                 </motion.div>
 
                 <motion.div
@@ -43,7 +47,14 @@ export default function UWBHacksIntroSection() {
                         ease: "linear",
                     }}
                 >
-                    <Image src={Cloud4} alt="" className="w-full opacity-35" />
+                    <Image
+                        src={Cloud4}
+                        alt=""
+                        className="w-full opacity-35"
+                        sizes={
+                            "(min-width: 1200px) 25vw, (min-width: 800px) 33vw, 50vw"
+                        }
+                    />
                 </motion.div>
 
                 <div className="w-[80vw] max-w-[1000px] mx-auto text-center">
@@ -74,25 +85,24 @@ export default function UWBHacksIntroSection() {
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="relative z-10 overflow-x-clip">
-                <Image
-                    src={BigCloud}
-                    alt=""
-                    className="h-auto max-w-none w-[150vw] md:w-[125vw] -translate-x-[25vw] md:-translate-x-[12.5vw]"
-                />
-                <div className="absolute bottom-0 w-full h-1/3 flex">
-                    <FileDownload
-                        filePath="/sponsor-page/sponsorship-one-pager.pdf"
-                        fileName="UWB Hacks 2026 Sponsorship One Pager"
-                        content="Sponsorship One Pager"
-                    />
-                    <FileDownload
-                        filePath="/sponsor-page/sponsorship-packet.pdf"
-                        fileName="UWB Hacks 2026 Sponsorship Packet"
-                        content="Sponsorship Info Packet"
-                    />
+                <div className="w-[60vw] max-w-[800px] mx-auto text-center mt-[2vh] lg:mt-[4vh]">
+                    <h3 className="font-edge-of-the-galaxy text-lg md:text-xl lg:text-2xl xl:text-3xl tracking-wider md:tracking-widest">
+                        Download Our Sponsorship Packets!
+                    </h3>
+
+                    <div className="flex flex-col md:flex-row items-center justify-around mt-2 lg:mt-4 gap-2">
+                        <FileDownload
+                            filePath="/sponsor-page/sponsorship-one-pager.pdf"
+                            fileName="UWB Hacks 2026 Sponsorship One Pager.pdf"
+                            content="Sponsorship One Pager"
+                        />
+                        <FileDownload
+                            filePath="/sponsor-page/sponsorship-packet.pdf"
+                            fileName="UWB Hacks 2026 Sponsorship Packet.pdf"
+                            content="Sponsorship Info Packet"
+                        />
+                    </div>
                 </div>
             </div>
         </section>

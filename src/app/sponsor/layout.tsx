@@ -14,9 +14,9 @@ export default function RootLayout({
 }>) {
     return (
         <div className={`w-full`}>
-            <Header links={[]} />
+            <Header bgColor={"#0d83db"} links={[]} />
             {children}
-            <Footer />
+            <Footer className={"bg-[#13c5f8] text-white/80"} />
         </div>
     );
 }

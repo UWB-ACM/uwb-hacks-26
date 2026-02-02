@@ -28,7 +28,7 @@ export default function SponsorshipPackagesSection() {
                 "Challenge statement",
             ],
             minDonation: 500,
-            className: "-translate-x-[40%] translate-y-[30%]",
+            className: "translate-x-[10%] translate-y-[25%]",
         },
         Silver: {
             image: Sparkle,
@@ -45,7 +45,7 @@ export default function SponsorshipPackagesSection() {
                 "Host a workshop",
             ],
             minDonation: 1500,
-            className: "-translate-y-[15%]",
+            className: "-translate-y-[10%]",
         },
         Gold: {
             image: Star,
@@ -63,7 +63,7 @@ export default function SponsorshipPackagesSection() {
                 "Sponsor a track",
             ],
             minDonation: 2500,
-            className: "-translate-x-[13%] translate-y-[20%] rotate-[60deg]",
+            className: "-translate-x-[13%] translate-y-[20%]",
         },
         Platinum: {
             image: ShootingStar,
@@ -82,7 +82,7 @@ export default function SponsorshipPackagesSection() {
                 "Speak at opening and closing ceremony for 5 minutes",
             ],
             minDonation: 5000,
-            className: "-translate-y-[5%] rotate-130 scale-75",
+            className: "-translate-x-[15%] -translate-y-[5%] scale-75",
         },
         Diamond: {
             image: Sun,
@@ -101,7 +101,7 @@ export default function SponsorshipPackagesSection() {
                 "Speak at opening and closing ceremony for 7 minutes",
             ],
             minDonation: 10000,
-            className: "-translate-x-[30%] -translate-y-[40%]",
+            className: "-translate-x-[30%] -translate-y-[18%]",
         },
     };
 
@@ -129,7 +129,10 @@ export default function SponsorshipPackagesSection() {
     return (
         <section className="mt-[3vh] md:mt-[5vh] lg:mt-[10vh]">
             <h2 className="font-edge-of-the-galaxy text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-center tracking-wider md:tracking-widest">
-                Sponsorship Packages
+                Sponsorship Packages <br />{" "}
+                <span className="font-glacial-indifference text-base md:text-lg lg:text-xl xl:text-2xl tracking-normal">
+                    Click each tier to view its perks!
+                </span>
             </h2>
 
             <div className="w-full flex gap-4 md:gap-8 px-4 md:px-8 mt-[1.5vmin] md:mt-[2vmin] xl:mt-[3vmin]">
@@ -137,7 +140,8 @@ export default function SponsorshipPackagesSection() {
                     ([tierName, tier]) => (
                         <SponsorshipTier
                             key={tierName}
-                            image={tier.image}
+                            tierName={tierName}
+                            tierImage={tier.image}
                             onClick={() =>
                                 setSelectedTier(
                                     tierName as keyof typeof sponsorshipTierPerks,
@@ -149,7 +153,7 @@ export default function SponsorshipPackagesSection() {
                 )}
             </div>
 
-            <div className="flex flex-col justify-center items-center my-[3vmin] md:my-[4vmin] xl:my-[6vmin] space-y-1 lg:space-y-2">
+            <div className="flex flex-col justify-center items-center my-[8vmin] space-y-1 lg:space-y-2">
                 <div className="text-center">
                     <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl">
                         {selectedTier}
@@ -172,7 +176,7 @@ export default function SponsorshipPackagesSection() {
                     >
                         {sponsorshipTierPerks[selectedTier].perks.map(
                             (perk, idx) => (
-                                <Fragment key={idx}>
+                                <Fragment key={selectedTier + "-" + idx}>
                                     <span>{perk}</span>{" "}
                                     {idx !==
                                         sponsorshipTierPerks[selectedTier].perks
@@ -189,7 +193,12 @@ export default function SponsorshipPackagesSection() {
                 </motion.div>
             </div>
 
-            <Image src={CitySkyline} alt="" className="w-full" />
+            <Image
+                src={CitySkyline}
+                alt=""
+                className="w-full"
+                sizes={"100vw"}
+            />
         </section>
     );
 }

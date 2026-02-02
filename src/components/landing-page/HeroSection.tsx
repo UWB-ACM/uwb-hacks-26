@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import Cloud3Background from "@/public/Cloud3-Background.png";
+import Cloud3 from "@/public/clouds/Cloud3.png";
 import Bridge from "@/public/Bridge-Background.png";
 import City1 from "@/public/City-Background-1.png";
 import City2 from "@/public/City-Background-2.png";
 import City3 from "@/public/City-Background-3.png";
 import { Parallax } from "react-scroll-parallax";
-import React from "react";
 import { daysUntilEvent } from "@/src/util/date";
 
 export default function HeroSection() {
@@ -19,19 +18,19 @@ export default function HeroSection() {
             <div className="relative flex justify-center">
                 {/* Left Cloud */}
                 <Image
-                    src={Cloud3Background}
+                    src={Cloud3}
                     alt=""
                     className="absolute top-20 -left-20 md:-left-20 lg:-left-15 scale-x-[-1] opacity-40 w-1/2 md:w-1/3 lg:w-1/4"
                 />
 
                 {/* Right Cloud */}
                 <Image
-                    src={Cloud3Background}
+                    src={Cloud3}
                     alt=""
                     className="absolute bottom-5 right-3 md:right-2 lg:right-1 opacity-40 w-1/2 md:w-1/3 lg:w-1/4"
                 />
 
-                <div className="z-[5] flex flex-col text-center px-6 pt-20 sm:px-12 md:px-20 max-w-4xl">
+                <div className="z-5 flex flex-col text-center px-6 pt-20 sm:px-12 md:px-20 max-w-4xl">
                     <h1 className="text-white font-bold text-4xl font-glacial-indifference">
                         UWB HACKS: The Future 2026
                     </h1>

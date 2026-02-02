@@ -1,13 +1,17 @@
 import Link from "next/link";
+import { cn } from "../util/utils";
 
-interface FooterProps {
-    blendWithGrass?: boolean;
-}
-
-function Footer({ blendWithGrass = false }: FooterProps) {
+/**
+ *
+ * @param className - additional styling to be added to Footer
+ */
+function Footer({ className = "" }: { className?: string }) {
     return (
         <footer
-            className={`flex flex-col justify-center items-center text-black py-2 lg:py-4 text-[0.6rem] md:text-[0.8rem] lg:text-[0.9rem] xl:text-base ${blendWithGrass && "bg-[#439531] text-white/80"}`}
+            className={cn(
+                "flex flex-col justify-center items-center text-black py-2 lg:py-4 text-[0.6rem] md:text-[0.8rem] lg:text-[0.9rem] xl:text-base bg-[#84c6ff]",
+                className,
+            )}
         >
             <p className="text-center">&copy; 2026 UWB ACM</p>
             <div className="flex gap-5">

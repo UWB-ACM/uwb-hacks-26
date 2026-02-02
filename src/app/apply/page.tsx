@@ -26,7 +26,7 @@ export default async function ApplyPage() {
             <main>
                 <ApplicationForm initialApp={details} />
             </main>
-            <Footer blendWithGrass />
+            <Footer className={"bg-[#439531] text-white/80"} />
         </div>
     );
 }
