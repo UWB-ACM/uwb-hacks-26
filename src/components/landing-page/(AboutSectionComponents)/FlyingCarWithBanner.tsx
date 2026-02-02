@@ -29,8 +29,7 @@ export default function FlyingCarWithBanner() {
                 <Image
                     src={FlyingCar}
                     alt=""
-                    className="w-[35vw] md:w-[35vw] lg:w-[30vw] xl:w-1/4 -ml-2 md:-ml-4 lg:-ml-6"
-                    priority
+                    className="w-[35vw] md:w-[35vw] lg:w-[30vw] xl:w-[25vw] -ml-2 md:-ml-4 lg:-ml-6"
                     sizes="(max-width: 800px) 35vw, (max-width: 1000px) 35vw, (max-width: 1200px) 30vw, 25vw"
                 />
             </div>

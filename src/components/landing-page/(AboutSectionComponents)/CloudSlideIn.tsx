@@ -1,15 +1,14 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { motion, useInView, useAnimate } from "motion/react";
 import React, { useRef, useEffect, useState } from "react";
 
 /**
- *
+ * image of cloud positioned based on arguments; cloud slides in when user scrolls
  * @param cloudImage cloud SVG
  * @param position whether cloud should be positioned to the left or right
  * @param padding how far cloud should be positioned from left or right; should be percentage (e.g. "25%")
- * @returns image of cloud positioned based on arguments; cloud slides in when user scrolls
  */
 export default function CloudSlideIn({
     cloudImage,
@@ -17,8 +16,7 @@ export default function CloudSlideIn({
     position,
     padding,
 }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    cloudImage: any;
+    cloudImage: StaticImageData;
     alt: string;
     position: "left" | "right";
     padding: string;
@@ -101,36 +99,44 @@ function ScaleDownOnTap({ children }: { children: React.ReactNode }) {
     const [scope, animate] = useAnimate();
 
     useEffect(() => {
-        async function disappear() {
-            if (!scope.current) return;
+        // cleanup timeout when component unmounts
+        return () => {
+            if (timeoutIDRef.current) {
+                clearTimeout(timeoutIDRef.current);
+                timeoutIDRef.current = null;
+            }
+        };
+    }, []);
 
-            await animate(
-                scope.current,
-                { opacity: 0.5, scale: 0, rotate: 1440 },
-                { duration: 1, ease: "easeOut" },
-            );
-            await animate(scope.current, { opacity: 1, rotate: 0 });
-            await animate(
-                scope.current,
-                { scale: 1, rotate: 0 },
-                { delay: 1, duration: 0.25, ease: "easeOut" },
-            );
-        }
+    async function disappear() {
+        if (!scope.current) return;
 
-        if (numClicks == 0 || numClicks > 5) return;
-        // run disappear animation when user clicks cloud 5 times
-        else if (numClicks == 5) disappear();
-
-        // clear previous timeout
-        if (timeoutIDRef.current) clearTimeout(timeoutIDRef.current);
-
-        // set new timeout
-        timeoutIDRef.current = setTimeout(() => setNumClicks(0), 2250);
-    }, [animate, scope, numClicks]);
+        await animate(
+            scope.current,
+            { opacity: 0.5, scale: 0, rotate: 1440 },
+            { duration: 1, ease: "easeOut" },
+        );
+        await animate(scope.current, { opacity: 1, rotate: 0 });
+        await animate(
+            scope.current,
+            { scale: 1, rotate: 0 },
+            { delay: 1, duration: 0.25, ease: "easeOut" },
+        );
+    }
 
     function handleClick() {
-        if (numClicks === 5) return;
-        setNumClicks((prev) => prev + 1);
+        setNumClicks((prevNumClicks) => {
+            const newNumClicks = prevNumClicks + 1;
+            if (newNumClicks === 5) disappear();
+
+            // clear previous timeout
+            if (timeoutIDRef.current) clearTimeout(timeoutIDRef.current);
+
+            // set new timeout
+            timeoutIDRef.current = setTimeout(() => setNumClicks(0), 2250);
+
+            return newNumClicks;
+        });
     }
 
     return (
