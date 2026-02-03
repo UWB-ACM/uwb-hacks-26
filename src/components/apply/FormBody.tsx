@@ -76,7 +76,7 @@ const QUESTIONS = {
         type: "TEXT",
     },
     resumeType: {
-        text: "Upload your resume (optional).",
+        text: "Upload your resume (optional). This will be shared with our sponsors and partners for recruiting and networking purposes.",
         type: "RESUME_TYPE",
         required: false,
     },
