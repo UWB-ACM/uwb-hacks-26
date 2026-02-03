@@ -74,8 +74,8 @@ export default async function PrizesPage() {
             </div>
 
             <p className="mb-5 self-center text-center max-w-[80%] md:max-w-[50%] font-bold">
-                The Hackeroon Shop will be open on Saturday, April 26th from
-                6:00 PM to 8:00 PM and Sunday, April 27th from 9:00 AM to 2:00
+                The Hackeroon Shop will be open on Saturday, April 25th from
+                6:00 PM to 8:00 PM and Sunday, April 26th from 9:00 AM to 2:00
                 PM. Come by the top floor of the ARC to browse and redeem your
                 Hackeroons for prizes in person!
                 <br />
@@ -84,7 +84,8 @@ export default async function PrizesPage() {
                 <br /> Prices also may be subject to change!
             </p>
 
-            <LinkButton href="/hackeroon-guide" text="Hackeroon Guide" />
+            {/* TODO: Add back hackeroon guide */}
+            {/* <LinkButton href="/hackeroon-guide" text="Hackeroon Guide" /> */}
 
             <div className="w-full grow p-8 overflow-scroll overflow-x-hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {prizes.map((prize, index) => (
