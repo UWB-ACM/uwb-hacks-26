@@ -16,7 +16,7 @@ const TermsOfService = () => {
                     UWB Hacks Terms of Service
                 </h1>
                 <p className="text-sm text-gray-600 mb-6">
-                    Effective Date: April 5th, 2025
+                    Effective Date: February 2nd, 2026
                 </p>
 
                 <section className="mb-6">
@@ -66,6 +66,13 @@ const TermsOfService = () => {
                         dashboard on the Site. Deleting your account will remove
                         your personal information associated with the Event,
                         subject to limitations outlined in our Privacy Policy.
+                    </p>
+                    <p className="mb-2">
+                        Participation in the Event may require submitting an
+                        application with additional information such as contact
+                        details, educational background, and experience. You
+                        agree to provide accurate and complete information in
+                        your application.
                     </p>
                 </section>
 
@@ -145,9 +152,22 @@ const TermsOfService = () => {
                         Event staff and designated organizers will have access
                         to your account details (name, email, profile picture,
                         Google ID, Hackeroon balance, transaction history, event
-                        attendance history) for the purposes of administering
-                        the Event, providing support, and ensuring compliance
-                        with these Terms.
+                        attendance history) and application information for the
+                        purposes of administering the Event, providing support,
+                        and ensuring compliance with these Terms.
+                    </p>
+                    <p className="mb-2">
+                        By submitting an application, you consent to ACM at UWB
+                        sharing your registration and application information,
+                        including uploaded resumes, with Event sponsors and
+                        partners. You acknowledge that ACM at UWB cannot control
+                        how sponsors and partners use or retain information once
+                        shared.
+                    </p>
+                    <p className="mb-2">
+                        By participating in the Event, you consent to receive
+                        Event-related communications via email, phone/SMS, and
+                        messaging platforms (e.g., Discord).
                     </p>
                 </section>
 
