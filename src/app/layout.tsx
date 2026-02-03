@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import React from "react";
-import "./globals.css";
+import "@/src/styles/globals.css";
 import Consent from "@/src/components/Consent";
 
 const title = "UWB Hacks 2026";

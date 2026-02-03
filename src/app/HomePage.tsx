@@ -4,7 +4,6 @@ import Header from "@/src/components/header/Header";
 import Footer from "@/src/components/Footer";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
-import "../styles/globals.css";
 import { ParallaxProvider } from "react-scroll-parallax";
 
 export default function HomePage() {
