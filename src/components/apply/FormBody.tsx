@@ -186,12 +186,17 @@ export default function FormBody({
 
     // Auto-scroll form
     useEffect(() => {
+        // Skip for index 0, since it hides the top content,
+        // and also skip for editing, since the user probably
+        // wants to start from the top anyway.
+        if (currentIndex === 0 || initialApp != null) return;
+
         const el = questionRefs.current[currentIndex];
         el?.scrollIntoView({
             behavior: "smooth",
             block: "center",
         });
-    }, [currentIndex]);
+    }, [currentIndex, initialApp]);
 
     return (
         <div className="relative flex flex-col w-full min-h-screen max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-12 pb-[35vh] md:pb-[40vh]">
