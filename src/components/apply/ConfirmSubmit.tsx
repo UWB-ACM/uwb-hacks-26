@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Cloud3Background from "@/public/Cloud3-Background.png";
+import Cloud3 from "@/public/clouds/Cloud3.png";
 import React, { useState } from "react";
 
 export default function ConfirmSubmit({
@@ -54,14 +54,14 @@ export default function ConfirmSubmit({
             <div className="relative">
                 {/* Left Cloud */}
                 <Image
-                    src={Cloud3Background}
+                    src={Cloud3}
                     alt=""
                     className="absolute z-0 top-20 -left-20 md:-left-20 lg:-left-16 scale-x-[-1] opacity-40 w-1/2 md:w-1/3 lg:w-1/4"
                 />
 
                 {/* Right Cloud */}
                 <Image
-                    src={Cloud3Background}
+                    src={Cloud3}
                     alt=""
                     className="absolute z-0 bottom-40 right-3 md:right-2 lg:right-1 opacity-40 w-1/2 md:w-1/3 lg:w-1/4"
                 />

@@ -22,17 +22,29 @@ export type HeaderLinkData = { id: string; name: string } & (
  * @param mainPage - should the header be shown in the main page style?
  * @param banner - should the banner be shown?
  *                 This should only really be used on the main page.
+ * @param bgColor - hex code of the header background color (e.g. #ffffff)
  */
 export default function Header({
     links,
     mainPage,
-    banner,
+    // banner,
+    bgColor = null,
 }: {
     links: HeaderLinkData[];
     mainPage?: boolean;
     banner?: boolean;
+    bgColor?: string | null;
 }) {
     const [sideNav, setSideNav] = useState(false);
+
+    let headerBackgroundColor;
+    if (mainPage) {
+        headerBackgroundColor = "#0a84dc";
+    } else if (bgColor != null) {
+        headerBackgroundColor = bgColor;
+    } else {
+        headerBackgroundColor = "#84c6ff";
+    }
 
     return (
         <>
@@ -42,14 +54,16 @@ export default function Header({
                 <HeaderDesktop
                     links={links}
                     mainPage={mainPage}
-                    banner={banner}
+                    // banner={banner}
+                    bgColor={headerBackgroundColor}
                 />
             </div>
             <div className="block lg:hidden">
                 <HeaderMobile
                     setSideNav={setSideNav}
                     mainPage={mainPage}
-                    banner={banner}
+                    // banner={banner}
+                    bgColor={headerBackgroundColor}
                 />
             </div>
 
@@ -125,17 +139,20 @@ function HeaderDesktop({
     links,
     mainPage,
     // banner,
+    bgColor,
 }: {
     links: HeaderLinkData[];
     mainPage?: boolean;
     banner?: boolean;
+    bgColor: string;
 }) {
     // const [bannerVisible, setBannerVisible] = useState(banner || false);
 
     return (
         <nav className="fixed z-999 top-0 w-full">
             <div
-                className={`flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full ${mainPage ? "bg-[#0a84dc]" : "bg-[#84c6ff]"}`}
+                className="flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full"
+                style={{ backgroundColor: bgColor }}
             >
                 <UWBHacksButton mainPage={mainPage} />
 
@@ -158,10 +175,12 @@ function HeaderMobile({
     mainPage,
     setSideNav,
     // banner,
+    bgColor,
 }: {
     mainPage?: boolean;
     setSideNav: Dispatch<SetStateAction<boolean>>;
-    banner?: boolean;
+    // banner?: boolean;
+    bgColor: string;
 }) {
     // const [bannerVisible] = useState(banner || false);
 
@@ -169,7 +188,8 @@ function HeaderMobile({
         <nav className="">
             {/* <MobileBanner bannerVisible={bannerVisible} /> */}
             <div
-                className={`flex items-center justify-between lg:justify-between h-28 px-5 lg:px-20 w-full min-w-72 ${mainPage ? "bg-[#0a84dc]" : "bg-[#84c6ff]"}`}
+                className="flex items-center justify-between lg:justify-between h-28 px-5 lg:px-20 w-full min-w-72"
+                style={{ backgroundColor: bgColor }}
             >
                 <UWBHacksButton mainPage={mainPage} mobile />
                 <HeaderSidebarButton setSideNav={setSideNav} />
