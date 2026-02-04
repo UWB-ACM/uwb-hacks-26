@@ -630,12 +630,9 @@ export interface ApplicationData {
     teamMembers: string | null;
 
     /**
-     * The applicant's preference for how they want to be judged.
+     * The applicant's shirt size.
      */
-    judgingPreference:
-        | "PRESENTATION STYLE"
-        | "CONFERENCE STYLE"
-        | "NO PREFERENCE";
+    tshirtSize: "XS" | "SM" | "MD" | "LG" | "XL" | "2XL" | "3XL";
 
     /**
      * The applicant's personal goals for attending the hackathon.

@@ -55,7 +55,7 @@ export default function HeroSection() {
                             className="flex-1 min-w-[120px] bg-white hover:bg-gray-100 text-[#0d83db] text-sm sm:text-base md:text-lg lg:text-xl font-bold py-3 px-6 sm:px-8 md:px-10 rounded-full flex items-center justify-center"
                             href="/apply"
                         >
-                            APPLY NOW
+                            REGISTER NOW
                         </Link>
 
                         <Link

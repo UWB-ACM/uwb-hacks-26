@@ -13,8 +13,10 @@ import { IoPaperPlaneSharp } from "react-icons/io5";
 import HallE from "@/public/HALL-E.png";
 import Image from "next/image";
 
-const DESCRIPTION =
-    "Welcome to UWB Hacks 2026!\n Please fill out this form to apply to participate in the hackathon.";
+const DESCRIPTION1 =
+    "Welcome to UWB Hacks 2026!\n Please fill out this form to register to participate in the hackathon.";
+const DESCRIPTION2 =
+    "Note: You must be a current university student and at least 18 years old to register.";
 
 /**
  * The details for each question.
@@ -27,7 +29,7 @@ const DESCRIPTION =
  */
 const QUESTIONS = {
     name: { text: "What is your full name?", type: "TEXT" },
-    email: { text: "What is your email address?", type: "TEXT" },
+    email: { text: "What is your school email address?", type: "TEXT" },
     major: { text: "What is your major?", type: "MAJOR" },
     school: { text: "What school/university do you attend?", type: "TEXT" },
     classStanding: {
@@ -39,12 +41,12 @@ const QUESTIONS = {
         type: "REFERRAL_SOURCE",
     },
     attendingWeekOfHacking: {
-        text: "Do you intend to participate in the week of hacking?",
+        text: "Do you intend to participate in the week of hacking? Week of hacking is a series of workshops to help you prepare for the hackathon.",
         type: "BOOLEAN",
     },
     teamMembers: {
         text: "Please list your team members, or leave blank if you're looking for a team.",
-        type: "TEXT",
+        type: "TEXT_MULTILINE",
         required: false,
     },
     phone: {
@@ -52,16 +54,12 @@ const QUESTIONS = {
         type: "TEXT",
     },
     discordUsername: {
-        text: "We will send participants notifications to coordinate the event. What is your Discord username?",
+        text: "What is your Discord username?",
         type: "TEXT",
-    },
-    judgingPreference: {
-        text: "What is your judging style preference?",
-        type: "JUDGING_PREFERENCE",
     },
     goals: {
-        text: "What are your personal goals for attending the hackathon?",
-        type: "TEXT",
+        text: "What are you hoping to get out of UWB Hacks?",
+        type: "TEXT_MULTILINE",
     },
     noCodePreference: {
         text: "Do you plan to make a code or no-code project?",
@@ -72,12 +70,18 @@ const QUESTIONS = {
         type: "BOOLEAN",
     },
     hackathonExperience: {
-        text: "Please indicate your previous hackathon experience.",
-        type: "TEXT",
+        text: "If you've previously attended UWB Hacks, how would you describe your hackathon experience? What would you change?",
+        type: "TEXT_MULTILINE",
+        required: false,
+    },
+    tshirtSize: {
+        text: "What is your t-shirt size (unisex)?",
+        type: "T_SHIRT",
     },
     portfolioLink: {
-        text: "Please provide a link to your GitHub/portfolio.",
+        text: "Please provide a link to your GitHub/portfolio (optional).",
         type: "TEXT",
+        required: false,
     },
     resumeType: {
         text: "Upload your resume (optional). This will be shared with our sponsors and partners for recruiting and networking purposes.",
@@ -103,7 +107,6 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
     "teamMembers",
     "phone",
     "discordUsername",
-    "judgingPreference",
     "noCodePreference",
     "previousAttendee",
     "hackathonExperience",
@@ -118,11 +121,12 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
  */
 export type QuestionTypeMap = {
     TEXT: string;
+    TEXT_MULTILINE: string;
     BOOLEAN: boolean;
     MAJOR: Major;
     CLASS_STANDING: ClassStanding;
     REFERRAL_SOURCE: ReferralSource;
-    JUDGING_PREFERENCE: ApplicationData["judgingPreference"];
+    T_SHIRT: ApplicationData["tshirtSize"];
     NO_CODE_PREFERENCE: ApplicationData["noCodePreference"];
     RESUME_TYPE: string | null;
 };
@@ -193,7 +197,8 @@ export default function FormBody({
         <div className="relative flex flex-col w-full min-h-screen max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-12 pb-[35vh] md:pb-[40vh]">
             <div className="flex-grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
                 {/* Description always displays */}
-                <Bubble side="left">{DESCRIPTION}</Bubble>
+                <Bubble side="left">{DESCRIPTION1}</Bubble>
+                <Bubble side="left">{DESCRIPTION2}</Bubble>
 
                 {/* Display each question */}
                 <form

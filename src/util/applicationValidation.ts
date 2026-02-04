@@ -37,10 +37,14 @@ export const APPLICATION_LIMITS = {
 /*
  * Valid enum values that match database option constraints
  */
-const VALID_JUDGING_PREFERENCES: ApplicationData["judgingPreference"][] = [
-    "PRESENTATION STYLE",
-    "CONFERENCE STYLE",
-    "NO PREFERENCE",
+const VALID_SHIRT_SIZES: ApplicationData["tshirtSize"][] = [
+    "XS",
+    "SM",
+    "MD",
+    "LG",
+    "XL",
+    "2XL",
+    "3XL",
 ] as const;
 
 /*
@@ -111,9 +115,9 @@ export function validateApplicationData(
     );
 
     // Validate enum fields to ensure they match allowed values
-    if (!VALID_JUDGING_PREFERENCES.includes(data.judgingPreference)) {
+    if (!VALID_SHIRT_SIZES.includes(data.tshirtSize)) {
         errorsFound.push(
-            `Judging Preference must be one of: ${VALID_JUDGING_PREFERENCES.join(", ")}`,
+            `T-shirt Size must be one of: ${VALID_SHIRT_SIZES.join(", ")}`,
         );
     }
 
