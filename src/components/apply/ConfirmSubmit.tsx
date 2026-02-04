@@ -35,7 +35,6 @@ export default function ConfirmSubmit({
                                 onClick={togglePopUp}
                                 href="https://uwb-hacks-the-future.devpost.com/"
                                 target="_blank"
-                                rel="noopener noreferrer"
                             >
                                 Click Here
                             </Link>
@@ -84,7 +83,6 @@ export default function ConfirmSubmit({
                             className="underline text-blue-500 font-bold"
                             href="https://uwb-hacks-the-future.devpost.com/"
                             target="_blank"
-                            rel="noopener noreferrer"
                         >
                             Devpost
                         </Link>

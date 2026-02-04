@@ -17,6 +17,12 @@ function Footer({ className = "" }: { className?: string }) {
             <div className="flex gap-5">
                 <Link href="/tos">Terms of Service</Link>
                 <Link href="/privacy">Privacy Policy</Link>
+                <Link
+                    href="https://uwb-hacks-the-future.devpost.com/"
+                    target="_blank"
+                >
+                    Devpost
+                </Link>
             </div>
         </footer>
     );
