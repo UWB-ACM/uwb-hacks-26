@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { motion, useInView } from "motion/react";
 
 import Image from "next/image";
 import BigCloud from "@/public/clouds/BigCloud.png";
@@ -8,6 +9,9 @@ import WhySponsorClouds from "./WhySponsorClouds";
 import HallE from "@/public/HALL-E.png";
 
 export default function WhySponsorSection() {
+    const headerRef = useRef(null);
+    const isInView = useInView(headerRef, { margin: "-150px", once: true });
+
     return (
         <section className="relative overflow-hidden">
             <div className="relative z-8 -left-[25vw] md:-left-[12.5vw]">
@@ -20,10 +24,13 @@ export default function WhySponsorSection() {
             </div>
 
             <motion.h2
+                ref={headerRef}
                 initial={{ y: "-100%", opacity: 0 }}
-                whileInView={{ y: "0", opacity: 1 }}
-                viewport={{ margin: "-200px", once: true }}
-                transition={{ duration: 1, ease: "easeInOut" }}
+                animate={{
+                    y: isInView ? "0" : "-100%",
+                    opacity: isInView ? 1 : 0,
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="font-edge-of-the-galaxy text-4xl lg:text-5xl text-center tracking-wider md:tracking-widest w-[80vw] max-w-[1000px] mx-auto mt-[8vmin] mb-[12vmin]"
             >
                 Why Sponsor UWBHacks?
