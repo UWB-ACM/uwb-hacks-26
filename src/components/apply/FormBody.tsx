@@ -110,6 +110,7 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
     "noCodePreference",
     "previousAttendee",
     "hackathonExperience",
+    "tshirtSize",
     "goals",
     "portfolioLink",
     "resumeType",
