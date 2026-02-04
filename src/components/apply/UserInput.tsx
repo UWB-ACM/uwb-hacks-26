@@ -83,6 +83,7 @@ export const INPUT_TYPES: Record<
     React.FC<InputProps>
 > = {
     TEXT: TextInput,
+    TEXT_MULTILINE: TextInputMultiline,
     BOOLEAN: BooleanInput,
     MAJOR: SelectInput(MAJOR_LABELS, "Select your major", true),
     CLASS_STANDING: SelectInput(
@@ -109,6 +110,27 @@ export const INPUT_TYPES: Record<
 };
 
 function TextInput({ name, register, defaultValue, required }: InputProps) {
+    return (
+        <div className="flex gap-2">
+            <input
+                type="text"
+                className="max-w-full overflow-clip resize-none"
+                defaultValue={(defaultValue as string) || ""}
+                placeholder={"Enter answer here"}
+                {...register(name as Path<ApplicationData>, {
+                    required,
+                })}
+            />
+        </div>
+    );
+}
+
+function TextInputMultiline({
+    name,
+    register,
+    defaultValue,
+    required,
+}: InputProps) {
     const updateSize = (e: FormEvent<HTMLTextAreaElement>) => {
         e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
     };

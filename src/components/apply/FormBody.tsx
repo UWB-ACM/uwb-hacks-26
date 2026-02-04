@@ -44,7 +44,7 @@ const QUESTIONS = {
     },
     teamMembers: {
         text: "Please list your team members, or leave blank if you're looking for a team.",
-        type: "TEXT",
+        type: "TEXT_MULTILINE",
         required: false,
     },
     phone: {
@@ -61,7 +61,7 @@ const QUESTIONS = {
     },
     goals: {
         text: "What are your personal goals for attending the hackathon?",
-        type: "TEXT",
+        type: "TEXT_MULTILINE",
     },
     noCodePreference: {
         text: "Do you plan to make a code or no-code project?",
@@ -73,7 +73,7 @@ const QUESTIONS = {
     },
     hackathonExperience: {
         text: "Please indicate your previous hackathon experience.",
-        type: "TEXT",
+        type: "TEXT_MULTILINE",
     },
     portfolioLink: {
         text: "Please provide a link to your GitHub/portfolio.",
@@ -118,6 +118,7 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
  */
 export type QuestionTypeMap = {
     TEXT: string;
+    TEXT_MULTILINE: string;
     BOOLEAN: boolean;
     MAJOR: Major;
     CLASS_STANDING: ClassStanding;
