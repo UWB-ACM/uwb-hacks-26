@@ -60,15 +60,6 @@ const REFERRAL_SOURCE_LABELS: Record<ReferralSource, string> = {
     [ReferralSource.Other]: "Other",
 };
 
-const JUDGING_PREFERENCE_LABELS: Record<
-    ApplicationData["judgingPreference"],
-    string
-> = {
-    "PRESENTATION STYLE": "Presentation Style",
-    "CONFERENCE STYLE": "Conference Style",
-    "NO PREFERENCE": "No Preference",
-};
-
 const NO_CODE_PREFERENCE_LABELS: Record<
     ApplicationData["noCodePreference"],
     string
@@ -76,6 +67,16 @@ const NO_CODE_PREFERENCE_LABELS: Record<
     CODE: "Code",
     "NO CODE": "No Code",
     "NO PREFERENCE": "No Preference",
+};
+
+const T_SHIRT_LABELS: Record<ApplicationData["tshirtSize"], string> = {
+    XS: "XS",
+    SM: "SM",
+    MD: "MD",
+    LG: "LG",
+    XL: "XL",
+    "2XL": "2XL",
+    "3XL": "3XL",
 };
 
 export const INPUT_TYPES: Record<
@@ -96,16 +97,12 @@ export const INPUT_TYPES: Record<
         "Select how you heard about us",
         true,
     ),
-    JUDGING_PREFERENCE: SelectInput(
-        JUDGING_PREFERENCE_LABELS,
-        "Select your preference",
-        false,
-    ),
     NO_CODE_PREFERENCE: SelectInput(
         NO_CODE_PREFERENCE_LABELS,
         "Select your preference",
         false,
     ),
+    T_SHIRT: SelectInput(T_SHIRT_LABELS, "Select your preference", false),
     RESUME_TYPE: ResumeInput,
 };
 
