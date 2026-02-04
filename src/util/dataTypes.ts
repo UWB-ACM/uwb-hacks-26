@@ -630,12 +630,9 @@ export interface ApplicationData {
     teamMembers: string | null;
 
     /**
-     * The applicant's preference for how they want to be judged.
+     * The applicant's shirt size.
      */
-    judgingPreference:
-        | "PRESENTATION STYLE"
-        | "CONFERENCE STYLE"
-        | "NO PREFERENCE";
+    tshirtSize: "XS" | "SM" | "MD" | "LG" | "XL" | "2XL" | "3XL";
 
     /**
      * The applicant's personal goals for attending the hackathon.
@@ -679,4 +676,10 @@ export interface ApplicationData {
      * @see ReferralSource
      */
     referralSource: ReferralSource;
+
+    /**
+     * The file extension of the applicant's uploaded resume,
+     * or null if no resume was uploaded.
+     */
+    resumeType: string | null;
 }

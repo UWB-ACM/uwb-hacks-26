@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import React from "react";
-import "./globals.css";
+import "@/src/styles/globals.css";
 import Consent from "@/src/components/Consent";
 
 const title = "UWB Hacks 2026";
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
         description,
         card: "summary_large_image",
         images: {
-            url: "https://uwbhacks.com/card-image.webp",
-            width: 1984,
-            height: 1208,
+            url: "https://uwbhacks.com/card-image.png",
+            width: 1358,
+            height: 827,
         },
     },
     openGraph: {
@@ -30,9 +30,9 @@ export const metadata: Metadata = {
         description,
         locale: "en_US",
         images: {
-            url: "https://uwbhacks.com/card-image.webp",
-            width: 1984,
-            height: 1208,
+            url: "https://uwbhacks.com/card-image.png",
+            width: 1358,
+            height: 827,
         },
     },
     robots: "max-image-preview:large",

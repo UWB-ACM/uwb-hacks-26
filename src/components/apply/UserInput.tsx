@@ -1,6 +1,13 @@
 "use client";
-import React from "react";
-import { Control, Controller, Path, UseFormRegister } from "react-hook-form";
+import React, { FormEvent } from "react";
+import {
+    Control,
+    Controller,
+    Path,
+    UseFormClearErrors,
+    UseFormRegister,
+    UseFormSetError,
+} from "react-hook-form";
 import {
     ApplicationData,
     Major,
@@ -8,6 +15,7 @@ import {
     ReferralSource,
 } from "@/src/util/dataTypes";
 import { QuestionTypeMap } from "@/src/components/apply/FormBody";
+import ResumeInput from "@/src/components/apply/ResumeInput";
 
 export interface InputProps<
     T extends keyof ApplicationData = keyof ApplicationData,
@@ -15,8 +23,12 @@ export interface InputProps<
     name: T;
     register: UseFormRegister<ApplicationData>;
     control: Control<ApplicationData>;
+    setError: UseFormSetError<ApplicationData>;
+    clearErrors: UseFormClearErrors<ApplicationData>;
     defaultValue?: ApplicationData[T];
     required: boolean;
+    onFileSelect: (file: File | null) => void;
+    onDeleteResume: (deleted: boolean) => void;
 }
 
 const MAJOR_LABELS: Record<Major, string> = {
@@ -48,15 +60,6 @@ const REFERRAL_SOURCE_LABELS: Record<ReferralSource, string> = {
     [ReferralSource.Other]: "Other",
 };
 
-const JUDGING_PREFERENCE_LABELS: Record<
-    ApplicationData["judgingPreference"],
-    string
-> = {
-    "PRESENTATION STYLE": "Presentation Style",
-    "CONFERENCE STYLE": "Conference Style",
-    "NO PREFERENCE": "No Preference",
-};
-
 const NO_CODE_PREFERENCE_LABELS: Record<
     ApplicationData["noCodePreference"],
     string
@@ -66,11 +69,22 @@ const NO_CODE_PREFERENCE_LABELS: Record<
     "NO PREFERENCE": "No Preference",
 };
 
+const T_SHIRT_LABELS: Record<ApplicationData["tshirtSize"], string> = {
+    XS: "XS",
+    SM: "SM",
+    MD: "MD",
+    LG: "LG",
+    XL: "XL",
+    "2XL": "2XL",
+    "3XL": "3XL",
+};
+
 export const INPUT_TYPES: Record<
     keyof QuestionTypeMap,
     React.FC<InputProps>
 > = {
     TEXT: TextInput,
+    TEXT_MULTILINE: TextInputMultiline,
     BOOLEAN: BooleanInput,
     MAJOR: SelectInput(MAJOR_LABELS, "Select your major", true),
     CLASS_STANDING: SelectInput(
@@ -83,25 +97,49 @@ export const INPUT_TYPES: Record<
         "Select how you heard about us",
         true,
     ),
-    JUDGING_PREFERENCE: SelectInput(
-        JUDGING_PREFERENCE_LABELS,
-        "Select your preference",
-        false,
-    ),
     NO_CODE_PREFERENCE: SelectInput(
         NO_CODE_PREFERENCE_LABELS,
         "Select your preference",
         false,
     ),
+    T_SHIRT: SelectInput(T_SHIRT_LABELS, "Select your preference", false),
+    RESUME_TYPE: ResumeInput,
 };
 
 function TextInput({ name, register, defaultValue, required }: InputProps) {
     return (
         <div className="flex gap-2">
             <input
+                type="text"
+                className="max-w-full overflow-clip resize-none"
                 defaultValue={(defaultValue as string) || ""}
                 placeholder={"Enter answer here"}
-                className="flex-auto px-2 py-1"
+                {...register(name as Path<ApplicationData>, {
+                    required,
+                })}
+            />
+        </div>
+    );
+}
+
+function TextInputMultiline({
+    name,
+    register,
+    defaultValue,
+    required,
+}: InputProps) {
+    const updateSize = (e: FormEvent<HTMLTextAreaElement>) => {
+        e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+    };
+
+    return (
+        <div className="flex gap-2">
+            <textarea
+                className="max-w-full overflow-clip resize-none"
+                onInput={updateSize}
+                onLoad={updateSize}
+                defaultValue={(defaultValue as string) || ""}
+                placeholder={"Enter answer here"}
                 {...register(name as Path<ApplicationData>, {
                     required,
                 })}

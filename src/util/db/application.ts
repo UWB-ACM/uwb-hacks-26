@@ -28,8 +28,7 @@ export async function getApplication(
         school: row.school,
         attendingWeekOfHacking: row.attending_week_of_hacking,
         teamMembers: row.team_members ?? null,
-        judgingPreference:
-            row.judging_preference as ApplicationData["judgingPreference"],
+        tshirtSize: row.t_shirt as ApplicationData["tshirtSize"],
         goals: row.goals,
         noCodePreference: row.no_code_preference,
         hackathonExperience: row.hackathon_experience,
@@ -39,6 +38,7 @@ export async function getApplication(
         classStanding: row.class_standing as ClassStanding,
         major: row.major as Major,
         referralSource: row.referral_source as ReferralSource,
+        resumeType: row.resume_type ?? null,
     };
 }
 
@@ -57,16 +57,17 @@ export async function saveApplication(
 ): Promise<void> {
     await sql`INSERT INTO "Applications" (
             user_id, name, email, phone, discord_username, school,
-            attending_week_of_hacking, team_members, judging_preference,
+            attending_week_of_hacking, team_members, t_shirt,
             goals, no_code_preference, hackathon_experience, previous_attendee,
-            portfolio_links, class_standing, major, referral_source
+            portfolio_links, class_standing, major, referral_source, resume_type
         ) VALUES (
             ${user}, ${data.name}, ${data.email}, ${data.phone},
             ${data.discordUsername}, ${data.school}, ${data.attendingWeekOfHacking},
-            ${data.teamMembers}, ${data.judgingPreference}, ${data.goals},
+            ${data.teamMembers}, ${data.tshirtSize}, ${data.goals},
             ${data.noCodePreference}, ${data.hackathonExperience},
             ${data.previousAttendee}, ${data.portfolioLink},
-            ${data.classStanding}, ${data.major}, ${data.referralSource}
+            ${data.classStanding}, ${data.major}, ${data.referralSource},
+            ${data.resumeType}
         )
         ON CONFLICT (user_id) DO UPDATE SET
             name = ${data.name},
@@ -76,7 +77,7 @@ export async function saveApplication(
             school = ${data.school},
             attending_week_of_hacking = ${data.attendingWeekOfHacking},
             team_members = ${data.teamMembers},
-            judging_preference = ${data.judgingPreference},
+            t_shirt = ${data.tshirtSize},
             goals = ${data.goals},
             no_code_preference = ${data.noCodePreference},
             hackathon_experience = ${data.hackathonExperience},
@@ -84,6 +85,7 @@ export async function saveApplication(
             portfolio_links = ${data.portfolioLink},
             class_standing = ${data.classStanding},
             major = ${data.major},
-            referral_source = ${data.referralSource}
+            referral_source = ${data.referralSource},
+            resume_type = ${data.resumeType}
     `;
 }

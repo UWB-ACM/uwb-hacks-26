@@ -21,9 +21,9 @@ export default async function ApplyPage() {
     const details = await getApplication(session.user.id);
 
     return (
-        <div className="w-full min-h-screen">
+        <div className="w-full min-h-screen flex flex-col">
             <Header links={[{ id: "about", name: "About", url: "/#about" }]} />
-            <main>
+            <main className="flex-1 flex flex-col">
                 <ApplicationForm initialApp={details} />
             </main>
             <Footer className={"bg-[#439531] text-white/80"} />

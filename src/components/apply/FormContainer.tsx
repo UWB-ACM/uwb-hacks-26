@@ -13,30 +13,49 @@ export default function ApplicationForm({
 }: {
     initialApp: ApplicationData | null;
 }) {
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [lastSubmitted, setLastSubmitted] = useState<ApplicationData | null>(
+        initialApp,
+    );
+    // If the user previously submitted, show them the confirmation message
+    // first to make it obvious it was received.
+    const [isSubmitted, setIsSubmitted] = useState(initialApp != null);
 
-    const onSubmit = async (data: ApplicationData) => {
-        await actionSaveApplication(data);
+    const onSubmit = async (
+        data: ApplicationData,
+        resumeFile: File | null,
+        deleteResume: boolean,
+    ) => {
+        const formData = new FormData();
+        formData.set("applicationData", JSON.stringify(data));
+        if (resumeFile) formData.set("resume", resumeFile);
+        if (deleteResume) formData.set("deleteResume", "true");
+
+        await actionSaveApplication(formData);
         setIsSubmitted(true);
+        setLastSubmitted(data);
     };
 
     return (
-        <div className="bg-blue-300">
+        <div className="bg-[#84c6ff] h-full flex-1 flex flex-col">
             {!isSubmitted ? (
-                <FormBody
-                    initialApp={initialApp}
-                    onSubmit={onSubmit}
-                ></FormBody>
+                // Use the latest application.
+                <FormBody initialApp={lastSubmitted} onSubmit={onSubmit} />
             ) : (
-                <ConfirmSubmit></ConfirmSubmit>
+                <ConfirmSubmit
+                    onEdit={() => setIsSubmitted(false)}
+                    // Only show the popup on their first submission.
+                    showPopup={initialApp == null}
+                />
             )}
+
+            <div className="flex-1" />
 
             {/* Background grass */}
             <div className="relative z-0 mt-4 md:mt-6 lg:mt-8">
                 <Image
                     src={GrassBackground}
                     alt=""
-                    className="absolute z-0 bottom-0 w-full pointer-events-none"
+                    className="z-0 w-full pointer-events-none"
                 />
             </div>
         </div>

@@ -9,8 +9,14 @@ import {
 } from "@/src/util/dataTypes";
 import { FieldErrors, useForm } from "react-hook-form";
 import { INPUT_TYPES } from "@/src/components/apply/UserInput";
+import { IoPaperPlaneSharp } from "react-icons/io5";
+import HallE from "@/public/HALL-E.png";
+import Image from "next/image";
 
-const DESCRIPTION = "Welcome to UWB Hacks 2026!\n Please fill out this form!";
+const DESCRIPTION1 =
+    "Welcome to UWB Hacks 2026!\n Please fill out this form to register to participate in the hackathon.";
+const DESCRIPTION2 =
+    "Note: You must be a current university student and at least 18 years old to register.";
 
 /**
  * The details for each question.
@@ -23,7 +29,7 @@ const DESCRIPTION = "Welcome to UWB Hacks 2026!\n Please fill out this form!";
  */
 const QUESTIONS = {
     name: { text: "What is your full name?", type: "TEXT" },
-    email: { text: "What is your email address?", type: "TEXT" },
+    email: { text: "What is your school email address?", type: "TEXT" },
     major: { text: "What is your major?", type: "MAJOR" },
     school: { text: "What school/university do you attend?", type: "TEXT" },
     classStanding: {
@@ -35,12 +41,12 @@ const QUESTIONS = {
         type: "REFERRAL_SOURCE",
     },
     attendingWeekOfHacking: {
-        text: "Do you intend to participate in the week of hacking?",
+        text: "Do you intend to participate in the week of hacking? Week of hacking is a series of workshops to help you prepare for the hackathon.",
         type: "BOOLEAN",
     },
     teamMembers: {
         text: "Please list your team members, or leave blank if you're looking for a team.",
-        type: "TEXT",
+        type: "TEXT_MULTILINE",
         required: false,
     },
     phone: {
@@ -48,16 +54,12 @@ const QUESTIONS = {
         type: "TEXT",
     },
     discordUsername: {
-        text: "We will send participants notifications to coordinate the event. What is your Discord username?",
+        text: "What is your Discord username?",
         type: "TEXT",
-    },
-    judgingPreference: {
-        text: "What is your judging style preference?",
-        type: "JUDGING_PREFERENCE",
     },
     goals: {
-        text: "What are your personal goals for attending the hackathon?",
-        type: "TEXT",
+        text: "What are you hoping to get out of UWB Hacks?",
+        type: "TEXT_MULTILINE",
     },
     noCodePreference: {
         text: "Do you plan to make a code or no-code project?",
@@ -68,12 +70,23 @@ const QUESTIONS = {
         type: "BOOLEAN",
     },
     hackathonExperience: {
-        text: "Please indicate your previous hackathon experience.",
-        type: "TEXT",
+        text: "If you've previously attended UWB Hacks, how would you describe your hackathon experience? What would you change?",
+        type: "TEXT_MULTILINE",
+        required: false,
+    },
+    tshirtSize: {
+        text: "What is your t-shirt size (unisex)?",
+        type: "T_SHIRT",
     },
     portfolioLink: {
-        text: "Please provide a link to your GitHub/portfolio.",
+        text: "Please provide a link to your GitHub/portfolio (optional).",
         type: "TEXT",
+        required: false,
+    },
+    resumeType: {
+        text: "Upload your resume (optional). This will be shared with our sponsors and partners for recruiting and networking purposes.",
+        type: "RESUME_TYPE",
+        required: false,
     },
 } as const satisfies Record<
     keyof ApplicationData,
@@ -94,12 +107,13 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
     "teamMembers",
     "phone",
     "discordUsername",
-    "judgingPreference",
     "noCodePreference",
     "previousAttendee",
     "hackathonExperience",
+    "tshirtSize",
     "goals",
     "portfolioLink",
+    "resumeType",
 ];
 
 /**
@@ -108,12 +122,14 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
  */
 export type QuestionTypeMap = {
     TEXT: string;
+    TEXT_MULTILINE: string;
     BOOLEAN: boolean;
     MAJOR: Major;
     CLASS_STANDING: ClassStanding;
     REFERRAL_SOURCE: ReferralSource;
-    JUDGING_PREFERENCE: ApplicationData["judgingPreference"];
+    T_SHIRT: ApplicationData["tshirtSize"];
     NO_CODE_PREFERENCE: ApplicationData["noCodePreference"];
+    RESUME_TYPE: string | null;
 };
 
 export default function FormBody({
@@ -121,11 +137,24 @@ export default function FormBody({
     onSubmit,
 }: {
     initialApp: ApplicationData | null;
-    onSubmit: (data: ApplicationData) => void;
+    onSubmit: (
+        data: ApplicationData,
+        resumeFile: File | null,
+        deleteResume: boolean,
+    ) => void;
 }) {
     // Used for displaying the next unanswered question
-    const [currentIndex, setCurrentIndex] = useState(0);
+    // If they already have an application, no need to require clicking
+    // through all the buttons again.
+    const [currentIndex, setCurrentIndex] = useState(
+        initialApp == null ? 0 : QUESTION_ORDER.length,
+    );
     const isFinished = currentIndex >= QUESTION_ORDER.length;
+
+    // Holds the selected resume file until form submission
+    const resumeFileRef = useRef<File | null>(null);
+    // Whether the user explicitly cleared their resume
+    const deleteResumeRef = useRef(false);
 
     // Used for dynamic scrolling
     const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -136,6 +165,8 @@ export default function FormBody({
         control,
         trigger,
         handleSubmit,
+        setError,
+        clearErrors,
         formState: { errors },
     } = useForm<ApplicationData>({ mode: "onBlur" });
 
@@ -149,25 +180,31 @@ export default function FormBody({
         if (!el) return;
 
         if (el instanceof HTMLElement) {
-            el.scrollIntoView({ behavior: "smooth", block: "end" });
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
             el.focus();
         }
     };
 
     // Auto-scroll form
     useEffect(() => {
+        // Skip for index 0, since it hides the top content,
+        // and also skip for editing, since the user probably
+        // wants to start from the top anyway.
+        if (currentIndex === 0 || initialApp != null) return;
+
         const el = questionRefs.current[currentIndex];
         el?.scrollIntoView({
             behavior: "smooth",
             block: "center",
         });
-    }, [currentIndex]);
+    }, [currentIndex, initialApp]);
 
     return (
         <div className="relative flex flex-col w-full min-h-screen max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-12 pb-[35vh] md:pb-[40vh]">
             <div className="flex-grow w-full max-w-5xl mx-auto px-4 py-8 md:px-6 md:py-12">
                 {/* Description always displays */}
-                <Bubble side="left">{DESCRIPTION}</Bubble>
+                <Bubble side="left">{DESCRIPTION1}</Bubble>
+                <Bubble side="left">{DESCRIPTION2}</Bubble>
 
                 {/* Display each question */}
                 <form
@@ -175,8 +212,17 @@ export default function FormBody({
                         // ESLint is confused here, since both onSubmit
                         // and onError are only called on user input, not during
                         // render (which the lint is worried about).
-                        // eslint-disable-next-line react-hooks/refs
-                        handleSubmit(onSubmit, scrollToError)
+                        handleSubmit(
+                            // eslint-disable-next-line react-hooks/refs
+                            (data) =>
+                                onSubmit(
+                                    data,
+                                    resumeFileRef.current,
+                                    deleteResumeRef.current,
+                                ),
+                            // eslint-disable-next-line react-hooks/refs
+                            scrollToError,
+                        )
                     }
                     ref={formRef}
                 >
@@ -195,72 +241,110 @@ export default function FormBody({
                                 <QuestionBubble
                                     question={QUESTIONS[q].text}
                                     hidden={i > currentIndex}
+                                    husky={i === currentIndex}
                                 >
-                                    <QuestionComponent
-                                        name={q}
-                                        register={register}
-                                        control={control}
-                                        defaultValue={initialApp?.[q]}
-                                        required={
-                                            "required" in QUESTIONS[q]
-                                                ? (QUESTIONS[q]
-                                                      .required as boolean)
-                                                : true
-                                        }
-                                    />
+                                    <div className="flex flex-row items-center">
+                                        <div className="flex flex-col flex-1 p-2 min-w-0">
+                                            <QuestionComponent
+                                                name={q}
+                                                register={register}
+                                                control={control}
+                                                setError={setError}
+                                                clearErrors={clearErrors}
+                                                defaultValue={initialApp?.[q]}
+                                                required={
+                                                    "required" in QUESTIONS[q]
+                                                        ? (QUESTIONS[q]
+                                                              .required as boolean)
+                                                        : true
+                                                }
+                                                onFileSelect={(file) => {
+                                                    resumeFileRef.current =
+                                                        file;
+                                                }}
+                                                onDeleteResume={(deleted) => {
+                                                    deleteResumeRef.current =
+                                                        deleted;
+                                                }}
+                                            />
 
-                                    {errors[q] && (
-                                        <p className="text-red-500 text-sm ml-3">
-                                            Answer required
-                                        </p>
-                                    )}
+                                            {errors[q] && (
+                                                <p className="text-red-500 text-sm ml-3">
+                                                    Answer required
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        {currentIndex === i && (
+                                            <button
+                                                aria-label="Next"
+                                                className="p-[5px] ml-[10px] rounded-full overflow-hidden bg-[#84c6ff]"
+                                                onClick={async (e) => {
+                                                    // Something (either react-hook-form or the browser) is
+                                                    // moving focus to the next input field when this button is clicked.
+                                                    // This breaks the animation, so disable it.
+                                                    e.preventDefault();
+
+                                                    // Validate all currently shown fields so we can
+                                                    // stop the user immediately if there's an error.
+                                                    const formValid =
+                                                        await trigger(
+                                                            QUESTION_ORDER.slice(
+                                                                0,
+                                                                currentIndex +
+                                                                    1,
+                                                            ),
+                                                        );
+                                                    if (!formValid) {
+                                                        // This isn't exactly right, since errors still points
+                                                        // to the old list of errors. But the only item that should
+                                                        // be missing is the last form input, so scrolling isn't a
+                                                        // big deal.
+                                                        // Maybe there's some way to request the latest errors from
+                                                        // react-hook-form, though?
+                                                        scrollToError(errors);
+                                                        return;
+                                                    }
+
+                                                    // Make sure we don't go backwards.
+                                                    setCurrentIndex((curIdx) =>
+                                                        Math.max(curIdx, i + 1),
+                                                    );
+                                                }}
+                                            >
+                                                <IoPaperPlaneSharp
+                                                    color="white"
+                                                    size={20}
+                                                    className="relative -left-[2px] -bottom-[1px]"
+                                                />
+                                            </button>
+                                        )}
+                                    </div>
                                 </QuestionBubble>
-
-                                <Bubble side="right" hidden={i > currentIndex}>
-                                    <button
-                                        className="ml-auto"
-                                        onClick={async (e) => {
-                                            // Something (either react-hook-form or the browser) is
-                                            // moving focus to the next input field when this button is clicked.
-                                            // This breaks the animation, so disable it.
-                                            e.preventDefault();
-
-                                            // Validate all currently shown fields so we can
-                                            // stop the user immediately if there's an error.
-                                            const formValid = await trigger(
-                                                QUESTION_ORDER.slice(
-                                                    0,
-                                                    currentIndex + 1,
-                                                ),
-                                            );
-                                            if (!formValid) {
-                                                // TODO: Maybe display the error?
-                                                // This isn't exactly right, since errors still points
-                                                // to the old list of errors. But the only item that should
-                                                // be missing is the last form input, so scrolling isn't a
-                                                // big deal.
-                                                // Maybe there's some way to request the latest errors from
-                                                // react-hook-form, though?
-                                                scrollToError(errors);
-                                                return;
-                                            }
-
-                                            // Make sure we don't go backwards.
-                                            setCurrentIndex((curIdx) =>
-                                                Math.max(curIdx, i + 1),
-                                            );
-                                        }}
-                                    >
-                                        Next
-                                    </button>
-                                </Bubble>
                             </div>
                         );
                     })}
 
                     <Bubble side="left" hidden={!isFinished}>
-                        <input type="submit" value="Submit" />
+                        {
+                            "That's it! Take a moment to review your application, then click the button below to submit."
+                        }
                     </Bubble>
+
+                    <Bubble side="left" hidden={!isFinished}>
+                        <input
+                            type="submit"
+                            value="Submit"
+                            className="cursor-pointer"
+                        />
+                    </Bubble>
+
+                    <Image
+                        src={HallE}
+                        alt=""
+                        className="w-1/2 sm:w-1/3 scale-x-[-1] move-around"
+                        hidden={!isFinished}
+                    />
                 </form>
             </div>
         </div>

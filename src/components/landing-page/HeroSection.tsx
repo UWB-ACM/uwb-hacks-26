@@ -7,6 +7,7 @@ import City2 from "@/public/City-Background-2.png";
 import City3 from "@/public/City-Background-3.png";
 import { Parallax } from "react-scroll-parallax";
 import { daysUntilEvent } from "@/src/util/date";
+import { motion } from "motion/react";
 
 export default function HeroSection() {
     const daysLeft = daysUntilEvent();
@@ -53,7 +54,7 @@ export default function HeroSection() {
                             className="flex-1 min-w-[120px] bg-white hover:bg-gray-100 text-[#0d83db] text-sm sm:text-base md:text-lg lg:text-xl font-bold py-3 px-6 sm:px-8 md:px-10 rounded-full flex items-center justify-center"
                             href="/apply"
                         >
-                            APPLY NOW
+                            REGISTER NOW
                         </Link>
 
                         <Link
@@ -72,7 +73,18 @@ export default function HeroSection() {
                     translateY={[0, 30]}
                 >
                     {/* Train */}
-                    <div className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] mx-auto">
+                    <motion.div
+                        className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] ml-auto"
+                        initial={{ x: "100%" }} // offscreen to the right
+                        animate={{ x: "-100%", marginLeft: 0 }} // translates 100% to the left and completely reduces left margin; final position will be offscreen to the left
+                        transition={{
+                            duration: 5, // in seconds
+                            repeat: Infinity, // loop forever
+                            repeatType: "loop", // resets to start instantly
+                            repeatDelay: 1,
+                            ease: [0.33, 0.67, 0.67, 0.33], // train slows down in the middle of the bridge when "X-days count shows up" to emphasize how many days are left, then speeds up along both ends of the bridge
+                        }}
+                    >
                         <Image
                             src="/train.svg"
                             alt={
@@ -84,7 +96,7 @@ export default function HeroSection() {
                             height={88}
                             className="w-full h-auto"
                         />
-                    </div>
+                    </motion.div>
                     {/* Bridge */}
                     <div className="w-full">
                         <Image src={Bridge} alt="" className="w-full h-auto" />
