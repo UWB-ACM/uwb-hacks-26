@@ -14,9 +14,9 @@ import HallE from "@/public/HALL-E.png";
 import Image from "next/image";
 
 const DESCRIPTION1 =
-    "Welcome to UWB Hacks 2026!\n Please fill out this form to apply to participate in the hackathon.";
+    "Welcome to UWB Hacks 2026!\n Please fill out this form to register to participate in the hackathon.";
 const DESCRIPTION2 =
-    "Note: You must be a current university student and at least 18 years old to apply.";
+    "Note: You must be a current university student and at least 18 years old to register.";
 
 /**
  * The details for each question.
