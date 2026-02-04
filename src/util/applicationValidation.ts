@@ -105,7 +105,7 @@ export function validateApplicationData(
         "Hackathon Experience",
         data.hackathonExperience,
         APPLICATION_LIMITS.hackathonExperience,
-        true,
+        false,
     );
     checkLength(
         "Portfolio Link",
