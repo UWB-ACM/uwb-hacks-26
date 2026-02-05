@@ -1,6 +1,5 @@
 "use client";
 
-import BigCloud from "@/public/clouds/BigCloud.png";
 import Cloud2 from "@/public/clouds/Cloud2.png";
 import Cloud4 from "@/public/clouds/Cloud4.png";
 
@@ -93,12 +92,12 @@ export default function UWBHacksIntroSection() {
 
                     <div className="flex flex-col md:flex-row items-center justify-around mt-2 lg:mt-4 gap-2">
                         <FileDownload
-                            filePath="/sponsor-page/sponsorship-one-pager.pdf"
+                            filePath="sponsor-page/sponsorship-one-pager.pdf"
                             fileName="UWB Hacks 2026 Sponsorship One Pager.pdf"
                             content="Sponsorship One Pager"
                         />
                         <FileDownload
-                            filePath="/sponsor-page/sponsorship-packet.pdf"
+                            filePath="sponsor-page/sponsorship-packet.pdf"
                             fileName="UWB Hacks 2026 Sponsorship Packet.pdf"
                             content="Sponsorship Info Packet"
                         />
