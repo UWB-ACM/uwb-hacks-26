@@ -45,7 +45,7 @@ const QUESTIONS = {
         type: "BOOLEAN",
     },
     teamMembers: {
-        text: "Please list your team members, or leave blank if you're looking for a team.",
+        text: "Please list your team members, or leave blank if you're looking for a team or currently undecided. Note: teams must be 3 to 4 people, no exceptions!",
         type: "TEXT_MULTILINE",
         required: false,
     },
