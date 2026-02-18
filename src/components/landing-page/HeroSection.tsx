@@ -33,7 +33,7 @@ export default function HeroSection() {
 
                 <div className="z-5 flex flex-col text-center px-6 pt-20 sm:px-12 md:px-20 max-w-4xl">
                     <h1 className="text-white font-bold text-4xl font-glacial-indifference">
-                        UWB HACKS: The Future 2026
+                        UWB HACKS 2026: The Future
                     </h1>
 
                     <p className="text-white mt-4 text-sm sm:text-lg md:text-xl lg:text-2xl mx-auto">
