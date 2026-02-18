@@ -5,6 +5,7 @@ import Footer from "@/src/components/Footer";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
 import { ParallaxProvider } from "react-scroll-parallax";
+import FAQSection from "@/src/components/landing-page/FAQSection";
 
 export default function HomePage() {
     return (
@@ -28,8 +29,9 @@ export default function HomePage() {
 
                     <HeroSection />
                     <AboutSection />
+                    <FAQSection />
 
-                    <Footer className={"bg-[#439531] text-white/80"} />
+                    <Footer className={"bg-[#14c5f8] text-white"} />
                 </ParallaxProvider>
             </div>
         </div>
