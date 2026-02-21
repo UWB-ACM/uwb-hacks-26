@@ -16,6 +16,8 @@ import Image from "next/image";
 const DESCRIPTION1 =
     "Welcome to UWB Hacks 2026!\n Please fill out this form to register to participate in the hackathon.";
 const DESCRIPTION2 =
+    "UWB Hacks is taking place on Friday, April 24th to Sunday, April 26th. Please ensure you are able to attend before registering.";
+const DESCRIPTION3 =
     "Note: You must be a current university student and at least 18 years old to register.";
 
 /**
@@ -205,6 +207,7 @@ export default function FormBody({
                 {/* Description always displays */}
                 <Bubble side="left">{DESCRIPTION1}</Bubble>
                 <Bubble side="left">{DESCRIPTION2}</Bubble>
+                <Bubble side="left">{DESCRIPTION3}</Bubble>
 
                 {/* Display each question */}
                 <form
