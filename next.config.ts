@@ -41,7 +41,21 @@ const nextConfig: NextConfig = {
             },
         ],
     },
-    async headers() {
+    redirects() {
+        return [
+            {
+                source: "/links/yardsign",
+                destination: "/",
+                permanent: false,
+            },
+            {
+                source: "/links/standingbanner",
+                destination: "/",
+                permanent: false,
+            },
+        ];
+    },
+    headers() {
         return [
             {
                 source: "/(.*)",
