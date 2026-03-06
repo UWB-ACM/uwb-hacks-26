@@ -30,10 +30,19 @@ const DESCRIPTION3 =
  * type name in `QuestionTypeMap`, which maps to the same type specified in `ApplicationData`.
  */
 const QUESTIONS = {
-    name: { text: "What is your full name?", type: "TEXT" },
+    firstName: { text: "What is your first name?", type: "TEXT" },
+    lastName: { text: "What is your last name?", type: "TEXT" },
     email: { text: "What is your school email address?", type: "TEXT" },
+    age: { text: "How old are you? (Must be 18+)", type: "AGE_SELECT" },
+    countryOfResidence: {
+        text: "What country do you reside in?",
+        type: "COUNTRY_SELECT",
+    },
     major: { text: "What is your major?", type: "MAJOR" },
-    school: { text: "What school/university do you attend?", type: "TEXT" },
+    school: {
+        text: "What school/university do you attend?",
+        type: "SCHOOL_SELECT",
+    },
     classStanding: {
         text: "What is your class standing?",
         type: "CLASS_STANDING",
@@ -85,22 +94,43 @@ const QUESTIONS = {
         type: "TEXT",
         required: false,
     },
+    linkedIn: {
+        text: "Please provide a link to your LinkedIn profile (optional). This will be shared with our sponsors and partners for recruiting and networking purposes.",
+        type: "TEXT",
+        required: false,
+    },
     resumeType: {
         text: "Upload your resume (optional). This will be shared with our sponsors and partners for recruiting and networking purposes.",
         type: "RESUME_TYPE",
         required: false,
     },
+    mlhCodeOfConduct: {
+        text: "UWB Hacks is an MLH member event, and we require all participants to adhere to MLH's policies and code of conduct.",
+        type: "MLH_CODE_OF_CONDUCT",
+    },
+    mlhDataSharing: {
+        text: null,
+        type: "MLH_DATA_SHARING",
+    },
+    mlhCommunications: {
+        text: null,
+        type: "MLH_COMMUNICATIONS",
+        required: false,
+    },
 } as const satisfies Record<
     keyof ApplicationData,
-    { text: string; type: keyof QuestionTypeMap; required?: boolean }
+    { text: string | null; type: keyof QuestionTypeMap; required?: boolean }
 >;
 
 /**
  * The order in which questions from QUESTIONS will be displayed.
  */
 const QUESTION_ORDER: (keyof ApplicationData)[] = [
-    "name",
+    "firstName",
+    "lastName",
     "email",
+    "age",
+    "countryOfResidence",
     "major",
     "school",
     "classStanding",
@@ -115,7 +145,11 @@ const QUESTION_ORDER: (keyof ApplicationData)[] = [
     "tshirtSize",
     "goals",
     "portfolioLink",
+    "linkedIn",
     "resumeType",
+    "mlhCodeOfConduct",
+    "mlhDataSharing",
+    "mlhCommunications",
 ];
 
 /**
@@ -132,6 +166,12 @@ export type QuestionTypeMap = {
     T_SHIRT: ApplicationData["tshirtSize"];
     NO_CODE_PREFERENCE: ApplicationData["noCodePreference"];
     RESUME_TYPE: string | null;
+    SCHOOL_SELECT: string;
+    COUNTRY_SELECT: string | null;
+    AGE_SELECT: number | null;
+    MLH_CODE_OF_CONDUCT: boolean;
+    MLH_DATA_SHARING: boolean;
+    MLH_COMMUNICATIONS: boolean;
 };
 
 export default function FormBody({
@@ -199,6 +239,19 @@ export default function FormBody({
             behavior: "smooth",
             block: "center",
         });
+
+        // This is a bit of a hack.
+        // The animation gets messed up if we focus immediately, so
+        // wait a bit longer (10ms) and then focus.
+        const timer = setTimeout(() => {
+            // react-hook-form focus doesn't always work (for controllers),
+            // so grabbing the element directly is more reliable.
+            const focusable = el?.querySelector<HTMLElement>(
+                "input, select, textarea",
+            );
+            focusable?.focus();
+        }, 310);
+        return () => clearTimeout(timer);
     }, [currentIndex, initialApp]);
 
     return (
@@ -273,7 +326,8 @@ export default function FormBody({
 
                                             {errors[q] && (
                                                 <p className="text-red-500 text-sm ml-3">
-                                                    Answer required
+                                                    {errors[q]?.message ||
+                                                        "Answer required"}
                                                 </p>
                                             )}
                                         </div>

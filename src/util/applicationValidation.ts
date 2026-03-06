@@ -23,7 +23,8 @@ export const MAX_RESUME_SIZE_BYTES = 5 * 1024 * 1024;
  * Should be used on the frontend for Form UI constraints and on the backend for validation
  */
 export const APPLICATION_LIMITS = {
-    name: 100,
+    firstName: 100,
+    lastName: 100,
     email: 200,
     phone: 20,
     discordUsername: 50,
@@ -32,6 +33,8 @@ export const APPLICATION_LIMITS = {
     goals: 2000,
     hackathonExperience: 2000,
     portfolioLink: 500,
+    countryOfResidence: 100,
+    linkedIn: 500,
 } as const;
 
 /*
@@ -84,7 +87,13 @@ export function validateApplicationData(
     };
 
     // Validate string length limits
-    checkLength("Name", data.name, APPLICATION_LIMITS.name, true);
+    checkLength(
+        "First Name",
+        data.firstName,
+        APPLICATION_LIMITS.firstName,
+        true,
+    );
+    checkLength("Last Name", data.lastName, APPLICATION_LIMITS.lastName, true);
     checkLength("Email", data.email, APPLICATION_LIMITS.email, true);
     checkLength("Phone", data.phone, APPLICATION_LIMITS.phone, false);
     checkLength(
@@ -113,6 +122,13 @@ export function validateApplicationData(
         APPLICATION_LIMITS.portfolioLink,
         false,
     );
+    checkLength(
+        "Country of Residence",
+        data.countryOfResidence,
+        APPLICATION_LIMITS.countryOfResidence,
+        true,
+    );
+    checkLength("LinkedIn", data.linkedIn, APPLICATION_LIMITS.linkedIn, false);
 
     // Validate enum fields to ensure they match allowed values
     if (!VALID_SHIRT_SIZES.includes(data.tshirtSize)) {

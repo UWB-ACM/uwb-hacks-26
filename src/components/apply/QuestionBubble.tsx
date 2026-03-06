@@ -4,7 +4,7 @@ import Image from "next/image";
 import HallE from "@/public/HALL-E.png";
 
 type QuestionBubbleProps = {
-    question: string;
+    question?: string | null;
     hidden: boolean;
     husky: boolean;
 };
@@ -17,9 +17,11 @@ export default function QuestionBubble({
 }: PropsWithChildren<QuestionBubbleProps>) {
     return (
         <>
-            <Bubble side="left" hidden={hidden}>
-                <p>{question}</p>
-            </Bubble>
+            {question && (
+                <Bubble side="left" hidden={hidden}>
+                    <p>{question}</p>
+                </Bubble>
+            )}
 
             {husky && (
                 <Image

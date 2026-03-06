@@ -4,7 +4,7 @@ const cspHeader = `
     default-src 'self';
     script-src 'self'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} 'unsafe-inline' https://cdn.strawpoll.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data:;
+    img-src 'self' blob: data: https://s3.amazonaws.com;
     font-src 'self';
     object-src 'none';
     base-uri 'self';
