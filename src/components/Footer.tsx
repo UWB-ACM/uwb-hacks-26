@@ -23,6 +23,12 @@ function Footer({ className = "" }: { className?: string }) {
                 >
                     Devpost
                 </Link>
+                <Link
+                    href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                    target="_blank"
+                >
+                    MLH Code of Conduct
+                </Link>
             </div>
         </footer>
     );
