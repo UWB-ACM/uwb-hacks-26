@@ -239,6 +239,19 @@ export default function FormBody({
             behavior: "smooth",
             block: "center",
         });
+
+        // This is a bit of a hack.
+        // The animation gets messed up if we focus immediately, so
+        // wait a bit longer (10ms) and then focus.
+        const timer = setTimeout(() => {
+            // react-hook-form focus doesn't always work (for controllers),
+            // so grabbing the element directly is more reliable.
+            const focusable = el?.querySelector<HTMLElement>(
+                "input, select, textarea",
+            );
+            focusable?.focus();
+        }, 310);
+        return () => clearTimeout(timer);
     }, [currentIndex, initialApp]);
 
     return (
