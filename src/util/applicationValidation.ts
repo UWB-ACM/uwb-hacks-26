@@ -33,6 +33,8 @@ export const APPLICATION_LIMITS = {
     goals: 2000,
     hackathonExperience: 2000,
     portfolioLink: 500,
+    countryOfResidence: 100,
+    linkedIn: 500,
 } as const;
 
 /*
@@ -120,6 +122,13 @@ export function validateApplicationData(
         APPLICATION_LIMITS.portfolioLink,
         false,
     );
+    checkLength(
+        "Country of Residence",
+        data.countryOfResidence,
+        APPLICATION_LIMITS.countryOfResidence,
+        true,
+    );
+    checkLength("LinkedIn", data.linkedIn, APPLICATION_LIMITS.linkedIn, false);
 
     // Validate enum fields to ensure they match allowed values
     if (!VALID_SHIRT_SIZES.includes(data.tshirtSize)) {

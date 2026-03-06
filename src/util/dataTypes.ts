@@ -687,4 +687,34 @@ export interface ApplicationData {
      * or null if no resume was uploaded.
      */
     resumeType: string | null;
+
+    /**
+     * The applicant's age.
+     */
+    age: number | null;
+
+    /**
+     * The applicant's country of residence.
+     */
+    countryOfResidence: string | null;
+
+    /**
+     * A link to the applicant's LinkedIn profile (if provided).
+     */
+    linkedIn: string | null;
+
+    /**
+     * Has the applicant agreed to the MLH Code of Conduct?
+     */
+    mlhCodeOfConduct: boolean;
+
+    /**
+     * Has the applicant authorized sharing their data with MLH?
+     */
+    mlhDataSharing: boolean;
+
+    /**
+     * Has the applicant opted in to MLH communications?
+     */
+    mlhCommunications: boolean;
 }

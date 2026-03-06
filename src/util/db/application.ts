@@ -40,6 +40,13 @@ export async function getApplication(
         major: row.major as Major,
         referralSource: row.referral_source as ReferralSource,
         resumeType: row.resume_type ?? null,
+
+        age: row.age ?? null,
+        countryOfResidence: row.country ?? null,
+        linkedIn: row.linkedin ?? null,
+        mlhCodeOfConduct: row.mlh_code_of_conduct ?? false,
+        mlhDataSharing: row.mlh_data_sharing ?? false,
+        mlhCommunications: row.mlh_communications ?? false,
     };
 }
 
@@ -60,7 +67,9 @@ export async function saveApplication(
             user_id, first_name, last_name, email, phone, discord_username, school,
             attending_week_of_hacking, team_members, t_shirt,
             goals, no_code_preference, hackathon_experience, previous_attendee,
-            portfolio_links, class_standing, major, referral_source, resume_type
+            portfolio_links, class_standing, major, referral_source, resume_type,
+            age, country, linkedin,
+            mlh_code_of_conduct, mlh_data_sharing, mlh_communications
         ) VALUES (
             ${user}, ${data.firstName}, ${data.lastName}, ${data.email}, ${data.phone},
             ${data.discordUsername}, ${data.school}, ${data.attendingWeekOfHacking},
@@ -68,7 +77,9 @@ export async function saveApplication(
             ${data.noCodePreference}, ${data.hackathonExperience},
             ${data.previousAttendee}, ${data.portfolioLink},
             ${data.classStanding}, ${data.major}, ${data.referralSource},
-            ${data.resumeType}
+            ${data.resumeType},
+            ${data.age}, ${data.countryOfResidence}, ${data.linkedIn},
+            ${data.mlhCodeOfConduct}, ${data.mlhDataSharing}, ${data.mlhCommunications}
         )
         ON CONFLICT (user_id) DO UPDATE SET
             first_name = ${data.firstName},
@@ -88,6 +99,12 @@ export async function saveApplication(
             class_standing = ${data.classStanding},
             major = ${data.major},
             referral_source = ${data.referralSource},
-            resume_type = ${data.resumeType}
+            resume_type = ${data.resumeType},
+            age = ${data.age},
+            country = ${data.countryOfResidence},
+            linkedin = ${data.linkedIn},
+            mlh_code_of_conduct = ${data.mlhCodeOfConduct},
+            mlh_data_sharing = ${data.mlhDataSharing},
+            mlh_communications = ${data.mlhCommunications}
     `;
 }
