@@ -21,7 +21,8 @@ export async function getApplication(
 
     const row = data[0];
     return {
-        name: row.name,
+        firstName: row.first_name,
+        lastName: row.last_name,
         email: row.email,
         phone: row.phone ?? null,
         discordUsername: row.discord_username,
@@ -56,12 +57,12 @@ export async function saveApplication(
     data: ApplicationData,
 ): Promise<void> {
     await sql`INSERT INTO "Applications" (
-            user_id, name, email, phone, discord_username, school,
+            user_id, first_name, last_name, email, phone, discord_username, school,
             attending_week_of_hacking, team_members, t_shirt,
             goals, no_code_preference, hackathon_experience, previous_attendee,
             portfolio_links, class_standing, major, referral_source, resume_type
         ) VALUES (
-            ${user}, ${data.name}, ${data.email}, ${data.phone},
+            ${user}, ${data.firstName}, ${data.lastName}, ${data.email}, ${data.phone},
             ${data.discordUsername}, ${data.school}, ${data.attendingWeekOfHacking},
             ${data.teamMembers}, ${data.tshirtSize}, ${data.goals},
             ${data.noCodePreference}, ${data.hackathonExperience},
@@ -70,7 +71,8 @@ export async function saveApplication(
             ${data.resumeType}
         )
         ON CONFLICT (user_id) DO UPDATE SET
-            name = ${data.name},
+            first_name = ${data.firstName},
+            last_name = ${data.lastName},
             email = ${data.email},
             phone = ${data.phone},
             discord_username = ${data.discordUsername},

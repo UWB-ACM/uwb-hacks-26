@@ -23,7 +23,8 @@ export const MAX_RESUME_SIZE_BYTES = 5 * 1024 * 1024;
  * Should be used on the frontend for Form UI constraints and on the backend for validation
  */
 export const APPLICATION_LIMITS = {
-    name: 100,
+    firstName: 100,
+    lastName: 100,
     email: 200,
     phone: 20,
     discordUsername: 50,
@@ -84,7 +85,13 @@ export function validateApplicationData(
     };
 
     // Validate string length limits
-    checkLength("Name", data.name, APPLICATION_LIMITS.name, true);
+    checkLength(
+        "First Name",
+        data.firstName,
+        APPLICATION_LIMITS.firstName,
+        true,
+    );
+    checkLength("Last Name", data.lastName, APPLICATION_LIMITS.lastName, true);
     checkLength("Email", data.email, APPLICATION_LIMITS.email, true);
     checkLength("Phone", data.phone, APPLICATION_LIMITS.phone, false);
     checkLength(

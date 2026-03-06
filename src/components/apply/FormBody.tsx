@@ -30,7 +30,8 @@ const DESCRIPTION3 =
  * type name in `QuestionTypeMap`, which maps to the same type specified in `ApplicationData`.
  */
 const QUESTIONS = {
-    name: { text: "What is your full name?", type: "TEXT" },
+    firstName: { text: "What is your first name?", type: "TEXT" },
+    lastName: { text: "What is your last name?", type: "TEXT" },
     email: { text: "What is your school email address?", type: "TEXT" },
     major: { text: "What is your major?", type: "MAJOR" },
     school: { text: "What school/university do you attend?", type: "TEXT" },
@@ -99,7 +100,8 @@ const QUESTIONS = {
  * The order in which questions from QUESTIONS will be displayed.
  */
 const QUESTION_ORDER: (keyof ApplicationData)[] = [
-    "name",
+    "firstName",
+    "lastName",
     "email",
     "major",
     "school",

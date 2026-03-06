@@ -593,9 +593,14 @@ export enum ReferralSource {
  */
 export interface ApplicationData {
     /**
-     * The applicant's full name.
+     * The applicant's first name.
      */
-    name: string;
+    firstName: string;
+
+    /**
+     * The applicant's last name.
+     */
+    lastName: string;
 
     /**
      * The applicant's contact email.
