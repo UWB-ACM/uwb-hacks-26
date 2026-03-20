@@ -53,7 +53,7 @@ export default function PanelHeader({
         ref: headerRef,
         className: twMerge(
             clsx(
-                `w-full lg:w-fit p-6 bg-white border-black border-b-2 border-r-0 lg:border-r-2 font-h1 text-center ${isSectionHeader ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"}`,
+                `w-full lg:w-fit p-6 bg-white font-h1 text-center ${isSectionHeader ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"}`,
                 className,
             ),
         ),
