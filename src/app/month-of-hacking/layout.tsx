@@ -5,7 +5,7 @@ import Footer from "@/src/components/Footer";
 
 const title = "UWB Hacks 2026";
 const description =
-    "Students assemble! We need your skills, NOW! Combine forces and push your potential to the limit at the 10th annual UW Bothell Hackathon, UWB Hacks: The Future 2026!";
+    "Students assemble! We need your skills, NOW! Combine forces and push your potential to the limit at the 10th annual UW Bothell Hackathon, UWB Hacks 2026: The Future!";
 const url = "https://uwbhacks.com/";
 
 export const metadata: Metadata = {
