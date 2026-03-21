@@ -18,7 +18,7 @@ const DESCRIPTION1 =
 const DESCRIPTION2 =
     "UWB Hacks is taking place on Friday, April 24th to Sunday, April 26th. Please ensure you are able to attend before registering.";
 const DESCRIPTION3 =
-    "Note: You must be a current university student and at least 18 years old to register.";
+    "Note: You must be a current university student (or recent graduate) and at least 18 years old to register.";
 
 /**
  * The details for each question.

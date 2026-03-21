@@ -7,7 +7,7 @@ const faqItems = [
     },
     {
         question: "Who is eligible to participate?",
-        answer: `UWB Hacks 2026 is open to all high school and university students of all skill levels and experience aged 18 and over. We have provided options for "Code" and "No Code" projects and will also provide mentorship and learning opportunities.`,
+        answer: `UWB Hacks 2026 is open to university students of all skill levels and experience aged 18 and over, including recent graduates. We have provided options for "Code" and "No Code" projects and will also provide mentorship and learning opportunities.`,
     },
     {
         question: "Does it cost money to enter?",
