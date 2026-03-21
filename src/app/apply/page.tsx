@@ -3,8 +3,7 @@ import { Metadata } from "next";
 import Footer from "@/src/components/Footer";
 import Header from "@/src/components/header/Header";
 import ApplicationForm from "../../components/apply/FormContainer";
-import { getSession } from "@/src/util/session";
-import { redirect } from "next/navigation";
+import { getSession, redirectToLogin } from "@/src/util/session";
 import { getApplication } from "@/src/util/db/application";
 
 export const metadata: Metadata = {
@@ -15,7 +14,8 @@ export default async function ApplyPage() {
     // Users need an account before they can submit an application.
     const session = await getSession();
     if (session.user?.id == null) {
-        redirect("/api/auth/google");
+        await redirectToLogin(session);
+        return;
     }
 
     const details = await getApplication(session.user.id);
