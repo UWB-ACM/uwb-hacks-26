@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ const PrivacyPolicy = () => {
                     UWB Hacks Privacy Policy
                 </h1>
                 <p className="text-sm text-gray-600 mb-6">
-                    Effective Date: April 5th, 2025
+                    Effective Date: February 2nd, 2026
                 </p>
 
                 <section className="mb-6">
@@ -78,6 +79,13 @@ const PrivacyPolicy = () => {
                             Hackeroon balance, which is associated with your
                             account.
                         </li>
+                        <li>
+                            <strong>Registration and Application Data:</strong>{" "}
+                            Information you provide when applying to participate
+                            in the Event, such as contact information,
+                            educational background, experience, preferences, and
+                            any files you upload (e.g., resumes).
+                        </li>
                     </ul>
                 </section>
 
@@ -117,6 +125,14 @@ const PrivacyPolicy = () => {
                         <li>
                             Administer the Event, including verification,
                             support, and enforcement of rules and terms.
+                        </li>
+                        <li>
+                            Contact you regarding the Event via email,
+                            phone/SMS, or messaging platforms (e.g., Discord).
+                        </li>
+                        <li>
+                            Share your information with Event sponsors and
+                            partners for recruiting and networking purposes.
                         </li>
                         <li>Comply with legal obligations.</li>
                     </ul>
@@ -168,6 +184,15 @@ const PrivacyPolicy = () => {
                             require these third parties to maintain the
                             confidentiality of your information and use it only
                             for the purposes for which we disclose it to them.
+                        </li>
+                        <li>
+                            <strong>Event Sponsors and Partners:</strong> We may
+                            share your registration and application information,
+                            including uploaded resumes, with Event sponsors and
+                            partners for recruiting and networking purposes.
+                            Once shared, this information is subject to the
+                            recipient&apos;s privacy practices and may be
+                            retained by them indefinitely.
                         </li>
                     </ul>
                     <p className="mt-2">
@@ -280,6 +305,7 @@ const PrivacyPolicy = () => {
                     </p>
                 </section>
             </div>
+            <Footer />
         </>
     );
 };

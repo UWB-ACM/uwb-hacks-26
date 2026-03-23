@@ -2,43 +2,38 @@ import React, { useState } from "react";
 
 const faqItems = [
     {
-        question: "1. How will UWB Hacks 2026 be run?",
-        answer: "The hackathon will take place over a weekend, where participants will form teams, brainstorm ideas, and build projects that align with this year’s theme: Save the World You will have access to mentors, workshops, and networking opportunities to help bring your ideas to life.",
+        question: "What is the format of UWB Hacks 2026?",
+        answer: "The hackathon will take place from Friday, April 24, 2026 to Sunday, April 26, 2026. You'll work in teams to brainstorm ideas and build projects that align with this year's theme: The Future. You will have access to mentors, workshops, and networking opportunities to help bring your ideas to life.",
     },
     {
-        question: "2. Do I have to be a UWB student to participate?",
-        answer: "No! UWB Hacks 2026 is open to all students aged 18 and over, including those from any university or high school seniors who are 18+.",
+        question: "Who is eligible to participate?",
+        answer: `UWB Hacks 2026 is open to university students of all skill levels and experience aged 18 and over, including recent graduates. We have provided options for "Code" and "No Code" projects and will also provide mentorship and learning opportunities.`,
     },
     {
-        question: "3. Does it cost money to enter the hackathon?",
+        question: "Does it cost money to enter?",
         answer: "No! Participation is completely free.",
     },
     {
-        question: "4. Do I need programming experience to participate?",
-        answer: `No prior programming experience is required! We have provided options for "No Code" and "Low Code" projects. We welcome participants of all skill levels and will also provide mentorship, and other learning opportunities. Although, we have adjusted judging criteria to balance the playing field for all participants.`,
+        question: "Will meals be provided?",
+        answer: "Yes, meals will be provided on all three days. More details on food to come soon!",
     },
     {
         question:
-            "5. Do I need a team to register, and how many people can be on a team?",
-        answer: "Yes. If you don’t have a team, we will provide opportunities to form teams before the hackathon begins. Each team must have 3 to 5 members—no exceptions. Teams that don’t meet this requirementwill be disqualified.",
+            "Do I need a team to register, and how many people can be on a team?",
+        answer: "Yes. If you don't have a team, we will provide opportunities to form teams before the hackathon begins. Each team must have 3 to 4 members—no exceptions. Teams that don't meet this requirement will be disqualified.",
     },
     {
         question:
-            "6. How do you sign up as a team on Devpost once you have found a team?",
+            "How do you sign up as a team on Devpost once you have found a team?",
         answer: [
             "Create a Devpost account and register individually – This not only allows you to participate in UWB Hacks 2026, but also makes it easier to join future hackathons. Plus, it helps us plan ahead to ensure we have enough food, seating, and resources for everyone.",
-            "Wait until hacking officially begins on April 25th – Following the Opening Ceremony, you’ll be able to start working on your project.",
+            "Wait until hacking officially begins on April 24th, 2026 – Following the Opening Ceremony, you'll be able to start working on your project.",
             "Begin your project submission on Devpost – Once submissions open, you can list your teammates and save your project as a draft while you continue building.",
         ],
     },
     {
-        question: "7. What activities will take place aside from hacking?",
-        answer: "In addition to the hackathon, participants will have the opportunity to attend interactive workshops, networking sessions, and engaging activities. These will includeinsightful talks from industry professionals and hands-on learning experiences designed to align with this year's Save the World theme.",
-    },
-    {
-        question:
-            "8. Is UWB Hacks 2026 open to students from non-technical or non-CS backgrounds?",
-        answer: "Yes! UWB Hacks 2026 welcomes students from all academic backgrounds — not just computer science. Whether you're studying business, design, engineering, biology, or anything else, your perspective is valuable. You’re also encouraged to explore no-code or low-code solutions, create mockups, or pitch well-developed concepts — creativity, collaboration, and innovation are what matter most!",
+        question: "What else can I do at UWB Hacks 2026?",
+        answer: "In addition to the hackathon, participants will have the opportunity to attend interactive workshops, networking sessions, and other engaging activities. These will include insightful talks from industry professionals and hands-on learning experiences designed to align with this year's The Future theme.",
     },
 ];
 
@@ -72,44 +67,44 @@ const FAQSection = () => {
     };
 
     return (
-        <div className="bg-white border-black border-2 p-10 mt-12 md:mt-16">
-            <h1 className="font-h1 text-5xl md:text-7xl text-[#49B2F8] text-center mb-8">
+        <div className="bg-[linear-gradient(180deg,#0d83db,#14c5f8)] px-6 md:px-20 py-16 text-white">
+            <h1 className="font-h1 text-5xl md:text-7xl text-center mb-8">
                 FAQ
             </h1>
-            <div className="w-full mx-auto">
+            <div className="w-full max-w-4xl mx-auto">
                 {faqItems.map((item, index) => {
                     const isOpen = openIndex === index;
 
                     return (
-                        <div key={index}>
+                        <div key={index} className="border-b border-white/40">
                             <button
                                 onClick={() => toggleAccordion(index)}
-                                className="w-full flex justify-between items-center py-5 font-rubik-mono-one text-xl"
+                                className="w-full flex justify-between items-center py-5 text-xl text-left"
                             >
                                 <span className="text-left">
                                     {item.question}
                                 </span>
-                                <span className="transition-transform duration-300">
+                                <span className="ml-4 shrink-0 transition-transform duration-300">
                                     {isOpen ? MinusIcon : PlusIcon}
                                 </span>
                             </button>
 
                             {/* https://stackoverflow.com/a/76944290 */}
                             <div
-                                className={`grid transition-[grid-template_rows_300ms] ease-in-out overflow-hidden ${
+                                className={`grid transition-[grid-template-rows] duration-300 ease-in-out overflow-hidden ${
                                     isOpen
                                         ? "grid-rows-[1fr]"
                                         : "grid-rows-[0fr]"
                                 }`}
                             >
                                 <div className="overflow-hidden">
-                                    <div className="pb-5 font-h3 px-1 ml-12">
+                                    <div className="pb-5 text-white/90 px-1 ml-4">
                                         {Array.isArray(item.answer) ? (
-                                            <ul className="list-decimal list-inside space-y-2">
+                                            <ol className="list-decimal list-inside space-y-2">
                                                 {item.answer.map((line, i) => (
                                                     <li key={i}>{line}</li>
                                                 ))}
-                                            </ul>
+                                            </ol>
                                         ) : (
                                             <p>{item.answer}</p>
                                         )}

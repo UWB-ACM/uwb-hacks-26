@@ -9,7 +9,7 @@ function MobileBanner({ bannerVisible }: BannerProps) {
     return (
         <>
             {bannerVisible && (
-                <div className="bg-orange-500 text-[9px] text-white font-rubik-mono-one justify-center items-center flex flex-col h-14">
+                <div className="bg-orange-500 text-[9px] text-white justify-center items-center flex flex-col h-14">
                     <p>Shape the Future of ACM!</p>
                     <div className="w-4"></div>
 

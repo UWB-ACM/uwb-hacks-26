@@ -1,4 +1,5 @@
 "use server";
+import "server-only";
 
 import { getSession, saveSession } from "@/src/util/session";
 import { redirect } from "next/navigation";

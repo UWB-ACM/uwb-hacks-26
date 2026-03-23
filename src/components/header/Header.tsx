@@ -4,8 +4,9 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import "../../styles/header.css";
 import Image from "next/image";
-import DesktopBanner from "./DesktopBanner";
-import MobileBanner from "./MobileBanner";
+import Logo from "@/public/Logo.png";
+// import DesktopBanner from "./DesktopBanner";
+// import MobileBanner from "./MobileBanner";
 
 export type HeaderLinkData = { id: string; name: string } & (
     | { url: string }
@@ -18,34 +19,51 @@ export type HeaderLinkData = { id: string; name: string } & (
  * as navigation links.
  * On mobile, this contains a sidebar.
  * @param links - is a list of links to show on the header.
- * @param wrapH1 - should the big "UWB HACKS" be wrapped in an h1?
- *                 This should only really be used on the main page.
+ * @param mainPage - should the header be shown in the main page style?
  * @param banner - should the banner be shown?
  *                 This should only really be used on the main page.
+ * @param bgColor - hex code of the header background color (e.g. #ffffff)
  */
 export default function Header({
     links,
-    wrapH1,
-    banner,
+    mainPage,
+    // banner,
+    bgColor = null,
 }: {
     links: HeaderLinkData[];
-    wrapH1?: boolean;
+    mainPage?: boolean;
     banner?: boolean;
+    bgColor?: string | null;
 }) {
     const [sideNav, setSideNav] = useState(false);
+
+    let headerBackgroundColor;
+    if (mainPage) {
+        headerBackgroundColor = "#0a84dc";
+    } else if (bgColor != null) {
+        headerBackgroundColor = bgColor;
+    } else {
+        headerBackgroundColor = "#84c6ff";
+    }
 
     return (
         <>
             <div className="hidden lg:block">
                 {/* Heading spacer */}
                 <div className="h-28" />
-                <HeaderDesktop links={links} wrapH1={wrapH1} banner={banner} />
+                <HeaderDesktop
+                    links={links}
+                    mainPage={mainPage}
+                    // banner={banner}
+                    bgColor={headerBackgroundColor}
+                />
             </div>
             <div className="block lg:hidden">
                 <HeaderMobile
-                    wrapH1={wrapH1}
                     setSideNav={setSideNav}
-                    banner={banner}
+                    mainPage={mainPage}
+                    // banner={banner}
+                    bgColor={headerBackgroundColor}
                 />
             </div>
 
@@ -59,37 +77,29 @@ export default function Header({
 }
 
 function UWBHacksButton({
-    wrapH1,
+    mainPage,
     mobile,
 }: {
-    wrapH1?: boolean;
+    mainPage?: boolean;
     mobile?: boolean;
 }) {
-    const inner = (
-        <>
-            {/* Using spans so the text stays inline when compressed */}
-            <span>UWB</span>
-            <span className="ml-3">Hacks</span>
-        </>
-    );
-
     return (
         <Link href="/">
-            <button
-                className={
-                    mobile
-                        ? "font-h1 text-3xl tilt-animation scale-up-animation"
-                        : "font-h1 text-5xl scale-up-animation"
-                }
-            >
-                {wrapH1 ? <h1>{inner}</h1> : inner}
-            </button>
+            <Image
+                src={Logo}
+                alt="UWB Hacks 2026: The Future"
+                className={`${mobile ? "tilt-animation" : ""} scale-up-animation ${mainPage ? "w-[50%] sm:w-[40%] md:w-[30%] lg:w-[20%]" : "w-[45%] sm:w-[35%] md:w-[25%] lg:w-[15%]"} top-[28px] absolute`}
+                // Slightly bigger than the real size to allow the scale up animation to work at full resolution.
+                sizes="(min-width: 1000px) 25vw, (min-width: 800px) 35vw, (min-width: 450px) 45vw, 55vw"
+            />
         </Link>
     );
 }
 
 function HeaderLink({ link }: { link: HeaderLinkData }) {
-    const linkClassName = "font-h3 font-medium text-lg scale-up-animation";
+    // TODO: When selected, add border-3 border-white
+    const linkClassName =
+        "font-bold text-xl scale-up-animation rounded-full text-white p-[10px]";
     if ("customOnClick" in link) {
         return (
             <button className={linkClassName} onClick={link.customOnClick}>
@@ -127,19 +137,24 @@ function HeaderLink({ link }: { link: HeaderLinkData }) {
 
 function HeaderDesktop({
     links,
-    wrapH1,
-    banner,
+    mainPage,
+    // banner,
+    bgColor,
 }: {
     links: HeaderLinkData[];
-    wrapH1?: boolean;
+    mainPage?: boolean;
     banner?: boolean;
+    bgColor: string;
 }) {
-    const [bannerVisible, setBannerVisible] = useState(banner || false);
+    // const [bannerVisible, setBannerVisible] = useState(banner || false);
 
     return (
         <nav className="fixed z-999 top-0 w-full">
-            <div className="flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full bg-white/25 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]">
-                <UWBHacksButton wrapH1={wrapH1} />
+            <div
+                className="flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full"
+                style={{ backgroundColor: bgColor }}
+            >
+                <UWBHacksButton mainPage={mainPage} />
 
                 <div className="hidden md:flex gap-x-10 ">
                     {links.map((link) => (
@@ -148,30 +163,35 @@ function HeaderDesktop({
                 </div>
             </div>
 
-            <DesktopBanner
+            {/* <DesktopBanner
                 bannerVisible={bannerVisible}
                 setBannerVisible={setBannerVisible}
-            />
+            /> */}
         </nav>
     );
 }
 
 function HeaderMobile({
-    wrapH1,
+    mainPage,
     setSideNav,
-    banner,
+    // banner,
+    bgColor,
 }: {
-    wrapH1?: boolean;
+    mainPage?: boolean;
     setSideNav: Dispatch<SetStateAction<boolean>>;
-    banner?: boolean;
+    // banner?: boolean;
+    bgColor: string;
 }) {
-    const [bannerVisible] = useState(banner || false);
+    // const [bannerVisible] = useState(banner || false);
 
     return (
         <nav className="">
-            <MobileBanner bannerVisible={bannerVisible} />
-            <div className="flex items-center justify-around lg:justify-between h-28 lg:px-20 w-full min-w-72">
-                <UWBHacksButton wrapH1={wrapH1} mobile />
+            {/* <MobileBanner bannerVisible={bannerVisible} /> */}
+            <div
+                className="flex items-center justify-between lg:justify-between h-28 px-5 lg:px-20 w-full min-w-72"
+                style={{ backgroundColor: bgColor }}
+            >
+                <UWBHacksButton mainPage={mainPage} mobile />
                 <HeaderSidebarButton setSideNav={setSideNav} />
             </div>
         </nav>
@@ -266,7 +286,7 @@ function HeaderSidebar({
 }) {
     return (
         <div
-            className={`bg-orange-300 fixed top-0 w-full h-screen p-5 font-h1 text-3xl transition-transform z-1000`}
+            className={`bg-[#0a84dc] fixed top-0 w-full h-screen p-5 font-h1 text-3xl transition-transform z-1000`}
             style={{
                 transform: sideNav ? undefined : "translate(100%, 0)",
             }}

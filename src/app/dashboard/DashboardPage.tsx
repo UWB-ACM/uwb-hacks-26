@@ -1,4 +1,4 @@
-import { getSession } from "@/src/util/session";
+import { getSession, redirectToLogin } from "@/src/util/session";
 import {
     getAllUsers,
     getPermissionLevel,
@@ -7,7 +7,6 @@ import {
 import React from "react";
 import { hasPermissions, PermissionLevel } from "@/src/util/dataTypes";
 import UserDashboard from "@/src/components/dashboards/UserDashboard";
-import { redirect } from "next/navigation";
 import AdminActions from "@/src/components/dashboards/AdminActions";
 import StaffActions from "@/src/components/dashboards/StaffActions";
 import AdminActionsUser from "@/src/components/dashboards/AdminActionsUser";
@@ -24,7 +23,8 @@ export default async function DashboardPage({
     const session = await getSession();
 
     if (session.user?.id == null) {
-        redirect("/api/auth/google");
+        await redirectToLogin(session);
+        return;
     }
 
     const permission = await getPermissionLevel(session.user.id);

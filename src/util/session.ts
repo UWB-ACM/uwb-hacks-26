@@ -1,9 +1,10 @@
 import "server-only";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { buildKey, redis } from "@/src/util/redis";
 import { NextRequest, NextResponse } from "next/server";
 import { User } from "./dataTypes";
+import { redirect } from "next/navigation";
 
 export const cookieName =
     process.env.NODE_ENV === "development"
@@ -152,4 +153,28 @@ export async function saveSession(data: Session): Promise<void> {
     await redis.set(buildKey("session", cookie.value), JSON.stringify(data), {
         ex: sessionTimeSeconds,
     });
+}
+
+/**
+ * Sends the user to the login page.
+ * This can only be used in server actions or API routes.
+ * In client components, send them to /api/auth/google.
+ *
+ * @param session - is the user's session.
+ */
+export async function redirectToLogin(session: Session): Promise<never> {
+    // Once auth is done, send the user back to the URL they were trying to access.
+    // This is always a URL on the website, so no validation is required.
+    //
+    // The URL the user accessed this page from gets injected into the
+    // header by the middleware.
+    // This is required because we can't access it otherwise.
+    const headerList = await headers();
+    const curURL = headerList.get("x-current-url");
+    if (curURL) {
+        session.redirectAfter = curURL;
+        await saveSession(session);
+    }
+
+    redirect("/api/auth/google");
 }

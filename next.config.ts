@@ -4,7 +4,7 @@ const cspHeader = `
     default-src 'self';
     script-src 'self'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} 'unsafe-inline' https://cdn.strawpoll.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data:;
+    img-src 'self' blob: data: https://s3.amazonaws.com;
     font-src 'self';
     object-src 'none';
     base-uri 'self';
@@ -15,6 +15,11 @@ const cspHeader = `
 `;
 
 const nextConfig: NextConfig = {
+    experimental: {
+        serverActions: {
+            bodySizeLimit: "6mb",
+        },
+    },
     images: {
         formats: ["image/avif", "image/webp"],
         remotePatterns: [
@@ -36,7 +41,21 @@ const nextConfig: NextConfig = {
             },
         ],
     },
-    async headers() {
+    redirects() {
+        return [
+            {
+                source: "/links/yardsign",
+                destination: "/",
+                permanent: false,
+            },
+            {
+                source: "/links/standingbanner",
+                destination: "/",
+                permanent: false,
+            },
+        ];
+    },
+    headers() {
         return [
             {
                 source: "/(.*)",

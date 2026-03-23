@@ -558,7 +558,7 @@ export interface Project {
     submissionURL: string;
 
     /**
-     * Status of the project completion. submitted or not 
+     * Status of the project completion. submitted or not
      */
     projectStatus: boolean;
 
@@ -566,15 +566,14 @@ export interface Project {
      * Url where projects can be demonstrated.
      */
     tryURL: string;
-    
 
     /**
-     *  
+     *
      */
     videoURL: string;
 
     /**
-     * This is their main track 
+     * This is their main track
      */
     mainTrack: number;
 
@@ -584,3 +583,175 @@ export interface Project {
     sideTrack: number;
 }
 
+/**
+ * Represents the student's class standing.
+ * These values correspond to the IDs in the `Class Standing` database table.
+ */
+export enum ClassStanding {
+    Freshman = 1,
+    Sophomore = 2,
+    Junior = 3,
+    Senior = 4,
+    Masters = 5,
+    RunningStart = 6,
+}
+
+/**
+ * Represents the student's area of study.
+ * These values correspond to the IDs in the `Majors` database table.
+ */
+export enum Major {
+    ComputerScience = 1,
+    AppliedComputing = 2,
+    ComputerEngineering = 3,
+    DataScienceVis = 4,
+    Business = 5,
+    OtherSTEM = 6,
+    OtherNonSTEM = 7,
+}
+
+/**
+ * Represents how the user heard about the hackathon.
+ * These values correspond to the IDs in the `Referral Source` database table.
+ */
+export enum ReferralSource {
+    Discord = 1,
+    Email = 2,
+    WordOfMouth = 3,
+    PhysicalPoster = 4,
+    ACM = 5,
+    OtherClub = 6,
+    Other = 7,
+}
+
+/**
+ * Data about a user's application, excluding the user ID.
+ * I.e., this is all the data a user entered themselves on the form.
+ */
+export interface ApplicationData {
+    /**
+     * The applicant's first name.
+     */
+    firstName: string;
+
+    /**
+     * The applicant's last name.
+     */
+    lastName: string;
+
+    /**
+     * The applicant's contact email.
+     */
+    email: string;
+
+    /**
+     * The applicant's phone number (if provided).
+     */
+    phone: string | null;
+
+    /**
+     * The applicant's Discord username for communication during the event.
+     */
+    discordUsername: string;
+
+    /**
+     * The name of the school the applicant attends.
+     */
+    school: string;
+
+    /**
+     * Whether the applicant plans to attend the "Week of Hacking" events
+     * leading up to the main hackathon.
+     */
+    attendingWeekOfHacking: boolean;
+
+    /**
+     * A list of team members the applicant plans to work with,
+     * or null if they are looking for a team.
+     */
+    teamMembers: string | null;
+
+    /**
+     * The applicant's shirt size.
+     */
+    tshirtSize: "XS" | "SM" | "MD" | "LG" | "XL" | "2XL" | "3XL";
+
+    /**
+     * The applicant's personal goals for attending the hackathon.
+     */
+    goals: string;
+
+    /**
+     * The applicant's interest in a no-code option
+     */
+    noCodePreference: "CODE" | "NO CODE" | "NO PREFERENCE";
+
+    /**
+     * A description of the applicant's previous hackathon experience.
+     */
+    hackathonExperience: string;
+
+    /**
+     * Has the applicant attended UWB Hacks before?
+     */
+    previousAttendee: boolean;
+
+    /**
+     * A link to the applicant's portfolio or GitHub (if provided).
+     */
+    portfolioLink: string | null;
+
+    /**
+     * The ID of the applicant's class standing.
+     * @see ClassStanding
+     */
+    classStanding: ClassStanding;
+
+    /**
+     * The ID of the applicant's major.
+     * @see Major
+     */
+    major: Major;
+
+    /**
+     * The ID of the source from which the applicant heard about the event.
+     * @see ReferralSource
+     */
+    referralSource: ReferralSource;
+
+    /**
+     * The file extension of the applicant's uploaded resume,
+     * or null if no resume was uploaded.
+     */
+    resumeType: string | null;
+
+    /**
+     * The applicant's age.
+     */
+    age: number | null;
+
+    /**
+     * The applicant's country of residence.
+     */
+    countryOfResidence: string | null;
+
+    /**
+     * A link to the applicant's LinkedIn profile (if provided).
+     */
+    linkedIn: string | null;
+
+    /**
+     * Has the applicant agreed to the MLH Code of Conduct?
+     */
+    mlhCodeOfConduct: boolean;
+
+    /**
+     * Has the applicant authorized sharing their data with MLH?
+     */
+    mlhDataSharing: boolean;
+
+    /**
+     * Has the applicant opted in to MLH communications?
+     */
+    mlhCommunications: boolean;
+}

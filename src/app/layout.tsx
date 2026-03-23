@@ -1,31 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import React from "react";
-import { Inter, Rubik_Mono_One, Open_Sans } from "next/font/google";
-import "./globals.css";
-import Footer from "../components/Footer";
+import "@/src/styles/globals.css";
 import Consent from "@/src/components/Consent";
-
-const inter = Inter({
-    variable: "--font-inter",
-    subsets: ["latin"],
-    weight: ["400"],
-});
-
-const openSans = Open_Sans({
-    variable: "--font-opensans",
-    subsets: ["latin"],
-    weight: ["400"],
-});
-
-const rubikMonoOne = Rubik_Mono_One({
-    variable: "--font-rubik-mono-one",
-    subsets: ["latin"],
-    weight: ["400"],
-});
 
 const title = "UWB Hacks 2026";
 const description =
-    "Students assemble! We need your skills, NOW! Combine forces and push your potential to the limit at the 10th annual UW Bothell Hackathon, UWB Hacks: The Future 2026!";
+    "Students assemble! We need your skills, NOW! Combine forces and push your potential to the limit at the 10th annual UW Bothell Hackathon, UWB Hacks 2026: The Future!";
 const url = "https://uwbhacks.com/";
 
 export const metadata: Metadata = {
@@ -39,9 +19,9 @@ export const metadata: Metadata = {
         description,
         card: "summary_large_image",
         images: {
-            url: "https://uwbhacks.com/card-image.webp",
-            width: 1984,
-            height: 1208,
+            url: "https://uwbhacks.com/card-image.png",
+            width: 1358,
+            height: 827,
         },
     },
     openGraph: {
@@ -50,16 +30,16 @@ export const metadata: Metadata = {
         description,
         locale: "en_US",
         images: {
-            url: "https://uwbhacks.com/card-image.webp",
-            width: 1984,
-            height: 1208,
+            url: "https://uwbhacks.com/card-image.png",
+            width: 1358,
+            height: 827,
         },
     },
     robots: "max-image-preview:large",
 };
 
 export const viewport: Viewport = {
-    themeColor: "#11c4f8",
+    themeColor: "#84c6ff",
 };
 
 export default function RootLayout({
@@ -69,12 +49,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${inter.variable} ${openSans.variable} ${rubikMonoOne.variable} antialiased w-full`}
-            >
+            <body className={`antialiased w-full`}>
                 <Consent />
                 {children}
-                <Footer />
             </body>
         </html>
     );

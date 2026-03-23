@@ -205,7 +205,7 @@ export default function BuyPage({
                 </div>
 
                 {/* Shopping Cart / Selected Items */}
-                <div className="h-screen w-[30vw] md:w-[20vw] lg:w-[15vw] flex flex-col justify-between bg-neutral-100 border-l border-black sticky top-0">
+                <div className="h-[71vh] w-[30vw] md:w-[20vw] lg:w-[15vw] flex flex-col justify-between bg-neutral-100 border-l border-black sticky top-0 lg:top-28">
                     {/* Selected Items */}
                     <div className="p-4">
                         <h2 className="text-center text-xl md:text-2xl">

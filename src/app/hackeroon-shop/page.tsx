@@ -3,6 +3,7 @@ import React from "react";
 import { getPrizes } from "@/src/util/db/prize";
 import { Metadata } from "next";
 import Header from "@/src/components/header/Header";
+import Footer from "@/src/components/Footer";
 import LinkButton from "@/src/components/dashboards/userdashboard/LinkButton";
 
 export const metadata: Metadata = {
@@ -62,7 +63,7 @@ export default async function PrizesPage() {
                 ]}
             />
 
-            <h1 className="font-san-marino-beach text-5xl text-[#2886c4] text-center mt-8">
+            <h1 className="font-edge-of-the-galaxy text-5xl text-[#2886c4] text-center mt-8">
                 Hackeroon Shop
             </h1>
 
@@ -73,8 +74,8 @@ export default async function PrizesPage() {
             </div>
 
             <p className="mb-5 self-center text-center max-w-[80%] md:max-w-[50%] font-bold">
-                The Hackeroon Shop will be open on Saturday, April 26th from
-                6:00 PM to 8:00 PM and Sunday, April 27th from 9:00 AM to 2:00
+                The Hackeroon Shop will be open on Saturday, April 25th from
+                6:00 PM to 8:00 PM and Sunday, April 26th from 9:00 AM to 2:00
                 PM. Come by the top floor of the ARC to browse and redeem your
                 Hackeroons for prizes in person!
                 <br />
@@ -83,13 +84,16 @@ export default async function PrizesPage() {
                 <br /> Prices also may be subject to change!
             </p>
 
-            <LinkButton href="/hackeroon-guide" text="Hackeroon Guide" />
+            {/* TODO: Add back hackeroon guide */}
+            {/* <LinkButton href="/hackeroon-guide" text="Hackeroon Guide" /> */}
 
             <div className="w-full grow p-8 overflow-scroll overflow-x-hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {prizes.map((prize, index) => (
                     <PrizeCard key={index} prize={prize} />
                 ))}
             </div>
+
+            <Footer />
         </div>
     );
 }

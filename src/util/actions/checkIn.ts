@@ -1,4 +1,5 @@
 "use server";
+import "server-only";
 
 import { getSession } from "@/src/util/session";
 import { addCode, getCodeData, removeCode } from "@/src/util/tempCode";
