@@ -1,8 +1,9 @@
 import React, { Dispatch, RefObject, SetStateAction } from "react";
-import { Track } from "@/src/util/dataTypes";
+
+import { DisplayTrack } from "@/src/components/landing-page/TrackSection";
 
 type TracksNavHeaderProps = {
-    tracks: Track[];
+    tracks: DisplayTrack[];
     tracksNavRef: RefObject<HTMLDivElement | null>;
     selectedTrackIdx: number;
     setSelectedTrackIdx: Dispatch<SetStateAction<number>>;

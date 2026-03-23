@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
-
 // Panel components
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
@@ -19,16 +17,47 @@ import QuestionMark from "./(TracksSectionComponents)/QuestionMark";
 
 // Tab navigation for tracks
 import Tracks from "./(TracksSectionComponents)/TracksTabNavigation/Tracks";
-import { Track } from "@/src/util/dataTypes";
 
 import LivePoll from "./(AboutSectionComponents)/LivePoll";
 import { actionSetTracksAnimation } from "@/src/util/actions/animation";
+
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * Frontend display data for a track (used by landing page).
+ */
+export interface DisplayTrack {
+    /**
+     * name of track
+     */
+    name: string;
+
+    /**
+     * question related to track (helps explain tracks goal)
+     */
+    question: string;
+
+    /**
+     * track description
+     */
+    description: string;
+
+    /**
+     * no code example of track
+     */
+    noCodeExample: string;
+
+    /**
+     * low code / code example of track
+     */
+    lowCodeExample: string;
+}
 
 const TracksSection = ({ noTrackAnimation }: { noTrackAnimation: boolean }) => {
     const panelMargin = "mt-12 md:mt-16";
 
     // tracks contains all relevant information about each of the 6 tracks
-    const tracks: Track[] = tracks_data["tracks"];
+    const tracks: DisplayTrack[] = tracks_data["tracks"];
     const [showTracks, setShowTracks] = useState(false);
     const panelContentRef = useRef<HTMLDivElement | null>(null);
     const tracksNavRef = useRef<HTMLDivElement | null>(null);

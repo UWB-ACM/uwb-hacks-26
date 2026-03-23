@@ -517,33 +517,156 @@ export const typeNameMap: Record<TransactionType, string> = {
 };
 
 /**
- * Structure of each Track record
+ * A track record in the database.
  */
 export interface Track {
     /**
-     * name of track
+     * The track's ID, which is unique to it.
      */
-    name: string;
+    id: number;
 
     /**
-     * question related to track (helps explain tracks goal)
+     * The display name of the track.
      */
-    question: string;
+    trackName: string;
 
     /**
-     * track description
+     * The Devpost tag associated with this track, as it shows
+     * up in the CSV export.
      */
-    description: string;
+    devpostTag: string;
 
     /**
-     * no code example of track
+     * Whether this is a main track (as opposed to a side track).
      */
-    noCodeExample: string;
+    mainTrack: boolean;
 
     /**
-     * low code / code example of track
+     * IDs of judging questions associated with this track.
      */
-    lowCodeExample: string;
+    questions: number[];
+}
+
+/**
+ * A judging question record in the database.
+ */
+export interface JudgingQuestion {
+    /**
+     * The question's ID, which is unique to it.
+     */
+    id: number;
+
+    /**
+     * The question body displayed to the judge.
+     */
+    questionText: string;
+}
+
+/**
+ * A judge assignment linking a judge to a project.
+ */
+export interface JudgeAssignment {
+    /**
+     * The user ID of the judge.
+     */
+    judgeId: number;
+
+    /**
+     * The ID of the assigned project.
+     */
+    projectId: number;
+
+    /**
+     * When the judge completed judging this project (if they have).
+     */
+    completedAt: Date | null;
+}
+
+/**
+ * A judging score for a specific question on a project by a judge.
+ */
+export interface JudgingScore {
+    /**
+     * The ID of the judge who submitted the score.
+     */
+    judgeId: number;
+
+    /**
+     * The ID of the project being scored.
+     */
+    projectId: number;
+
+    /**
+     * The ID of the judging question being answered.
+     */
+    questionId: number;
+
+    /**
+     * The numeric score given (0 to 10, inclusive).
+     */
+    score: number;
+
+    /**
+     * When the score was submitted.
+     */
+    submittedAt: Date;
+}
+
+/**
+ * A project record in the database.
+ */
+export interface Project {
+    /**
+     * The project's ID, which is unique to it.
+     */
+    id: number;
+
+    /**
+     * The title of the project, pulled from Devpost.
+     */
+    projectTitle: string;
+
+    /**
+     * The Devpost submission URL (if it exists).
+     */
+    submissionUrl: string | null;
+
+    /**
+     * Whether the project has been submitted.
+     */
+    submitted: boolean;
+
+    /**
+     * URL of the project's Devpost image (if it exists).
+     */
+    devpostImage: string | null;
+
+    /**
+     * URL where the project can be demonstrated (if it exists).
+     */
+    tryUrl: string | null;
+
+    /**
+     * URL of the project's demo video (if it exists).
+     */
+    videoUrl: string | null;
+
+    /**
+     * The Devpost tag of the project's main track.
+     */
+    mainTrack: string;
+
+    /**
+     * Devpost tags of any side tracks the project is entered in.
+     */
+    sideTracks: string[];
+
+    /**
+     * Email addresses of the team members.
+     * Note: this is the email on Devpost, not necessarily the
+     * email in our account system.
+     */
+    userEmails: string[];
 }
 
 /**
