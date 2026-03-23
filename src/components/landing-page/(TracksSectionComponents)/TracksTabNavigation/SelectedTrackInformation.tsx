@@ -1,9 +1,10 @@
 import React, { RefObject } from "react";
-import { Track } from "@/src/util/dataTypes";
+
+import { DisplayTrack } from "@/src/components/landing-page/TrackSection";
 
 type SelectedTrackInformationProps = {
     selectedTrackRef: RefObject<HTMLDivElement | null>;
-    selectedTrack: Track;
+    selectedTrack: DisplayTrack;
 };
 
 export default function SelectedTrackInformation({

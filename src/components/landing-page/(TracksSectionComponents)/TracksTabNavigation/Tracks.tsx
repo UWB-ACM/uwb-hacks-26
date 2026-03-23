@@ -1,10 +1,10 @@
 import React, { RefObject, useState } from "react";
-import { Track } from "@/src/util/dataTypes";
 import TracksNav from "./TracksNav";
 import SelectedTrackInformation from "./SelectedTrackInformation";
+import { DisplayTrack } from "@/src/components/landing-page/TrackSection";
 
 type TracksProps = {
-    tracks: Track[];
+    tracks: DisplayTrack[];
     tracksNavRef: RefObject<HTMLDivElement | null>;
     selectedTrackRef: RefObject<HTMLDivElement | null>;
 };
