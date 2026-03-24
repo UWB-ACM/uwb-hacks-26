@@ -622,6 +622,11 @@ export interface Project {
     id: number;
 
     /**
+     * The Devpost submission ID (numeric, as it appears in the submission URL).
+     */
+    devpostId: string;
+
+    /**
      * The title of the project, pulled from Devpost.
      */
     projectTitle: string;
@@ -667,6 +672,36 @@ export interface Project {
      * email in our account system.
      */
     userEmails: string[];
+}
+
+/**
+ * A registrant record from the Devpost CSV export.
+ */
+export interface DevpostUser {
+    /**
+     * The record's ID, which is unique to it (does NOT correspond to the users table).
+     */
+    id: number;
+
+    /**
+     * The registrant's first name (if it exists).
+     */
+    firstName: string | null;
+
+    /**
+     * The registrant's last name (if it exists).
+     */
+    lastName: string | null;
+
+    /**
+     * The registrant's email address (unique).
+     */
+    email: string;
+
+    /**
+     * The URL of the registrant's submitted project (if they have one).
+     */
+    projectUrl: string | null;
 }
 
 /**
