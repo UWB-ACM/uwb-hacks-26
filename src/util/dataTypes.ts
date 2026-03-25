@@ -365,6 +365,12 @@ export enum TransactionType {
     StudentInterview = 22,
 
     KeyboardCompetition = 23,
+
+    /**
+     * Easter egg: pressing the two left clouds simultaneously (1010 pattern).
+     * 1010 in binary = 10 in decimal = 10th annual hackathon!
+     */
+    EasterEgg1010 = 24,
 }
 
 /**
@@ -395,6 +401,8 @@ export const valuedTransactionAmounts = {
     [TransactionType.SundayCostumeProfessional]: 100,
     [TransactionType.SundayDemoDay]: 100,
     [TransactionType.SundayAdmissionsBoothPhoto]: 50,
+
+    [TransactionType.EasterEgg1010]: 50,
 } as const;
 
 /**
@@ -429,6 +437,8 @@ export const valuedTransactionLimits: Record<
     [TransactionType.SundayCostumeProfessional]: 1,
     [TransactionType.SundayDemoDay]: 1,
     [TransactionType.SundayAdmissionsBoothPhoto]: 1,
+
+    [TransactionType.EasterEgg1010]: 1,
 };
 
 export const reasonTypeMap = {
@@ -455,6 +465,8 @@ export const reasonTypeMap = {
     "sunday-costume-professional": TransactionType.SundayCostumeProfessional,
     "sunday-demo-day": TransactionType.SundayDemoDay,
     "sunday-admissions-photo": TransactionType.SundayAdmissionsBoothPhoto,
+
+    "easter-egg-1010": TransactionType.EasterEgg1010,
 } as const;
 
 export const reasonNameMap: Record<keyof typeof reasonTypeMap, string> = {
@@ -481,6 +493,8 @@ export const reasonNameMap: Record<keyof typeof reasonTypeMap, string> = {
     "sunday-costume-professional": "Professional Costume (Sunday)",
     "sunday-demo-day": "Demo Day (Sunday)",
     "sunday-admissions-photo": "Admissions Booth Photo (Sunday)",
+
+    "easter-egg-1010": "Easter Egg: 1010",
 };
 
 export const typeNameMap: Record<TransactionType, string> = {
@@ -514,6 +528,8 @@ export const typeNameMap: Record<TransactionType, string> = {
     [TransactionType.SundayDemoDay]: "Demo Day (Sunday)",
     [TransactionType.SundayAdmissionsBoothPhoto]:
         "Admissions Booth Photo (Sunday)",
+
+    [TransactionType.EasterEgg1010]: "Easter Egg: 1010",
 };
 
 /**

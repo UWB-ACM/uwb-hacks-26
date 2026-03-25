@@ -1,5 +1,3 @@
-"use client";
-
 import Image, { StaticImageData } from "next/image";
 import { motion, useInView, useAnimate } from "motion/react";
 import React, { useRef, useEffect, useState } from "react";
@@ -7,19 +5,23 @@ import React, { useRef, useEffect, useState } from "react";
 /**
  * image of cloud positioned based on arguments; cloud slides in when user scrolls
  * @param cloudImage cloud SVG
+ * @param alt - is the alt text for the image
  * @param position whether cloud should be positioned to the left or right
  * @param padding how far cloud should be positioned from left or right; should be percentage (e.g. "25%")
+ * @param onPressChange - is a callback function triggered when the cloud is pressed or reappears (unpressed)
  */
 export default function CloudSlideIn({
     cloudImage,
     alt,
     position,
     padding,
+    onPressChange,
 }: {
     cloudImage: StaticImageData;
     alt: string;
     position: "left" | "right";
     padding: string;
+    onPressChange?: (pressed: boolean) => void;
 }) {
     const triggerRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,7 +35,7 @@ export default function CloudSlideIn({
             />
             <SlideIn triggerRef={triggerRef} position={position}>
                 <Hover>
-                    <ScaleDownOnTap>
+                    <ScaleDownOnTap onPressChange={onPressChange}>
                         <Image
                             src={cloudImage}
                             alt={alt}
@@ -93,8 +95,15 @@ function Hover({ children }: { children: React.ReactNode }) {
     );
 }
 
-function ScaleDownOnTap({ children }: { children: React.ReactNode }) {
-    const [numClicks, setNumClicks] = useState(0);
+function ScaleDownOnTap({
+    children,
+    onPressChange,
+}: {
+    children: React.ReactNode;
+    onPressChange?: (pressed: boolean) => void;
+}) {
+    const [hidden, setHidden] = useState(false);
+    const numClicks = useRef(0);
     const timeoutIDRef = useRef<NodeJS.Timeout | null>(null);
     const [scope, animate] = useAnimate();
 
@@ -111,6 +120,9 @@ function ScaleDownOnTap({ children }: { children: React.ReactNode }) {
     async function disappear() {
         if (!scope.current) return;
 
+        setHidden(true);
+        onPressChange?.(true);
+
         await animate(
             scope.current,
             { opacity: 0.5, scale: 0, rotate: 1440 },
@@ -122,21 +134,22 @@ function ScaleDownOnTap({ children }: { children: React.ReactNode }) {
             { scale: 1, rotate: 0 },
             { delay: 1, duration: 0.25, ease: "easeOut" },
         );
+
+        setHidden(false);
+        onPressChange?.(false);
     }
 
     function handleClick() {
-        setNumClicks((prevNumClicks) => {
-            const newNumClicks = prevNumClicks + 1;
-            if (newNumClicks === 5) disappear();
+        numClicks.current++;
+        if (numClicks.current === 5) disappear();
 
-            // clear previous timeout
-            if (timeoutIDRef.current) clearTimeout(timeoutIDRef.current);
+        // clear previous timeout
+        if (timeoutIDRef.current) clearTimeout(timeoutIDRef.current);
 
-            // set new timeout
-            timeoutIDRef.current = setTimeout(() => setNumClicks(0), 2250);
-
-            return newNumClicks;
-        });
+        // set new timeout
+        timeoutIDRef.current = setTimeout(() => {
+            numClicks.current = 0;
+        }, 2250);
     }
 
     return (
@@ -144,12 +157,12 @@ function ScaleDownOnTap({ children }: { children: React.ReactNode }) {
             ref={scope}
             onClick={handleClick}
             whileTap={
-                numClicks < 5
-                    ? {
+                hidden
+                    ? undefined
+                    : {
                           scale: 0.75,
                           transition: { duration: 0.1, ease: "easeInOut" },
                       }
-                    : undefined
             }
             className="w-full h-full cursor-pointer select-none"
         >
