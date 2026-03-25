@@ -13,6 +13,8 @@ import FlyingCarWithBanner from "@/src/components/landing-page/(AboutSectionComp
 
 import CitySkyline from "@/public/about/skyline.png";
 import Grass from "@/public/Grass.png";
+import Bushes from "@/public/about/Bushes.png";
+import FlowerBushes from "@/public/about/FlowerBushes.png";
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
@@ -131,6 +133,32 @@ export default function AboutSection() {
                     sizes="100vw"
                 />
             </div>
+            {/* Flower bushes */}
+            <div className="w-full bottom-0 left-0 bg-[#0d83db]">
+                <div className="bg-[#bebebe]">
+                    <br></br>
+                    <br></br>
+                </div>
+                <div>
+                    <br></br>
+                </div>
+                <div className="flex justify-center w-full bottom-0 left-0">
+                    <div className="flex w-[120vw] shrink-0">
+                        <Image
+                            src={FlowerBushes}
+                            alt=""
+                            className="w-1/2 h-auto sm:translate-x-5"
+                            sizes="100vw"
+                        />
+                        <Image
+                            src={FlowerBushes}
+                            alt=""
+                            className="w-1/2 h-auto "
+                            sizes="100vw"
+                        />
+                    </div>
+                </div>
+            </div>
             {/* UWB ACM Descriptor Container */}
             <Panel
                 id="uwbacmDescriptionPanel"
@@ -146,7 +174,7 @@ export default function AboutSection() {
                 </PanelHeader>
                 <PanelContent
                     parentPanelId="hackeroonsPanel"
-                    className="px-6 pb-6 pt-0 md:px-20 md:pb-6 md:pt-0 sm:text-xl md:text-2xl"
+                    className="static px-6 pb-12 pt-0 md:px-20 md:pb-6 md:pt-0 sm:text-xl md:text-2xl"
                 >
                     <div className="text-shadow-lg/15">
                         UWB ACM is a chapter of the Association of Computing
@@ -155,12 +183,30 @@ export default function AboutSection() {
                         related to Computer Science. Learn more in our Discord!
                     </div>
                     <Link
-                        className="mx-auto w-fit mt-5 bg-white hover:bg-gray-100 text-[#089719] text-md sm:text-base md:text-2xl lg:text-3xl font-bold sm:py-2 md:py-3 px-6 sm:px-12 md:px-20 rounded-full flex items-center justify-center"
+                        className="mx-auto w-fit mt-5 sm:mb-2 md:mb-15 bg-white hover:bg-gray-100 text-[#089719] text-md sm:text-base md:text-2xl lg:text-3xl font-bold sm:py-2 md:py-3 px-6 sm:px-12 md:px-20 rounded-full flex items-center justify-center"
                         href="https://discord.gg/eZCm7XfJd7"
                         target="_blank"
                     >
                         DISCORD
                     </Link>
+
+                    {/* Bushes appear over Discord button */}
+                    <div className="flex justify-center w-full absolute bottom-0 left-0">
+                        <div className="flex w-[120vw] shrink-0">
+                            <Image
+                                src={Bushes}
+                                alt=""
+                                className="w-1/2 h-auto sm:translate-x-5"
+                                sizes="100vw"
+                            />
+                            <Image
+                                src={Bushes}
+                                alt=""
+                                className="w-1/2 h-auto "
+                                sizes="100vw"
+                            />
+                        </div>
+                    </div>
                 </PanelContent>
             </Panel>
         </div>
