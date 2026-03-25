@@ -1,5 +1,11 @@
 import HomePage from "@/src/app/HomePage";
+import { getPrizes } from "../util/db/prize";
 
 export default async function Page() {
-    return <HomePage />;
+    // The catch is to let this work in builds without databases.
+    const hackeroonPrizes = getPrizes().catch((e) => {
+        console.error(e);
+        return [];
+    });
+    return <HomePage hackeroonPrizes={hackeroonPrizes} />;
 }

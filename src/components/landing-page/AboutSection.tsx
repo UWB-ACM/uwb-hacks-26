@@ -19,6 +19,7 @@ import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 import Link from "next/link";
+import { Prize } from "@/src/util/dataTypes";
 
 import { actionClaimEasterEgg1010 } from "@/src/util/actions/transactions";
 import {
@@ -37,6 +38,8 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/src/components/ui/alert-dialog";
+
+type AboutSectionProp = { hackeroonPrizes: Promise<Prize[]> };
 
 export default function AboutSection() {
     // Track pressed state (clouds in order).
@@ -81,7 +84,6 @@ export default function AboutSection() {
         },
         [checkPattern],
     );
-
     return (
         <div className="bg-[linear-gradient(180deg,#1382DC_0%,#16C2F7_50%,#C3EFFE_100%)]">
             {/* Statistics */}

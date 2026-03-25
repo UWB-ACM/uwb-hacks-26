@@ -6,8 +6,13 @@ import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
 import { ParallaxProvider } from "react-scroll-parallax";
 import FAQSection from "@/src/components/landing-page/FAQSection";
+import { Prize } from "../util/dataTypes";
 
-export default function HomePage() {
+type HomePageProps = {
+    hackeroonPrizes?: Promise<Prize[]>;
+};
+
+export default function HomePage({ hackeroonPrizes }: HomePageProps) {
     return (
         <div className="flex flex-col items-center overflow-hidden">
             <div
@@ -28,7 +33,7 @@ export default function HomePage() {
                     />
 
                     <HeroSection />
-                    <AboutSection />
+                    <AboutSection hackeroonPrizes={hackeroonPrizes} />
                     <FAQSection />
 
                     <Footer className={"bg-[#14c5f8] text-white"} />
