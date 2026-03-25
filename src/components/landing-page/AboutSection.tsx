@@ -15,6 +15,8 @@ import CitySkyline from "@/public/about/skyline.png";
 import Grass from "@/public/Grass.png";
 import Bushes from "@/public/about/Bushes.png";
 import FlowerBushes from "@/public/about/FlowerBushes.png";
+import GrassTuft1 from "@/public/about/Grass1-Dark-Green.png";
+import GrassTuft2 from "@/public/about/Grass2-Dark-Green.png";
 
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
@@ -25,6 +27,8 @@ import Link from "next/link";
 import { Suspense } from "react";
 import HackeroonCarousel from "./(AboutSectionComponents)/HackeroonCarousel/Carousel";
 import { Prize } from "@/src/util/dataTypes";
+import { LeaderboardRecord } from "@/src/util/dataTypes";
+import Leaderboard from "./(AboutSectionComponents)/leaderboard/Leaderboard";
 
 import { actionClaimEasterEgg1010 } from "@/src/util/actions/transactions";
 import {
@@ -44,9 +48,15 @@ import {
     AlertDialogTitle,
 } from "@/src/components/ui/alert-dialog";
 
-type AboutSectionProp = { hackeroonPrizes: Promise<Prize[]> };
+type AboutSectionProp = {
+    hackeroonPrizes: Promise<Prize[]>;
+    leaderboardData: Promise<LeaderboardRecord[]>;
+};
 
-export default function AboutSection({ hackeroonPrizes }: AboutSectionProp) {
+export default function AboutSection({
+    hackeroonPrizes,
+    leaderboardData,
+}: AboutSectionProp) {
     const grassColor = "#089719";
     const gridSquare =
         "aspect-square rounded-[100] bg-white font-glacial-indifference justify-items-center";
@@ -54,7 +64,7 @@ export default function AboutSection({ hackeroonPrizes }: AboutSectionProp) {
     const gridSpan =
         "col-span-full rounded-[100] bg-white font-glacial-indifference justify-items-center";
     const panelHeader = "font-glacial-indifference border-none font-bold";
-    
+
     // Track pressed state (clouds in order).
     const pressedRef = useRef([false, false, false, false]);
     const [easterEggPopup, setEasterEggPopup] = useState<
@@ -254,11 +264,18 @@ export default function AboutSection({ hackeroonPrizes }: AboutSectionProp) {
                                 ></HackeroonCarousel>
                             </Suspense>
                         </PanelContent>
+
+                        <Image
+                            src={GrassTuft2}
+                            alt=""
+                            className="absolute w-25 md:w-30 bottom-0 left-15"
+                            sizes="100vw"
+                        />
                     </Panel>
                     <Panel
                         id="leaderboardPanel"
                         panelBackground="white"
-                        className={gridSquare}
+                        className={`${gridSquare} relative`}
                     >
                         <PanelHeader
                             parentPanelId="leaderboardPanel"
@@ -273,13 +290,32 @@ export default function AboutSection({ hackeroonPrizes }: AboutSectionProp) {
                             parentPanelId="leaderboardPanel"
                             className="gap-x-8 gap-y-4 overflow-hidden"
                         >
-                            {" "}
+                            <Suspense>
+                                <Leaderboard
+                                    leaderboardData={leaderboardData}
+                                ></Leaderboard>
+                            </Suspense>
                         </PanelContent>
+
+                        <div className="absolute bottom-0 left-0 w-full flex px-6">
+                            <Image
+                                src={GrassTuft1}
+                                alt=""
+                                className="absolute bottom-0 left-[10%] w-12 md:w-15"
+                                sizes="100vw"
+                            />
+                            <Image
+                                src={GrassTuft2}
+                                alt=""
+                                className="absolute bottom-0 right-[10%] w-25 md:w-30"
+                                sizes="100vw"
+                            />
+                        </div>
                     </Panel>
                     <Panel
                         id="hackeroonsPanel"
                         panelBackground="white"
-                        className={gridSpan}
+                        className={`${gridSpan} relative`}
                     >
                         <PanelHeader
                             parentPanelId="lastYearsWinnersPanel"
@@ -297,6 +333,31 @@ export default function AboutSection({ hackeroonPrizes }: AboutSectionProp) {
                         >
                             {" "}
                         </PanelContent>
+
+                        <div className="absolute bottom-0 left-0 w-full flex px-6">
+                            {/* two tufts stay together regardless of screen size */}
+                            <div className="absolute bottom-0 left-0 w-full flex px-6">
+                                <Image
+                                    src={GrassTuft2}
+                                    alt=""
+                                    className="absolute bottom-0 left-15 w-25 md:w-30"
+                                    sizes="100vw"
+                                />
+                                <Image
+                                    src={GrassTuft1}
+                                    alt=""
+                                    className="absolute bottom-0 left-50 w-12 md:w-15 hidden md:block"
+                                    sizes="100vw"
+                                />
+                            </div>
+
+                            <Image
+                                src={GrassTuft1}
+                                alt=""
+                                className="absolute bottom-0 right-[8%] w-12 md:w-15"
+                                sizes="100vw"
+                            />
+                        </div>
                     </Panel>
                 </div>
             </div>
