@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -47,7 +48,7 @@ export default function PanelContent({
     }, [long, parentPanelId]);
 
     return (
-        <div ref={panelContentRef} className={clsx("p-6 md:p-10", className)}>
+        <div ref={panelContentRef} className={twMerge(clsx("p-6 md:p-10", className))}>
             {children}
         </div>
     );

@@ -1,11 +1,12 @@
 "use client";
 
+import { ParallaxProvider } from "react-scroll-parallax";
 import Header from "@/src/components/header/Header";
-import Footer from "@/src/components/Footer";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
-import { ParallaxProvider } from "react-scroll-parallax";
+import MeetTheTeamSection from "../components/landing-page/MeetTheTeamSection";
 import FAQSection from "@/src/components/landing-page/FAQSection";
+import Footer from "@/src/components/Footer";
 
 export default function HomePage() {
     return (
@@ -29,6 +30,7 @@ export default function HomePage() {
 
                     <HeroSection />
                     <AboutSection />
+                    <MeetTheTeamSection />
                     <FAQSection />
 
                     <Footer className={"bg-[#14c5f8] text-white"} />
