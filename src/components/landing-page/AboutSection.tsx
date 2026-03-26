@@ -18,6 +18,8 @@ import FlowerBushes from "@/public/about/FlowerBushes.png";
 import GrassTuft1 from "@/public/about/Grass1-Dark-Green.png";
 import GrassTuft2 from "@/public/about/Grass2-Dark-Green.png";
 
+import { FaLock } from "react-icons/fa6";
+
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
@@ -58,7 +60,7 @@ export default function AboutSection({
     leaderboardData,
 }: AboutSectionProp) {
     const gridSquare =
-        "aspect-square rounded-[100] bg-white font-glacial-indifference justify-items-center";
+        "flex flex-col aspect-square rounded-[100] bg-white font-glacial-indifference items-center";
     // used by grid cells that span the ensure row
     const gridSpan =
         "col-span-full rounded-[100] bg-white font-glacial-indifference justify-items-center";
@@ -263,20 +265,22 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="hackeroonPrizePanel"
-                            className="w-full gap-x-8 gap-y-4 overflow-hidden justify-items-center"
+                            className="w-full h-full overflow-hidden items-center justify-center"
                         >
-                            <div className="font-bold text-[var(--grass-color)]">
-                                PRIZES COMING SOON!
-                            </div>
-
                             {/* TODO: remove placeholder once prize are purchased */}
                             {/* <Suspense fallback={<div>Loading</div>}>
                                 <HackeroonCarousel
                                     hackeroonPrizes={hackeroonPrizes}
                                 ></HackeroonCarousel>
-                            </Suspense> */}
+                            </Suspense> */}{" "}
                         </PanelContent>
 
+                        {/* Hackeroon Prizes Placeholder */}
+                        <div className="absolute flex inset-0 items-center justify-center">
+                            <div className="font-bold text-4xl text-center">
+                                Coming Soon!
+                            </div>
+                        </div>
                         <Image
                             src={GrassTuft2}
                             alt=""
@@ -287,7 +291,7 @@ export default function AboutSection({
                     <Panel
                         id="leaderboardPanel"
                         panelBackground="white"
-                        className={`${gridSquare} relative`}
+                        className={gridSquare}
                     >
                         <PanelHeader
                             parentPanelId="leaderboardPanel"
@@ -300,15 +304,23 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="leaderboardPanel"
-                            className="w-full gap-x-8 gap-y-4 overflow-hidden"
+                            className="w-full overflow-hidden"
                         >
-                            <Suspense>
+                            <div className="w-full justify-items-center"></div>
+                            {/* TODO: remove placeholder after hackathon start */}
+                            {/* <Suspense>
                                 <Leaderboard
                                     leaderboardData={leaderboardData}
                                 ></Leaderboard>
-                            </Suspense>
+                            </Suspense> */}
                         </PanelContent>
 
+                        <div className="absolute flex flex-col inset-0 items-center justify-center">
+                            <FaLock size={50} className="m-5"></FaLock>
+                            <div className="font-bold text-xl">
+                                Leaderboard Opens On 4/24!
+                            </div>
+                        </div>
                         <div className="absolute bottom-0 left-0 w-full flex px-6">
                             <Image
                                 src={GrassTuft1}
@@ -327,7 +339,7 @@ export default function AboutSection({
                     <Panel
                         id="lastYearsWinnersPanel"
                         panelBackground="white"
-                        className={`${gridSpan} relative`}
+                        className={gridSpan}
                     >
                         <PanelHeader
                             parentPanelId="lastYearsWinnersPanel"
@@ -341,7 +353,7 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="lastYearsWinnersPanel"
-                            className="flex flex-row w-full gap-x-8 gap-y-4 overflow-hidden justify-evenly"
+                            className="flex flex-row w-full overflow-hidden justify-evenly"
                         >
                             {/* TODO: add winners from last year + linkedin post links */}{" "}
                         </PanelContent>
