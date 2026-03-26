@@ -57,7 +57,6 @@ export default function AboutSection({
     hackeroonPrizes,
     leaderboardData,
 }: AboutSectionProp) {
-    const grassColor = "#089719";
     const gridSquare =
         "aspect-square rounded-[100] bg-white font-glacial-indifference justify-items-center";
     // used by grid cells that span the ensure row
@@ -158,40 +157,48 @@ export default function AboutSection({
                     sizes="100vw"
                 />
             </div>
-            {/* Flower bushes */}
-            <div className="w-full bottom-0 left-0 bg-[#0d83db]">
-                <div className="bg-[#bebebe]">
-                    <br></br>
-                    <br></br>
-                </div>
-                <div>
-                    <br></br>
-                </div>
-                <div className="flex justify-center w-full bottom-0 left-0">
-                    <div className="flex w-[120vw] shrink-0">
-                        <Image
-                            src={FlowerBushes}
-                            alt=""
-                            className="w-1/2 h-auto sm:translate-x-5"
-                            sizes="100vw"
-                        />
-                        <Image
-                            src={FlowerBushes}
-                            alt=""
-                            className="w-1/2 h-auto "
-                            sizes="100vw"
-                        />
+
+            <div className="bg-[var(--grass-color)]">
+                {/* Flower bushes */}
+                <div className="w-full bottom-0 left-0 bg-[var(--grass-color)]">
+                    <div className="flex justify-center w-full bottom-0 left-0">
+                        <div className="flex w-[120vw] shrink-0">
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto sm:translate-x-5"
+                                sizes="100vw"
+                            />
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto "
+                                sizes="100vw"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-center rotate-180 w-full bottom-0 left-0 bg-[#bebebe]">
+                        <div className="flex w-[120vw] shrink-0">
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto sm:translate-x-5"
+                                sizes="100vw"
+                            />
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto "
+                                sizes="100vw"
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-            {/* UWB ACM Descriptor Container */}
-            <div
-                style={{ "--grass-color": grassColor } as React.CSSProperties}
-                className="bg-[var(--grass-color)]"
-            >
+
+                {/* UWB ACM Descriptor Container */}
                 <Panel
                     id="uwbacmDescriptionPanel"
-                    className="flex flex-col items-center text-center text-white bg-[#bebebe] font-glacial-indifference"
+                    className="flex flex-col items-center text-center text-white bg-[#bebebe] font-glacial-indifference lg:pt-3"
                 >
                     <PanelHeader
                         parentPanelId="uwbacmDescriptionPanel"
@@ -221,19 +228,19 @@ export default function AboutSection({
                         </Link>
 
                         {/* Bushes appear over Discord button */}
-                        <div className="flex justify-center w-full absolute bottom-0 left-0">
+                        <div className="pointer-events-none flex justify-center w-full absolute bottom-0 left-0">
                             <div className="flex w-[120vw] shrink-0">
                                 <Image
                                     src={Bushes}
                                     alt=""
                                     className="w-1/2 h-auto sm:translate-x-5"
-                                    sizes="100vw"
+                                    sizes="60vw"
                                 />
                                 <Image
                                     src={Bushes}
                                     alt=""
                                     className="w-1/2 h-auto "
-                                    sizes="100vw"
+                                    sizes="60vw"
                                 />
                             </div>
                         </div>
@@ -243,33 +250,38 @@ export default function AboutSection({
                 {/* Hackathon Information Grid */}
                 <div className="grid py-15 px-15 sm:grid-cols-1 md:grid-cols-2 gap-20 auto-rows-fr">
                     <Panel
-                        id="hackeroonsPanel"
+                        id="hackeroonPrizePanel"
                         panelBackground="white"
                         className={gridSquare}
                     >
                         <PanelHeader
-                            parentPanelId="hackeroonsPanel"
+                            parentPanelId="hackeroonPrizePanel"
                             as="h2"
                             className={`text-[var(--grass-color)] ${panelHeader}`}
                         >
-                            HACKEROONS
+                            HACKEROON PRIZES
                         </PanelHeader>
                         <PanelContent
-                            parentPanelId="hackeroonsPanel"
-                            className="w-full gap-x-8 gap-y-4 overflow-hidden"
+                            parentPanelId="hackeroonPrizePanel"
+                            className="w-full gap-x-8 gap-y-4 overflow-hidden justify-items-center"
                         >
-                            <Suspense fallback={<div>Loading</div>}>
+                            <div className="font-bold text-[var(--grass-color)]">
+                                PRIZES COMING SOON!
+                            </div>
+
+                            {/* TODO: remove placeholder once prize are purchased */}
+                            {/* <Suspense fallback={<div>Loading</div>}>
                                 <HackeroonCarousel
                                     hackeroonPrizes={hackeroonPrizes}
                                 ></HackeroonCarousel>
-                            </Suspense>
+                            </Suspense> */}
                         </PanelContent>
 
                         <Image
                             src={GrassTuft2}
                             alt=""
                             className="absolute w-25 md:w-30 bottom-0 left-15"
-                            sizes="100vw"
+                            sizes="(min-width: 768px) 120px, 100px"
                         />
                     </Panel>
                     <Panel
@@ -302,13 +314,13 @@ export default function AboutSection({
                                 src={GrassTuft1}
                                 alt=""
                                 className="absolute bottom-0 left-[10%] w-12 md:w-15"
-                                sizes="100vw"
+                                sizes="(min-width: 768px) 120px, 100px"
                             />
                             <Image
                                 src={GrassTuft2}
                                 alt=""
                                 className="absolute bottom-0 right-[10%] w-25 md:w-30"
-                                sizes="100vw"
+                                sizes="(min-width: 768px) 120px, 100px"
                             />
                         </div>
                     </Panel>
@@ -341,13 +353,13 @@ export default function AboutSection({
                                     src={GrassTuft2}
                                     alt=""
                                     className="absolute bottom-0 left-15 w-25 md:w-30"
-                                    sizes="100vw"
+                                    sizes="(min-width: 768px) 120px, 100px"
                                 />
                                 <Image
                                     src={GrassTuft1}
                                     alt=""
                                     className="absolute bottom-0 left-50 w-12 md:w-15 hidden md:block"
-                                    sizes="100vw"
+                                    sizes="(min-width: 768px) 120px, 100px"
                                 />
                             </div>
 
@@ -355,7 +367,7 @@ export default function AboutSection({
                                 src={GrassTuft1}
                                 alt=""
                                 className="absolute bottom-0 right-[8%] w-12 md:w-15"
-                                sizes="100vw"
+                                sizes="(min-width: 768px) 120px, 100px"
                             />
                         </div>
                     </Panel>
