@@ -194,7 +194,7 @@ export default function AboutSection({
                     className="flex flex-col items-center text-center text-white bg-[#bebebe] font-glacial-indifference"
                 >
                     <PanelHeader
-                        parentPanelId="hackeroonsPanel"
+                        parentPanelId="uwbacmDescriptionPanel"
                         as="h1"
                         isSectionHeader
                         className="bg-[#bebebe] font-glacial-indifference font-bold text-shadow-lg/15"
@@ -202,7 +202,7 @@ export default function AboutSection({
                         UWB Association for Computing Machinery
                     </PanelHeader>
                     <PanelContent
-                        parentPanelId="hackeroonsPanel"
+                        parentPanelId="uwbacmDescriptionPanel"
                         className="static px-6 pb-12 pt-0 md:px-20 md:pb-6 md:pt-0 sm:text-xl md:text-2xl"
                     >
                         <div className="text-shadow-lg/15">
@@ -256,7 +256,7 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="hackeroonsPanel"
-                            className="gap-x-8 gap-y-4 overflow-hidden"
+                            className="w-full gap-x-8 gap-y-4 overflow-hidden"
                         >
                             <Suspense fallback={<div>Loading</div>}>
                                 <HackeroonCarousel
@@ -288,7 +288,7 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="leaderboardPanel"
-                            className="gap-x-8 gap-y-4 overflow-hidden"
+                            className="w-full gap-x-8 gap-y-4 overflow-hidden"
                         >
                             <Suspense>
                                 <Leaderboard
@@ -313,7 +313,7 @@ export default function AboutSection({
                         </div>
                     </Panel>
                     <Panel
-                        id="hackeroonsPanel"
+                        id="lastYearsWinnersPanel"
                         panelBackground="white"
                         className={`${gridSpan} relative`}
                     >
@@ -329,9 +329,9 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="lastYearsWinnersPanel"
-                            className="gap-x-8 gap-y-4 overflow-hidden"
+                            className="flex flex-row w-full gap-x-8 gap-y-4 overflow-hidden justify-evenly"
                         >
-                            {" "}
+                            {/* TODO: add winners from last year + linkedin post links */}{" "}
                         </PanelContent>
 
                         <div className="absolute bottom-0 left-0 w-full flex px-6">
