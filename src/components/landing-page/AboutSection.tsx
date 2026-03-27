@@ -29,8 +29,11 @@ import Link from "next/link";
 import { Suspense } from "react";
 import HackeroonCarousel from "./(AboutSectionComponents)/HackeroonCarousel/Carousel";
 import { Prize } from "@/src/util/dataTypes";
+
 import { LeaderboardRecord } from "@/src/util/dataTypes";
 import Leaderboard from "./(AboutSectionComponents)/leaderboard/Leaderboard";
+
+import PrevWinners from "./(AboutSectionComponents)/PrevWinners/PrevWinners";
 
 import { actionClaimEasterEgg1010 } from "@/src/util/actions/transactions";
 import {
@@ -60,10 +63,10 @@ export default function AboutSection({
     leaderboardData,
 }: AboutSectionProp) {
     const gridSquare =
-        "flex flex-col aspect-square rounded-[100] bg-white font-glacial-indifference items-center";
+        "flex flex-col aspect-square w-full rounded-[100] bg-white font-glacial-indifference items-center";
     // used by grid cells that span the ensure row
     const gridSpan =
-        "col-span-full rounded-[100] bg-white font-glacial-indifference justify-items-center";
+        "col-span-full w-full rounded-[100] bg-white font-glacial-indifference justify-items-center";
     const panelHeader = "font-glacial-indifference border-none font-bold";
 
     // Track pressed state (clouds in order).
@@ -222,7 +225,7 @@ export default function AboutSection({
                             our Discord!
                         </div>
                         <Link
-                            className="mx-auto w-fit mt-5 sm:mb-2 md:mb-15 bg-white hover:bg-gray-100 text-[var(--grass-color)] text-md sm:text-base md:text-2xl lg:text-3xl font-bold sm:py-2 md:py-3 px-6 sm:px-12 md:px-20 rounded-full flex items-center justify-center"
+                            className="flex items-center justify-center mx-auto w-fit mt-5 sm:mb-2 md:mb-15 px-6 sm:px-12 md:px-20 sm:py-2 md:py-3 rounded-full bg-white hover:bg-gray-100 text-md sm:text-base md:text-2xl lg:text-3xl font-bold text-[var(--grass-color)]"
                             href="https://discord.gg/eZCm7XfJd7"
                             target="_blank"
                         >
@@ -250,7 +253,7 @@ export default function AboutSection({
                 </Panel>
 
                 {/* Hackathon Information Grid */}
-                <div className="grid py-15 px-15 sm:grid-cols-1 md:grid-cols-2 gap-20 auto-rows-fr">
+                <div className="grid py-15 px-15 sm:grid-cols-1 md:grid-cols-2 gap-20">
                     <Panel
                         id="hackeroonPrizePanel"
                         panelBackground="white"
@@ -353,9 +356,9 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="lastYearsWinnersPanel"
-                            className="flex flex-row w-full overflow-hidden justify-evenly"
+                            className="flex-1 overflow-hidden"
                         >
-                            {/* TODO: add winners from last year + linkedin post links */}{" "}
+                            <PrevWinners></PrevWinners>
                         </PanelContent>
 
                         <div className="absolute bottom-0 left-0 w-full flex px-6">
