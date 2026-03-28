@@ -33,7 +33,7 @@ function LinkButton({
         <Link
             href={href}
             className={twMerge(
-                "flex items-center justify-center mx-auto w-fit mt-5 px-6 py-3 rounded-full border-2 border-[var(--grass-color)] bg-white hover:bg-gray-100 sm:text-sm text-md font-bold text-[var(--grass-color)] m-2",
+                "flex justify-center mx-2 my-1 px-6 py-3 rounded-full border-2 border-[var(--grass-color)] bg-white hover:bg-gray-100 sm:text-sm text-md font-bold text-[var(--grass-color)] text-center",
                 className,
             )}
             target="_blank"
@@ -86,7 +86,7 @@ const projects: Project[] = [
         link: "https://devpost.com/software/ecoloop",
     },
     {
-        id: "insH",
+        id: "INSH",
         title: "I.N.S.H.",
         description:
             "A 2D cooperative puzzle game where two players work together to save the world.",
@@ -97,7 +97,7 @@ const projects: Project[] = [
 
 export default function PrevWinners() {
     const headerStyle =
-        "flex font-bold font-glacial-indifference justify-center bg-transparent";
+        "flex font-bold font-glacial-indifference justify-center bg-transparent p-3";
 
     const contentStyle =
         "grid grid-cols-1 md:grid-cols-[1fr_30%] gap-5 items-center";
@@ -124,14 +124,16 @@ export default function PrevWinners() {
                     className="w-full h-auto object-cover"
                     sizes="100vw"
                 />
-                <div className="flex flex-row col-span-1">
+                <div className="flex flex-col md:flex-row col-span-1">
                     <LinkButton
                         href={project.link}
                         text={`View ${project.title}`}
+                        className="w-full md:w-1/2"
                     />
                     <LinkButton
                         href="https://uwb-hacks-save-the-world.devpost.com/project-gallery"
                         text={`View All Projects!`}
+                        className="w-full md:w-1/2"
                     />
                 </div>
             </PanelContent>

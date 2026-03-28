@@ -63,10 +63,10 @@ export default function AboutSection({
     leaderboardData,
 }: AboutSectionProp) {
     const gridSquare =
-        "flex flex-col aspect-square w-full rounded-[100] bg-white font-glacial-indifference items-center";
+        "flex flex-col w-full rounded-[75] bg-white font-glacial-indifference items-center";
     // used by grid cells that span the ensure row
     const gridSpan =
-        "col-span-full w-full rounded-[100] bg-white font-glacial-indifference justify-items-center";
+        "col-span-full w-full rounded-[75] bg-white font-glacial-indifference justify-items-center";
     const panelHeader = "font-glacial-indifference border-none font-bold";
 
     // Track pressed state (clouds in order).
@@ -253,7 +253,7 @@ export default function AboutSection({
                 </Panel>
 
                 {/* Hackathon Information Grid */}
-                <div className="grid py-15 px-15 sm:grid-cols-1 md:grid-cols-2 gap-20">
+                <div className="grid py-15 px-[5vw] sm:grid-cols-1 md:grid-cols-2 gap-y-[10vw] md:gap-y-[5vw] gap-[5vw]">
                     <Panel
                         id="hackeroonPrizePanel"
                         panelBackground="white"
@@ -264,32 +264,29 @@ export default function AboutSection({
                             as="h2"
                             className={`text-[var(--grass-color)] ${panelHeader}`}
                         >
-                            HACKEROON PRIZES
+                            HACKEROON
+                            <br />
+                            PRIZES
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="hackeroonPrizePanel"
-                            className="w-full h-full overflow-hidden items-center justify-center"
+                            className="w-full h-full overflow-hidden grid place-content-center font-bold text-4xl text-center"
                         >
-                            {/* TODO: remove placeholder once prize are purchased */}
                             {/* <Suspense fallback={<div>Loading</div>}>
                                 <HackeroonCarousel
                                     hackeroonPrizes={hackeroonPrizes}
                                 ></HackeroonCarousel>
-                            </Suspense> */}{" "}
+                            </Suspense> */}
+                            Coming Soon!
                         </PanelContent>
-
-                        {/* Hackeroon Prizes Placeholder */}
-                        <div className="absolute flex inset-0 items-center justify-center">
-                            <div className="font-bold text-4xl text-center">
-                                Coming Soon!
-                            </div>
+                        <div className="w-full">
+                            <Image
+                                src={GrassTuft2}
+                                alt=""
+                                className="w-25 md:w-30 ml-15"
+                                sizes="(min-width: 768px) 120px, 100px"
+                            />
                         </div>
-                        <Image
-                            src={GrassTuft2}
-                            alt=""
-                            className="absolute w-25 md:w-30 bottom-0 left-15"
-                            sizes="(min-width: 768px) 120px, 100px"
-                        />
                     </Panel>
                     <Panel
                         id="leaderboardPanel"
@@ -307,34 +304,29 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="leaderboardPanel"
-                            className="w-full overflow-hidden"
+                            className="w-full overflow-hidden grid place-content-center"
                         >
-                            <div className="w-full justify-items-center"></div>
-                            {/* TODO: remove placeholder after hackathon start */}
                             {/* <Suspense>
                                 <Leaderboard
                                     leaderboardData={leaderboardData}
                                 ></Leaderboard>
                             </Suspense> */}
-                        </PanelContent>
-
-                        <div className="absolute flex flex-col inset-0 items-center justify-center">
-                            <FaLock size={50} className="m-5"></FaLock>
-                            <div className="font-bold text-xl">
+                            <FaLock size={50} className="m-5 mx-auto" />
+                            <div className="font-bold text-xl text-center">
                                 Leaderboard Opens On 4/24!
                             </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full flex px-6">
+                        </PanelContent>
+                        <div className="w-full flex justify-between">
                             <Image
                                 src={GrassTuft1}
                                 alt=""
-                                className="absolute bottom-0 left-[10%] w-12 md:w-15"
+                                className="ml-[10%] w-12 md:w-15"
                                 sizes="(min-width: 768px) 120px, 100px"
                             />
                             <Image
                                 src={GrassTuft2}
                                 alt=""
-                                className="absolute bottom-0 right-[10%] w-25 md:w-30"
+                                className="mr-[10%] w-25 md:w-30"
                                 sizes="(min-width: 768px) 120px, 100px"
                             />
                         </div>
@@ -347,7 +339,7 @@ export default function AboutSection({
                         <PanelHeader
                             parentPanelId="lastYearsWinnersPanel"
                             as="h2"
-                            className={`text-[var(--grass-color)] ${panelHeader}`}
+                            className={`text-[var(--grass-color)] ${panelHeader} pb-3 mb:pb-3`}
                             long
                         >
                             <div>
@@ -356,14 +348,14 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="lastYearsWinnersPanel"
-                            className="flex-1 overflow-hidden"
+                            className="flex-1 overflow-hidden pt-0 md:pt-0 w-full"
                         >
                             <PrevWinners></PrevWinners>
                         </PanelContent>
 
                         <div className="absolute bottom-0 left-0 w-full flex px-6">
                             {/* two tufts stay together regardless of screen size */}
-                            <div className="absolute bottom-0 left-0 w-full flex px-6">
+                            <div className="pointer-events-none absolute bottom-0 left-0 w-full flex px-6">
                                 <Image
                                     src={GrassTuft2}
                                     alt=""

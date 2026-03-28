@@ -17,7 +17,7 @@ export default function DetailSelector({ items }: DetailPanelProps) {
 
     return (
         <div className="grid auto-rows-auto">
-            <div className="flex w-full justify-evenly overflow-auto">
+            <div className="w-full flex justify-evenly flex-wrap">
                 {items.map((item) => (
                     <div
                         key={item.id}
@@ -26,7 +26,7 @@ export default function DetailSelector({ items }: DetailPanelProps) {
                             selectedId === item.id
                                 ? "bg-blue-100"
                                 : "hover:bg-gray-100"
-                        }`}
+                        } hover:cursor-pointer`}
                     >
                         {item.header}
                     </div>
