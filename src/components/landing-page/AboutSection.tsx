@@ -13,6 +13,27 @@ import FlyingCarWithBanner from "@/src/components/landing-page/(AboutSectionComp
 
 import CitySkyline from "@/public/about/skyline.png";
 import Grass from "@/public/Grass.png";
+import Bushes from "@/public/about/Bushes.png";
+import FlowerBushes from "@/public/about/FlowerBushes.png";
+import GrassTuft1 from "@/public/about/Grass1-Dark-Green.png";
+import GrassTuft2 from "@/public/about/Grass2-Dark-Green.png";
+
+import { FaLock } from "react-icons/fa6";
+
+import Panel from "./(AboutSectionComponents)/Panel/Panel";
+import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
+import PanelContent from "./(AboutSectionComponents)/Panel/Content";
+
+import Link from "next/link";
+
+import { Suspense } from "react";
+import HackeroonCarousel from "./(AboutSectionComponents)/HackeroonCarousel/Carousel";
+import { Prize } from "@/src/util/dataTypes";
+
+import { LeaderboardRecord } from "@/src/util/dataTypes";
+import Leaderboard from "./(AboutSectionComponents)/leaderboard/Leaderboard";
+
+import PrevWinners from "./(AboutSectionComponents)/PrevWinners/PrevWinners";
 
 import { actionClaimEasterEgg1010 } from "@/src/util/actions/transactions";
 import {
@@ -23,7 +44,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/src/components/ui/dialog";
-import Link from "next/link";
 import {
     AlertDialog,
     AlertDialogContent,
@@ -33,7 +53,22 @@ import {
     AlertDialogTitle,
 } from "@/src/components/ui/alert-dialog";
 
-export default function AboutSection() {
+type AboutSectionProp = {
+    hackeroonPrizes: Promise<Prize[]>;
+    leaderboardData: Promise<LeaderboardRecord[]>;
+};
+
+export default function AboutSection({
+    hackeroonPrizes,
+    leaderboardData,
+}: AboutSectionProp) {
+    const gridSquare =
+        "flex flex-col w-full rounded-[75] bg-white font-glacial-indifference items-center";
+    // used by grid cells that span the ensure row
+    const gridSpan =
+        "col-span-full w-full rounded-[75] bg-white font-glacial-indifference justify-items-center";
+    const panelHeader = "font-glacial-indifference border-none font-bold";
+
     // Track pressed state (clouds in order).
     const pressedRef = useRef([false, false, false, false]);
     const [easterEggPopup, setEasterEggPopup] = useState<
@@ -76,9 +111,9 @@ export default function AboutSection() {
         },
         [checkPattern],
     );
-
     return (
         <div className="bg-[linear-gradient(180deg,#1382DC_0%,#16C2F7_50%,#C3EFFE_100%)]">
+            {/* Statistics */}
             <div className="mt-[10vmin] space-y-[8vmin] xl:space-y-[4vmin]">
                 <CloudSlideIn
                     cloudImage={ParticipantsCloud}
@@ -128,55 +163,223 @@ export default function AboutSection() {
                 />
             </div>
 
-            {/* Easter Egg 1010 Popup */}
-            <AlertDialog
-                open={easterEggOpen}
-                onOpenChange={(open) => {
-                    setEasterEggOpen(open);
-                }}
-            >
-                <AlertDialogContent className="max-w-[90%] sm:max-w-[425px] z-1000">
-                    <AlertDialogHeader>
-                        <AlertDialogTitle className="text-center text-2xl font-bold text-[#0d83db]">
-                            1010₂ = 10₁₀
-                        </AlertDialogTitle>
-                        <AlertDialogDescription className="text-center">
-                            Binary{" "}
-                            <span className="font-mono font-bold">1010</span> is{" "}
-                            <span className="font-bold">10</span> in decimal,
-                            just like our{" "}
-                            <span className="font-bold text-[#0d83db]">
-                                10th annual hackathon!
-                            </span>
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    {easterEggPopup === "success" ? (
-                        <p className="text-center text-green-600 font-semibold">
-                            50 Hackeroons added to your account!
-                        </p>
-                    ) : (
-                        <p className="text-center text-amber-600 font-semibold">
-                            Sign in, then try again to claim your Hackeroons!
-                        </p>
-                    )}
-                    <AlertDialogFooter className="sm:justify-center">
-                        {easterEggPopup === "success" ? (
-                            <button
-                                className="bg-[#0d83db] hover:bg-[#0a6ab8] text-white font-bold py-2 px-8 rounded-full transition-colors"
-                                onClick={() => setEasterEggOpen(false)}
-                            >
-                                Nice!
-                            </button>
-                        ) : (
-                            <Link href="/api/auth/google">
-                                <button className="bg-[#0d83db] hover:bg-[#0a6ab8] text-white font-bold py-2 px-8 rounded-full transition-colors">
-                                    Sign In
-                                </button>
-                            </Link>
-                        )}
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <div className="bg-[var(--grass-color)]">
+                {/* Flower bushes */}
+                <div className="w-full bottom-0 left-0 bg-[var(--grass-color)]">
+                    <div className="flex justify-center w-full bottom-0 left-0">
+                        <div className="flex w-[120vw] shrink-0">
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto sm:translate-x-5"
+                                sizes="100vw"
+                            />
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto "
+                                sizes="100vw"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-center rotate-180 w-full bottom-0 left-0 bg-[#bebebe]">
+                        <div className="flex w-[120vw] shrink-0">
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto sm:translate-x-5"
+                                sizes="100vw"
+                            />
+                            <Image
+                                src={FlowerBushes}
+                                alt=""
+                                className="w-1/2 h-auto "
+                                sizes="100vw"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* UWB ACM Descriptor Container */}
+                <Panel
+                    id="uwbacmDescriptionPanel"
+                    className="flex flex-col items-center text-center text-white bg-[#bebebe] font-glacial-indifference lg:pt-3"
+                >
+                    <PanelHeader
+                        parentPanelId="uwbacmDescriptionPanel"
+                        as="h1"
+                        isSectionHeader
+                        className="bg-[#bebebe] font-glacial-indifference font-bold text-shadow-lg/15"
+                    >
+                        UWB Association for Computing Machinery
+                    </PanelHeader>
+                    <PanelContent
+                        parentPanelId="uwbacmDescriptionPanel"
+                        className="static px-6 pb-12 pt-0 md:px-20 md:pb-6 md:pt-0 sm:text-xl md:text-2xl"
+                    >
+                        <div className="text-shadow-lg/15">
+                            UWB ACM is a chapter of the Association of Computing
+                            Machinery at UWB dedicated to creating events and
+                            providing insight into academics, research, and
+                            careers related to Computer Science. Learn more in
+                            our Discord!
+                        </div>
+                        <Link
+                            className="flex items-center justify-center mx-auto w-fit mt-5 sm:mb-2 md:mb-15 px-6 sm:px-12 md:px-20 sm:py-2 md:py-3 rounded-full bg-white hover:bg-gray-100 text-md sm:text-base md:text-2xl lg:text-3xl font-bold text-[var(--grass-color)]"
+                            href="https://discord.gg/eZCm7XfJd7"
+                            target="_blank"
+                        >
+                            DISCORD
+                        </Link>
+
+                        {/* Bushes appear over Discord button */}
+                        <div className="pointer-events-none flex justify-center w-full absolute bottom-0 left-0">
+                            <div className="flex w-[120vw] shrink-0">
+                                <Image
+                                    src={Bushes}
+                                    alt=""
+                                    className="w-1/2 h-auto sm:translate-x-5"
+                                    sizes="60vw"
+                                />
+                                <Image
+                                    src={Bushes}
+                                    alt=""
+                                    className="w-1/2 h-auto "
+                                    sizes="60vw"
+                                />
+                            </div>
+                        </div>
+                    </PanelContent>
+                </Panel>
+
+                {/* Hackathon Information Grid */}
+                <div className="grid py-15 px-[5vw] sm:grid-cols-1 md:grid-cols-2 gap-y-[10vw] md:gap-y-[5vw] gap-[5vw]">
+                    <Panel
+                        id="hackeroonPrizePanel"
+                        panelBackground="white"
+                        className={gridSquare}
+                    >
+                        <PanelHeader
+                            parentPanelId="hackeroonPrizePanel"
+                            as="h2"
+                            className={`text-[var(--grass-color)] ${panelHeader}`}
+                        >
+                            HACKEROON
+                            <br />
+                            PRIZES
+                        </PanelHeader>
+                        <PanelContent
+                            parentPanelId="hackeroonPrizePanel"
+                            className="w-full h-full overflow-hidden grid place-content-center font-bold text-4xl text-center"
+                        >
+                            {/* <Suspense fallback={<div>Loading</div>}>
+                                <HackeroonCarousel
+                                    hackeroonPrizes={hackeroonPrizes}
+                                ></HackeroonCarousel>
+                            </Suspense> */}
+                            Coming Soon!
+                        </PanelContent>
+                        <div className="w-full">
+                            <Image
+                                src={GrassTuft2}
+                                alt=""
+                                className="w-25 md:w-30 ml-15"
+                                sizes="(min-width: 768px) 120px, 100px"
+                            />
+                        </div>
+                    </Panel>
+                    <Panel
+                        id="leaderboardPanel"
+                        panelBackground="white"
+                        className={gridSquare}
+                    >
+                        <PanelHeader
+                            parentPanelId="leaderboardPanel"
+                            as="h2"
+                            className={`text-[var(--grass-color)] ${panelHeader}`}
+                        >
+                            <div>
+                                HACKEROON <br></br> LEADERBOARD
+                            </div>
+                        </PanelHeader>
+                        <PanelContent
+                            parentPanelId="leaderboardPanel"
+                            className="w-full overflow-hidden grid place-content-center"
+                        >
+                            {/* <Suspense>
+                                <Leaderboard
+                                    leaderboardData={leaderboardData}
+                                ></Leaderboard>
+                            </Suspense> */}
+                            <FaLock size={50} className="m-5 mx-auto" />
+                            <div className="font-bold text-xl text-center">
+                                Leaderboard Opens On 4/24!
+                            </div>
+                        </PanelContent>
+                        <div className="w-full flex justify-between">
+                            <Image
+                                src={GrassTuft1}
+                                alt=""
+                                className="ml-[10%] w-12 md:w-15"
+                                sizes="(min-width: 768px) 120px, 100px"
+                            />
+                            <Image
+                                src={GrassTuft2}
+                                alt=""
+                                className="mr-[10%] w-25 md:w-30"
+                                sizes="(min-width: 768px) 120px, 100px"
+                            />
+                        </div>
+                    </Panel>
+                    <Panel
+                        id="lastYearsWinnersPanel"
+                        panelBackground="white"
+                        className={gridSpan}
+                    >
+                        <PanelHeader
+                            parentPanelId="lastYearsWinnersPanel"
+                            as="h2"
+                            className={`text-[var(--grass-color)] ${panelHeader} pb-3 mb:pb-3`}
+                            long
+                        >
+                            <div>
+                                LAST YEAR&apos;S <br></br> PROJECTS
+                            </div>
+                        </PanelHeader>
+                        <PanelContent
+                            parentPanelId="lastYearsWinnersPanel"
+                            className="flex-1 overflow-hidden pt-0 md:pt-0 w-full"
+                        >
+                            <PrevWinners></PrevWinners>
+                        </PanelContent>
+
+                        <div className="absolute bottom-0 left-0 w-full flex px-6">
+                            {/* two tufts stay together regardless of screen size */}
+                            <div className="pointer-events-none absolute bottom-0 left-0 w-full flex px-6">
+                                <Image
+                                    src={GrassTuft2}
+                                    alt=""
+                                    className="absolute bottom-0 left-15 w-25 md:w-30"
+                                    sizes="(min-width: 768px) 120px, 100px"
+                                />
+                                <Image
+                                    src={GrassTuft1}
+                                    alt=""
+                                    className="absolute bottom-0 left-50 w-12 md:w-15 hidden md:block"
+                                    sizes="(min-width: 768px) 120px, 100px"
+                                />
+                            </div>
+
+                            <Image
+                                src={GrassTuft1}
+                                alt=""
+                                className="absolute bottom-0 right-[8%] w-12 md:w-15"
+                                sizes="(min-width: 768px) 120px, 100px"
+                            />
+                        </div>
+                    </Panel>
+                </div>
+            </div>
         </div>
     );
 }
