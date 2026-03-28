@@ -43,6 +43,8 @@ export default function PanelContent({
                 // to avoid an uncomfortable delay.
                 start: long ? "10% 80%" : "30% 80%",
             },
+            force3D: true,
+            rotation: 0.01
         });
         // parentPanelId only passed into dependency array to satisfy ESLint. value of parentPanelId will never be changed within this component
     }, [long, parentPanelId]);
