@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 
 import Panel from "../(AboutSectionComponents)/Panel/Panel";
@@ -8,6 +10,9 @@ import Image from "next/image";
 import FlyingCarMobileTablet from "@/public/clouds/FlyingCarCloud_MobileTablet.png"
 
 import { cn } from "@/src/util/utils";
+import Link from "next/link";
+
+import gsap from "gsap";
 
 interface committeeMember {
     name: string;
@@ -25,6 +30,57 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
     const panelHeaderStyles = "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent";
     const panelContentStyles = "p-0 md:p-0 grow relative overflow-hidden";
 
+    // panelContentRef is used to get width of panelContent container; this width is used in committee member "rotating" animation
+    const panelContentRef = useRef<HTMLDivElement | null>(null);
+    const [panelContentWidth, setPanelContentWidth] = useState(0);
+
+    // set new panelContent width whenever screen size changes
+    // this is to make sure that animation never ends early or way too late
+    useEffect(() => {
+        const el = panelContentRef.current;
+        if (!el) return;
+
+        const onResize = () => setPanelContentWidth(el.offsetWidth);
+        onResize();
+
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
+
+    // animation logic: handles revolving committeeMember icons
+    const committeeMemberIconsRef = useRef<HTMLDivElement | null>(null);
+    const tlRef = useRef<gsap.core.Timeline | null>(null);
+    useEffect(() => {
+        const el = committeeMemberIconsRef.current;
+
+        // kill timeline if committeeMemberIcons reference or panelContentWidth state has not been set
+        if (!el || panelContentWidth <= 0) {
+            tlRef.current?.kill();
+            tlRef.current = null;
+            return;
+        }
+
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+        tlRef.current = tl;
+        tl.set(el, { x: panelContentWidth });
+        tl.to(el, { x: "-100%", duration: 10, ease: "linear" });
+
+        return () => {
+            tl.kill();
+            if (tlRef.current === tl) tlRef.current = null;
+        };
+    }, [panelContentWidth]);
+
+    const [selectedMemberIdx, setSelectedMemberIdx] = useState<number | null>(null);
+    const onMouseEnter = (hoveredIdx: number) => {
+        tlRef.current?.pause();
+        setSelectedMemberIdx(hoveredIdx);
+    }
+    const onMouseLeave = () => {
+        tlRef.current?.resume();
+        setSelectedMemberIdx(null);
+    }
+
     return (
         <div className="relative block lg:hidden mx-auto w-[90%] md:w-3/4">
             <Image src={FlyingCarMobileTablet} alt="" className="w-full h-full" />
@@ -38,8 +94,61 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
                 >
                     MEET THE TEAM
                 </PanelHeader>
-                <PanelContent parentPanelId={"meetTheTeamPanelMobileTablet"} className={panelContentStyles}>
-                    bleh
+                <PanelContent
+                    parentPanelId={"meetTheTeamPanelMobileTablet"}
+                    className={panelContentStyles + " flex flex-col pt-2 md:pt-2"}
+                >
+                    {/* this div is only used to be a reference to retrieve the panelContent's width */}
+                    <div
+                        className="relative w-full h-[30%] shrink-0"
+                        ref={panelContentRef}
+                    >
+                        <div
+                            ref={committeeMemberIconsRef}
+                            className="h-full flex gap-x-[5vmin] px-5"
+                        >
+                            {committeeMembers.map((committeeMember, idx) => {
+                                return (
+                                    <Link
+                                        key={idx}
+                                        href={committeeMember["link"]}
+                                        className="relative h-full mx-auto aspect-square border-black border rounded-full cursor-pointer hover:scale-110 duration-300"
+                                        onMouseEnter={() => onMouseEnter(idx)}
+                                        onMouseLeave={() => onMouseLeave()}
+                                    >
+                                        <Image
+                                            src={committeeMember.image_path}
+                                            alt=""
+                                            fill
+                                            sizes="(min-width: 768px) 14vmin, 18vmin"
+                                        />
+                                    </Link>
+                                );
+                            })}
+                        </div>
+
+                        <div className="absolute top-0 left-0 w-[10%] h-full bg-[linear-gradient(90deg,rgba(244,253,255,1)_0%,rgba(244,253,255,1)_50%,rgba(244,253,255,0)_100%)]" />
+                        <div className="absolute top-0 right-0 w-[10%] h-full bg-[linear-gradient(260deg,rgba(244,253,255,1)_0%,rgba(244,253,255,1)_50%,rgba(244,253,255,0)_100%)]" />
+                    </div>
+
+                    <div className="grow h-full grid place-content-center text-shadow-md lg:text-lg xl:text-xl text-center">
+                        {selectedMemberIdx !== null ?
+                            <>
+                                <p className="lg:text-xl xl:text-2xl font-semibold">{committeeMembers[selectedMemberIdx]["name"]}</p>
+                                <p>
+                                    {
+                                        committeeMembers[selectedMemberIdx]["roles"].map((role, jdx) =>
+                                            <span key={jdx}>
+                                                {role}{(jdx !== committeeMembers[selectedMemberIdx]["roles"].length - 1) && ", "}
+                                            </span>)
+                                    }
+                                </p>
+                            </> :
+                            <p>
+                                Hover over one of our wonderful hackathon organizers to learn more about them!
+                            </p>
+                        }
+                    </div>
                 </PanelContent>
             </Panel>
         </div>
