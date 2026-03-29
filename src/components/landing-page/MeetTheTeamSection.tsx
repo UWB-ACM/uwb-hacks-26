@@ -30,10 +30,22 @@ const committeeMembers = [
 ]
 
 const MeetTheTeamSection = () => {
+    const panelStyles = {
+        "panel": "flex flex-col absolute top-0 left-1/2 border-0",
+        "header": "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent",
+        "content": "p-0 md:p-0 grow relative overflow-hidden"
+    }
+
     return (
         <div className="my-[12vmin]">
-            <MeetTheTeamCloudDesktop committeeMembers={committeeMembers} />
-            <MeetTheTeamCloudMobileTablet committeeMembers={committeeMembers} />
+            <MeetTheTeamCloudDesktop
+                panelStyles={panelStyles}
+                committeeMembers={committeeMembers}
+            />
+            <MeetTheTeamCloudMobileTablet
+                panelStyles={panelStyles}
+                committeeMembers={committeeMembers}
+            />
         </div >
     );
 };

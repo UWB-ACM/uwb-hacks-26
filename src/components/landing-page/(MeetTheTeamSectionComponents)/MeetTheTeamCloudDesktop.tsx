@@ -12,22 +12,14 @@ import { cn } from "@/src/util/utils";
 import gsap from "gsap";
 import Link from "next/link";
 
-interface committeeMember {
-    name: string;
-    image_path: string;
-    roles: string[];
-    link: string;
-}
+import { committeeMember } from "./Committees";
 
 interface MeetTheTeamCloudDesktopProps {
     committeeMembers: committeeMember[];
+    panelStyles: Record<"panel" | "header" | "content", string>;
 }
 
-const MeetTheTeamCloudDesktop = ({ committeeMembers }: MeetTheTeamCloudDesktopProps) => {
-    const panelStyles = "flex flex-col absolute top-0 left-1/2 border-0";
-    const panelHeaderStyles = "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent";
-    const panelContentStyles = "p-0 md:p-0 grow relative overflow-hidden";
-
+const MeetTheTeamCloudDesktop = ({ committeeMembers, panelStyles }: MeetTheTeamCloudDesktopProps) => {
     // panelContentRef is used to get height of panelContent container; this height is used in committee member "rotating" animation
     const panelContentRef = useRef<HTMLDivElement | null>(null);
     const [panelContentHeight, setPanelContentHeight] = useState(0);
@@ -70,13 +62,14 @@ const MeetTheTeamCloudDesktop = ({ committeeMembers }: MeetTheTeamCloudDesktopPr
     }, [panelContentHeight]);
 
     const [selectedMemberIdx, setSelectedMemberIdx] = useState<number | null>(null);
-    const onMouseEnter = (hoveredIdx: number) => {
-        tlRef.current?.pause();
-        setSelectedMemberIdx(hoveredIdx);
-    }
-    const onMouseLeave = () => {
-        tlRef.current?.resume();
-        setSelectedMemberIdx(null);
+    const handleClick = (hoveredIdx: number) => {
+        if (selectedMemberIdx === null) {
+            tlRef.current?.pause();
+            setSelectedMemberIdx(hoveredIdx);
+        } else {
+            tlRef.current?.resume();
+            setSelectedMemberIdx(null);
+        }
     }
 
     return (
@@ -84,17 +77,17 @@ const MeetTheTeamCloudDesktop = ({ committeeMembers }: MeetTheTeamCloudDesktopPr
             <Image src={FlyingCarDesktop} alt="" className="w-full h-full" />
 
             {/* Safe Content Area */}
-            <Panel id={"meetTheTeamPanelDesktop"} className={cn(panelStyles, "lg:translate-y-[70%] xl:translate-y-[65%] -translate-x-1/2 lg:w-[85%] xl:w-[85%] lg:h-[51.5%] xl:h-[54%]")}>
+            <Panel id={"meetTheTeamPanelDesktop"} className={cn(panelStyles["panel"], "lg:translate-y-[70%] xl:translate-y-[65%] -translate-x-1/2 lg:w-[85%] xl:w-[85%] lg:h-[51.5%] xl:h-[54%]")}>
                 <PanelHeader
                     parentPanelId={"meetTheTeamPanelDesktop"}
                     as={"h2"}
-                    className={panelHeaderStyles}
+                    className={panelStyles["header"]}
                 >
                     MEET THE TEAM
                 </PanelHeader>
                 <PanelContent
                     parentPanelId={"meetTheTeamPanelDesktop"}
-                    className={panelContentStyles + " flex"}
+                    className={cn(panelStyles["content"], "flex")}
                 >
                     {/* this div is only used to be a reference to retrieve the panelContent's height */}
                     <div
@@ -107,12 +100,10 @@ const MeetTheTeamCloudDesktop = ({ committeeMembers }: MeetTheTeamCloudDesktopPr
                         >
                             {committeeMembers.map((committeeMember, idx) => {
                                 return (
-                                    <Link
+                                    <div
                                         key={idx}
-                                        href={committeeMember["link"]}
-                                        className="relative w-3/5 mx-auto aspect-square border-black border rounded-full cursor-pointer hover:scale-110 duration-300"
-                                        onMouseEnter={() => onMouseEnter(idx)}
-                                        onMouseLeave={() => onMouseLeave()}
+                                        className={`relative w-3/5 mx-auto aspect-square border-black border rounded-full cursor-pointer hover:scale-110 duration-300 ${selectedMemberIdx === idx && "scale-110"}`}
+                                        onClick={() => handleClick(idx)}
                                     >
                                         <Image
                                             src={committeeMember.image_path}
@@ -120,7 +111,7 @@ const MeetTheTeamCloudDesktop = ({ committeeMembers }: MeetTheTeamCloudDesktopPr
                                             fill
                                             sizes="(min-width: 1200px) 12vw, (min-width: 1000px) 17vw"
                                         />
-                                    </Link>
+                                    </div>
                                 );
                             })}
                         </div>
@@ -132,7 +123,12 @@ const MeetTheTeamCloudDesktop = ({ committeeMembers }: MeetTheTeamCloudDesktopPr
                     <div className="grow h-full grid place-content-center text-shadow-md lg:text-lg xl:text-xl">
                         {selectedMemberIdx !== null ?
                             <>
-                                <p className="lg:text-xl xl:text-2xl font-semibold">{committeeMembers[selectedMemberIdx]["name"]}</p>
+                                <Link
+                                    href={committeeMembers[selectedMemberIdx]["link"]}
+                                    className="lg:text-xl xl:text-2xl font-semibold hover:underline underline-offset-2 text-blue-400"
+                                >
+                                    {committeeMembers[selectedMemberIdx]["name"]}
+                                </Link>
                                 <p>
                                     {
                                         committeeMembers[selectedMemberIdx]["roles"].map((role, jdx) =>

@@ -14,22 +14,14 @@ import Link from "next/link";
 
 import gsap from "gsap";
 
-interface committeeMember {
-    name: string;
-    image_path: string;
-    roles: string[];
-    link: string;
-}
+import { committeeMember } from "./Committees";
 
 interface MeetTheTeamCloudMobileTabletProps {
     committeeMembers: committeeMember[];
+    panelStyles: Record<"panel" | "header" | "content", string>;
 }
 
-const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobileTabletProps) => {
-    const panelStyles = "flex flex-col absolute top-0 left-1/2 border-0";
-    const panelHeaderStyles = "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent";
-    const panelContentStyles = "p-0 md:p-0 grow relative overflow-hidden";
-
+const MeetTheTeamCloudMobileTablet = ({ committeeMembers, panelStyles }: MeetTheTeamCloudMobileTabletProps) => {
     // panelContentRef is used to get width of panelContent container; this width is used in committee member "rotating" animation
     const panelContentRef = useRef<HTMLDivElement | null>(null);
     const [panelContentWidth, setPanelContentWidth] = useState(0);
@@ -63,7 +55,7 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
         const tl = gsap.timeline({ repeat: -1, repeatDelay: 0 });
         tlRef.current = tl;
         tl.set(el, { x: panelContentWidth });
-        tl.to(el, { x: "-100%", duration: 10, ease: "linear" });
+        tl.to(el, { x: -el.scrollWidth, duration: 10, ease: "linear" });
 
         return () => {
             tl.kill();
@@ -72,13 +64,14 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
     }, [panelContentWidth]);
 
     const [selectedMemberIdx, setSelectedMemberIdx] = useState<number | null>(null);
-    const onMouseEnter = (hoveredIdx: number) => {
-        tlRef.current?.pause();
-        setSelectedMemberIdx(hoveredIdx);
-    }
-    const onMouseLeave = () => {
-        tlRef.current?.resume();
-        setSelectedMemberIdx(null);
+    const handleClick = (hoveredIdx: number) => {
+        if (selectedMemberIdx === null) {
+            tlRef.current?.pause();
+            setSelectedMemberIdx(hoveredIdx);
+        } else {
+            tlRef.current?.resume();
+            setSelectedMemberIdx(null);
+        }
     }
 
     return (
@@ -86,17 +79,17 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
             <Image src={FlyingCarMobileTablet} alt="" className="w-full h-full" />
 
             {/* Safe Content Area */}
-            <Panel id={"meetTheTeamPanelMobileTablet"} className={cn(panelStyles, "translate-y-[40%] md:translate-y-[41%] -translate-x-1/2 w-[78%] md:w-[70%] h-[65%] md:h-[65%]")}>
+            <Panel id={"meetTheTeamPanelMobileTablet"} className={cn(panelStyles["panel"], "translate-y-[40%] md:translate-y-[41%] -translate-x-1/2 w-[78%] md:w-[70%] h-[65%] md:h-[65%]")}>
                 <PanelHeader
                     parentPanelId={"meetTheTeamPanelMobileTablet"}
                     as={"h2"}
-                    className={panelHeaderStyles}
+                    className={panelStyles["header"]}
                 >
                     MEET THE TEAM
                 </PanelHeader>
                 <PanelContent
                     parentPanelId={"meetTheTeamPanelMobileTablet"}
-                    className={panelContentStyles + " flex flex-col pt-2 md:pt-2"}
+                    className={cn(panelStyles["content"], "flex flex-col pt-2 md:pt-2")}
                 >
                     {/* this div is only used to be a reference to retrieve the panelContent's width */}
                     <div
@@ -109,12 +102,10 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
                         >
                             {committeeMembers.map((committeeMember, idx) => {
                                 return (
-                                    <Link
+                                    <div
                                         key={idx}
-                                        href={committeeMember["link"]}
-                                        className="relative h-full mx-auto aspect-square border-black border rounded-full cursor-pointer hover:scale-110 duration-300"
-                                        onMouseEnter={() => onMouseEnter(idx)}
-                                        onMouseLeave={() => onMouseLeave()}
+                                        className={`relative h-full mx-auto aspect-square border-black border rounded-full cursor-pointer hover:scale-110 duration-300 ${selectedMemberIdx === idx && "scale-110"}`}
+                                        onClick={() => handleClick(idx)}
                                     >
                                         <Image
                                             src={committeeMember.image_path}
@@ -122,7 +113,7 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
                                             fill
                                             sizes="(min-width: 768px) 14vmin, 18vmin"
                                         />
-                                    </Link>
+                                    </div>
                                 );
                             })}
                         </div>
@@ -134,7 +125,13 @@ const MeetTheTeamCloudMobileTablet = ({ committeeMembers }: MeetTheTeamCloudMobi
                     <div className="grow h-full grid place-content-center text-shadow-md lg:text-lg xl:text-xl text-center">
                         {selectedMemberIdx !== null ?
                             <>
-                                <p className="lg:text-xl xl:text-2xl font-semibold">{committeeMembers[selectedMemberIdx]["name"]}</p>
+                                <Link
+                                    href={committeeMembers[selectedMemberIdx]["link"]}
+                                    target="_"
+                                    className="lg:text-xl xl:text-2xl font-semibold underline underline-offset-2 text-blue-400"
+                                >
+                                    {committeeMembers[selectedMemberIdx]["name"]}
+                                </Link>
                                 <p>
                                     {
                                         committeeMembers[selectedMemberIdx]["roles"].map((role, jdx) =>

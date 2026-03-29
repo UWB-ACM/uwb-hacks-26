@@ -475,3 +475,10 @@ export const committees = [
         ],
     },
 ];
+
+export interface committeeMember {
+    name: string;
+    image_path: string;
+    roles: string[];
+    link: string;
+}
