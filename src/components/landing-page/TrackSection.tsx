@@ -54,7 +54,7 @@ export interface DisplayTrack {
 }
 
 const TracksSection = ({ noTrackAnimation }: { noTrackAnimation: boolean }) => {
-    const panelMargin = "mt-12 md:mt-16";
+    const panelPadding = "py-6 md:py-10";
 
     // tracks contains all relevant information about each of the tracks
     const tracks: DisplayTrack[] = tracks_data["tracks"];
@@ -63,7 +63,7 @@ const TracksSection = ({ noTrackAnimation }: { noTrackAnimation: boolean }) => {
     // const livePollRef = useRef<HTMLDivElement | null>(null);
 
     return (
-        <Panel id="tracksPanel" className={panelMargin} panelColor="white">
+        <Panel id="tracksPanel" className={panelPadding} panelColor="white">
             <PanelHeader
                 parentPanelId="tracksPanel"
                 as="h2"
