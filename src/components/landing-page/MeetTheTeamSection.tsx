@@ -6,7 +6,7 @@ import gsap from "gsap";
 
 import Image from "next/image";
 import FlyingCarDesktop from "@/public/clouds/FlyingCarCloud_Desktop.png";
-import FlyingCarMobileTablet from "@/public/clouds/FlyingCarCloud_MobileTablet.png"
+import FlyingCarMobileTablet from "@/public/clouds/FlyingCarCloud_MobileTablet.png";
 
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
@@ -15,57 +15,75 @@ import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 import { cn } from "@/src/util/utils";
 
 // TODO: fill out actual committeeMember info
-// this is temporary, will replace with committees list in (MeetTheTeamSection)/Committees.tsx and import list in mobile/tablet and desktop MeetTheTeam components rather than passing in as props
+// this is temporary, will replace with committees list in (MeetTheTeamSectionComponents)/Committees.tsx and import list in mobile/tablet and desktop MeetTheTeam components rather than passing in as props
 const committeeMembers = [
     {
-        "name": "Breanna Powell",
-        "roles": ["Marketing Lead", "Local Arrangements Member", "Production Management Member", "Sponsorships Outreach Member"],
-        "image_path": "/MeetTheTeamPhotos/breanna-powell.jpg",
-        "link": "https://www.linkedin.com/in/breanna-powell-wa/",
+        name: "Breanna Powell",
+        roles: [
+            "Marketing Lead",
+            "Local Arrangements Member",
+            "Production Management Member",
+            "Sponsorships Outreach Member",
+        ],
+        image_path: "/MeetTheTeamPhotos/breanna-powell.jpg",
+        link: "https://www.linkedin.com/in/breanna-powell-wa/",
     },
     {
-        "name": "Chin Chadalavada",
-        "roles": ["Sponsorships Outreach Lead"],
-        "image_path": "/MeetTheTeamPhotos/chinmayee-chadalavada.jpg",
-        "link": "https://www.linkedin.com/in/chinmayee-chadalavada-4279a4243/",
+        name: "Chin Chadalavada",
+        roles: ["Sponsorships Outreach Lead"],
+        image_path: "/MeetTheTeamPhotos/chinmayee-chadalavada.jpg",
+        link: "https://www.linkedin.com/in/chinmayee-chadalavada-4279a4243/",
     },
     {
-        "name": "Hannah Kim",
-        "roles": ["Production Management Lead"],
-        "image_path": "/MeetTheTeamPhotos/hannah-kim.jpg",
-        "link": "https://www.linkedin.com/in/hannah-hanul/",
+        name: "Hannah Kim",
+        roles: ["Production Management Lead"],
+        image_path: "/MeetTheTeamPhotos/hannah-kim.jpg",
+        link: "https://www.linkedin.com/in/hannah-hanul/",
     },
     {
-        "name": "Sai Bathina",
-        "roles": ["BCA", "Avanade Rep", "Content and Design Co-lead"],
-        "image_path": "/MeetTheTeamPhotos/sai-bathina.jpg",
-        "link": "https://www.linkedin.com/in/saikanishkbathina/",
+        name: "Sai Bathina",
+        roles: ["BCA", "Avanade Rep", "Content and Design Co-lead"],
+        image_path: "/MeetTheTeamPhotos/sai-bathina.jpg",
+        link: "https://www.linkedin.com/in/saikanishkbathina/",
     },
     {
-        "name": "Simon Dao",
-        "roles": ["Website Development Lead"],
-        "image_path": "/MeetTheTeamPhotos/simon-dao.jpg",
-        "link": "https://www.linkedin.com/in/simon-dao/",
+        name: "Simon Dao",
+        roles: ["Website Development Lead"],
+        image_path: "/MeetTheTeamPhotos/simon-dao.jpg",
+        link: "https://www.linkedin.com/in/simon-dao/",
     },
     {
-        "name": "Vinaya Chava",
-        "roles": ["Local Arrangements Lead"],
-        "image_path": "/MeetTheTeamPhotos/vinaya-chava.jpg",
-        "link": "https://www.linkedin.com/in/vinayachava/",
-    }
-]
+        name: "Vinaya Chava",
+        roles: ["Local Arrangements Lead"],
+        image_path: "/MeetTheTeamPhotos/vinaya-chava.jpg",
+        link: "https://www.linkedin.com/in/vinayachava/",
+    },
+];
 
 const MeetTheTeamSection = () => {
-    const panelStyles = "flex flex-col absolute top-0 left-1/2 border-0 translate-y-[40%] md:translate-y-[41%] lg:translate-y-[70%] xl:translate-y-[65%] -translate-x-1/2 w-[78%] md:w-[70%] lg:w-[85%] xl:w-[85%] h-[65%] md:h-[65%] lg:h-[51.5%] xl:h-[54%]";
-    const panelHeaderStyles = "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent";
-    const panelContentStyles = "relative grow flex p-0 md:p-0 overflow-hidden"
+    const panelStyles =
+        "flex flex-col absolute top-0 left-1/2 border-0 translate-y-[40%] md:translate-y-[41%] lg:translate-y-[70%] xl:translate-y-[65%] -translate-x-1/2 w-[78%] md:w-[70%] lg:w-[85%] xl:w-[85%] h-[65%] md:h-[65%] lg:h-[51.5%] xl:h-[54%]";
+    const panelHeaderStyles =
+        "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent";
+    const panelContentStyles = "relative grow flex p-0 md:p-0 overflow-hidden";
 
+    // passed into mobile/tablet and desktop versions as prop to get...
+    // - height of panelContent element on desktop
+    // - width of panelContent elemnent on mobile/tablet
     const panelContentRef = useRef<HTMLDivElement | null>(null);
-    const [selectedMemberIdx, setSelectedMemberIdx] = useState<number | null>(null);
-    const committeeMemberIconsRef = useRef<HTMLDivElement | null>(null);
-    const tlRef = useRef<gsap.core.Timeline | null>(null);
+
+    // keeps track of currently selected memberIcon
+    // set to null when no one is selected
+    const [selectedMemberIdx, setSelectedMemberIdx] = useState<number | null>(
+        null,
+    );
     const selectedMemberIdxRef = useRef<number | null>(null);
     selectedMemberIdxRef.current = selectedMemberIdx;
+
+    // committeeMemberIconsRef references revolving element
+    // committeeMemberIconsRef is used by GSAP timeline, tlRef.current, to perform the animation
+    const committeeMemberIconsRef = useRef<HTMLDivElement | null>(null);
+    const tlRef = useRef<gsap.core.Timeline | null>(null);
 
     // isMobile state logic
     // sets isMobile to true when viewport width is < 1000, otherwise false
@@ -75,6 +93,7 @@ const MeetTheTeamSection = () => {
         const handleResize = () => {
             const width = window.innerWidth;
             setIsMobile(width < 1000);
+
             selectedMemberIdxRef.current = null;
             setSelectedMemberIdx(null);
             tlRef.current?.resume();
@@ -85,6 +104,8 @@ const MeetTheTeamSection = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    // initialize animation timeline
+    // calls buildTimeline() function whenever committeeMemberIconsRef.current resizes; makes sure that animation's transform is always correct
     useEffect(() => {
         const el = committeeMemberIconsRef.current;
         if (!el) {
@@ -106,10 +127,18 @@ const MeetTheTeamSection = () => {
 
             if (isMobile) {
                 gsap.set(el, { x: 0 });
-                tl.fromTo(el, { x: 0 }, { x: -half, duration: 10, ease: "none" });
+                tl.fromTo(
+                    el,
+                    { x: 0 },
+                    { x: -half, duration: 10, ease: "none" },
+                );
             } else {
                 gsap.set(el, { y: -half });
-                tl.fromTo(el, { y: -half }, { y: 0, duration: 10, ease: "none" });
+                tl.fromTo(
+                    el,
+                    { y: -half },
+                    { y: 0, duration: 10, ease: "none" },
+                );
             }
 
             if (selectedMemberIdxRef.current !== null) {
@@ -136,15 +165,30 @@ const MeetTheTeamSection = () => {
             tlRef.current?.resume();
             setSelectedMemberIdx(null);
         }
-    }
+    };
 
     return (
         <div className="my-[12vmin] relative mx-auto w-[90%] md:w-[75%] lg:w-[80%] xl:w-[60%]">
-            {isMobile ?
-                <Image src={FlyingCarMobileTablet} alt="" className="w-full h-full" /> :
-                <Image src={FlyingCarDesktop} alt="" className="w-full h-full" />
-            }
+            {/* conditionally render respective FlyingCar image */}
+            {isMobile ? (
+                <Image
+                    src={FlyingCarMobileTablet}
+                    alt=""
+                    className="w-full h-full"
+                />
+            ) : (
+                <Image
+                    src={FlyingCarDesktop}
+                    alt=""
+                    className="w-full h-full"
+                />
+            )}
 
+            {/*
+                Panel component is absolutely positioned on top of FlyingCar image
+                
+                safe content area is established via panelStyles variable through all the "translate-y"s, "w-[XX%]"s, and "h-[XX%]"s. makes sure that all content never overflows out of cloud image
+            */}
             <Panel id={"meetTheTeamPanel"} className={panelStyles}>
                 <PanelHeader
                     parentPanelId={"meetTheTeamPanel"}
@@ -155,16 +199,21 @@ const MeetTheTeamSection = () => {
                 </PanelHeader>
                 <PanelContent
                     parentPanelId={"meetTheTeamPanel"}
-                    className={cn(panelContentStyles, isMobile && "flex-col pt-2 md:pt-2")}
+                    className={cn(
+                        panelContentStyles,
+                        isMobile && "flex-col pt-2 md:pt-2",
+                    )}
                 >
-                    {!isMobile ?
+                    {/* TODO: remove committeeMembers prop and import committees list @ (MeetTheTeamSectionComponents)/Committees.tsx once actual committee member info is filled out */}
+                    {!isMobile ? (
                         <MeetTheTeamCloudDesktop
                             committeeMembers={committeeMembers}
                             panelContentRef={panelContentRef}
                             committeeMemberIconsRef={committeeMemberIconsRef}
                             handleClick={handleClick}
                             selectedMemberIdx={selectedMemberIdx}
-                        /> :
+                        />
+                    ) : (
                         <MeetTheTeamCloudMobileTablet
                             committeeMembers={committeeMembers}
                             panelContentRef={panelContentRef}
@@ -172,10 +221,10 @@ const MeetTheTeamSection = () => {
                             handleClick={handleClick}
                             selectedMemberIdx={selectedMemberIdx}
                         />
-                    }
+                    )}
                 </PanelContent>
             </Panel>
-        </div >
+        </div>
     );
 };
 

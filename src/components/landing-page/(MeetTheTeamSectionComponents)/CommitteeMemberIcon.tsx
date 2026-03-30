@@ -12,7 +12,7 @@ const CommitteeMemberIcon = ({
     idx,
     committeeMember,
     isSelected,
-    handleClick
+    handleClick,
 }: CommitteeMemberIconProps) => {
     return (
         <div
@@ -25,7 +25,8 @@ const CommitteeMemberIcon = ({
                 fill
                 sizes="(min-width: 1200px) 12vw, (min-width: 1000px) 17vw"
             />
-        </div>);
-}
+        </div>
+    );
+};
 
 export default CommitteeMemberIcon;
