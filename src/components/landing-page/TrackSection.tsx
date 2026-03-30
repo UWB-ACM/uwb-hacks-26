@@ -41,16 +41,6 @@ export interface DisplayTrack {
      * track description
      */
     description: string;
-
-    /**
-     * no code example of track
-     */
-    noCodeExample: string;
-
-    /**
-     * low code / code example of track
-     */
-    lowCodeExample: string;
 }
 
 const TracksSection = ({ noTrackAnimation }: { noTrackAnimation: boolean }) => {
@@ -60,7 +50,6 @@ const TracksSection = ({ noTrackAnimation }: { noTrackAnimation: boolean }) => {
     const tracks: DisplayTrack[] = tracks_data["tracks"];
     const tracksNavRef = useRef<HTMLDivElement | null>(null);
     const selectedTrackRef = useRef<HTMLDivElement | null>(null);
-    // const livePollRef = useRef<HTMLDivElement | null>(null);
 
     return (
         <Panel id="tracksPanel" className={panelPadding} panelColor="white">
@@ -78,8 +67,6 @@ const TracksSection = ({ noTrackAnimation }: { noTrackAnimation: boolean }) => {
                 tracksNavRef={tracksNavRef}
                 selectedTrackRef={selectedTrackRef}
             />
-
-            {/* <LivePoll livePollRef={livePollRef} /> */}
         </Panel>
     );
 };
