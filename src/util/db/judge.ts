@@ -106,7 +106,7 @@ export async function getScores(judgeId: number): Promise<JudgingScore[] | null>
     const data = await sql`SELECT * FROM judging_scores WHERE judge_id = ${judgeId}`;
     
     if (data.length === 0) {
-        return null
+        return null;
     }
 
     return data.map((entry) => ({
@@ -128,7 +128,8 @@ export async function completeAssignment(
     judgeId: number,
     projectId: number,
 ): Promise<void> {
-    // TODO: implement function
+    const now = new Date();
+    await sql`UPDATE judge_assignments SET completed_at = ${now} WHERE judge_id = ${judgeId} AND project_id = ${projectId}`;
 }
 
 /**
@@ -137,16 +138,38 @@ export async function completeAssignment(
  * @returns a Track object, or null if not found.
  */
 export async function getTrack(trackId: number): Promise<Track | null> {
-    // TODO: implement function
-    return null;
+    const data = await sql`SELECT * FROM tracks WHERE id = ${trackId}`;
+
+    if (data.length === 0) {
+        return null;
+    }
+
+    const row = data[0]
+    return {
+        id : row.id,
+        trackName : row.track_name,
+        devpostTag : row.devpost_tag,
+        mainTrack : row.main_track,
+        questions : row.questions
+    }
 }
 
 /**
  * Returns all tracks.
  */
-export async function getAllTracks(): Promise<Track[]> {
-    // TODO: implement function
-    return [];
+export async function getAllTracks(): Promise<Track[] | null> {
+    const data = await sql`SELECT * FROM tracks`;
+
+    if (data.length === 0) {
+        return null
+    }
+    return data.map((row) => ({
+        id: row.id,
+        trackName: row.track_name,
+        devpostTag: row.devpost_tag,
+        mainTrack: row.main_track,
+        questions: row.questions,
+    }));
 }
 
 /**
@@ -163,7 +186,17 @@ export async function getJudgingQuestions(): Promise<JudgingQuestion[]> {
  */
 export async function getTrackQuestions(
     trackId: number,
-): Promise<JudgingQuestion[]> {
-    // TODO: implement function
-    return [];
+): Promise<JudgingQuestion[] | null> {
+
+    const data = await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT questions FROM tracks WHERE id=${trackId})`;
+    
+    if (data.length === 0) {
+        return null;
+    }
+
+    return data.map((row) => ({
+        id : row.id,
+        questionText : row.question_text
+    }));
+
 }
