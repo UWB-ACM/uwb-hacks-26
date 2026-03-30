@@ -15,19 +15,19 @@ const CommitteeMemberInfo = ({ committeeMember }: CommitteeMemberInfoProps) => {
         null;
 
     return (
-        <div className="grow h-full grid place-content-center text-shadow-md lg:text-lg xl:text-xl text-center lg:text-left">
+        <div className="flex h-full min-h-0 grow flex-col overflow-y-auto overflow-x-hidden text-shadow-md text-center lg:text-left">
             {committeeMember ?
-                <>
+                <div className="m-auto w-full max-w-full p-3">
                     <Link
                         href={committeeMember["link"]}
                         target="_"
-                        className="lg:text-xl xl:text-2xl font-semibold underline lg:no-underline lg:hover:underline underline-offset-2 text-blue-400"
+                        className="text-lg lg:text-xl font-semibold underline lg:no-underline lg:hover:underline underline-offset-2 text-blue-400"
                     >
                         {committeeMember["name"]}
                     </Link>
-                    <p>{roles}</p>
-                </> :
-                <p className="text-base md:text-lg lg:text-center">
+                    <p className="text-base md:text-lg">{roles}</p>
+                </div> :
+                <p className="m-auto p-3 text-base md:text-lg lg:text-center">
                     Select one of our wonderful hackathon organizers to learn more about them!
                 </p>
             }

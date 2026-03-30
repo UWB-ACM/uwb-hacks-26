@@ -16,7 +16,7 @@ const CommitteeMemberIcon = ({
 }: CommitteeMemberIconProps) => {
     return (
         <div
-            className={`relative w-3/5 mx-auto aspect-square border-black border rounded-full cursor-pointer hover:scale-110 duration-300 ${isSelected && "scale-110"}`}
+            className={`relative w-3/5 mx-auto aspect-square border-black border rounded-full overflow-hidden cursor-pointer hover:scale-110 duration-300 ${isSelected && "scale-110"}`}
             onClick={() => handleClick(idx)}
         >
             <Image

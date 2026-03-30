@@ -21,21 +21,28 @@ const MeetTheTeamCloudMobileTablet = ({
     return (
         <>
             <div
-                className="relative w-full h-[42%] md:h-[45%] pt-2 shrink-0"
+                className="relative w-full h-[42%] md:h-[45%] py-3 shrink-0 overflow-hidden"
                 ref={panelContentRef}
             >
                 <div
                     ref={committeeMemberIconsRef}
-                    className="h-full flex gap-x-[5vmin] px-5"
+                    className="flex h-full w-max will-change-transform"
                 >
-                    {committeeMembers.map((committeeMember, idx) =>
-                        <CommitteeMemberIcon
-                            key={idx}
-                            idx={idx}
-                            committeeMember={committeeMember}
-                            isSelected={idx === selectedMemberIdx}
-                            handleClick={handleClick}
-                        />
+                    {[0, 1].map((dup) =>
+                        <div
+                            key={dup}
+                            className="flex h-full shrink-0 gap-x-[5vmin] pl-[5vmin]"
+                        >
+                            {committeeMembers.map((committeeMember, idx) =>
+                                <CommitteeMemberIcon
+                                    key={`${dup}-${idx}`}
+                                    idx={idx}
+                                    committeeMember={committeeMember}
+                                    isSelected={idx === selectedMemberIdx}
+                                    handleClick={handleClick}
+                                />
+                            )}
+                        </div>
                     )}
                 </div>
 

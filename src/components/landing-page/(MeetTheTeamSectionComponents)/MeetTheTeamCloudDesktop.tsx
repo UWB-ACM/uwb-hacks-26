@@ -21,21 +21,28 @@ const MeetTheTeamCloudDesktop = ({
     return (
         <>
             <div
-                className="relative w-[40%] h-full shrink-0"
+                className="relative w-[40%] h-full shrink-0 overflow-hidden"
                 ref={panelContentRef}
             >
                 <div
                     ref={committeeMemberIconsRef}
-                    className="flex flex-col gap-y-[5vmin] py-10"
+                    className="flex flex-col will-change-transform"
                 >
-                    {committeeMembers.map((committeeMember, idx) =>
-                        <CommitteeMemberIcon
-                            key={idx}
-                            idx={idx}
-                            committeeMember={committeeMember}
-                            isSelected={idx === selectedMemberIdx}
-                            handleClick={handleClick}
-                        />
+                    {[0, 1].map((dup) =>
+                        <div
+                            key={dup}
+                            className="flex flex-col gap-y-[5vmin] pt-[5vmin] shrink-0"
+                        >
+                            {committeeMembers.map((committeeMember, idx) =>
+                                <CommitteeMemberIcon
+                                    key={`${dup}-${idx}`}
+                                    idx={idx}
+                                    committeeMember={committeeMember}
+                                    isSelected={idx === selectedMemberIdx}
+                                    handleClick={handleClick}
+                                />
+                            )}
+                        </div>
                     )}
                 </div>
 
