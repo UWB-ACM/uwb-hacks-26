@@ -99,12 +99,24 @@ export async function upsertScore(
 }
 
 /**
- * Gets all scores for a project, grouped by judge
- * @param projectId - is the project to get scores for
+ * Gets all the scores that a specific judge gave out.
+ * @param judgeId - is the judge's id number
  */
-export async function getScores(projectId: number): Promise<JudgingScore[]> {
-    // TODO: implement function
-    return [];
+export async function getScores(judgeId: number): Promise<JudgingScore[] | null> {
+    const data = await sql`SELECT * FROM judging_scores WHERE judge_id = ${judgeId}`;
+    
+    if (data.length === 0) {
+        return null
+    }
+
+    return data.map((entry) => ({
+        judgeId : entry.judge_id,
+        projectId : entry.project_id,
+        questionId : entry.question_id, 
+        score : entry.score,
+        submittedAt : entry.submitted_at
+    }));
+
 }
 
 /**
