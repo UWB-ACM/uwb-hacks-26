@@ -1,12 +1,19 @@
 import { Track, JudgingQuestion, JudgingScore, Project } from "../dataTypes";
+import sql from "@/src/util/database";
 
 /**
  * Returns array of project IDs assigned to this judge
  * @param judgeId - is the user id that corresponds to the judge's id
  */
-export async function getJudgeAssignments(judgeId: number): Promise<number[]> {
-    // TODO: implement function
-    return [];
+export async function getJudgeAssignments(judgeId: number): Promise<number[] | null> {
+    const data =
+        await sql`SELECT project_id FROM judge_assignments WHERE judge_id=${judgeId};`;
+
+    if (data.length === 0) {
+        return null;
+    }
+
+    return data.map((row) => row.project_id);
 }
 
 /**
@@ -14,8 +21,24 @@ export async function getJudgeAssignments(judgeId: number): Promise<number[]> {
  * @param projectId - is the id of the project to retrieve
  */
 export async function getProject(projectId: number): Promise<Project | null> {
-    // TODO: implement function
-    return null;
+    const data = await sql `SELECT * FROM projects WHERE id=${projectId}`;
+
+    if (data.length === 0) {
+        return null
+    }
+
+    return {
+        id : data[0].id,
+        projectTitle : data[0].project_title,
+        submissionUrl : data[0].submission_url,
+        submitted : data[0].submitted,
+        devpostImage : data[0].devpost_image,
+        tryUrl : data[0].try_url,
+        videoUrl : data[0].video_url,
+        mainTrack : data[0].main_track,
+        sideTracks : data[0].side_tracks,
+        userEmails : data[0].user_emails
+    }
 }
 
 /**
@@ -27,7 +50,7 @@ export async function addJudgeTrack(
     judgeId: number,
     trackId: number,
 ): Promise<void> {
-    // TODO: implement function
+    await sql`UPDATE judge_info SET track_ids = array_append(track_ids, ${trackId}) WHERE id = ${judgeId}`;
 }
 
 /**
@@ -39,17 +62,20 @@ export async function removeJudgeTrack(
     judgeId: number,
     trackId: number,
 ): Promise<void> {
-    // TODO: implement function
+    await sql`UPDATE judge_info SET track_ids = array_remove(track_ids, ${trackId}) WHERE id = ${judgeId}`;
 }
-
 /**
  * Gets all track IDs assigned to a judge
  * @param judgeId - is the judge's user id
  * @returns array of track IDs
  */
-export async function getJudgeTracks(judgeId: number): Promise<number[]> {
-    // TODO: implement function
-    return [];
+export async function getJudgeTracks(judgeId: number): Promise<number[] | null> {
+    const data = await sql`SELECT track_ids FROM judge_info WHERE id=${judgeId}`;
+
+    if (data.length === 0) {
+        return null;
+    }
+    return data[0].track_ids;
 }
 
 /**
@@ -59,13 +85,17 @@ export async function getJudgeTracks(judgeId: number): Promise<number[]> {
  * @param questionId - is the question being scored
  * @param score - is the score the judge gave (0 to 10, inclusive)
  */
-export async function updateScore(
+export async function upsertScore(
     judgeId: number,
     projectId: number,
     questionId: number,
     score: number,
 ): Promise<void> {
-    // TODO: implement function
+    const now = new Date()
+    await sql`INSERT INTO judging_scores (judge_id, project_id, question_id, score) 
+            VALUES (${judgeId}, ${projectId}, ${questionId}, ${score}) ON CONFLICT (judge_id, project_id, question_id) 
+            DO UPDATE SET score = EXCLUDED.score, 
+            submitted_at = ${now}`;
 }
 
 /**
@@ -78,7 +108,7 @@ export async function getScores(projectId: number): Promise<JudgingScore[]> {
 }
 
 /**
- * Marks a judge assignment as completed.
+ * Marks a judge assignment as completed using a timestamp
  * @param judgeId - is the judge's user id.
  * @param projectId - is the project id.
  */
