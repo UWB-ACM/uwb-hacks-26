@@ -1,136 +1,58 @@
 import Image from "next/image";
-import UWBStemImage from "@/public/sponsorsSection/uwb-stem.png";
-import UWBBusinessImage from "@/public/sponsorsSection/uwb-business.png";
-import AvanadeImage from "@/public/sponsorsSection/avanade-logo.svg";
-import FutureForceImage from "@/public/sponsorsSection/futureforce.jpg";
-import IEEESeattleImage from "@/public/sponsorsSection/ieee-seattle.png";
-import MaddKitchenImage from "@/public/sponsorsSection/madkitchen.png";
-import ITServeImage from "@/public/sponsorsSection/itserve.png";
-import Link from "next/link";
-import Panel from "./(AboutSectionComponents)/Panel/Panel";
-import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
-import PanelContent from "./(AboutSectionComponents)/Panel/Content";
+import Grass from "@/public/Grass.png";
+import CityBackground2 from "@/public/City-Background-2.png";
+import CitySkylineLightBlue from "@/public/sponsorsSection/City-Skyline-LightBlue.png";
+import Billboard from "@/public/sponsorsSection/Billboard.png";
+import { motion } from "motion/react";
 
 const SponsorsSection = () => {
-    const panelMargin = "mt-12 md:mt-16";
-
     return (
-        <Panel id="sponsorsPanel" className={panelMargin} panelColor="white">
-            <PanelHeader
-                parentPanelId="sponsorsPanel"
-                className="text-[#49B2F8] border-none lg:w-full pb-0 bg-transparent"
-                isSectionHeader
-            >
-                UWB HACKS 2026 SPONSORS
-            </PanelHeader>
+        <>
+            <div className="relative py-10">
+                <div className="z-5 relative h-auto w-[60vw] md:w-[50vw] lg:w-[48vw] xl:w-[45vw] mx-auto mb-0 md:mb-8 lg:mb-16 xl:mb-32">
+                    <Image src={Billboard} alt="" className="w-full h-full" />
 
-            <PanelContent
-                parentPanelId="sponsorsPanel"
-                className="w-full flex flex-col items-center"
-            >
-                {/* Main sponsors row */}
-                <div className="w-full flex flex-wrap justify-center items-center gap-8 md:gap-16">
-                    <div className="flex justify-center items-center">
-                        <Link href="https://www.uwb.edu/stem/" target="_blank">
-                            <Image
-                                src={UWBStemImage}
-                                width={300}
-                                height={100}
-                                alt="UW Bothell School of STEM"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                        <Link href="https://www.avanade.com" target="_blank">
-                            <Image
-                                src={AvanadeImage}
-                                width={370}
-                                height={100}
-                                alt="Avanade"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                        <Link
-                            href="https://www.uwb.edu/business/"
-                            target="_blank"
+                    <div className="absolute left-[0.5vw] top-[2.1vw] md:top-[1.68vw] aspect-1765/1059 w-[59vw] md:w-[49vw] lg:w-[47vw] xl:w-[44vw] h-auto overflow-hidden">
+                        <motion.h2
+                            initial={{ y: 0 }}
+                            whileInView={{ y: "100%" }}
+                            viewport={{ amount: 0.75, once: true }}
+                            transition={{
+                                delay: 0.75,
+                                duration: 0.75,
+                                ease: "easeOut",
+                            }}
+                            className="w-full h-full grid place-content-center text-2xl md:text-4xl lg:text-5xl font-bold bg-[#f6fcff]"
                         >
-                            <Image
-                                src={UWBBusinessImage}
-                                width={300}
-                                height={100}
-                                alt="UW Bothell School of Business"
-                                className="object-contain"
-                            />
-                        </Link>
+                            SPONSORS
+                        </motion.h2>
                     </div>
                 </div>
 
-                {/* Secondary sponsors row */}
-                <div className="w-full flex flex-wrap justify-center items-center gap-8 md:gap-16 pt-20">
-                    <div className="flex justify-center items-center">
-                        <Link href="https://ieee-seattle.org/" target="_blank">
-                            <Image
-                                src={IEEESeattleImage}
-                                width={200}
-                                height={80}
-                                alt="Future Force"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
+                <Image
+                    src={CitySkylineLightBlue}
+                    alt=""
+                    className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
+                />
 
-                    <div className="flex justify-center items-center">
-                        <Link
-                            href="https://www.maddkitchen.com/"
-                            target="_blank"
-                        >
-                            <Image
-                                src={MaddKitchenImage}
-                                width={255}
-                                height={80}
-                                alt="Madd Kitchen"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                        <Link
-                            href="https://www.future-force.org/"
-                            target="_blank"
-                        >
-                            <Image
-                                src={FutureForceImage}
-                                width={175}
-                                height={80}
-                                alt="Future Force"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
+                <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
+                    <Image src={CityBackground2} alt="" className="w-1/3" />
+                    <Image src={CityBackground2} alt="" className="w-1/3" />
+                    <Image src={CityBackground2} alt="" className="w-1/3" />
                 </div>
+                <Image
+                    src={Grass}
+                    alt=""
+                    className="z-5 absolute bottom-0 w-screen"
+                />
+            </div>
 
-                {/* Third sponsors row */}
-                <div className="w-full flex flex-wrap justify-center items-center gap-8 md:gap-16 pt-20">
-                    <div className="flex justify-center items-center">
-                        <Link href="https://itserve.org/" target="_blank">
-                            <Image
-                                src={ITServeImage}
-                                width={200}
-                                height={80}
-                                alt="ITServe"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
-                </div>
-            </PanelContent>
-        </Panel>
+            <Image
+                src={Grass}
+                alt=""
+                className="z-5 w-screen -scale-y-100 -translate-y-1 opacity-60"
+            />
+        </>
     );
 };
 
