@@ -53,6 +53,11 @@ const nextConfig: NextConfig = {
                 destination: "/",
                 permanent: false,
             },
+            {
+                source: "/links/visits",
+                destination: "/",
+                permanent: false,
+            },
         ];
     },
     headers() {
