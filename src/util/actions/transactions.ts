@@ -55,6 +55,37 @@ export async function actionCreateTransaction(
 }
 
 /**
+ * Claims the 1010 easter egg for the current user.
+ * No staff permission required - this is self-service.
+ *
+ * @returns "success" if the transaction was created,
+ *          "already-claimed" if the user already has it,
+ *          or null if the user is not logged in.
+ */
+export async function actionClaimEasterEgg1010(): Promise<
+    "success" | "already-claimed" | null
+> {
+    const session = await getSession();
+    if (!session.user?.id) return null;
+
+    const result = await createTransaction(
+        session.user.id,
+        TransactionType.EasterEgg1010,
+        0,
+        null,
+        null,
+        null,
+    );
+    if (!result) return null;
+
+    if ("error" in result && result.error === "over-limit") {
+        return "already-claimed";
+    }
+
+    return "success";
+}
+
+/**
  * Sets the reverted status of the given transaction.
  * This handles permission differences between staff and admins.
  * @param id - is the ID of the transaction to modify.

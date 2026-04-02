@@ -1,5 +1,5 @@
 import React from "react";
-import { FaGift } from "react-icons/fa6";
+import { FaGift, FaFileImport } from "react-icons/fa6";
 import DashboardButton from "@/src/components/dashboards/DashboardButton";
 
 function AdminActions() {
@@ -20,6 +20,10 @@ function AdminActions() {
             <DashboardButton href="/dashboard/modify-prize">
                 <FaGift className="h-[30px] w-[30px]" />
                 Modify Prize
+            </DashboardButton>
+            <DashboardButton href="/dashboard/import-devpost">
+                <FaFileImport className="h-[30px] w-[30px]" />
+                Import Devpost
             </DashboardButton>
         </>
     );

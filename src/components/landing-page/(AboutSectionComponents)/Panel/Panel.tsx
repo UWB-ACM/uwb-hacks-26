@@ -38,7 +38,7 @@ export default function Panel({
             id={id}
             className={twMerge(
                 clsx(
-                    "relative w-full border-black border-[3px] bg-cover bg-center overflow-hidden",
+                    "relative w-full bg-cover bg-center overflow-hidden",
                     className,
                 ),
             )}

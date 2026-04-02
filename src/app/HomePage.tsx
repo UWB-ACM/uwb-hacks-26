@@ -7,8 +7,17 @@ import AboutSection from "../components/landing-page/AboutSection";
 import MeetTheTeamSection from "../components/landing-page/MeetTheTeamSection";
 import FAQSection from "@/src/components/landing-page/FAQSection";
 import Footer from "@/src/components/Footer";
+import { LeaderboardRecord, Prize } from "../util/dataTypes";
 
-export default function HomePage() {
+type HomePageProps = {
+    hackeroonPrizes: Promise<Prize[]>;
+    leaderboardData: Promise<LeaderboardRecord[]>;
+};
+
+export default function HomePage({
+    hackeroonPrizes,
+    leaderboardData,
+}: HomePageProps) {
     return (
         <div className="flex flex-col items-center overflow-hidden">
             <div
@@ -29,8 +38,10 @@ export default function HomePage() {
                     />
 
                     <HeroSection />
-                    <AboutSection />
-                    <MeetTheTeamSection />
+                    <AboutSection
+                        hackeroonPrizes={hackeroonPrizes}
+                        leaderboardData={leaderboardData}
+                    />
                     <FAQSection />
 
                     <Footer className={"bg-[#14c5f8] text-white"} />
