@@ -46,17 +46,17 @@ const nextConfig: NextConfig = {
         return [
             {
                 source: "/links/yardsign",
-                destination: "/",
+                destination: "/?utm_source=yardsign",
                 permanent: false,
             },
             {
                 source: "/links/standingbanner",
-                destination: "/",
+                destination: "/?utm_source=standingbanner",
                 permanent: false,
             },
             {
                 source: "/links/visits",
-                destination: "/",
+                destination: "/?utm_source=visits",
                 permanent: false,
             },
         ];
