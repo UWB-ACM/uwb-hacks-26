@@ -42,6 +42,7 @@ export default function HomePage({
                         hackeroonPrizes={hackeroonPrizes}
                         leaderboardData={leaderboardData}
                     />
+                    <MeetTheTeamSection />
                     <FAQSection />
 
                     <Footer className={"bg-[#14c5f8] text-white"} />

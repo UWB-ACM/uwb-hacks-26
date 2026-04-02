@@ -78,7 +78,10 @@ const MeetTheTeamSection = () => {
         null,
     );
     const selectedMemberIdxRef = useRef<number | null>(null);
-    selectedMemberIdxRef.current = selectedMemberIdx;
+    // accessing ref's current property resulted in error from linter; placed line in useEffect to prevent error
+    useEffect(() => {
+        selectedMemberIdxRef.current = selectedMemberIdx;
+    }, [selectedMemberIdx]);
 
     // committeeMemberIconsRef references revolving element
     // committeeMemberIconsRef is used by GSAP timeline, tlRef.current, to perform the animation
