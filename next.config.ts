@@ -2,9 +2,10 @@ import type { NextConfig } from "next";
 
 const cspHeader = `
     default-src 'self';
-    script-src 'self'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} 'unsafe-inline' https://cdn.strawpoll.com;
+    script-src 'self'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} 'unsafe-inline' https://www.googletagmanager.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://s3.amazonaws.com;
+    img-src 'self' blob: data: https://s3.amazonaws.com https://www.googletagmanager.com;
+    connect-src 'self' https://www.googletagmanager.com https://www.google.com;
     font-src 'self';
     object-src 'none';
     base-uri 'self';
