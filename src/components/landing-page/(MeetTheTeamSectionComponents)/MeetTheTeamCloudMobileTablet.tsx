@@ -21,7 +21,7 @@ const MeetTheTeamCloudMobileTablet = ({
     return (
         <>
             <div
-                className="relative w-full h-[42%] md:h-[45%] py-3 shrink-0 overflow-hidden"
+                className="relative w-full h-[42%] md:h-[45%] py-1 shrink-0 overflow-hidden"
                 ref={panelContentRef}
             >
                 <div
