@@ -5,16 +5,9 @@ import sql from "@/src/util/database";
  * Returns array of project IDs assigned to this judge
  * @param judgeId - is the user id that corresponds to the judge's id
  */
-export async function getJudgeAssignments(
-    judgeId: number,
-): Promise<number[]> {
+export async function getJudgeAssignments(judgeId: number): Promise<number[]> {
     const data =
         await sql`SELECT project_id FROM judge_assignments WHERE judge_id=${judgeId};`;
-
-    if (data.length === 0) {
-        return [];
-    }
-
     return data.map((row) => row.project_id);
 }
 
@@ -71,15 +64,10 @@ export async function removeJudgeTrack(
  * @param judgeId - is the judge's user id
  * @returns array of track IDs
  */
-export async function getJudgeTracks(
-    judgeId: number,
-): Promise<number[]> {
+export async function getJudgeTracks(judgeId: number): Promise<number[]> {
     const data =
         await sql`SELECT track_ids FROM judge_info WHERE id=${judgeId}`;
 
-    if (data.length === 0) {
-        return [];
-    }
     return data[0].track_ids;
 }
 
@@ -106,15 +94,9 @@ export async function upsertScore(
  * Gets all the scores that a specific judge gave out.
  * @param judgeId - is the judge's id number
  */
-export async function getScores(
-    judgeId: number,
-): Promise<JudgingScore[] > {
+export async function getScores(judgeId: number): Promise<JudgingScore[]> {
     const data =
         await sql`SELECT * FROM judging_scores WHERE judge_id = ${judgeId}`;
-
-    if (data.length === 0) {
-        return [];
-    }
 
     return data.map((entry) => ({
         judgeId: entry.judge_id,
@@ -148,7 +130,6 @@ export async function getTrack(trackId: number): Promise<Track | null> {
     if (data.length === 0) {
         return null;
     }
-
     const row = data[0];
     return {
         id: row.id,
@@ -165,9 +146,6 @@ export async function getTrack(trackId: number): Promise<Track | null> {
 export async function getAllTracks(): Promise<Track[]> {
     const data = await sql`SELECT * FROM tracks`;
 
-    if (data.length === 0) {
-        return [];
-    }
     return data.map((row) => ({
         id: row.id,
         trackName: row.track_name,
@@ -194,10 +172,6 @@ export async function getTrackQuestions(
 ): Promise<JudgingQuestion[]> {
     const data =
         await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT UNNEST(questions) FROM tracks WHERE id=${trackId})`;
-
-    if (data.length === 0) {
-        return [];
-    }
 
     return data.map((row) => ({
         id: row.id,
