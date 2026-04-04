@@ -24,6 +24,7 @@ export async function getProject(projectId: number): Promise<Project | null> {
 
     return {
         id: data[0].id,
+        devpostId: data[0].devpost_id,
         projectTitle: data[0].project_title,
         submissionUrl: data[0].submission_url,
         submitted: data[0].submitted,
