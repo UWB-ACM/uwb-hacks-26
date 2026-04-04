@@ -5,12 +5,14 @@ import sql from "@/src/util/database";
  * Returns array of project IDs assigned to this judge
  * @param judgeId - is the user id that corresponds to the judge's id
  */
-export async function getJudgeAssignments(judgeId: number): Promise<number[] | null> {
+export async function getJudgeAssignments(
+    judgeId: number,
+): Promise<number[]> {
     const data =
         await sql`SELECT project_id FROM judge_assignments WHERE judge_id=${judgeId};`;
 
     if (data.length === 0) {
-        return null;
+        return [];
     }
 
     return data.map((row) => row.project_id);
@@ -21,24 +23,24 @@ export async function getJudgeAssignments(judgeId: number): Promise<number[] | n
  * @param projectId - is the id of the project to retrieve
  */
 export async function getProject(projectId: number): Promise<Project | null> {
-    const data = await sql `SELECT * FROM projects WHERE id=${projectId}`;
+    const data = await sql`SELECT * FROM projects WHERE id=${projectId}`;
 
     if (data.length === 0) {
-        return null
+        return null;
     }
 
     return {
-        id : data[0].id,
-        projectTitle : data[0].project_title,
-        submissionUrl : data[0].submission_url,
-        submitted : data[0].submitted,
-        devpostImage : data[0].devpost_image,
-        tryUrl : data[0].try_url,
-        videoUrl : data[0].video_url,
-        mainTrack : data[0].main_track,
-        sideTracks : data[0].side_tracks,
-        userEmails : data[0].user_emails
-    }
+        id: data[0].id,
+        projectTitle: data[0].project_title,
+        submissionUrl: data[0].submission_url,
+        submitted: data[0].submitted,
+        devpostImage: data[0].devpost_image,
+        tryUrl: data[0].try_url,
+        videoUrl: data[0].video_url,
+        mainTrack: data[0].main_track,
+        sideTracks: data[0].side_tracks,
+        userEmails: data[0].user_emails,
+    };
 }
 
 /**
@@ -50,7 +52,7 @@ export async function addJudgeTrack(
     judgeId: number,
     trackId: number,
 ): Promise<void> {
-    await sql`UPDATE judge_info SET track_ids = array_append(track_ids, ${trackId}) WHERE id = ${judgeId}`;
+    await sql`UPDATE judge_info SET track_ids = array_append(track_ids, ${trackId}) WHERE id = ${judgeId} AND ${trackId} != ANY(track_ids)`;
 }
 
 /**
@@ -69,11 +71,14 @@ export async function removeJudgeTrack(
  * @param judgeId - is the judge's user id
  * @returns array of track IDs
  */
-export async function getJudgeTracks(judgeId: number): Promise<number[] | null> {
-    const data = await sql`SELECT track_ids FROM judge_info WHERE id=${judgeId}`;
+export async function getJudgeTracks(
+    judgeId: number,
+): Promise<number[]> {
+    const data =
+        await sql`SELECT track_ids FROM judge_info WHERE id=${judgeId}`;
 
     if (data.length === 0) {
-        return null;
+        return [];
     }
     return data[0].track_ids;
 }
@@ -91,32 +96,33 @@ export async function upsertScore(
     questionId: number,
     score: number,
 ): Promise<void> {
-    const now = new Date()
     await sql`INSERT INTO judging_scores (judge_id, project_id, question_id, score) 
             VALUES (${judgeId}, ${projectId}, ${questionId}, ${score}) ON CONFLICT (judge_id, project_id, question_id) 
             DO UPDATE SET score = EXCLUDED.score, 
-            submitted_at = ${now}`;
+            submitted_at = NOW()`;
 }
 
 /**
  * Gets all the scores that a specific judge gave out.
  * @param judgeId - is the judge's id number
  */
-export async function getScores(judgeId: number): Promise<JudgingScore[] | null> {
-    const data = await sql`SELECT * FROM judging_scores WHERE judge_id = ${judgeId}`;
-    
+export async function getScores(
+    judgeId: number,
+): Promise<JudgingScore[] > {
+    const data =
+        await sql`SELECT * FROM judging_scores WHERE judge_id = ${judgeId}`;
+
     if (data.length === 0) {
-        return null;
+        return [];
     }
 
     return data.map((entry) => ({
-        judgeId : entry.judge_id,
-        projectId : entry.project_id,
-        questionId : entry.question_id, 
-        score : entry.score,
-        submittedAt : entry.submitted_at
+        judgeId: entry.judge_id,
+        projectId: entry.project_id,
+        questionId: entry.question_id,
+        score: entry.score,
+        submittedAt: entry.submitted_at,
     }));
-
 }
 
 /**
@@ -128,8 +134,7 @@ export async function completeAssignment(
     judgeId: number,
     projectId: number,
 ): Promise<void> {
-    const now = new Date();
-    await sql`UPDATE judge_assignments SET completed_at = ${now} WHERE judge_id = ${judgeId} AND project_id = ${projectId}`;
+    await sql`UPDATE judge_assignments SET completed_at = NOW() WHERE judge_id = ${judgeId} AND project_id = ${projectId}`;
 }
 
 /**
@@ -144,24 +149,24 @@ export async function getTrack(trackId: number): Promise<Track | null> {
         return null;
     }
 
-    const row = data[0]
+    const row = data[0];
     return {
-        id : row.id,
-        trackName : row.track_name,
-        devpostTag : row.devpost_tag,
-        mainTrack : row.main_track,
-        questions : row.questions
-    }
+        id: row.id,
+        trackName: row.track_name,
+        devpostTag: row.devpost_tag,
+        mainTrack: row.main_track,
+        questions: row.questions,
+    };
 }
 
 /**
  * Returns all tracks.
  */
-export async function getAllTracks(): Promise<Track[] | null> {
+export async function getAllTracks(): Promise<Track[]> {
     const data = await sql`SELECT * FROM tracks`;
 
     if (data.length === 0) {
-        return null
+        return [];
     }
     return data.map((row) => ({
         id: row.id,
@@ -186,17 +191,16 @@ export async function getJudgingQuestions(): Promise<JudgingQuestion[]> {
  */
 export async function getTrackQuestions(
     trackId: number,
-): Promise<JudgingQuestion[] | null> {
+): Promise<JudgingQuestion[]> {
+    const data =
+        await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT UNNEST(questions) FROM tracks WHERE id=${trackId})`;
 
-    const data = await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT questions FROM tracks WHERE id=${trackId})`;
-    
     if (data.length === 0) {
-        return null;
+        return [];
     }
 
     return data.map((row) => ({
-        id : row.id,
-        questionText : row.question_text
+        id: row.id,
+        questionText: row.question_text,
     }));
-
 }
