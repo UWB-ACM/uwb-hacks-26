@@ -2,13 +2,29 @@ import { Track, JudgingQuestion, JudgingScore, Project } from "../dataTypes";
 import sql from "@/src/util/database";
 
 /**
- * Returns array of project IDs assigned to this judge
+ * Returns an array of Project objects associated with the Judge
  * @param judgeId - is the user id that corresponds to the judge's id
  */
-export async function getJudgeAssignments(judgeId: number): Promise<number[]> {
+export async function getJudgeAssignments(judgeId: number): Promise<Project[]> {
     const data =
-        await sql`SELECT project_id FROM judge_assignments WHERE judge_id=${judgeId};`;
-    return data.map((row) => row.project_id);
+        await sql`SELECT * FROM judge_assignments JOIN projects ON judge_assignments.project_id = projects.id WHERE judge_id=${judgeId};`;
+
+    if (data.length === 0) {
+        return [];
+    }
+    return data.map((row) => ({
+        id: row.id,
+        devpostId: row.devpost_id,
+        projectTitle: row.project_title,
+        submissionUrl: row.submission_url,
+        submitted: row.submitted,
+        devpostImage: row.devpost_image,
+        tryUrl: row.try_url,
+        videoUrl: row.video_url,
+        mainTrack: row.main_track,
+        sideTracks: row.side_tracks,
+        userEmails: row.user_emails,
+    }));
 }
 
 /**
