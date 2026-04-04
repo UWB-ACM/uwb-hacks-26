@@ -45,6 +45,11 @@ const nextConfig: NextConfig = {
     redirects() {
         return [
             {
+                source: "/login",
+                destination: "/api/auth/google",
+                permanent: false,
+            },
+            {
                 source: "/links/yardsign",
                 destination: "/?utm_source=yardsign",
                 permanent: false,
