@@ -173,7 +173,7 @@ export async function getAllTracks(): Promise<Track[]> {
 }
 
 /**
- * Gets judging questions for a specific judge on a specific page
+ * Gets judging questions for a specific judge for a specific project.
  * @param projectId - this is the id for the project
  * @param judgeId - this is the judge's id
  */
@@ -210,7 +210,7 @@ export async function getTrackQuestions(
 
 /**
  * This function will grab all the questions for a specific project based on it's tracks.
- * @param project_id - this id for the project 
+ * @param project_id - this id for the project
  * @returns returns a JudgeQuestions array
  */
 export async function grabQuestionsByProject(
