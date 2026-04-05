@@ -173,11 +173,23 @@ export async function getAllTracks(): Promise<Track[]> {
 }
 
 /**
- * Returns all judging questions.
+ * Gets judging questions for a specific judge on a specific page
+ * @param projectId - this is the id for the project
+ * @param judgeId - this is the judge's id
  */
-export async function getJudgingQuestions(): Promise<JudgingQuestion[]> {
-    // TODO: implement function
-    return [];
+export async function getJudgingQuestions(
+    projectId: number,
+    judgeId: number,
+): Promise<JudgingQuestion[]> {
+    const data =
+        await sql`SELECT * FROM judging_questions WHERE id IN ( SELECT UNNEST(questions) FROM tracks WHERE tracks.id IN(SELECT UNNEST(track_ids) FROM judge_info WHERE judge_info.id = ${judgeId}) AND tracks.id IN (SELECT main_track FROM projects WHERE project.id = ${projectId} UNION SELECT UNNEST(side_tracks) FROM projects WHERE project.id = ${projectId}));`;
+    if (data.length === 0) {
+        return [];
+    }
+    return data.map((row) => ({
+        id: row.id,
+        questionText: row.question_text,
+    }));
 }
 
 /**
@@ -189,6 +201,23 @@ export async function getTrackQuestions(
 ): Promise<JudgingQuestion[]> {
     const data =
         await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT UNNEST(questions) FROM tracks WHERE id=${trackId})`;
+
+    return data.map((row) => ({
+        id: row.id,
+        questionText: row.question_text,
+    }));
+}
+
+/**
+ * This function will grab all the questions for a specific project based on it's tracks.
+ * @param project_id - this id for the project 
+ * @returns returns a JudgeQuestions array
+ */
+export async function grabQuestionsByProject(
+    project_id: number,
+): Promise<JudgingQuestion[]> {
+    const data =
+        await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT UNNEST(questions) FROM tracks WHERE tracks.id IN (SELECT main_track FROM projects where project.id = ${project_id} UNION SELECT UNNEST(side_tracks) FROM projects WHERE project.id = ${project_id})))`;
 
     return data.map((row) => ({
         id: row.id,
