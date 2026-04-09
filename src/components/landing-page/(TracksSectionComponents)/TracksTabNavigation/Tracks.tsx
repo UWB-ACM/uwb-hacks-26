@@ -28,11 +28,8 @@ export default function Tracks({
 
             {/*
                 Selected Track Information
-                - question
+                - track name
                 - description
-                - examples
-                    - no code
-                    - low code / code
             */}
             <SelectedTrackInformation
                 selectedTrackRef={selectedTrackRef}

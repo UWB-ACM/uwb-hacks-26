@@ -25,7 +25,7 @@ export default function TracksNavHeader({
                     <button
                         key={idx}
                         onClick={() => setSelectedTrackIdx(idx)}
-                        className={`track font-glacial-indifference font-bold text-md md:text-2xl text-[#0e83da] flex-1 min-w-[150px] min-h-[85px] shrink-0 px-2 py-3 md:px-5 md:py-3 border-3 border-[#0e83da] rounded-[100] duration-300 ${idx === selectedTrackIdx ? "bg-[#0fc6f9] border-[#0fc6f9] hover:bg-[#0e83da] hover:border-[#0e83da] text-white" : "bg-white hover:bg-[#eefafd]"}`}
+                        className={`track min-h-[75px] md:min-h-[85px] font-glacial-indifference font-bold text-md sm:text-2xl text-[#0e83da] px-3 md:px-5 py-2 md:py-3 border-3 border-[#0e83da] rounded-[100] duration-300 ${idx === selectedTrackIdx ? "bg-[#0fc6f9] border-[#0fc6f9] hover:bg-[#0e83da] hover:border-[#0e83da] text-white" : "bg-[--cloud-color] hover:bg-[#eefafd]"}`}
                     >
                         {track.name}
                     </button>
