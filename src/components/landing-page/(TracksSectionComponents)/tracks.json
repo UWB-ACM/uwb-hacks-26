@@ -1,32 +1,3 @@
 {
-    "tracks": [
-        {
-            "name": "Cities & Societies",
-            "question": "How can we build more connected, informed, and resilient communities?",
-            "description": "Design solutions that improve how people interact with their cities and each other. From smarter transportation systems to tools that increase civic engagement or combat misinformation, this track is about shaping the future of how societies function at scale.",
-            "noCodeExample": "",
-            "lowCodeExample": ""
-        },
-        {
-            "name": "Campus Life Innovation",
-            "question": "How can we reimagine the student experience on campus?",
-            "description": "Create tools that make student life more seamless, engaging, and inclusive. Whether it’s helping students navigate campus, find their community, or stay informed, this track focuses on improving everyday life for students.",
-            "noCodeExample": "",
-            "lowCodeExample": ""
-        },
-        {
-            "name": "Sustainability",
-            "question": "How can we design smarter, more sustainable systems for movement and daily life?",
-            "description": "Build solutions that improve the efficiency, reliability, and environmental impact of transportation and mobility systems. Projects may also explore accessibility, public health, and how sustainable infrastructure can better serve communities.",
-            "noCodeExample": "",
-            "lowCodeExample": ""
-        },
-        {
-            "name": "Human Expression",
-            "question": "How will we create, share, and experience stories in the future?",
-            "description": "Explore new forms of creativity and self-expression. From reimagining how we experience music and art to building collaborative storytelling platforms, this track focuses on empowering individuals to create and connect in innovative ways.",
-            "noCodeExample": "",
-            "lowCodeExample": ""
-        }
-    ]
+    "tracks": []
 }

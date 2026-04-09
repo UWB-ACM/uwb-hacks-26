@@ -11,6 +11,17 @@ export default function SelectedTrackInformation({
     selectedTrackRef,
     selectedTrack,
 }: SelectedTrackInformationProps) {
+    if (!selectedTrack) {
+        return (
+            <div
+                ref={selectedTrackRef}
+                className="font-bold text-[#0078d0] text-center text-xl md:text-2xl"
+            >
+                Coming soon on Friday, April 24th 2026!
+            </div>
+        );
+    }
+
     return (
         <div ref={selectedTrackRef} className="space-y-4 p-4 px-10 md:p-12">
             <div>
