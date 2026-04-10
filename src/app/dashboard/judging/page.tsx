@@ -5,13 +5,15 @@ import Link from "next/link";
 import { actionAssignJudges } from "@/src/util/actions/judging";
 
 export default function JudgingAdminPage() {
-    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [status, setStatus] = useState<
+        "idle" | "loading" | "success" | "error"
+    >("idle");
     const [newCount, setNewCount] = useState(0);
 
     const handleRunAssignment = async () => {
         setStatus("loading");
         const result = await actionAssignJudges();
-        
+
         if (result.success) {
             setNewCount(result.count || 0);
             setStatus("success");
@@ -23,11 +25,13 @@ export default function JudgingAdminPage() {
     return (
         <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 p-4">
             <div className="w-full max-w-md bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] rounded-xl">
-                <h1 className="text-4xl font-black italic uppercase mb-4 text-center">Judging Admin</h1>
-                
+                <h1 className="text-4xl font-black italic uppercase mb-4 text-center">
+                    Judging Admin
+                </h1>
+
                 <div className="bg-yellow-100 border-2 border-black p-4 mb-8 text-sm font-bold">
-                    ⚠️ ATTENTION: This will assign 2 judges to every track for every project. 
-                    Existing assignments will NOT be deleted.
+                    ⚠️ ATTENTION: This will assign 2 judges to every track for
+                    every project. Existing assignments will NOT be deleted.
                 </div>
 
                 <button
@@ -54,10 +58,15 @@ export default function JudgingAdminPage() {
                 )}
 
                 <div className="mt-10 pt-6 border-t-2 border-black flex justify-between">
-                    <Link href="/dashboard" className="font-bold underline hover:text-red-600">
+                    <Link
+                        href="/dashboard"
+                        className="font-bold underline hover:text-red-600"
+                    >
                         ← Dashboard
                     </Link>
-                    <span className="text-gray-400 font-bold uppercase text-xs">UWB Hacks 2026</span>
+                    <span className="text-gray-400 font-bold uppercase text-xs">
+                        UWB Hacks 2026
+                    </span>
                 </div>
             </div>
         </div>
