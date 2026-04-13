@@ -892,3 +892,6 @@ export interface ApplicationData {
      */
     mlhCommunications: boolean;
 }
+
+// src/util/dataTypes.ts
+export const JUDGES_PER_TRACK = 2;
