@@ -11,7 +11,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 <p>#{project.id}</p>
                 <p>{project.projectTitle}</p>
                 <p>{project.mainTrack}</p>
-                <p>{project.sideTracks}</p>
+                <p>{project.sideTracks.join(", ")}</p>
             </div>
         </Link>
     );
