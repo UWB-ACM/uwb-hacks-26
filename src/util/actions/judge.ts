@@ -14,7 +14,7 @@ export async function actionSubmitScore(
     if (!session.user?.id) return null;
 
     await ensureJudgePermission(session);
-    upsertScore(session.user.id, projectId, questionId, score);
+    await upsertScore(session.user.id, projectId, questionId, score);
 }
 
 export async function actionCompleteAssignment(
@@ -24,5 +24,5 @@ export async function actionCompleteAssignment(
     if (!session.user?.id) return null;
 
     await ensureJudgePermission(session);
-    completeAssignment(session.user.id, projectId);
+    await completeAssignment(session.user.id, projectId);
 }

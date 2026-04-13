@@ -182,13 +182,34 @@ export async function getJudgingQuestions(
     judgeId: number,
 ): Promise<JudgingQuestion[]> {
     const data =
-        await sql`SELECT * FROM judging_questions WHERE id IN ( SELECT UNNEST(questions) FROM tracks WHERE tracks.id IN(SELECT UNNEST(track_ids) FROM judge_info WHERE judge_info.id = ${judgeId}) AND tracks.id IN (SELECT main_track FROM projects WHERE project.id = ${projectId} UNION SELECT UNNEST(side_tracks) FROM projects WHERE project.id = ${projectId}));`;
+        await sql`SELECT * FROM judging_questions WHERE id IN ( SELECT UNNEST(questions) FROM tracks WHERE tracks.id IN(SELECT UNNEST(track_ids) FROM judge_info WHERE judge_info.id = ${judgeId}) AND tracks.devpost_tag IN (SELECT main_track FROM projects WHERE projects.id = ${projectId} UNION SELECT UNNEST(side_tracks) FROM projects WHERE projects.id = ${projectId}));`;
     if (data.length === 0) {
         return [];
     }
     return data.map((row) => ({
         id: row.id,
         questionText: row.question_text,
+    }));
+}
+
+/**
+ * Gets all scores a judge has submitted for a specific project.
+ * @param judgeId - is the judge's user id.
+ * @param projectId - is the project id.
+ */
+export async function getScoresForProject(
+    judgeId: number,
+    projectId: number,
+): Promise<JudgingScore[]> {
+    const data =
+        await sql`SELECT * FROM judging_scores WHERE judge_id = ${judgeId} AND project_id = ${projectId}`;
+
+    return data.map((entry) => ({
+        judgeId: entry.judge_id,
+        projectId: entry.project_id,
+        questionId: entry.question_id,
+        score: entry.score,
+        submittedAt: entry.submitted_at,
     }));
 }
 
