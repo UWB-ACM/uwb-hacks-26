@@ -7,9 +7,12 @@ import { getSession } from "@/src/util/session";
 import { getPermissionLevel } from "@/src/util/db/user";
 import {
     getAllTrackTags,
+    markDevpostCodesAsSent,
+    syncDevpostEmailsToUsers,
     upsertDevpostUser,
     upsertProject,
 } from "@/src/util/db/devpost";
+import { sendDevpostLinkingEmails } from "../awsSes";
 
 const MIN_TEAM_SIZE = 3;
 const MAX_TEAM_SIZE = 4;
@@ -120,6 +123,9 @@ export async function actionImportRegistrants(
         }
     }
 
+    // Automically execute the syncing process once new users are inserted.
+    await actionSyncDevpostEmails();
+
     return result;
 }
 
@@ -201,7 +207,7 @@ async function actionImportProjects(
         const mainTrack = row["What Main Track Have You Chosen?"]?.trim() ?? "";
         const sideTracks = parseHumanList(
             row["What Sub Tracks Have You Chosen (Max 2, Optional)?"]?.trim() ??
-                "",
+            "",
         );
 
         // If any selected track isn't a known tag, something has gone wrong.
@@ -283,3 +289,54 @@ async function actionImportProjects(
 }
 
 export default actionImportProjects;
+
+/**
+ * Automatically syncs matched devpost emails, creates pairing codes for unlinked ones,
+ * and blasts out SES emails to new unlinked devs or retries after 7 days.
+ *
+ * @returns the number of emails sent and any error message if applicable.
+ */
+export async function actionSyncDevpostEmails(): Promise<{
+    sent: number;
+    error: string;
+} | null> {
+    const session = await getSession();
+    if (!session.user?.id) return { sent: 0, error: "Authentication failed" };
+
+    const permission = await getPermissionLevel(session.user.id);
+    if (
+        !permission ||
+        !hasPermissions(permission, { has: PermissionLevel.Admin })
+    ) {
+        return { sent: 0, error: "Unauthorized User" };
+    }
+
+    try {
+        const pendingEmails = await syncDevpostEmailsToUsers();
+
+        if (pendingEmails.length === 0) {
+            return { sent: 0, error: "No emails currently require syncing, no linking emails sent." };
+        }
+
+        const { successfulEmails, failedEmails } = await sendDevpostLinkingEmails(pendingEmails);
+        
+        if (successfulEmails.length > 0) {
+            await markDevpostCodesAsSent(successfulEmails);
+        }
+
+        if (failedEmails.length > 0) {
+            return {
+                sent: successfulEmails.length,
+                error: `Sent ${successfulEmails.length}, but failed to send ${failedEmails.length} emails.`
+            };
+        }
+
+        return { sent: successfulEmails.length, error: "" };
+    } catch (error) {
+        console.error("\n==== AWS SES DETAILED ERROR ==== \n", error);
+        return {
+            sent: 0,
+            error: error instanceof Error ? error.message : String(error),
+        };
+    }
+}
