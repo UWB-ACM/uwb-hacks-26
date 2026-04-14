@@ -3,7 +3,6 @@ import { Session } from "@/src/util/session";
 import { getPermissionLevel } from "@/src/util/db/user";
 import { redirect } from "next/navigation";
 
-
 /**
  * This validates that the requesting user has Judge level permissions.
  * If the user does not meet these requirements, they will be redirected
