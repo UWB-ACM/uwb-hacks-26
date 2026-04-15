@@ -2,7 +2,7 @@ import "server-only";
 
 import { cookies, headers } from "next/headers";
 import { buildKey, redis } from "@/src/util/redis";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { User } from "./dataTypes";
 import { redirect } from "next/navigation";
 import { CookieSync } from "@/src/proxy";
@@ -77,9 +77,12 @@ export async function getSession(): Promise<Session> {
 }
 
 /**
- * Ensures that a request/response has a session
+ * Ensures that a request/response has a session, and returns it.
  */
-export async function ensureSession(req: NextRequest, cookies: CookieSync) {
+export async function ensureSession(
+    req: NextRequest,
+    cookies: CookieSync,
+): Promise<Session> {
     const cookie = req.cookies.get(cookieName);
 
     // If we have a cookie, ensure that it points to a valid session.
@@ -92,7 +95,12 @@ export async function ensureSession(req: NextRequest, cookies: CookieSync) {
         // header that gets passed on to later code, but I'm not sure
         // if there are security concerns with that, and it just
         // feels like a poor solution overall.
-        if (await redis.exists(buildKey("session", cookie.value))) return;
+        const data = await redis.get<Session>(
+            buildKey("session", cookie.value),
+        );
+        if (data && typeof data === "object") {
+            return data;
+        }
     }
 
     const newSessionId = crypto.randomUUID();
@@ -117,6 +125,9 @@ export async function ensureSession(req: NextRequest, cookies: CookieSync) {
         // with OAuth2 redirects.
         sameSite: "lax",
     });
+
+    // New sessions are empty.
+    return {};
 }
 
 /**

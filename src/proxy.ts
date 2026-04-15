@@ -2,11 +2,23 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { ensureSession } from "@/src/util/session";
 import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { ipAddress } from "@vercel/functions";
+import { ratelimit, rateLimitKey } from "@/src/util/ratelimit";
 
 export async function proxy(req: NextRequest) {
     const cookies = createCookieSync(req);
 
-    await ensureSession(req, cookies);
+    // We're using the return value for ratelimiting, but ensureSession always
+    // needs to be called here so that downstream code has a session cookie.
+    const session = await ensureSession(req, cookies);
+
+    const ratelimitID = rateLimitKey(session, ipAddress(req));
+    const ratelimitRes = await ratelimit.limit(ratelimitID);
+    if (!ratelimitRes.success) {
+        // This is 500 instead of 429 so that NextJS server actions get rejected.
+        // Otherwise, the error might get hidden.
+        return new NextResponse("Too many requests!", { status: 500 });
+    }
 
     // We need to pass the URL through as headers since NextJS
     // doesn't allow us to access it in server components
