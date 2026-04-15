@@ -2,9 +2,10 @@ import "server-only";
 
 import { cookies, headers } from "next/headers";
 import { buildKey, redis } from "@/src/util/redis";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { User } from "./dataTypes";
 import { redirect } from "next/navigation";
+import { CookieSync } from "@/src/proxy";
 
 export const cookieName =
     process.env.NODE_ENV === "development"
@@ -76,9 +77,12 @@ export async function getSession(): Promise<Session> {
 }
 
 /**
- * Ensures that a request/response has a session
+ * Ensures that a request/response has a session, and returns it.
  */
-export async function ensureSession(req: NextRequest, res: NextResponse) {
+export async function ensureSession(
+    req: NextRequest,
+    cookies: CookieSync,
+): Promise<Session> {
     const cookie = req.cookies.get(cookieName);
 
     // If we have a cookie, ensure that it points to a valid session.
@@ -91,7 +95,12 @@ export async function ensureSession(req: NextRequest, res: NextResponse) {
         // header that gets passed on to later code, but I'm not sure
         // if there are security concerns with that, and it just
         // feels like a poor solution overall.
-        if (await redis.exists(buildKey("session", cookie.value))) return;
+        const data = await redis.get<Session>(
+            buildKey("session", cookie.value),
+        );
+        if (data && typeof data === "object") {
+            return data;
+        }
     }
 
     const newSessionId = crypto.randomUUID();
@@ -104,7 +113,7 @@ export async function ensureSession(req: NextRequest, res: NextResponse) {
     // Dates are in milliseconds
     const expiresAt = new Date(Date.now() + sessionTimeSeconds * 1000);
 
-    res.cookies.set({
+    cookies.set({
         name: cookieName,
         value: newSessionId,
         expires: expiresAt,
@@ -117,13 +126,8 @@ export async function ensureSession(req: NextRequest, res: NextResponse) {
         sameSite: "lax",
     });
 
-    // Also set the request header so that any server
-    // side code has the right session ID.
-    // This doesn't write any cookies.
-    req.cookies.set({
-        name: cookieName,
-        value: newSessionId,
-    });
+    // New sessions are empty.
+    return {};
 }
 
 /**
