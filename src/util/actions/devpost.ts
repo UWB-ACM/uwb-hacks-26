@@ -7,6 +7,8 @@ import { getSession } from "@/src/util/session";
 import { getPermissionLevel } from "@/src/util/db/user";
 import {
     getAllTrackTags,
+    getEmailFromCode,
+    linkDevpostEmailToUser,
     markDevpostCodesAsSent,
     syncDevpostEmailsToUsers,
     upsertDevpostUser,
@@ -207,7 +209,7 @@ async function actionImportProjects(
         const mainTrack = row["What Main Track Have You Chosen?"]?.trim() ?? "";
         const sideTracks = parseHumanList(
             row["What Sub Tracks Have You Chosen (Max 2, Optional)?"]?.trim() ??
-            "",
+                "",
         );
 
         // If any selected track isn't a known tag, something has gone wrong.
@@ -315,11 +317,15 @@ export async function actionSyncDevpostEmails(): Promise<{
         const pendingEmails = await syncDevpostEmailsToUsers();
 
         if (pendingEmails.length === 0) {
-            return { sent: 0, error: "No emails currently require syncing, no linking emails sent." };
+            return {
+                sent: 0,
+                error: "No emails currently require syncing, no linking emails sent.",
+            };
         }
 
-        const { successfulEmails, failedEmails } = await sendDevpostLinkingEmails(pendingEmails);
-        
+        const { successfulEmails, failedEmails } =
+            await sendDevpostLinkingEmails(pendingEmails);
+
         if (successfulEmails.length > 0) {
             await markDevpostCodesAsSent(successfulEmails);
         }
@@ -327,7 +333,7 @@ export async function actionSyncDevpostEmails(): Promise<{
         if (failedEmails.length > 0) {
             return {
                 sent: successfulEmails.length,
-                error: `Sent ${successfulEmails.length}, but failed to send ${failedEmails.length} emails.`
+                error: `Sent ${successfulEmails.length}, but failed to send ${failedEmails.length} emails.`,
             };
         }
 
@@ -339,4 +345,28 @@ export async function actionSyncDevpostEmails(): Promise<{
             error: error instanceof Error ? error.message : String(error),
         };
     }
+}
+
+/**
+ * Links a user's account to a devpost email based on a code they received in an email.
+ * 
+ * @param code - the code that was sent in the email link to users to link their devpost account.
+ */
+export async function actionLinkDevpostAccount(code: string): Promise<{
+    success: boolean;
+    error: string;
+}> {
+    const session = await getSession();
+    if (!session.user?.id) return { success: false, error: "Authentication failed" };
+
+    const devpostEmail = await getEmailFromCode(code);
+    if (!devpostEmail) return { success: false, error: "Invalid or expired code" };
+
+    try {
+        await linkDevpostEmailToUser(devpostEmail, session.user.id);
+    } catch (error) {
+        return { success: false, error: "An internal error occurred while linking your account." };
+    }
+
+    return { success: true, error: "" };
 }
