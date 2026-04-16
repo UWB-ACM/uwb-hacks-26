@@ -231,25 +231,25 @@ export default function AboutSection({
                         >
                             DISCORD
                         </Link>
-
-                        {/* Bushes appear over Discord button */}
-                        <div className="pointer-events-none flex justify-center w-full absolute bottom-0 left-0">
-                            <div className="flex w-[120vw] shrink-0">
-                                <Image
-                                    src={Bushes}
-                                    alt=""
-                                    className="w-1/2 h-auto sm:translate-x-5"
-                                    sizes="60vw"
-                                />
-                                <Image
-                                    src={Bushes}
-                                    alt=""
-                                    className="w-1/2 h-auto "
-                                    sizes="60vw"
-                                />
-                            </div>
-                        </div>
                     </PanelContent>
+
+                    {/* Bushes appear over Discord button, outside of PanelContent so the bushes don't get animated */}
+                    <div className="pointer-events-none flex justify-center w-full absolute bottom-0 left-0">
+                        <div className="flex w-[120vw] shrink-0">
+                            <Image
+                                src={Bushes}
+                                alt=""
+                                className="w-1/2 h-auto sm:translate-x-5"
+                                sizes="60vw"
+                            />
+                            <Image
+                                src={Bushes}
+                                alt=""
+                                className="w-1/2 h-auto "
+                                sizes="60vw"
+                            />
+                        </div>
+                    </div>
                 </Panel>
 
                 {/* Hackathon Information Grid */}
