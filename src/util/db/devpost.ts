@@ -109,12 +109,13 @@ export async function markDevpostCodesAsSent(emails: string[]) {
 
 /**
  * Retrieves the devpost_email associated with a given code.
- * 
+ *
  * @param code - the code that was sent in the email link to users to link their devpost account.
  * @return the devpost_email associated with the code, or null if no valid code is found.
  */
 export async function getEmailFromCode(code: string): Promise<string | null> {
-    const result = await sql`SELECT devpost_email FROM devpost_codes WHERE code = ${code}`;
+    const result =
+        await sql`SELECT devpost_email FROM devpost_codes WHERE code = ${code}`;
     if (result.length === 0) {
         return null;
     }
@@ -122,29 +123,52 @@ export async function getEmailFromCode(code: string): Promise<string | null> {
 }
 
 /**
- * Checks if the given devpost email is already linked to another user's account, excluding the current user.
- * 
+ * Fetch the current user's devpost_email from the database.
+ *
+ * @param userId - the ID of the user to fetch the devpost_email for.
+ * @return the devpost_email associated with the user, or null if no email is linked.
+ */
+export async function getDevpostEmailByUserId(
+    userId: number,
+): Promise<string | null> {
+    const result =
+        await sql`SELECT devpost_email FROM users WHERE id = ${userId}`;
+    if (result.length === 0) {
+        return null;
+    }
+    return result[0].devpost_email;
+}
+
+/**
+ * Checks if there is a conflict with the given Devpost email, meaning that another user (other than the current user) already has that Devpost email linked to their account. This is used to determine if we need to show a warning to users trying to link a Devpost account that is already linked to another account.
+ *
  * @param devpostEmail - the devpost email to check for conflicts.
  * @param userId - the ID of the current user to exclude from the conflict check.
- * @returns true if a conflict exists (i.e., another user has the same devpost email), false otherwise.
+ * @returns the ID of the user who holds that email, or null if no conflict exists.
  */
-export async function existsDevpostEmailConflict(devpostEmail: string, userId: number): Promise<boolean> {
+export async function getUserIdByDevpostEmail(
+    devpostEmail: string,
+    userId: number,
+): Promise<number | null> {
     const result = await sql`
-        SELECT 1 FROM users 
+        SELECT id FROM users 
         WHERE devpost_email = ${devpostEmail} 
           AND id != ${userId}
         LIMIT 1
     `;
-    return result.length > 0;
+    return result.length > 0 ? result[0].id : null;
 }
 
 /**
  * Links a Devpost email to a user's account. This function first removes the devpost email from any other user that currently has it linked to prevent UNIQUE constraint errors, and then links it to the specified user.
- * 
+ *
  * @param devpostEmail - the Devpost email to link.
  * @param userId - the ID of the user to link the email to.
  */
-export async function linkDevpostEmailToUser(devpostEmail: string, userId: number): Promise<void> {
+export async function linkDevpostEmailToUser(
+    devpostEmail: string,
+    userId: number,
+): Promise<void> {
     await sql.begin(async (sql) => {
         await sql`
             UPDATE users 

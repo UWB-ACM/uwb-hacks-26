@@ -15,6 +15,7 @@ import {
     upsertProject,
 } from "@/src/util/db/devpost";
 import { sendDevpostLinkingEmails } from "../awsSes";
+import { revalidatePath } from "next/cache";
 
 const MIN_TEAM_SIZE = 3;
 const MAX_TEAM_SIZE = 4;
@@ -349,7 +350,7 @@ export async function actionSyncDevpostEmails(): Promise<{
 
 /**
  * Links a user's account to a devpost email based on a code they received in an email.
- * 
+ *
  * @param code - the code that was sent in the email link to users to link their devpost account.
  */
 export async function actionLinkDevpostAccount(code: string): Promise<{
@@ -357,15 +358,21 @@ export async function actionLinkDevpostAccount(code: string): Promise<{
     error: string;
 }> {
     const session = await getSession();
-    if (!session.user?.id) return { success: false, error: "Authentication failed" };
+    if (!session.user?.id)
+        return { success: false, error: "Authentication failed" };
 
     const devpostEmail = await getEmailFromCode(code);
-    if (!devpostEmail) return { success: false, error: "Invalid or expired code" };
+    if (!devpostEmail)
+        return { success: false, error: "Invalid or expired code" };
 
     try {
         await linkDevpostEmailToUser(devpostEmail, session.user.id);
+        revalidatePath("/dashboard");
     } catch (error) {
-        return { success: false, error: "An internal error occurred while linking your account." };
+        return {
+            success: false,
+            error: "An internal error occurred while linking your account.",
+        };
     }
 
     return { success: true, error: "" };
