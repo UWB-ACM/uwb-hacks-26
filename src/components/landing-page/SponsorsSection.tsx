@@ -21,6 +21,7 @@ import SAF from "@/public/sponsorsSection/SAF.png";
 import { motion } from "motion/react";
 
 interface Sponsor {
+    alt: string;
     logoImage: StaticImageData;
     href: string;
     wide?: boolean;
@@ -30,28 +31,34 @@ const sponsors: Sponsor[] = [
     {
         logoImage: Avanade,
         href: "https://www.avanade.com/en-us",
+        alt: "Avanade Logo",
         wide: true,
     },
     {
         logoImage: WSECU,
         href: "https://wsecu.org/",
+        alt: "WSECU Logo",
         wide: true,
     },
     {
         logoImage: Pepsi,
         href: "https://www.pepsi.com/",
+        alt: "Pepsi Logo",
     },
     {
         logoImage: Starbucks,
         href: "https://www.starbucks.com/",
+        alt: "Starbucks Logo",
     },
     {
         logoImage: ClubCouncil,
         href: "https://www.uwb.edu/sea/clubs/club-council",
+        alt: "Club Council Logo",
     },
     {
         logoImage: SAF,
         href: "https://depts.washington.edu/safcom/",
+        alt: "Services & Activities Fee Committee Logo",
     },
 ];
 
@@ -79,7 +86,11 @@ const SponsorsSection = () => {
             <div className="relative mt-[7vmax] pb-[5vmax]">
                 {/* Billboard */}
                 <div className="z-5 relative h-auto w-[75vw] md:w-[65vw] lg:w-[60vw] xl:w-[55vw] mx-auto mb-0 md:mb-8 lg:mb-16 xl:mb-32">
-                    <Image src={BillboardTop} alt="" />
+                    <Image
+                        src={BillboardTop}
+                        alt=""
+                        sizes="(min-width: 1200px) 55vw, (min-width: 1000px) 60vw, (min-width: 800px) 65vw, 75vw"
+                    />
 
                     <div className="z-0 relative">
                         <div className="relative z-5 p-4 lg:p-6">
@@ -108,11 +119,16 @@ const SponsorsSection = () => {
                                         >
                                             <Image
                                                 src={sponsor.logoImage}
-                                                alt=""
+                                                alt={sponsor.alt}
                                                 className={
                                                     sponsor.wide
                                                         ? "mx-auto w-3/4 md:w-3/5 max-w-[500px]"
                                                         : "mx-auto w-3/5 max-w-[150px] xl:max-w-[175px]"
+                                                }
+                                                sizes={
+                                                    sponsor.wide
+                                                        ? "(min-width: 1515px) 500px, (min-width: 1200px) 33vw, (min-width: 1000px) 36vw, (min-width: 800px) 39vw, 56vw"
+                                                        : "(min-width: 1200px) 175px, (min-width: 667px) 150px, 22vw"
                                                 }
                                             />
                                         </Link>
@@ -125,27 +141,49 @@ const SponsorsSection = () => {
                             src={BillboardBody}
                             alt=""
                             className="z-0 absolute top-0 w-full h-full"
+                            sizes="(min-width: 1200px) 55vw, (min-width: 1000px) 60vw, (min-width: 800px) 65vw, 75vw"
                         />
                     </div>
 
-                    <Image src={BillboardBottom} alt="" />
+                    <Image
+                        src={BillboardBottom}
+                        alt=""
+                        sizes="(min-width: 1200px) 55vw, (min-width: 1000px) 60vw, (min-width: 800px) 65vw, 75vw"
+                    />
                 </div>
 
                 <Image
                     src={CitySkylineLightBlue}
                     alt=""
                     className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
+                    sizes="100vw"
                 />
 
                 <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
-                    <Image src={CityBackground2} alt="" className="w-1/3" />
-                    <Image src={CityBackground2} alt="" className="w-1/3" />
-                    <Image src={CityBackground2} alt="" className="w-1/3" />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
                 </div>
                 <Image
                     src={Grass}
                     alt=""
                     className="z-5 absolute bottom-0 w-screen"
+                    sizes="100vw"
                 />
             </div>
 
@@ -155,18 +193,35 @@ const SponsorsSection = () => {
                     src={CitySkylineLightBlue}
                     alt=""
                     className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
+                    sizes="100vw"
                 />
 
                 <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
-                    <Image src={CityBackground2} alt="" className="w-1/3" />
-                    <Image src={CityBackground2} alt="" className="w-1/3" />
-                    <Image src={CityBackground2} alt="" className="w-1/3" />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
                 </div>
 
                 <Image
                     src={Grass}
                     alt=""
                     className="z-5 absolute bottom-0 w-screen"
+                    sizes="100vw"
                 />
             </div>
         </>
