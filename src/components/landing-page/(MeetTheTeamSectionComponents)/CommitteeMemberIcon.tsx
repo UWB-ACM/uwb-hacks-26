@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { committeeMember } from "./Committees";
+import { CommitteeMember } from "./Committees";
 
 interface CommitteeMemberIconProps {
     idx: number;
-    committeeMember: committeeMember;
+    committeeMember: CommitteeMember;
     isSelected: boolean;
     handleClick: (selectedIdx: number) => void;
 }

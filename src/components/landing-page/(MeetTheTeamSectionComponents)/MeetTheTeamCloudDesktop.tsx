@@ -1,15 +1,6 @@
-import { RefObject } from "react";
-import { committeeMember } from "./Committees";
+import { MeetTheTeamCloudProps } from "./Committees";
 import CommitteeMemberInfo from "./CommitteeMemberInfo";
 import CommitteeMemberIcon from "./CommitteeMemberIcon";
-
-interface MeetTheTeamCloudDesktopProps {
-    committeeMembers: committeeMember[];
-    panelContentRef: RefObject<HTMLDivElement | null>;
-    committeeMemberIconsRef: RefObject<HTMLDivElement | null>;
-    handleClick: (selectedIdx: number) => void;
-    selectedMemberIdx: number | null;
-}
 
 const MeetTheTeamCloudDesktop = ({
     committeeMembers,
@@ -17,7 +8,7 @@ const MeetTheTeamCloudDesktop = ({
     committeeMemberIconsRef,
     handleClick,
     selectedMemberIdx,
-}: MeetTheTeamCloudDesktopProps) => {
+}: MeetTheTeamCloudProps) => {
     return (
         <>
             <div

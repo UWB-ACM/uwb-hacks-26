@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export const committees = [
     {
         id: "executives",
@@ -476,9 +478,17 @@ export const committees = [
     },
 ];
 
-export interface committeeMember {
+export interface CommitteeMember {
     name: string;
     image_path: string;
     roles: string[];
     link: string;
+}
+
+export interface MeetTheTeamCloudProps {
+    committeeMembers: CommitteeMember[];
+    panelContentRef: RefObject<HTMLDivElement | null>;
+    committeeMemberIconsRef: RefObject<HTMLDivElement | null>;
+    handleClick: (selectedIdx: number) => void;
+    selectedMemberIdx: number | null;
 }

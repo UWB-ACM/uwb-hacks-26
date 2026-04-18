@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { committeeMember } from "./Committees";
+import { CommitteeMember } from "./Committees";
 
 interface CommitteeMemberInfoProps {
-    committeeMember: committeeMember | null;
+    committeeMember: CommitteeMember | null;
 }
 
 const CommitteeMemberInfo = ({ committeeMember }: CommitteeMemberInfoProps) => {
