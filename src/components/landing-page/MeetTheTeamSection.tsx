@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 import MeetTheTeamCloudDesktop from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloudDesktop";
 import MeetTheTeamCloudMobileTablet from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloudMobileTablet";
@@ -77,39 +77,16 @@ const MeetTheTeamSection = () => {
     const [selectedMemberIdx, setSelectedMemberIdx] = useState<number | null>(
         null,
     );
-    const selectedMemberIdxRef = useRef<number | null>(null);
-    // accessing ref's current property resulted in error from linter; placed line in useEffect to prevent error
-    useEffect(() => {
-        selectedMemberIdxRef.current = selectedMemberIdx;
-    }, [selectedMemberIdx]);
 
     // committeeMemberIconsRef references revolving element
     // committeeMemberIconsRef is used by GSAP timeline, tlRef.current, to perform the animation
     const committeeMemberIconsRef = useRef<HTMLDivElement | null>(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-    // isMobile state logic
-    // sets isMobile to true when viewport width is < 1000, otherwise false
-    // used to conditionally render correct version of MeetTheTeamSection
+    // isMobile state is used to conditionally render correct version of MeetTheTeamSection elements
     const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const handleResize = () => {
-            const width = window.innerWidth;
-            setIsMobile(width < 1000);
 
-            selectedMemberIdxRef.current = null;
-            setSelectedMemberIdx(null);
-            tlRef.current?.resume();
-        };
-        handleResize();
-
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    // initialize animation timeline
-    // calls buildTimeline() function whenever committeeMemberIconsRef.current resizes; makes sure that animation's transform is always correct
-    useEffect(() => {
+    const buildTimeline = useCallback(() => {
         const el = committeeMemberIconsRef.current;
         if (!el) {
             tlRef.current?.kill();
@@ -117,48 +94,57 @@ const MeetTheTeamSection = () => {
             return;
         }
 
-        const buildTimeline = () => {
-            tlRef.current?.kill();
-            const half = isMobile ? el.scrollWidth / 2 : el.scrollHeight / 2;
-            if (half <= 0) {
-                tlRef.current = null;
-                return;
-            }
-
-            const tl = gsap.timeline({ repeat: -1 });
-            tlRef.current = tl;
-
-            if (isMobile) {
-                gsap.set(el, { x: 0 });
-                tl.fromTo(
-                    el,
-                    { x: 0 },
-                    { x: -half, duration: 10, ease: "none" },
-                );
-            } else {
-                gsap.set(el, { y: -half });
-                tl.fromTo(
-                    el,
-                    { y: -half },
-                    { y: 0, duration: 10, ease: "none" },
-                );
-            }
-
-            if (selectedMemberIdxRef.current !== null) {
-                tl.pause();
-            }
-        };
-
-        buildTimeline();
-        const ro = new ResizeObserver(() => buildTimeline());
-        ro.observe(el);
-
-        return () => {
-            ro.disconnect();
-            tlRef.current?.kill();
+        tlRef.current?.kill();
+        const half = isMobile ? el.scrollWidth / 2 : el.scrollHeight / 2;
+        if (half <= 0) {
             tlRef.current = null;
-        };
+            return;
+        }
+
+        const tl = gsap.timeline({ repeat: -1 });
+        tlRef.current = tl;
+
+        if (isMobile) {
+            gsap.set(el, { x: 0 });
+            tl.fromTo(
+                el,
+                { x: 0 },
+                { x: -half, duration: 10, ease: "none" },
+            );
+        } else {
+            gsap.set(el, { y: -half });
+            tl.fromTo(
+                el,
+                { y: -half },
+                { y: 0, duration: 10, ease: "none" },
+            );
+        }
     }, [isMobile]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 1000);
+            setSelectedMemberIdx(null);
+            tlRef.current?.resume();
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        const el = committeeMemberIconsRef.current;
+        if (el) {
+            buildTimeline();
+            const ro = new ResizeObserver(buildTimeline);
+            ro.observe(el);
+            return () => {
+                window.removeEventListener("resize", handleResize);
+                ro.disconnect();
+                tlRef.current?.kill();
+                tlRef.current = null;
+            };
+        }
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, [buildTimeline]);
 
     const handleClick = (selectedIdx: number) => {
         if (selectedMemberIdx === null || selectedIdx !== selectedMemberIdx) {
