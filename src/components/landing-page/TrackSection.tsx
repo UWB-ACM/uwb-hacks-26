@@ -7,7 +7,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 
-import tracks_data from "./(TracksSectionComponents)/tracks.json";
+import { tracks_data } from "./(TracksSectionComponents)/tracks";
 
 // Used in Tracks section background
 import Image from "next/image";
@@ -16,33 +16,15 @@ import Cloud from "@/public/tracksSection/CloudBackground.png";
 // Tab navigation for tracks
 import Tracks from "./(TracksSectionComponents)/TracksTabNavigation/Tracks";
 
+import { DisplayTrack } from "./(TracksSectionComponents)/tracks";
+
 gsap.registerPlugin(ScrollTrigger);
-
-/**
- * Frontend display data for a track (used by landing page).
- */
-export interface DisplayTrack {
-    /**
-     * name of track
-     */
-    name: string;
-
-    /**
-     * question related to track (helps explain tracks goal)
-     */
-    question: string;
-
-    /**
-     * track description
-     */
-    description: string;
-}
 
 const TracksSection = ({ noTrackAnimation }: { noTrackAnimation: boolean }) => {
     const panelPadding = "py-6 md:py-10";
 
     // tracks contains all relevant information about each of the tracks
-    const tracks: DisplayTrack[] = tracks_data["tracks"];
+    const tracks: DisplayTrack[] = tracks_data;
     const tracksNavRef = useRef<HTMLDivElement | null>(null);
     const selectedTrackRef = useRef<HTMLDivElement | null>(null);
 

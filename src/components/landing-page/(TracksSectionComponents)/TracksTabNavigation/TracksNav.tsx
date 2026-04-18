@@ -1,6 +1,6 @@
 import React, { Dispatch, RefObject, SetStateAction } from "react";
 
-import { DisplayTrack } from "@/src/components/landing-page/TrackSection";
+import { DisplayTrack } from "../tracks";
 
 type TracksNavHeaderProps = {
     tracks: DisplayTrack[];

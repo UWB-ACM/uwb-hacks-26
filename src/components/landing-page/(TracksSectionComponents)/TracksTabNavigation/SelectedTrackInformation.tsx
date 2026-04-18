@@ -1,6 +1,6 @@
-import React, { RefObject } from "react";
+import { RefObject } from "react";
 
-import { DisplayTrack } from "@/src/components/landing-page/TrackSection";
+import { DisplayTrack } from "@/src/components/landing-page/(TracksSectionComponents)/tracks";
 
 type SelectedTrackInformationProps = {
     selectedTrackRef: RefObject<HTMLDivElement | null>;
@@ -30,6 +30,9 @@ export default function SelectedTrackInformation({
                 </p>
                 <p className="mx-auto text-center md:w-3/4 md:text-xl text-[#0078d0]">
                     {selectedTrack.description}
+                </p>
+                <p className="mx-auto text-center font-bold font-h2 text-lg md:text-xl text-[#49B2F8]">
+                    Example: {" " + selectedTrack.example}
                 </p>
             </div>
         </div>
