@@ -173,19 +173,17 @@ const MeetTheTeamSection = () => {
     return (
         <div className="my-[12vmin] relative mx-auto w-[90%] md:w-[75%] lg:w-[80%] xl:w-[60%]">
             {/* conditionally render respective FlyingCar image */}
-            {isMobile ? (
-                <Image
-                    src={FlyingCarMobileTablet}
-                    alt=""
-                    className="w-full h-full"
-                />
-            ) : (
-                <Image
-                    src={FlyingCarDesktop}
-                    alt=""
-                    className="w-full h-full"
-                />
-            )}
+            <Image
+                src={FlyingCarMobileTablet}
+                alt=""
+                className={`w-full h-full ${isMobile ? "block" : "hidden"}`}
+            />
+
+            <Image
+                src={FlyingCarDesktop}
+                alt=""
+                className={`w-full h-full ${isMobile ? "hidden" : "block"}`}
+            />
 
             {/*
                 Panel component is absolutely positioned on top of FlyingCar image
@@ -204,7 +202,7 @@ const MeetTheTeamSection = () => {
                     parentPanelId={"meetTheTeamPanel"}
                     className={cn(
                         panelContentStyles,
-                        isMobile && "flex-col pt-2 md:pt-2",
+                        isMobile ? "flex-col pt-2 md:pt-2" : "",
                     )}
                 >
                     {/* TODO: remove committeeMembers prop and import committees list @ (MeetTheTeamSectionComponents)/Committees.tsx once actual committee member info is filled out */}

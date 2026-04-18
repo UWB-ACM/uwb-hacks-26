@@ -12,30 +12,23 @@ const CommitteeMemberInfo = ({
     isHidden,
 }: CommitteeMemberInfoProps) => {
     const roles =
-        committeeMember !== null
-            ? committeeMember["roles"].map((role, jdx) => (
-                  <span key={jdx}>
-                      {role}
-                      {jdx !== committeeMember["roles"].length - 1 && ", "}
-                  </span>
-              ))
-            : null;
+        committeeMember !== null ? committeeMember.roles.join(", ") : null;
 
     return (
         <div
             className={cn(
                 "flex h-full min-h-0 grow flex-col overflow-y-auto overflow-x-hidden text-shadow-md text-center lg:text-left",
-                isHidden && "hidden",
+                isHidden ? "hidden" : "flex",
             )}
         >
             {committeeMember ? (
                 <div className="m-auto w-full max-w-full p-3">
                     <Link
-                        href={committeeMember["link"]}
-                        target="_"
+                        href={committeeMember.link}
+                        target="_blank"
                         className="text-lg lg:text-xl font-semibold underline lg:no-underline lg:hover:underline underline-offset-2 text-blue-400"
                     >
-                        {committeeMember["name"]}
+                        {committeeMember.name}
                     </Link>
                     <p className="text-base md:text-lg">{roles}</p>
                 </div>

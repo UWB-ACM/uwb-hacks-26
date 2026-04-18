@@ -32,6 +32,7 @@ const MeetTheTeamCloudMobileTablet = ({
                                     committeeMember={committeeMember}
                                     isSelected={idx === selectedMemberIdx}
                                     handleClick={handleClick}
+                                    tabIndex={dup === 0 ? 0 : -1}
                                 />
                             ))}
                         </div>
