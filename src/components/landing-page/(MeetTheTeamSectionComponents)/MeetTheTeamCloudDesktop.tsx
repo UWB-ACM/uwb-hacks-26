@@ -44,12 +44,17 @@ const MeetTheTeamCloudDesktop = ({
             </div>
 
             <CommitteeMemberInfo
-                committeeMember={
-                    selectedMemberIdx !== null
-                        ? committeeMembers[selectedMemberIdx]
-                        : null
-                }
+                committeeMember={null}
+                isHidden={selectedMemberIdx !== null}
             />
+
+            {committeeMembers.map((committeeMember, idx) => (
+                <CommitteeMemberInfo
+                    key={idx}
+                    committeeMember={committeeMember}
+                    isHidden={selectedMemberIdx !== idx}
+                />
+            ))}
         </>
     );
 };

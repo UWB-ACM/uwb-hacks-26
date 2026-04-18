@@ -1,11 +1,16 @@
 import Link from "next/link";
 import { CommitteeMember } from "./Committees";
+import { cn } from "@/src/util/utils";
 
 interface CommitteeMemberInfoProps {
     committeeMember: CommitteeMember | null;
+    isHidden: boolean;
 }
 
-const CommitteeMemberInfo = ({ committeeMember }: CommitteeMemberInfoProps) => {
+const CommitteeMemberInfo = ({
+    committeeMember,
+    isHidden,
+}: CommitteeMemberInfoProps) => {
     const roles =
         committeeMember !== null
             ? committeeMember["roles"].map((role, jdx) => (
@@ -17,7 +22,12 @@ const CommitteeMemberInfo = ({ committeeMember }: CommitteeMemberInfoProps) => {
             : null;
 
     return (
-        <div className="flex h-full min-h-0 grow flex-col overflow-y-auto overflow-x-hidden text-shadow-md text-center lg:text-left">
+        <div
+            className={cn(
+                "flex h-full min-h-0 grow flex-col overflow-y-auto overflow-x-hidden text-shadow-md text-center lg:text-left",
+                isHidden && "hidden",
+            )}
+        >
             {committeeMember ? (
                 <div className="m-auto w-full max-w-full p-3">
                     <Link
