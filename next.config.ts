@@ -2,9 +2,10 @@ import type { NextConfig } from "next";
 
 const cspHeader = `
     default-src 'self';
-    script-src 'self'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} 'unsafe-inline' https://cdn.strawpoll.com;
+    script-src 'self'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} 'unsafe-inline' https://*.googletagmanager.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://s3.amazonaws.com;
+    img-src 'self' blob: data: https://s3.amazonaws.com https://*.google-analytics.com https://*.googletagmanager.com;
+    connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;
     font-src 'self';
     object-src 'none';
     base-uri 'self';
@@ -44,13 +45,23 @@ const nextConfig: NextConfig = {
     redirects() {
         return [
             {
+                source: "/login",
+                destination: "/api/auth/google",
+                permanent: false,
+            },
+            {
                 source: "/links/yardsign",
-                destination: "/",
+                destination: "/?utm_source=yardsign",
                 permanent: false,
             },
             {
                 source: "/links/standingbanner",
-                destination: "/",
+                destination: "/?utm_source=standingbanner",
+                permanent: false,
+            },
+            {
+                source: "/links/visits",
+                destination: "/?utm_source=visits",
                 permanent: false,
             },
         ];
