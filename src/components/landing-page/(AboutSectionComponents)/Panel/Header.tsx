@@ -45,6 +45,7 @@ export default function PanelHeader({
                 // to avoid an uncomfortable delay.
                 start: long ? "10% 80%" : "30% 80%",
             },
+            opacity: 1,
         });
         // parentPanelId only passed into dependency array to satisfy ESLint. value of parentPanelId will never be changed within this component
     }, [long, parentPanelId]);
