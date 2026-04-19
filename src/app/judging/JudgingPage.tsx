@@ -12,7 +12,7 @@ export function JudgingPage({ projects }: { projects: Project[] }) {
     return (
         <div className="w-full min-h-full flex flex-col">
             <Header links={HEADER_LINKS} />
-            <h1 className="font-edge-of-the-galaxy text-5xl text-[#2886c4] text-center mt-8">
+            <h1 className="font-edge-of-the-galaxy text-5xl text-[#ffffff] text-center mt-8">
                 Judge Portal
             </h1>
 
