@@ -272,6 +272,7 @@ async function actionImportProjects(
     for (const promise of promises) {
         try {
             await promise;
+            result.imported++;
         } catch (e) {
             result.errors.push(
                 `Failed to import project: ${e instanceof Error ? e.message : String(e)}`,

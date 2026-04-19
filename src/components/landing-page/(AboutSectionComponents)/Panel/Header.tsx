@@ -45,6 +45,7 @@ export default function PanelHeader({
                 // to avoid an uncomfortable delay.
                 start: long ? "10% 80%" : "30% 80%",
             },
+            opacity: 1,
         });
         // parentPanelId only passed into dependency array to satisfy ESLint. value of parentPanelId will never be changed within this component
     }, [long, parentPanelId]);
@@ -53,7 +54,7 @@ export default function PanelHeader({
         ref: headerRef,
         className: twMerge(
             clsx(
-                `w-full lg:w-fit p-6 bg-white font-h1 text-center ${isSectionHeader ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"}`,
+                `w-full p-6 bg-white font-h1 text-center ${isSectionHeader ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"}`,
                 className,
             ),
         ),
