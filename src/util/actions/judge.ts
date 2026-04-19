@@ -11,18 +11,16 @@ export async function actionSubmitScore(
     score: number,
 ): Promise<void | null> {
     const session = await getSession();
-    if (!session.user?.id) return null;
 
     await ensureJudgePermission(session);
-    await upsertScore(session.user.id, projectId, questionId, score);
+    await upsertScore(session.user!.id, projectId, questionId, score);
 }
 
 export async function actionCompleteAssignment(
     projectId: number,
 ): Promise<void | null> {
     const session = await getSession();
-    if (!session.user?.id) return null;
 
     await ensureJudgePermission(session);
-    await completeAssignment(session.user.id, projectId);
+    await completeAssignment(session.user!.id, projectId);
 }

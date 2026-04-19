@@ -7,11 +7,8 @@ import sql from "@/src/util/database";
  */
 export async function getJudgeAssignments(judgeId: number): Promise<Project[]> {
     const data =
-        await sql`SELECT * FROM judge_assignments JOIN projects ON judge_assignments.project_id = projects.id WHERE judge_id=${judgeId};`;
+        await sql`SELECT projects.* FROM judge_assignments INNER JOIN projects ON judge_assignments.project_id = projects.id WHERE judge_id=${judgeId};`;
 
-    if (data.length === 0) {
-        return [];
-    }
     return data.map((row) => ({
         id: row.id,
         devpostId: row.devpost_id,
@@ -183,9 +180,7 @@ export async function getJudgingQuestions(
 ): Promise<JudgingQuestion[]> {
     const data =
         await sql`SELECT * FROM judging_questions WHERE id IN ( SELECT UNNEST(questions) FROM tracks WHERE tracks.id IN(SELECT UNNEST(track_ids) FROM judge_info WHERE judge_info.id = ${judgeId}) AND tracks.devpost_tag IN (SELECT main_track FROM projects WHERE projects.id = ${projectId} UNION SELECT UNNEST(side_tracks) FROM projects WHERE projects.id = ${projectId}));`;
-    if (data.length === 0) {
-        return [];
-    }
+
     return data.map((row) => ({
         id: row.id,
         questionText: row.question_text,
@@ -221,7 +216,7 @@ export async function getTrackQuestions(
     trackId: number,
 ): Promise<JudgingQuestion[]> {
     const data =
-        await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT UNNEST(questions) FROM tracks WHERE id=${trackId})`;
+        await sql`SELECT * FROM judging_questions WHERE id IN (SELECT UNNEST(questions) FROM tracks WHERE id=${trackId})`;
 
     return data.map((row) => ({
         id: row.id,
@@ -229,19 +224,4 @@ export async function getTrackQuestions(
     }));
 }
 
-/**
- * This function will grab all the questions for a specific project based on it's tracks.
- * @param project_id - this id for the project
- * @returns returns a JudgeQuestions array
- */
-export async function grabQuestionsByProject(
-    project_id: number,
-): Promise<JudgingQuestion[]> {
-    const data =
-        await sql`SELECT * FROM judging_questions WHERE id = ANY(SELECT UNNEST(questions) FROM tracks WHERE tracks.id IN (SELECT main_track FROM projects where project.id = ${project_id} UNION SELECT UNNEST(side_tracks) FROM projects WHERE project.id = ${project_id})))`;
 
-    return data.map((row) => ({
-        id: row.id,
-        questionText: row.question_text,
-    }));
-}

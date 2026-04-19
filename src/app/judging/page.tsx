@@ -8,7 +8,7 @@ export default async function Page() {
     const session = await getSession();
     await ensureJudgePermission(session);
 
-    const judge_assignments = await getJudgeAssignments(session.user!.id);
+    const judgeAssingments = await getJudgeAssignments(session.user!.id);
 
-    return <JudgingPage projects={judge_assignments} />;
+    return <JudgingPage projects={judgeAssingments} />;
 }
