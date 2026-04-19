@@ -50,6 +50,11 @@ export default function ProjectScoringPage({
 
     async function handleComplete() {
         setCompleting(true);
+        for (const q of questions) {
+            if (scores[q.id] !== undefined) {
+                await actionSubmitScore(project.id, q.id, scores[q.id]);
+            }
+        }
         await actionCompleteAssignment(project.id);
         router.push("/judging");
     }
@@ -61,25 +66,25 @@ export default function ProjectScoringPage({
             <div className="flex flex-col gap-6 p-8 max-w-3xl mx-auto w-full">
                 <Link
                     href="/judging"
-                    className="font-h1 text-[#2886c4] underline w-fit"
+                    className="font-h2 text-[#ffffff]  w-fit font-bold text-2xl"
                 >
                     ← Back to projects
                 </Link>
 
                 {/* Project info card */}
                 <div className="bg-neutral-200 rounded-lg border-4 border-black shadow-comic p-6">
-                    <h1 className="font-edge-of-the-galaxy text-4xl text-[#2886c4]">
+                    <h1 className="font-bold text-4xl text-[#2886c4] text-center ">
                         {project.projectTitle}
                     </h1>
 
-                    <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="bg-white border-2 border-black px-3 py-1 rounded-full font-h1 text-sm">
+                    <div className="flex flex-wrap gap-2 mt-3 justify-center">
+                        <span className="bg-white border-2 border-black px-3 py-1 rounded-full font-h2 text-sm font-bold">
                             {project.mainTrack}
                         </span>
                         {project.sideTracks.map((track) => (
                             <span
                                 key={track}
-                                className="bg-white border-2 border-black px-3 py-1 rounded-full font-h1 text-sm"
+                                className="bg-white border-2 border-black px-3 py-1 rounded-full font-h2 text-sm font-bold"
                             >
                                 {track}
                             </span>
@@ -91,7 +96,7 @@ export default function ProjectScoringPage({
                             <Link
                                 href={project.submissionUrl}
                                 target="_blank"
-                                className="font-h1 text-[#2886c4] underline"
+                                className="font-h2 text-[#2886c4] underline font-bold"
                             >
                                 Devpost →
                             </Link>
@@ -100,7 +105,7 @@ export default function ProjectScoringPage({
                             <Link
                                 href={project.tryUrl}
                                 target="_blank"
-                                className="font-h1 text-[#2886c4] underline"
+                                className="font-h2 text-[#2886c4] underline"
                             >
                                 Demo →
                             </Link>
@@ -109,7 +114,7 @@ export default function ProjectScoringPage({
                             <Link
                                 href={project.videoUrl}
                                 target="_blank"
-                                className="font-h1 text-[#2886c4] underline"
+                                className="font-h2 text-[#2886c4] underline"
                             >
                                 Video →
                             </Link>
@@ -119,12 +124,12 @@ export default function ProjectScoringPage({
 
                 {/* Scoring questions */}
                 {questions.length === 0 ? (
-                    <p className="font-h1 text-xl text-neutral-500">
-                        No judging questions assigned for this project.
+                    <p className="font-h2 text-xl text-neutral-500">
+                        Please find a staff member immediately.
                     </p>
                 ) : (
                     <div className="flex flex-col gap-4">
-                        <h2 className="font-h1 text-2xl text-[#39a8f1]">
+                        <h2 className="font-h1 text-2xl text-[#ffffff] text-center text-4xl">
                             Scoring
                         </h2>
                         {questions.map((question) => (
@@ -132,32 +137,37 @@ export default function ProjectScoringPage({
                                 key={question.id}
                                 className="bg-neutral-200 rounded-lg border-4 border-black shadow-comic p-6 flex flex-col gap-3"
                             >
-                                <p className="font-h1 text-lg">
+                                <p className="font-h2 text-lg font-bold">
                                     {question.questionText}
                                 </p>
-                                <div className="flex items-center gap-3">
-                                    <input
-                                        type="number"
-                                        min={0}
-                                        max={10}
-                                        value={
-                                            scores[question.id] !== undefined
+                                <div className="flex flex-col gap-1">
+                                    <div className="flex items-center gap-4">
+                                        <input
+                                            type="range"
+                                            min={0}
+                                            max={10}
+                                            value={
+                                                scores[question.id] !== undefined
+                                                    ? scores[question.id]
+                                                    : 0
+                                            }
+                                            onChange={(e) =>
+                                                handleChange(
+                                                    question.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            onBlur={() => handleBlur(question.id)}
+                                            className="flex-1 accent-[#2886c4] h-3 cursor-pointer"
+                                        />
+                                        
+                                        <span className="font-h2 font-bold text-xl w-8 text-center border-2 border-black rounded bg-white">
+                                            {scores[question.id] !== undefined
                                                 ? scores[question.id]
-                                                : ""
-                                        }
-                                        onChange={(e) =>
-                                            handleChange(
-                                                question.id,
-                                                e.target.value,
-                                            )
-                                        }
-                                        onBlur={() => handleBlur(question.id)}
-                                        placeholder="0–10"
-                                        className="border-2 border-black rounded p-2 w-20 font-h1 text-center text-xl"
-                                    />
-                                    <span className="font-h1 text-sm text-neutral-500">
-                                        Score from 0 to 10
-                                    </span>
+                                                : "—"}
+                                        </span>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         ))}
@@ -167,7 +177,7 @@ export default function ProjectScoringPage({
                 <button
                     onClick={handleComplete}
                     disabled={!allScored || completing}
-                    className="mt-2 font-h1 text-xl bg-[#2886c4] text-white border-4 border-black shadow-comic rounded-lg px-6 py-3 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#39a8f1] transition-colors"
+                    className="mt-2 font-h2 text-xl bg-[#2886c4] text-white border-4 border-black shadow-comic rounded-lg px-6 py-3 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#39a8f1] transition-colors"
                 >
                     {completing ? "Submitting..." : "Mark Complete"}
                 </button>
