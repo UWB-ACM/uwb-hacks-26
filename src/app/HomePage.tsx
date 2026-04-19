@@ -4,6 +4,7 @@ import Header from "@/src/components/header/Header";
 import Footer from "@/src/components/Footer";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
+import SponsorsSection from "@/src/components/landing-page/SponsorsSection";
 import { ParallaxProvider } from "react-scroll-parallax";
 import FAQSection from "@/src/components/landing-page/FAQSection";
 import { LeaderboardRecord, Prize } from "../util/dataTypes";
@@ -43,6 +44,7 @@ export default function HomePage({
                         leaderboardData={leaderboardData}
                     />
                     <TracksSection noTrackAnimation={false}></TracksSection>
+                    <SponsorsSection />
                     <FAQSection />
 
                     <Footer className={"bg-[#14c5f8] text-white"} />
