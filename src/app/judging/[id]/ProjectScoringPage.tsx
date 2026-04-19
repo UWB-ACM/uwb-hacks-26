@@ -10,13 +10,7 @@ import {
 } from "@/src/util/actions/judge";
 import Header from "@/src/components/header/Header";
 
-const HEADER_LINKS = [
-    { id: "about", name: "About", url: "/#about" },
-    { id: "tracks", name: "Tracks", url: "/#tracks" },
-    { id: "schedule", name: "Schedule", url: "/#schedule" },
-    { id: "faq", name: "FAQ", url: "/#faq" },
-    { id: "dashboard", name: "Dashboard", url: "/dashboard" },
-];
+const HEADER_LINKS = [{ id: "Home", name: "Home", url: "/" }];
 
 export default function ProjectScoringPage({
     project,
