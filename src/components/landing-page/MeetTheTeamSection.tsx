@@ -143,7 +143,10 @@ const MeetTheTeamSection = () => {
                 </PanelHeader>
                 <PanelContent
                     parentPanelId={"meetTheTeamPanel"}
-                    className={cn(panelContentStyles, "flex-col pt-2 lg:flex-row lg:pt-0")}
+                    className={cn(
+                        panelContentStyles,
+                        "flex-col pt-2 lg:flex-row lg:pt-0",
+                    )}
                 >
                     <MeetTheTeamCloud
                         panelContentRef={panelContentRef}
