@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-import MeetTheTeamCloudDesktop from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloudDesktop";
-import MeetTheTeamCloudMobileTablet from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloudMobileTablet";
+import MeetTheTeamCloud from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloud";
 import gsap from "gsap";
 
 import Image from "next/image";
@@ -105,18 +104,18 @@ const MeetTheTeamSection = () => {
         tlRef.current = tl;
 
         if (isMobile) {
-            gsap.set(el, { x: 0 });
+            gsap.set(el, { x: 0, y: 0 });
             tl.fromTo(
                 el,
                 { x: 0 },
                 { x: -half, duration: 10, ease: "none" },
             );
         } else {
-            gsap.set(el, { y: -half });
+            gsap.set(el, { x: 0, y: -half });
             tl.fromTo(
                 el,
                 { y: -half },
-                { y: 0, duration: 10, ease: "none" },
+                { y: 0, duration: 25, ease: "none" },
             );
         }
     }, [isMobile]);
@@ -192,23 +191,14 @@ const MeetTheTeamSection = () => {
                     )}
                 >
                     {/* TODO: remove committeeMembers prop and import committees list @ (MeetTheTeamSectionComponents)/Committees.tsx once actual committee member info is filled out */}
-                    {!isMobile ? (
-                        <MeetTheTeamCloudDesktop
-                            committeeMembers={committeeMembers}
-                            panelContentRef={panelContentRef}
-                            committeeMemberIconsRef={committeeMemberIconsRef}
-                            handleClick={handleClick}
-                            selectedMemberIdx={selectedMemberIdx}
-                        />
-                    ) : (
-                        <MeetTheTeamCloudMobileTablet
-                            committeeMembers={committeeMembers}
-                            panelContentRef={panelContentRef}
-                            committeeMemberIconsRef={committeeMemberIconsRef}
-                            handleClick={handleClick}
-                            selectedMemberIdx={selectedMemberIdx}
-                        />
-                    )}
+                    <MeetTheTeamCloud
+                        committeeMembers={committeeMembers}
+                        panelContentRef={panelContentRef}
+                        committeeMemberIconsRef={committeeMemberIconsRef}
+                        handleClick={handleClick}
+                        selectedMemberIdx={selectedMemberIdx}
+                        isMobile={isMobile}
+                    />
                 </PanelContent>
             </Panel>
         </div>
