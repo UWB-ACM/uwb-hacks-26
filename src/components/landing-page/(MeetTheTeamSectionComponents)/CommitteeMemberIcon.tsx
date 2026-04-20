@@ -29,6 +29,7 @@ const CommitteeMemberIcon = ({
                 src={committeeMember.image_path}
                 alt={committeeMember.name}
                 fill
+                className="object-cover"
                 sizes="(min-width: 1200px) 12vw, (min-width: 1000px) 17vw"
             />
         </button>

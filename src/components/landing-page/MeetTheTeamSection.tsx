@@ -12,52 +12,7 @@ import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
 import { cn } from "@/src/util/utils";
-
-// TODO: fill out actual committeeMember info
-// this is temporary, will replace with committees list in (MeetTheTeamSectionComponents)/Committees.tsx and import list in mobile/tablet and desktop MeetTheTeam components rather than passing in as props
-const committeeMembers = [
-    {
-        name: "Breanna Powell",
-        roles: [
-            "Marketing Lead",
-            "Local Arrangements Member",
-            "Production Management Member",
-            "Sponsorships Outreach Member",
-        ],
-        image_path: "/MeetTheTeamPhotos/breanna-powell.jpg",
-        link: "https://www.linkedin.com/in/breanna-powell-wa/",
-    },
-    {
-        name: "Chin Chadalavada",
-        roles: ["Sponsorships Outreach Lead"],
-        image_path: "/MeetTheTeamPhotos/chinmayee-chadalavada.jpg",
-        link: "https://www.linkedin.com/in/chinmayee-chadalavada-4279a4243/",
-    },
-    {
-        name: "Hannah Kim",
-        roles: ["Production Management Lead"],
-        image_path: "/MeetTheTeamPhotos/hannah-kim.jpg",
-        link: "https://www.linkedin.com/in/hannah-hanul/",
-    },
-    {
-        name: "Sai Bathina",
-        roles: ["BCA", "Avanade Rep", "Content and Design Co-lead"],
-        image_path: "/MeetTheTeamPhotos/sai-bathina.jpg",
-        link: "https://www.linkedin.com/in/saikanishkbathina/",
-    },
-    {
-        name: "Simon Dao",
-        roles: ["Website Development Lead"],
-        image_path: "/MeetTheTeamPhotos/simon-dao.jpg",
-        link: "https://www.linkedin.com/in/simon-dao/",
-    },
-    {
-        name: "Vinaya Chava",
-        roles: ["Local Arrangements Lead"],
-        image_path: "/MeetTheTeamPhotos/vinaya-chava.jpg",
-        link: "https://www.linkedin.com/in/vinayachava/",
-    },
-];
+import { committeeMembers } from "./(MeetTheTeamSectionComponents)/Committees";
 
 const MeetTheTeamSection = () => {
     const panelStyles =
@@ -108,14 +63,14 @@ const MeetTheTeamSection = () => {
             tl.fromTo(
                 el,
                 { x: 0 },
-                { x: -half, duration: 10, ease: "none" },
+                { x: -half, duration: 35, ease: "none" },
             );
         } else {
             gsap.set(el, { x: 0, y: -half });
             tl.fromTo(
                 el,
                 { y: -half },
-                { y: 0, duration: 25, ease: "none" },
+                { y: 0, duration: 40, ease: "none" },
             );
         }
     }, [isMobile]);
