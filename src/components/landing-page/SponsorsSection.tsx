@@ -1,136 +1,230 @@
-import Image from "next/image";
-import UWBStemImage from "@/public/sponsorsSection/uwb-stem.png";
-import UWBBusinessImage from "@/public/sponsorsSection/uwb-business.png";
-import AvanadeImage from "@/public/sponsorsSection/avanade-logo.svg";
-import FutureForceImage from "@/public/sponsorsSection/futureforce.jpg";
-import IEEESeattleImage from "@/public/sponsorsSection/ieee-seattle.png";
-import MaddKitchenImage from "@/public/sponsorsSection/madkitchen.png";
-import ITServeImage from "@/public/sponsorsSection/itserve.png";
+import Image, { StaticImageData } from "next/image";
+import Grass from "@/public/Grass.png";
+import CityBackground2 from "@/public/City-Background-2.png";
+import CitySkylineLightBlue from "@/public/sponsorsSection/City-Skyline-LightBlue.png";
+
+// Billboard Parts
+// Sponsor logos go inside BillboardBody
+import BillboardTop from "@/public/sponsorsSection/BillboardTop.png";
+import BillboardBody from "@/public/sponsorsSection/BillboardBody.png";
+import BillboardBottom from "@/public/sponsorsSection/BillboardBottom.png";
+
+// Sponsor Logos
 import Link from "next/link";
-import Panel from "./(AboutSectionComponents)/Panel/Panel";
-import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
-import PanelContent from "./(AboutSectionComponents)/Panel/Content";
+import Avanade from "@/public/sponsorsSection/Avanade.svg";
+import WSECU from "@/public/sponsorsSection/WSECU.svg";
+import Pepsi from "@/public/sponsorsSection/Pepsi.png";
+import Starbucks from "@/public/sponsorsSection/Starbucks.png";
+import ClubCouncil from "@/public/sponsorsSection/ClubCouncil.jpg";
+import SAF from "@/public/sponsorsSection/SAF.png";
+
+import { motion } from "motion/react";
+
+interface Sponsor {
+    alt: string;
+    logoImage: StaticImageData;
+    href: string;
+    wide?: boolean;
+}
+
+const sponsors: Sponsor[] = [
+    {
+        logoImage: Avanade,
+        href: "https://www.avanade.com/en-us",
+        alt: "Avanade Logo",
+        wide: true,
+    },
+    {
+        logoImage: WSECU,
+        href: "https://wsecu.org/",
+        alt: "WSECU Logo",
+        wide: true,
+    },
+    {
+        logoImage: Pepsi,
+        href: "https://www.pepsi.com/",
+        alt: "Pepsi Logo",
+    },
+    {
+        logoImage: Starbucks,
+        href: "https://www.starbucks.com/",
+        alt: "Starbucks Logo",
+    },
+    {
+        logoImage: ClubCouncil,
+        href: "https://www.uwb.edu/sea/clubs/club-council",
+        alt: "Club Council Logo",
+    },
+    {
+        logoImage: SAF,
+        href: "https://depts.washington.edu/safcom/",
+        alt: "Services & Activities Fee Committee Logo",
+    },
+];
+
+const gridVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.2,
+        },
+    },
+};
+
+const logoVariants = {
+    hidden: { y: "-100%", opacity: 0 },
+    visible: {
+        y: 0,
+        opacity: 1,
+        transition: { ease: "easeInOut" as const, duration: 0.15 },
+    },
+};
 
 const SponsorsSection = () => {
-    const panelMargin = "mt-12 md:mt-16";
-
     return (
-        <Panel id="sponsorsPanel" className={panelMargin} panelColor="white">
-            <PanelHeader
-                parentPanelId="sponsorsPanel"
-                className="text-[#49B2F8] border-none lg:w-full pb-0 bg-transparent"
-                isSectionHeader
-            >
-                UWB HACKS 2026 SPONSORS
-            </PanelHeader>
+        <>
+            <div className="relative mt-[7vmax] pb-[5vmax]">
+                {/* Billboard */}
+                <div className="z-5 relative h-auto w-[75vw] md:w-[65vw] lg:w-[60vw] xl:w-[55vw] mx-auto mb-0 md:mb-8 lg:mb-16 xl:mb-32">
+                    <Image
+                        src={BillboardTop}
+                        alt=""
+                        sizes="(min-width: 1200px) 55vw, (min-width: 1000px) 60vw, (min-width: 800px) 65vw, 75vw"
+                    />
 
-            <PanelContent
-                parentPanelId="sponsorsPanel"
-                className="w-full flex flex-col items-center"
-            >
-                {/* Main sponsors row */}
-                <div className="w-full flex flex-wrap justify-center items-center gap-8 md:gap-16">
-                    <div className="flex justify-center items-center">
-                        <Link href="https://www.uwb.edu/stem/" target="_blank">
-                            <Image
-                                src={UWBStemImage}
-                                width={300}
-                                height={100}
-                                alt="UW Bothell School of STEM"
-                                className="object-contain"
-                            />
-                        </Link>
+                    <div className="z-0 relative">
+                        <div className="relative z-5 p-4 lg:p-6">
+                            <h2 className="text-center text-3xl md:text-4xl xl:text-5xl font-bold mb-[1.5vh] select-none">
+                                SPONSORS
+                            </h2>
+
+                            <motion.div
+                                className="grid grid-cols-2 gap-4 md:gap-8 xl:gap-10 overflow-hidden"
+                                variants={gridVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.5 }}
+                            >
+                                {sponsors.map((sponsor, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        variants={logoVariants}
+                                        className={
+                                            sponsor.wide ? "col-span-2" : ""
+                                        }
+                                    >
+                                        <Link
+                                            href={sponsor.href}
+                                            target="_blank"
+                                        >
+                                            <Image
+                                                src={sponsor.logoImage}
+                                                alt={sponsor.alt}
+                                                className={
+                                                    sponsor.wide
+                                                        ? "mx-auto w-3/4 md:w-3/5 max-w-[500px]"
+                                                        : "mx-auto w-3/5 max-w-[150px] xl:max-w-[175px]"
+                                                }
+                                                sizes={
+                                                    sponsor.wide
+                                                        ? "(min-width: 1515px) 500px, (min-width: 1200px) 33vw, (min-width: 1000px) 36vw, (min-width: 800px) 39vw, 56vw"
+                                                        : "(min-width: 1200px) 175px, (min-width: 667px) 150px, 22vw"
+                                                }
+                                            />
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        </div>
+
+                        <Image
+                            src={BillboardBody}
+                            alt=""
+                            className="z-0 absolute top-0 w-full h-full"
+                            sizes="(min-width: 1200px) 55vw, (min-width: 1000px) 60vw, (min-width: 800px) 65vw, 75vw"
+                        />
                     </div>
 
-                    <div className="flex justify-center items-center">
-                        <Link href="https://www.avanade.com" target="_blank">
-                            <Image
-                                src={AvanadeImage}
-                                width={370}
-                                height={100}
-                                alt="Avanade"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                        <Link
-                            href="https://www.uwb.edu/business/"
-                            target="_blank"
-                        >
-                            <Image
-                                src={UWBBusinessImage}
-                                width={300}
-                                height={100}
-                                alt="UW Bothell School of Business"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
+                    <Image
+                        src={BillboardBottom}
+                        alt=""
+                        sizes="(min-width: 1200px) 55vw, (min-width: 1000px) 60vw, (min-width: 800px) 65vw, 75vw"
+                    />
                 </div>
 
-                {/* Secondary sponsors row */}
-                <div className="w-full flex flex-wrap justify-center items-center gap-8 md:gap-16 pt-20">
-                    <div className="flex justify-center items-center">
-                        <Link href="https://ieee-seattle.org/" target="_blank">
-                            <Image
-                                src={IEEESeattleImage}
-                                width={200}
-                                height={80}
-                                alt="Future Force"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
+                <Image
+                    src={CitySkylineLightBlue}
+                    alt=""
+                    className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
+                    sizes="100vw"
+                />
 
-                    <div className="flex justify-center items-center">
-                        <Link
-                            href="https://www.maddkitchen.com/"
-                            target="_blank"
-                        >
-                            <Image
-                                src={MaddKitchenImage}
-                                width={255}
-                                height={80}
-                                alt="Madd Kitchen"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
+                <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                </div>
+                <Image
+                    src={Grass}
+                    alt=""
+                    className="z-5 absolute bottom-0 w-screen"
+                    sizes="100vw"
+                />
+            </div>
 
-                    <div className="flex justify-center items-center">
-                        <Link
-                            href="https://www.future-force.org/"
-                            target="_blank"
-                        >
-                            <Image
-                                src={FutureForceImage}
-                                width={175}
-                                height={80}
-                                alt="Future Force"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
+            {/* City and Grass Reflection */}
+            <div className="w-screen min-h-[30vw] md:min-h-[30vh] lg:min-h-[35vh] xl:min-h-[50vh] -scale-y-100 -translate-y-1 opacity-60 brightness-75 saturate-150">
+                <Image
+                    src={CitySkylineLightBlue}
+                    alt=""
+                    className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
+                    sizes="100vw"
+                />
+
+                <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
+                    <Image
+                        src={CityBackground2}
+                        alt=""
+                        className="w-1/3"
+                        sizes="33vw"
+                    />
                 </div>
 
-                {/* Third sponsors row */}
-                <div className="w-full flex flex-wrap justify-center items-center gap-8 md:gap-16 pt-20">
-                    <div className="flex justify-center items-center">
-                        <Link href="https://itserve.org/" target="_blank">
-                            <Image
-                                src={ITServeImage}
-                                width={200}
-                                height={80}
-                                alt="ITServe"
-                                className="object-contain"
-                            />
-                        </Link>
-                    </div>
-                </div>
-            </PanelContent>
-        </Panel>
+                <Image
+                    src={Grass}
+                    alt=""
+                    className="z-5 absolute bottom-0 w-screen"
+                    sizes="100vw"
+                />
+            </div>
+        </>
     );
 };
 

@@ -60,18 +60,10 @@ const MeetTheTeamSection = () => {
 
         if (isMobile) {
             gsap.set(el, { x: 0, y: 0 });
-            tl.fromTo(
-                el,
-                { x: 0 },
-                { x: -half, duration: 35, ease: "none" },
-            );
+            tl.fromTo(el, { x: 0 }, { x: -half, duration: 35, ease: "none" });
         } else {
             gsap.set(el, { x: 0, y: -half });
-            tl.fromTo(
-                el,
-                { y: -half },
-                { y: 0, duration: 40, ease: "none" },
-            );
+            tl.fromTo(el, { y: -half }, { y: 0, duration: 40, ease: "none" });
         }
     }, [isMobile]);
 
