@@ -7,7 +7,7 @@ import Header from "@/src/components/header/Header";
 const HEADER_LINKS = [{ id: "Home", name: "Home", url: "/" }];
 
 export function JudgingPage({ projects }: { projects: Project[] }) {
-            const ANY_PROJECTS = projects.length === 0;
+    const ANY_PROJECTS = projects.length === 0;
 
     return (
         <div className="w-full min-h-full flex flex-col">

@@ -72,10 +72,12 @@ export default function ProjectScoringPage({
         try {
             await actionCompleteAssignment(project.id, scoreQuestionArray);
             router.push("/judging");
-        } catch(e) {
-            setError("Something went wrong with submitting your assessment. Please inform a staff member")
+        } catch (e) {
+            setError(
+                "Something went wrong with submitting your assessment. Please inform a staff member",
+            );
             console.error("Failed to submit all scores", {
-                error: e
+                error: e,
             });
             setCompleting(false);
         }

@@ -223,5 +223,3 @@ export async function getTrackQuestions(
         questionText: row.question_text,
     }));
 }
-
-
