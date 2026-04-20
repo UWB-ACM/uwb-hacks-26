@@ -171,11 +171,7 @@ export default function ProjectScoringPage({
                                             type="range"
                                             min={0}
                                             max={10}
-                                            value={
-                                                (scores[question.id] ?? 0)
-                                                    ? scores[question.id]
-                                                    : 0
-                                            }
+                                            value={scores[question.id] ?? 0}
                                             onChange={(e) =>
                                                 handleChange(
                                                     question.id,

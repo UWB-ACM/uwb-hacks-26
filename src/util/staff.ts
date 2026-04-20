@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 export async function ensureStaffPermission(
     session: Session,
 ): Promise<PermissionLevel | never> {
-    if (!session.user?.id) return redirect("/");
+    if (!session.user?.id) return redirectToLogin(session);
 
     // Ensure that the user has permission.
     const permission = await getPermissionLevel(session.user.id);
@@ -20,7 +20,7 @@ export async function ensureStaffPermission(
         permission == null ||
         !hasPermissions(permission, { has: PermissionLevel.Staff })
     ) {
-        return await redirectToLogin(session);
+        return await redirect("/");
     }
 
     return permission;
