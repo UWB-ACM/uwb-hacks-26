@@ -18,9 +18,15 @@ export async function actionSubmitScore(
 
 export async function actionCompleteAssignment(
     projectId: number,
+    scoreQuestionArray: [number, number][],
 ): Promise<void | null> {
     const session = await getSession();
 
     await ensureJudgePermission(session);
+    await Promise.all(
+        scoreQuestionArray.map(([questionId, score]) =>
+            upsertScore(session.user!.id, projectId, questionId, score),
+        ),
+    );
     await completeAssignment(session.user!.id, projectId);
 }

@@ -33,6 +33,8 @@ export default function ProjectScoringPage({
     const allScored =
         questions.length === 0 || questions.every((q) => q.id in scores);
 
+    const [error, setError] = useState<string | null>(null);
+
     function handleChange(questionId: number, raw: string) {
         const val = parseInt(raw);
         if (!isNaN(val) && val >= 0 && val <= 10) {
@@ -41,22 +43,42 @@ export default function ProjectScoringPage({
     }
 
     // Autosave to DB when the judge finishes entering a score for a question.
-    function handleBlur(questionId: number) {
+    async function handleMouseUp(questionId: number) {
         const score = scores[questionId];
         if (score !== undefined) {
-            actionSubmitScore(project.id, questionId, score);
+            try {
+                await actionSubmitScore(project.id, questionId, score);
+            } catch (e) {
+                setError(
+                    "Something went wrong submitting your score. Please tell a staff member",
+                );
+                console.error("Failed to submit score", {
+                    projectId: project.id,
+                    questionId,
+                    score,
+                    error: e,
+                });
+            }
         }
     }
 
     async function handleComplete() {
         setCompleting(true);
-        for (const q of questions) {
-            if (scores[q.id] !== undefined) {
-                await actionSubmitScore(project.id, q.id, scores[q.id]);
-            }
+        setError(null);
+        const scoreQuestionArray = questions
+            .filter((q) => scores[q.id] !== undefined)
+            .map((q) => [q.id, scores[q.id]] as [number, number]);
+
+        try {
+            await actionCompleteAssignment(project.id, scoreQuestionArray);
+            router.push("/judging");
+        } catch(e) {
+            setError("Something went wrong with submitting your assessment. Please inform a staff member")
+            console.error("Failed to submit all scores", {
+                error: e
+            });
+            setCompleting(false);
         }
-        await actionCompleteAssignment(project.id);
-        router.push("/judging");
     }
 
     return (
@@ -125,6 +147,7 @@ export default function ProjectScoringPage({
                 {/* Scoring questions */}
                 {questions.length === 0 ? (
                     <p className="font-h2 text-xl text-neutral-500">
+                        Something went wrong and no questions were assigned.
                         Please find a staff member immediately.
                     </p>
                 ) : (
@@ -147,7 +170,8 @@ export default function ProjectScoringPage({
                                             min={0}
                                             max={10}
                                             value={
-                                                scores[question.id] !== undefined
+                                                scores[question.id] !==
+                                                undefined
                                                     ? scores[question.id]
                                                     : 0
                                             }
@@ -157,21 +181,27 @@ export default function ProjectScoringPage({
                                                     e.target.value,
                                                 )
                                             }
-                                            onBlur={() => handleBlur(question.id)}
+                                            onMouseUp={() =>
+                                                handleMouseUp(question.id)
+                                            }
                                             className="flex-1 accent-[#2886c4] h-3 cursor-pointer"
                                         />
-                                        
+
                                         <span className="font-h2 font-bold text-xl w-8 text-center border-2 border-black rounded bg-white">
                                             {scores[question.id] !== undefined
                                                 ? scores[question.id]
                                                 : "—"}
                                         </span>
                                     </div>
-                                    
                                 </div>
                             </div>
                         ))}
                     </div>
+                )}
+                {error && (
+                    <p className="font-h2 text-red-500 font-bold text-center text-5xl">
+                        {error}
+                    </p>
                 )}
 
                 <button
