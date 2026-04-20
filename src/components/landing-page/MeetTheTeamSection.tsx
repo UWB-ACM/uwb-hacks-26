@@ -12,7 +12,6 @@ import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
 import { cn } from "@/src/util/utils";
-import { committeeMembers } from "./(MeetTheTeamSectionComponents)/Committees";
 
 const MeetTheTeamSection = () => {
     const panelStyles =
@@ -37,9 +36,6 @@ const MeetTheTeamSection = () => {
     const committeeMemberIconsRef = useRef<HTMLDivElement | null>(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-    // isMobile state is used to conditionally render correct version of MeetTheTeamSection elements
-    const [isMobile, setIsMobile] = useState(false);
-
     const buildTimeline = useCallback(() => {
         const el = committeeMemberIconsRef.current;
         if (!el) {
@@ -49,7 +45,8 @@ const MeetTheTeamSection = () => {
         }
 
         tlRef.current?.kill();
-        const half = isMobile ? el.scrollWidth / 2 : el.scrollHeight / 2;
+        const isRow = window.getComputedStyle(el).flexDirection === "row";
+        const half = isRow ? el.scrollWidth / 2 : el.scrollHeight / 2;
         if (half <= 0) {
             tlRef.current = null;
             return;
@@ -58,18 +55,17 @@ const MeetTheTeamSection = () => {
         const tl = gsap.timeline({ repeat: -1 });
         tlRef.current = tl;
 
-        if (isMobile) {
+        if (isRow) {
             gsap.set(el, { x: 0, y: 0 });
             tl.fromTo(el, { x: 0 }, { x: -half, duration: 35, ease: "none" });
         } else {
             gsap.set(el, { x: 0, y: -half });
             tl.fromTo(el, { y: -half }, { y: 0, duration: 40, ease: "none" });
         }
-    }, [isMobile]);
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 1000);
             setSelectedMemberIdx(null);
             tlRef.current?.resume();
         };
@@ -121,13 +117,15 @@ const MeetTheTeamSection = () => {
             <Image
                 src={FlyingCarMobileTablet}
                 alt=""
-                className={`w-full h-full ${isMobile ? "block" : "hidden"}`}
+                sizes="(min-width: 1280px) 60vw, (min-width: 1024px) 80vw, (min-width: 768px) 75vw, 90vw"
+                className="w-full h-full block lg:hidden"
             />
 
             <Image
                 src={FlyingCarDesktop}
                 alt=""
-                className={`w-full h-full ${isMobile ? "hidden" : "block"}`}
+                sizes="(min-width: 1280px) 60vw, (min-width: 1024px) 80vw, (min-width: 768px) 75vw, 90vw"
+                className="w-full h-full hidden lg:block"
             />
 
             {/*
@@ -145,20 +143,14 @@ const MeetTheTeamSection = () => {
                 </PanelHeader>
                 <PanelContent
                     parentPanelId={"meetTheTeamPanel"}
-                    className={cn(
-                        panelContentStyles,
-                        isMobile ? "flex-col pt-2 md:pt-2" : "",
-                    )}
+                    className={cn(panelContentStyles, "flex-col pt-2 lg:flex-row lg:pt-0")}
                 >
-                    {/* TODO: remove committeeMembers prop and import committees list @ (MeetTheTeamSectionComponents)/Committees.tsx once actual committee member info is filled out */}
                     <MeetTheTeamCloud
-                        committeeMembers={committeeMembers}
                         panelContentRef={panelContentRef}
                         committeeMemberIconsRef={committeeMemberIconsRef}
                         handleClick={handleClick}
                         handleDeselect={handleDeselect}
                         selectedMemberIdx={selectedMemberIdx}
-                        isMobile={isMobile}
                     />
                 </PanelContent>
             </Panel>
