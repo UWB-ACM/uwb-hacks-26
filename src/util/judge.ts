@@ -1,5 +1,5 @@
 import { hasPermissions, PermissionLevel } from "@/src/util/dataTypes";
-import { Session } from "@/src/util/session";
+import { redirectToLogin, Session } from "@/src/util/session";
 import { getPermissionLevel } from "@/src/util/db/user";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 export async function ensureJudgePermission(
     session: Session,
 ): Promise<PermissionLevel | never> {
-    if (!session.user?.id) return redirect("/");
+    if (!session.user?.id) return await redirectToLogin(session);
 
     // Ensure that the user has permission
     const permission = await getPermissionLevel(session.user.id);
@@ -21,7 +21,7 @@ export async function ensureJudgePermission(
         permission == null ||
         !hasPermissions(permission, { has: PermissionLevel.Judge })
     ) {
-        return redirect("/");
+        return await redirectToLogin(session);
     }
 
     return permission;

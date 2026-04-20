@@ -1,5 +1,5 @@
 import { hasPermissions, PermissionLevel, User } from "@/src/util/dataTypes";
-import { Session } from "@/src/util/session";
+import { redirectToLogin, Session } from "@/src/util/session";
 import { getPermissionLevel, getUserFromID } from "@/src/util/db/user";
 import { redirect } from "next/navigation";
 
@@ -20,7 +20,7 @@ export async function ensureStaffPermission(
         permission == null ||
         !hasPermissions(permission, { has: PermissionLevel.Staff })
     ) {
-        return redirect("/");
+        return await redirectToLogin(session);
     }
 
     return permission;
