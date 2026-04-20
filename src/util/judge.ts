@@ -21,7 +21,7 @@ export async function ensureJudgePermission(
         permission == null ||
         !hasPermissions(permission, { has: PermissionLevel.Judge })
     ) {
-        return await redirectToLogin(session);
+        return redirect("/");
     }
 
     return permission;

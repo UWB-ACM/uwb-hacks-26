@@ -172,8 +172,7 @@ export default function ProjectScoringPage({
                                             min={0}
                                             max={10}
                                             value={
-                                                scores[question.id] !==
-                                                undefined
+                                                (scores[question.id] ?? 0)
                                                     ? scores[question.id]
                                                     : 0
                                             }
