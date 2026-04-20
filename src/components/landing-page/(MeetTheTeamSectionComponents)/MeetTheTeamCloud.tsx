@@ -8,6 +8,7 @@ const MeetTheTeamCloud = ({
     panelContentRef,
     committeeMemberIconsRef,
     handleClick,
+    handleDeselect,
     selectedMemberIdx,
     isMobile,
 }: MeetTheTeamCloudProps & { isMobile: boolean }) => {
@@ -78,6 +79,7 @@ const MeetTheTeamCloud = ({
                     key={idx}
                     committeeMember={committeeMember}
                     isHidden={selectedMemberIdx !== idx}
+                    onClose={handleDeselect}
                 />
             ))}
         </>

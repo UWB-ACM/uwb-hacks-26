@@ -100,15 +100,28 @@ const MeetTheTeamSection = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, [buildTimeline]);
 
+    const handleDeselect = useCallback(() => {
+        tlRef.current?.resume();
+        setSelectedMemberIdx(null);
+    }, []);
+
     const handleClick = (selectedIdx: number) => {
         if (selectedMemberIdx === null || selectedIdx !== selectedMemberIdx) {
             tlRef.current?.pause();
             setSelectedMemberIdx(selectedIdx);
         } else {
-            tlRef.current?.resume();
-            setSelectedMemberIdx(null);
+            handleDeselect();
         }
     };
+
+    useEffect(() => {
+        if (selectedMemberIdx === null) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") handleDeselect();
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [selectedMemberIdx, handleDeselect]);
 
     return (
         <div className="my-[12vmin] relative mx-auto w-[90%] md:w-[75%] lg:w-[80%] xl:w-[60%]">
@@ -151,6 +164,7 @@ const MeetTheTeamSection = () => {
                         panelContentRef={panelContentRef}
                         committeeMemberIconsRef={committeeMemberIconsRef}
                         handleClick={handleClick}
+                        handleDeselect={handleDeselect}
                         selectedMemberIdx={selectedMemberIdx}
                         isMobile={isMobile}
                     />
