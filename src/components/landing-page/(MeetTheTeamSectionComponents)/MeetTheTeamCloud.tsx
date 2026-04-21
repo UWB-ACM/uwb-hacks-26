@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { MeetTheTeamCloudProps, committeeMembers } from "./Committees";
 import CommitteeMemberInfo from "./CommitteeMemberInfo";
 import CommitteeMemberIcon from "./CommitteeMemberIcon";
@@ -9,6 +10,29 @@ const MeetTheTeamCloud = ({
     handleDeselect,
     selectedMemberIdx,
 }: MeetTheTeamCloudProps) => {
+    const [isReversed, setIsReversed] = useState(false);
+
+    useEffect(() => {
+        const el = committeeMemberIconsRef.current;
+        if (!el) return;
+
+        const checkDirection = () => {
+            const isRow = window.getComputedStyle(el).flexDirection === "row";
+            setIsReversed(!isRow);
+        };
+
+        checkDirection();
+
+        const ro = new ResizeObserver(checkDirection);
+        ro.observe(el);
+
+        return () => ro.disconnect();
+    }, [committeeMemberIconsRef]);
+
+    const displayMembers = isReversed
+        ? [...committeeMembers].reverse()
+        : committeeMembers;
+
     return (
         <>
             <div
@@ -25,7 +49,7 @@ const MeetTheTeamCloud = ({
                             key={dup}
                             className="shrink-0 flex h-full gap-x-[5vmin] pl-[5vmin] lg:flex-col lg:h-auto lg:gap-x-0 lg:gap-y-[5vmin] lg:pl-0 lg:pt-[5vmin]"
                         >
-                            {committeeMembers.map((committeeMember, idx) => (
+                            {displayMembers.map((committeeMember, idx) => (
                                 <CommitteeMemberIcon
                                     key={`${dup}-${idx}`}
                                     idx={idx}
@@ -51,7 +75,7 @@ const MeetTheTeamCloud = ({
                 isHidden={selectedMemberIdx !== null}
             />
 
-            {committeeMembers.map((committeeMember, idx) => (
+            {displayMembers.map((committeeMember, idx) => (
                 <CommitteeMemberInfo
                     key={idx}
                     committeeMember={committeeMember}
