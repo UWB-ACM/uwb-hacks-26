@@ -1,7 +1,7 @@
 import React, { RefObject, useState } from "react";
 import TracksNav from "./TracksNav";
 import SelectedTrackInformation from "./SelectedTrackInformation";
-import { DisplayTrack } from "@/src/components/landing-page/TrackSection";
+import { DisplayTrack } from "../tracks";
 
 type TracksProps = {
     tracks: DisplayTrack[];
@@ -28,11 +28,8 @@ export default function Tracks({
 
             {/*
                 Selected Track Information
-                - question
+                - track name
                 - description
-                - examples
-                    - no code
-                    - low code / code
             */}
             <SelectedTrackInformation
                 selectedTrackRef={selectedTrackRef}

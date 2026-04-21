@@ -203,7 +203,7 @@ export default function AboutSection({
                 {/* UWB ACM Descriptor Container */}
                 <Panel
                     id="uwbacmDescriptionPanel"
-                    className="flex flex-col items-center text-center text-white bg-[#bebebe] font-glacial-indifference lg:pt-3"
+                    className="flex flex-col items-center text-center text-white bg-[#bebebe] font-glacial-indifference lg:pt-3 lg:pb-20"
                 >
                     <PanelHeader
                         parentPanelId="uwbacmDescriptionPanel"
@@ -226,30 +226,30 @@ export default function AboutSection({
                         </div>
                         <Link
                             className="flex items-center justify-center mx-auto w-fit mt-5 sm:mb-2 md:mb-15 px-6 sm:px-12 md:px-20 sm:py-2 md:py-3 rounded-full bg-white hover:bg-gray-100 text-md sm:text-base md:text-2xl lg:text-3xl font-bold text-[var(--grass-color)]"
-                            href="https://discord.gg/eZCm7XfJd7"
+                            href="https://discord.gg/afVBpYa96B"
                             target="_blank"
                         >
                             DISCORD
                         </Link>
-
-                        {/* Bushes appear over Discord button */}
-                        <div className="pointer-events-none flex justify-center w-full absolute bottom-0 left-0">
-                            <div className="flex w-[120vw] shrink-0">
-                                <Image
-                                    src={Bushes}
-                                    alt=""
-                                    className="w-1/2 h-auto sm:translate-x-5"
-                                    sizes="60vw"
-                                />
-                                <Image
-                                    src={Bushes}
-                                    alt=""
-                                    className="w-1/2 h-auto "
-                                    sizes="60vw"
-                                />
-                            </div>
-                        </div>
                     </PanelContent>
+
+                    {/* Bushes appear over Discord button, outside of PanelContent so the bushes don't get animated */}
+                    <div className="pointer-events-none flex justify-center w-full absolute bottom-0 left-0">
+                        <div className="flex w-[120vw] shrink-0">
+                            <Image
+                                src={Bushes}
+                                alt=""
+                                className="w-1/2 h-auto sm:translate-x-5"
+                                sizes="60vw"
+                            />
+                            <Image
+                                src={Bushes}
+                                alt=""
+                                className="w-1/2 h-auto "
+                                sizes="60vw"
+                            />
+                        </div>
+                    </div>
                 </Panel>
 
                 {/* Hackathon Information Grid */}

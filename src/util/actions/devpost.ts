@@ -7,9 +7,16 @@ import { getSession } from "@/src/util/session";
 import { getPermissionLevel } from "@/src/util/db/user";
 import {
     getAllTrackTags,
+    getEmailFromCode,
+    linkDevpostEmailToUser,
+    markDevpostCodesAsSent,
+    syncDevpostEmailsToUsers,
     upsertDevpostUser,
     upsertProject,
 } from "@/src/util/db/devpost";
+import { sendDevpostLinkingEmails } from "../awsSes";
+import { revalidatePath } from "next/cache";
+import { ensureAdminPermission } from "../staff";
 
 const MIN_TEAM_SIZE = 3;
 const MAX_TEAM_SIZE = 4;
@@ -83,7 +90,8 @@ export async function actionImportRegistrants(
     for (let i = 0; i < parsed.data.length; i++) {
         const row = parsed.data[i];
 
-        const email = row["Email"]?.trim();
+        // Emails need to be normalized for consistency.
+        const email = row["Email"]?.trim().toLowerCase();
         if (!email) {
             result.errors.push(`Row ${i + 2}: Missing email address.`);
             continue;
@@ -284,3 +292,89 @@ async function actionImportProjects(
 }
 
 export default actionImportProjects;
+
+/**
+ * Automatically syncs matched devpost emails, creates pairing codes for unlinked ones,
+ * and blasts out SES emails to new unlinked devs or retries after 7 days.
+ *
+ * @returns the number of emails sent and any error message if applicable.
+ */
+export async function actionSyncDevpostEmails(): Promise<{
+    sent: number;
+    error: string;
+} | null> {
+    const session = await getSession();
+    await ensureAdminPermission(session);
+
+    try {
+        const pendingEmails = await syncDevpostEmailsToUsers();
+
+        if (pendingEmails.length === 0) {
+            return {
+                sent: 0,
+                error: "No emails currently require syncing, no linking emails sent.",
+            };
+        }
+
+        // In production, this will be 50 as a reasonable safe batch size.
+        // SES has a default sending limit of 14 emails per second, so 50 with a short delay is a safe bet to avoid hitting rate limits while still processing the queue in a timely manner.
+        const MAX_EMAILS = 50;
+        const emailsToProcess = pendingEmails.slice(0, MAX_EMAILS);
+
+        const { successfulEmails, failedEmails } =
+            await sendDevpostLinkingEmails(emailsToProcess);
+
+        if (successfulEmails.length > 0) {
+            await markDevpostCodesAsSent(successfulEmails);
+        }
+
+        if (failedEmails.length > 0) {
+            return {
+                sent: successfulEmails.length,
+                error: `Sent ${successfulEmails.length}, but failed to send ${failedEmails.length} emails. Failed emails: ${failedEmails.map((failed) => failed.email).join(", ")}`,
+            };
+        }
+
+        return { sent: successfulEmails.length, error: "" };
+    } catch (error) {
+        console.error("\n==== AWS SES DETAILED ERROR ==== \n", error);
+        return {
+            sent: 0,
+            error: error instanceof Error ? error.message : String(error),
+        };
+    }
+}
+
+/**
+ * Links a user's account to a devpost email based on a code they received in an email.
+ *
+ * @param code - the code that was sent in the email link to users to link their devpost account.
+ */
+export async function actionLinkDevpostAccount(code: string): Promise<{
+    success: boolean;
+    error: string;
+}> {
+    const session = await getSession();
+    if (!session.user?.id)
+        return { success: false, error: "Authentication failed" };
+
+    const devpostEmail = await getEmailFromCode(code);
+    if (!devpostEmail)
+        return { success: false, error: "Invalid or expired code" };
+
+    try {
+        await linkDevpostEmailToUser(devpostEmail, session.user.id);
+        revalidatePath("/dashboard");
+    } catch (error) {
+        console.error(
+            `Error linking devpost email ${devpostEmail} to user ${session.user.id}:`,
+            error,
+        );
+        return {
+            success: false,
+            error: "An internal error occurred while linking your account.",
+        };
+    }
+
+    return { success: true, error: "" };
+}
