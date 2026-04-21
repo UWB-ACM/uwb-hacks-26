@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -42,12 +42,19 @@ export default function PanelContent({
                 // to avoid an uncomfortable delay.
                 start: long ? "10% 80%" : "30% 80%",
             },
+            // force3D and slight rotation properties fix subpixel gaps between the gradient overlays and the container edges during GSAP animation.
+            // Without these, a brief sliver of content bleeds through. See: https://gsap.com/community/forums/topic/27336-looking-for-help-with-element-scaling-oddities-and-jitters/
+            force3D: true,
+            rotation: 0.01,
         });
         // parentPanelId only passed into dependency array to satisfy ESLint. value of parentPanelId will never be changed within this component
     }, [long, parentPanelId]);
 
     return (
-        <div ref={panelContentRef} className={clsx("p-6 md:p-10", className)}>
+        <div
+            ref={panelContentRef}
+            className={twMerge("p-6 md:p-10", className)}
+        >
             {children}
         </div>
     );

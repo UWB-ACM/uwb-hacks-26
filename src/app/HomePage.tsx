@@ -1,12 +1,13 @@
 "use client";
 
+import { ParallaxProvider } from "react-scroll-parallax";
 import Header from "@/src/components/header/Header";
-import Footer from "@/src/components/Footer";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import AboutSection from "../components/landing-page/AboutSection";
+import MeetTheTeamSection from "../components/landing-page/MeetTheTeamSection";
 import SponsorsSection from "@/src/components/landing-page/SponsorsSection";
-import { ParallaxProvider } from "react-scroll-parallax";
 import FAQSection from "@/src/components/landing-page/FAQSection";
+import Footer from "@/src/components/Footer";
 import { LeaderboardRecord, Prize } from "../util/dataTypes";
 import TracksSection from "../components/landing-page/TrackSection";
 
@@ -43,7 +44,8 @@ export default function HomePage({
                         hackeroonPrizes={hackeroonPrizes}
                         leaderboardData={leaderboardData}
                     />
-                    <TracksSection noTrackAnimation={false}></TracksSection>
+                    <TracksSection noTrackAnimation={false} />
+                    <MeetTheTeamSection />
                     <SponsorsSection />
                     <FAQSection />
 
