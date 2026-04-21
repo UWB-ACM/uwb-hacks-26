@@ -112,7 +112,7 @@ const MeetTheTeamSection = () => {
     }, [selectedMemberIdx, handleDeselect]);
 
     return (
-        <div className="my-[12vmin] relative mx-auto w-[90%] md:w-[75%] lg:w-[80%] xl:w-[60%]">
+        <div className="mt-[10vmin] relative mx-auto w-[90%] md:w-[75%] lg:w-[80%] xl:w-[60%]">
             {/* conditionally render respective FlyingCar image */}
             <Image
                 src={FlyingCarMobileTablet}
