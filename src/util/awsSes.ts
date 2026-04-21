@@ -25,20 +25,21 @@ export async function sendDevpostLinkingEmails(
     const failedEmails: { email: string; error: unknown }[] = [];
 
     const baseUrl = "https://uwbhacks.com";
-    const fromEmail = process.env.SES_FROM_EMAIL as string;
+    const fromEmail = "noreply@uwbhacks.com";
 
-    // TEMPORARY TEST OVERRIDE
+    // TEMPORARY OVERRIDE FOR TESTING: If TEST_MODE is true, we will only send one email to a test address to avoid spamming real users while testing. Remember to set this back to false in production!
     const TEST_MODE = false;
 
     // TEST OVERRIDE: Limit to 1 email maximum during testing so you don't get spammed
-    const MAX_EMAILS = TEST_MODE ? 1 : 50;
-    const targetsToProcess = targets.slice(0, MAX_EMAILS);
+    if (TEST_MODE) {
+        targets = targets.slice(0, 1);
+    }
 
-    for (const target of targetsToProcess) {
+    for (const target of targets) {
         const link = `${baseUrl}/link-devpost?code=${target.code}`;
 
         const destinationEmail = TEST_MODE
-            ? "testEmail@uw.edu"
+            ? "testerEmail@example.com"
             : target.devpost_email;
 
         const htmlBody = `
@@ -117,7 +118,7 @@ export async function sendDevpostLinkingEmails(
                 },
                 Body: {
                     Text: {
-                        Data: `Please link your Devpost account (${target.devpost_email}) to your UWB Hacks 2026 profile here: ${link}`,
+                        Data: `Please link your Devpost account (${target.devpost_email}) to your UWB Hacks 2026 profile here: ${link}\n\nTo ensure your team receives alerts surrounding judging for your project, please link your accounts.`,
                     },
                     Html: {
                         Data: htmlBody,
@@ -132,7 +133,7 @@ export async function sendDevpostLinkingEmails(
                 // temporary manual failure for test mode so we don't accidentally update the DB
                 failedEmails.push({
                     email: target.devpost_email,
-                    error: "TEST MODE: sent to alangt@uw.edu",
+                    error: "TEST MODE: sent to test email instead of real target",
                 });
             } else {
                 successfulEmails.push(target.devpost_email);

@@ -1,13 +1,8 @@
 "use client";
 
-import React, {
-    useState,
-    useTransition,
-    useEffect,
-    useRef,
-    useCallback,
-} from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { actionLinkDevpostAccount } from "@/src/util/actions/devpost";
+import Link from "next/link";
 
 type Props = {
     code: string;
@@ -28,7 +23,7 @@ export default function LinkDevpostClient({
     applicationWarning,
     hasApplication,
 }: Props) {
-    const [isPending, startTransition] = useTransition();
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
@@ -36,17 +31,17 @@ export default function LinkDevpostClient({
 
     const hasAnyConflict = devpostConflict || uwbHacksConflict;
 
-    const handleLink = useCallback(() => {
+    const handleLink = useCallback(async () => {
         setError(null);
-        startTransition(async () => {
-            const result = await actionLinkDevpostAccount(code);
-            if (result.success) {
-                setSuccess(true);
-            } else {
-                setError(result.error);
-            }
-        });
-    }, [code]); // Dependencies: only recreate if the 'code' prop changes
+        setIsLoading(true);
+        const result = await actionLinkDevpostAccount(code);
+        setIsLoading(false);
+        if (result.success) {
+            setSuccess(true);
+        } else {
+            setError(result.error);
+        }
+    }, [code]);
 
     useEffect(() => {
         if (!hasAnyConflict && !autoLinkAttempted.current) {
@@ -72,12 +67,12 @@ export default function LinkDevpostClient({
 
     let warningSentence = "";
     if (warningItems) {
-        warningSentence += `Warning: ${warningItems}. `;
+        warningSentence += `Warning: ${warningItems}.`;
     }
 
     if (applicationWarning) {
         warningSentence +=
-            "Because you have already filled out an application on a different UWB Hacks account, we recommend you do not link these accounts.";
+            " Because you have already filled out an application on a different UWB Hacks account, we recommend you do not link these accounts. Submitting an application is a required step to participate, and overwriting it may cause issues.";
     }
 
     if (success) {
@@ -90,12 +85,12 @@ export default function LinkDevpostClient({
                     Your Devpost account has been successfully linked to your
                     profile (<strong>{currentUserEmail}</strong>).
                 </p>
-                <a
+                <Link
                     href={hasApplication ? "/dashboard" : "/apply"}
                     className="inline-block w-full text-white bg-blue-600 hover:bg-blue-700 font-medium py-3 px-4 rounded-md transition-colors"
                 >
                     {hasApplication ? "Return to Dashboard" : "Apply Now"}
-                </a>
+                </Link>
             </div>
         );
     }
@@ -128,9 +123,11 @@ export default function LinkDevpostClient({
                 <strong>{currentUserEmail}</strong>.
             </p>
 
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r-md">
-                <p className="text-sm text-yellow-800">{warningSentence}</p>
-            </div>
+            {warningSentence && (
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r-md">
+                    <p className="text-sm text-yellow-800">{warningSentence}</p>
+                </div>
+            )}
 
             {error && (
                 <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-md">
@@ -140,10 +137,10 @@ export default function LinkDevpostClient({
 
             <button
                 onClick={handleLink}
-                disabled={isPending}
+                disabled={isLoading}
                 className="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors"
             >
-                {isPending ? "Linking..." : "Link Anyway"}
+                {isLoading ? "Linking..." : "Link Anyway"}
             </button>
         </div>
     );

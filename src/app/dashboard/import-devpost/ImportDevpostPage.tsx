@@ -17,13 +17,19 @@ export default function ImportDevpostPage() {
         setSyncLoading(true);
         setSyncResult("");
 
-        const result = await actionSyncDevpostEmails();
-        if (result?.error) {
-            setSyncResult(`Error: ${result?.error}`);
-        } else {
+        try {
+            const result = await actionSyncDevpostEmails();
+            if (result?.error) {
+                setSyncResult(`Error: ${result.error}`);
+            } else if (result) {
+                setSyncResult(`Success: Queued ${result.sent} emails.`);
+            }
+        } catch (e) {
+            setSyncLoading(false);
             setSyncResult(
-                `Successfully sent ${result?.sent ?? 0} linking email(s).`,
+                "Error: Network error or server is down. Please try again later.",
             );
+            return;
         }
         setSyncLoading(false);
     };

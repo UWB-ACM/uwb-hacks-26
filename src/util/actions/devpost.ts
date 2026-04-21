@@ -16,6 +16,7 @@ import {
 } from "@/src/util/db/devpost";
 import { sendDevpostLinkingEmails } from "../awsSes";
 import { revalidatePath } from "next/cache";
+import { ensureAdminPermission } from "../staff";
 
 const MIN_TEAM_SIZE = 3;
 const MAX_TEAM_SIZE = 4;
@@ -125,9 +126,6 @@ export async function actionImportRegistrants(
             );
         }
     }
-
-    // Automically execute the syncing process once new users are inserted.
-    await actionSyncDevpostEmails();
 
     return result;
 }
@@ -304,15 +302,7 @@ export async function actionSyncDevpostEmails(): Promise<{
     error: string;
 } | null> {
     const session = await getSession();
-    if (!session.user?.id) return { sent: 0, error: "Authentication failed" };
-
-    const permission = await getPermissionLevel(session.user.id);
-    if (
-        !permission ||
-        !hasPermissions(permission, { has: PermissionLevel.Admin })
-    ) {
-        return { sent: 0, error: "Unauthorized User" };
-    }
+    const permission = await ensureAdminPermission(session);
 
     try {
         const pendingEmails = await syncDevpostEmailsToUsers();
@@ -324,8 +314,13 @@ export async function actionSyncDevpostEmails(): Promise<{
             };
         }
 
+        // In production, this will be 50 as a reasonable safe batch size.
+        // SES has a default sending limit of 14 emails per second, so 50 with a short delay is a safe bet to avoid hitting rate limits while still processing the queue in a timely manner.
+        const MAX_EMAILS = 50;
+        const emailsToProcess = pendingEmails.slice(0, MAX_EMAILS);
+
         const { successfulEmails, failedEmails } =
-            await sendDevpostLinkingEmails(pendingEmails);
+            await sendDevpostLinkingEmails(emailsToProcess);
 
         if (successfulEmails.length > 0) {
             await markDevpostCodesAsSent(successfulEmails);
@@ -334,7 +329,7 @@ export async function actionSyncDevpostEmails(): Promise<{
         if (failedEmails.length > 0) {
             return {
                 sent: successfulEmails.length,
-                error: `Sent ${successfulEmails.length}, but failed to send ${failedEmails.length} emails.`,
+                error: `Sent ${successfulEmails.length}, but failed to send ${failedEmails.length} emails. Failed emails: ${failedEmails.map((failed) => failed.email).join(", ")}`,
             };
         }
 

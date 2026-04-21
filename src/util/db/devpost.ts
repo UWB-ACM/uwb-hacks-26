@@ -140,20 +140,17 @@ export async function getDevpostEmailByUserId(
 }
 
 /**
- * Checks if there is a conflict with the given Devpost email, meaning that another user (other than the current user) already has that Devpost email linked to their account. This is used to determine if we need to show a warning to users trying to link a Devpost account that is already linked to another account.
+ * Checks if a given devpost email is already linked to another user's account, and returns that user's ID if so.
  *
  * @param devpostEmail - the devpost email to check for conflicts.
- * @param userId - the ID of the current user to exclude from the conflict check.
  * @returns the ID of the user who holds that email, or null if no conflict exists.
  */
 export async function getUserIdByDevpostEmail(
     devpostEmail: string,
-    userId: number,
 ): Promise<number | null> {
     const result = await sql`
         SELECT id FROM users 
         WHERE devpost_email = ${devpostEmail} 
-          AND id != ${userId}
         LIMIT 1
     `;
     return result.length > 0 ? result[0].id : null;
