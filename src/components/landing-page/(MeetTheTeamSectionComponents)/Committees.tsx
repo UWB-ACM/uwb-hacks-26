@@ -17,7 +17,11 @@ export const committeeMembers: CommitteeMember[] = [
     {
         name: "Sohan Dandu",
         image_path: "/MeetTheTeamPhotos/SohanDandu.jpeg",
-        roles: ["Executive", "Committee Lead (Production Management)", "Committee Lead (Sponsorships)"],
+        roles: [
+            "Executive",
+            "Committee Lead (Production Management)",
+            "Committee Lead (Sponsorships)",
+        ],
         link: "https://www.linkedin.com/in/sohandandu/",
     },
     {
@@ -34,14 +38,18 @@ export const committeeMembers: CommitteeMember[] = [
     },
     {
         name: "Sarinna Thaiy",
-        image_path: "/MeetTheTeamPhotos/default.jpg",
+        image_path: "/MeetTheTeamPhotos/SarinnaThaiy.jpeg",
         roles: ["Executive", "Committee Lead (Content and Design)"],
         link: "https://www.linkedin.com/in/sarinnathaiy/",
     },
     {
         name: "Nandini Mistry",
         image_path: "/MeetTheTeamPhotos/NandiniMistry.jpg",
-        roles: ["Executive", "Committee Lead (Production Management)", "Content and Design"],
+        roles: [
+            "Executive",
+            "Committee Lead (Production Management)",
+            "Content and Design",
+        ],
         link: "https://www.linkedin.com/in/nandinimist/",
     },
     {
@@ -52,7 +60,7 @@ export const committeeMembers: CommitteeMember[] = [
     },
     {
         name: "Ruthie Lartey",
-        image_path: "/MeetTheTeamPhotos/default.jpg",
+        image_path: "/MeetTheTeamPhotos/RuthieLartey.png",
         roles: ["Committee Lead (Content and Design)"],
         link: "https://www.linkedin.com/in/ruthie-lartey/",
     },
@@ -88,8 +96,8 @@ export const committeeMembers: CommitteeMember[] = [
     },
     {
         name: "Mao Nishio",
-        image_path: "/MeetTheTeamPhotos/default.jpg",
-        roles: ["Content and Design"],
+        image_path: "/MeetTheTeamPhotos/MaoNishio.png",
+        roles: ["Content and Design", "Marketing"],
         link: "https://www.linkedin.com/in/maonishio/",
     },
     {
@@ -97,6 +105,12 @@ export const committeeMembers: CommitteeMember[] = [
         image_path: "/MeetTheTeamPhotos/RasajnaKolusu.jpg",
         roles: ["Content and Design", "Marketing"],
         link: "https://www.linkedin.com/in/sai-rasajna-kolusu/",
+    },
+    {
+        name: "Davina Loekito",
+        image_path: "/MeetTheTeamPhotos/DavinaLoekito.JPEG",
+        roles: ["Marketing"],
+        link: "https://www.linkedin.com/in/davina-loekito/",
     },
     {
         name: "Isabella Ta",
@@ -124,7 +138,7 @@ export const committeeMembers: CommitteeMember[] = [
     },
     {
         name: "Prashamsa Bandarapu",
-        image_path: "/MeetTheTeamPhotos/default.jpg",
+        image_path: "/MeetTheTeamPhotos/PrashamsaBandarapu.png",
         roles: ["Production Management"],
         link: "https://www.linkedin.com/in/prashamsa-bandarapu-b893b1243/",
     },
