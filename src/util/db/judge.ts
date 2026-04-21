@@ -223,3 +223,16 @@ export async function getTrackQuestions(
         questionText: row.question_text,
     }));
 }
+
+/**
+ * Assigns a judge to a project, does nothing if the judge is already assigned to the project.
+ * @param judgeID - is the judge's user ID.
+ * @param projectID - is the project's ID.
+ */
+export async function assignJudgeToProject(judgeID: number, projectID: number) {
+    await sql`
+        INSERT INTO judge_assignments (judge_id, project_id)
+        VALUES (${judgeID}, ${projectID})
+        ON CONFLICT (judge_id, project_id) DO NOTHING
+    `;
+}

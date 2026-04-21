@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { actionAssignJudges } from "@/src/util/actions/judging";
-import { JUDGES_PER_TRACK } from "@/src/util/dataTypes";
+import { actionAssignJudges } from "@/src/util/actions/judge";
 
 export default function JudgingAdminClient() {
     const [status, setStatus] = useState<
@@ -31,15 +30,15 @@ export default function JudgingAdminClient() {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 p-4 text-black">
+        <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 text-black">
             <div className="w-full max-w-md bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] rounded-xl">
                 <h1 className="text-4xl font-black italic uppercase mb-4 text-center">
                     Judging Admin
                 </h1>
 
                 <div className="bg-yellow-100 border-2 border-black p-4 mb-8 text-sm font-bold">
-                    ⚠️ ATTENTION: This will assign {JUDGES_PER_TRACK} judges to
-                    every track for every project.
+                    ⚠️ ATTENTION: This will assign judges to every track for
+                    every project.
                 </div>
 
                 <button
