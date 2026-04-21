@@ -34,12 +34,19 @@ export default function LinkDevpostClient({
     const handleLink = useCallback(async () => {
         setError(null);
         setIsLoading(true);
-        const result = await actionLinkDevpostAccount(code);
-        setIsLoading(false);
-        if (result.success) {
-            setSuccess(true);
-        } else {
-            setError(result.error);
+
+        try {
+            const result = await actionLinkDevpostAccount(code);
+            setIsLoading(false);
+            if (result.success) {
+                setSuccess(true);
+            } else {
+                setError(result.error);
+            }
+        } catch (e) {
+            console.error("Error linking devpost account:", e);
+            setIsLoading(false);
+            setError("An unknown error occurred.");
         }
     }, [code]);
 
@@ -72,7 +79,7 @@ export default function LinkDevpostClient({
 
     if (applicationWarning) {
         warningSentence +=
-            " Because you have already filled out an application on a different UWB Hacks account, we recommend you do not link these accounts. Submitting an application is a required step to participate, and overwriting it may cause issues.";
+            " Because you have already filled out an application on a different UWB Hacks account, we recommend you do not link these accounts.";
     }
 
     if (success) {
@@ -85,6 +92,14 @@ export default function LinkDevpostClient({
                     Your Devpost account has been successfully linked to your
                     profile (<strong>{currentUserEmail}</strong>).
                 </p>
+                {!hasApplication && (
+                    <p className="text-sm text-blue-800 bg-blue-50 p-3 rounded-md border border-blue-200 mb-6">
+                        <strong>Registration is almost complete!</strong>
+                        <br />
+                        Submitting an application is a required step to
+                        participate in UWB Hacks.
+                    </p>
+                )}
                 <Link
                     href={hasApplication ? "/dashboard" : "/apply"}
                     className="inline-block w-full text-white bg-blue-600 hover:bg-blue-700 font-medium py-3 px-4 rounded-md transition-colors"

@@ -7,7 +7,6 @@ import actionImportProjects, {
     actionSyncDevpostEmails,
     ImportResult,
 } from "@/src/util/actions/devpost";
-import { set } from "react-hook-form";
 
 export default function ImportDevpostPage() {
     const [syncLoading, setSyncLoading] = useState(false);
@@ -25,6 +24,7 @@ export default function ImportDevpostPage() {
                 setSyncResult(`Success: Queued ${result.sent} emails.`);
             }
         } catch (e) {
+            console.error("Manual sync failed:", e);
             setSyncLoading(false);
             setSyncResult(
                 "Error: Network error or server is down. Please try again later.",

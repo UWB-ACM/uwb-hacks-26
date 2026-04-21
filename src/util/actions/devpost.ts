@@ -302,7 +302,7 @@ export async function actionSyncDevpostEmails(): Promise<{
     error: string;
 } | null> {
     const session = await getSession();
-    const permission = await ensureAdminPermission(session);
+    await ensureAdminPermission(session);
 
     try {
         const pendingEmails = await syncDevpostEmailsToUsers();
@@ -364,6 +364,10 @@ export async function actionLinkDevpostAccount(code: string): Promise<{
         await linkDevpostEmailToUser(devpostEmail, session.user.id);
         revalidatePath("/dashboard");
     } catch (error) {
+        console.error(
+            `Error linking devpost email ${devpostEmail} to user ${session.user.id}:`,
+            error,
+        );
         return {
             success: false,
             error: "An internal error occurred while linking your account.",
