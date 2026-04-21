@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-import MeetTheTeamCloud from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloud";
+// import MeetTheTeamCloud from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloud";
 import gsap from "gsap";
 
 import Image from "next/image";
@@ -12,6 +12,7 @@ import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
 import { cn } from "@/src/util/utils";
+import { LuClock } from "react-icons/lu";
 
 const MeetTheTeamSection = () => {
     const panelStyles =
@@ -143,18 +144,19 @@ const MeetTheTeamSection = () => {
                 </PanelHeader>
                 <PanelContent
                     parentPanelId={"meetTheTeamPanel"}
-                    className={cn(
-                        panelContentStyles,
-                        "flex-col pt-2 lg:flex-row lg:pt-0",
-                    )}
+                    className={cn(panelContentStyles, "flex-col lg:flex-row")}
                 >
-                    <MeetTheTeamCloud
+                    {/* <MeetTheTeamCloud
                         panelContentRef={panelContentRef}
                         committeeMemberIconsRef={committeeMemberIconsRef}
                         handleClick={handleClick}
                         handleDeselect={handleDeselect}
                         selectedMemberIdx={selectedMemberIdx}
-                    />
+                    /> */}
+                    <div className="w-full h-full flex flex-col justify-center items-center">
+                        <LuClock className="h-[50px] w-[50px] lg:h-[100px] lg:w-[100px]" />
+                        <p>Stay tuned, the team is on their way!</p>
+                    </div>
                 </PanelContent>
             </Panel>
         </div>
