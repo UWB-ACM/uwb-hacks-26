@@ -90,7 +90,8 @@ export async function actionImportRegistrants(
     for (let i = 0; i < parsed.data.length; i++) {
         const row = parsed.data[i];
 
-        const email = row["Email"]?.trim();
+        // Emails need to be normalized for consistency.
+        const email = row["Email"]?.trim().toLowerCase();
         if (!email) {
             result.errors.push(`Row ${i + 2}: Missing email address.`);
             continue;
