@@ -155,7 +155,9 @@ const MeetTheTeamSection = () => {
                     /> */}
                     <div className="w-full h-full flex flex-col justify-center items-center">
                         <LuClock className="h-[50px] w-[50px] lg:h-[100px] lg:w-[100px]" />
-                        <p>Stay tuned, the team is on their way!</p>
+                        <p className="text-center">
+                            Stay tuned, the team is on their way!
+                        </p>
                     </div>
                 </PanelContent>
             </Panel>
