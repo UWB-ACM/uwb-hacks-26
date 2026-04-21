@@ -9,34 +9,58 @@ export interface CommitteeMember {
 
 export const committeeMembers: CommitteeMember[] = [
     {
-        name: "Prarin Behdarvandian",
-        image_path: "/MeetTheTeamPhotos/PrarinBehdarvandian.png",
-        roles: ["Content and Design"],
-        link: "https://www.linkedin.com/in/p-behdar/",
+        name: "Jonah Uellenberg",
+        image_path: "/MeetTheTeamPhotos/JonahUellenberg.png",
+        roles: ["Executive", "Committee Lead (Digital Experience)"],
+        link: "https://uellenberg.org/",
     },
     {
-        name: "Rasajna Kolusu",
-        image_path: "/MeetTheTeamPhotos/RasajnaKolusu.jpg",
-        roles: ["Content and Design", "Marketing"],
-        link: "https://www.linkedin.com/in/sai-rasajna-kolusu/",
+        name: "Sohan Dandu",
+        image_path: "/MeetTheTeamPhotos/SohanDandu.jpeg",
+        roles: ["Executive", "Committee Lead (Production Management)", "Committee Lead (Sponsorships)"],
+        link: "https://www.linkedin.com/in/sohandandu/",
+    },
+    {
+        name: "Nainoo Gobindpuri",
+        image_path: "/MeetTheTeamPhotos/NainooGobindpuri.jpg",
+        roles: ["Executive", "Committee Lead (Sponsorships)"],
+        link: "https://www.linkedin.com/in/khushnain-gobindpuri/",
+    },
+    {
+        name: "Meeti Gobindpuri",
+        image_path: "/MeetTheTeamPhotos/MeetiGobindpuri.jpg",
+        roles: ["Executive", "Committee Lead (Marketing)"],
+        link: "https://www.linkedin.com/in/khushmeetgobindpuri/",
+    },
+    {
+        name: "Sarinna Thaiy",
+        image_path: "/MeetTheTeamPhotos/default.jpg",
+        roles: ["Executive", "Committee Lead (Content and Design)"],
+        link: "https://www.linkedin.com/in/sarinnathaiy/",
     },
     {
         name: "Nandini Mistry",
         image_path: "/MeetTheTeamPhotos/NandiniMistry.jpg",
-        roles: ["Content and Design", "Production Management"],
+        roles: ["Executive", "Committee Lead (Production Management)", "Content and Design"],
         link: "https://www.linkedin.com/in/nandinimist/",
+    },
+    {
+        name: "Preeti Gobindpuri",
+        image_path: "/MeetTheTeamPhotos/PreetiGobindpuri.png",
+        roles: ["Executive", "Committee Lead (Digital Experience)"],
+        link: "https://www.linkedin.com/in/khushpreet-gobindpuri/",
+    },
+    {
+        name: "Ruthie Lartey",
+        image_path: "/MeetTheTeamPhotos/default.jpg",
+        roles: ["Committee Lead (Content and Design)"],
+        link: "https://www.linkedin.com/in/ruthie-lartey/",
     },
     {
         name: "Alan Talavera",
         image_path: "/MeetTheTeamPhotos/AlanTalavera.jpg",
         roles: ["Digital Experience"],
         link: "https://www.linkedin.com/in/alan-corvera/",
-    },
-    {
-        name: "Jonah Uellenberg",
-        image_path: "/MeetTheTeamPhotos/JonahUellenberg.png",
-        roles: ["Digital Experience"],
-        link: "https://uellenberg.org/",
     },
     {
         name: "Kenneth Angeles",
@@ -51,28 +75,34 @@ export const committeeMembers: CommitteeMember[] = [
         link: "https://www.linkedin.com/in/phohanh-tran/",
     },
     {
-        name: "Preeti Gobindpuri",
-        image_path: "/MeetTheTeamPhotos/PreetiGobindpuri.png",
-        roles: ["Digital Experience"],
-        link: "https://www.linkedin.com/in/khushpreet-gobindpuri/",
-    },
-    {
         name: "Reagan George",
         image_path: "/MeetTheTeamPhotos/ReaganGeorge.jpg",
         roles: ["Digital Experience"],
         link: "https://www.linkedin.com/in/reagan-george/",
     },
     {
+        name: "Melody Behdarvandian",
+        image_path: "/MeetTheTeamPhotos/PrarinBehdarvandian.png",
+        roles: ["Content and Design"],
+        link: "https://www.linkedin.com/in/p-behdar/",
+    },
+    {
+        name: "Mao Nishio",
+        image_path: "/MeetTheTeamPhotos/default.jpg",
+        roles: ["Content and Design"],
+        link: "https://www.linkedin.com/in/maonishio/",
+    },
+    {
+        name: "Rasajna Kolusu",
+        image_path: "/MeetTheTeamPhotos/RasajnaKolusu.jpg",
+        roles: ["Content and Design", "Marketing"],
+        link: "https://www.linkedin.com/in/sai-rasajna-kolusu/",
+    },
+    {
         name: "Isabella Ta",
         image_path: "/MeetTheTeamPhotos/IsabellaTa.png",
         roles: ["Marketing"],
         link: "https://www.linkedin.com/in/isabella-ta-0a91a82aa/",
-    },
-    {
-        name: "Meeti Gobindpuri",
-        image_path: "/MeetTheTeamPhotos/MeetiGobindpuri.jpg",
-        roles: ["Marketing"],
-        link: "https://www.linkedin.com/in/khushmeetgobindpuri/",
     },
     {
         name: "Ashley Tsang",
@@ -93,16 +123,10 @@ export const committeeMembers: CommitteeMember[] = [
         link: "https://www.linkedin.com/in/ayaan-ali30/",
     },
     {
-        name: "Sohan Dandu",
-        image_path: "/MeetTheTeamPhotos/SohanDandu.jpeg",
-        roles: ["Production Management", "Sponsorships"],
-        link: "https://www.linkedin.com/in/sohandandu/",
-    },
-    {
-        name: "Nainoo Gobindpuri",
-        image_path: "/MeetTheTeamPhotos/NainooGobindpuri.jpg",
-        roles: ["Sponsorships"],
-        link: "https://www.linkedin.com/in/khushnain-gobindpuri/",
+        name: "Prashamsa Bandarapu",
+        image_path: "/MeetTheTeamPhotos/default.jpg",
+        roles: ["Production Management"],
+        link: "https://www.linkedin.com/in/prashamsa-bandarapu-b893b1243/",
     },
 ];
 
