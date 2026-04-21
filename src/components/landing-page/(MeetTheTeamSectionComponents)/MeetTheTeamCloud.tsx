@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { MeetTheTeamCloudProps, committeeMembers } from "./Committees";
 import CommitteeMemberInfo from "./CommitteeMemberInfo";
 import CommitteeMemberIcon from "./CommitteeMemberIcon";
@@ -10,29 +9,6 @@ const MeetTheTeamCloud = ({
     handleDeselect,
     selectedMemberIdx,
 }: MeetTheTeamCloudProps) => {
-    const [isReversed, setIsReversed] = useState(false);
-
-    useEffect(() => {
-        const el = committeeMemberIconsRef.current;
-        if (!el) return;
-
-        const checkDirection = () => {
-            const isRow = window.getComputedStyle(el).flexDirection === "row";
-            setIsReversed(!isRow);
-        };
-
-        checkDirection();
-
-        const ro = new ResizeObserver(checkDirection);
-        ro.observe(el);
-
-        return () => ro.disconnect();
-    }, [committeeMemberIconsRef]);
-
-    const displayMembers = isReversed
-        ? [...committeeMembers].reverse()
-        : committeeMembers;
-
     return (
         <>
             <div
@@ -47,11 +23,11 @@ const MeetTheTeamCloud = ({
                     {[0, 1].map((dup) => (
                         <div
                             key={dup}
-                            className="shrink-0 flex h-full gap-x-[5vmin] pl-[5vmin] lg:flex-col lg:h-auto lg:gap-x-0 lg:gap-y-[5vmin] lg:pl-0 lg:pt-[5vmin]"
+                            className="shrink-0 flex h-full gap-x-[5vmin] pl-[5vmin] lg:flex-col-reverse lg:h-auto lg:gap-x-0 lg:gap-y-[5vmin] lg:pl-0 lg:pt-[5vmin]"
                         >
-                            {displayMembers.map((committeeMember, idx) => (
+                            {committeeMembers.map((committeeMember, idx) => (
                                 <CommitteeMemberIcon
-                                    key={`${dup}-${idx}`}
+                                    key={`${dup}-${committeeMember.name}`}
                                     idx={idx}
                                     committeeMember={committeeMember}
                                     isSelected={idx === selectedMemberIdx}
@@ -75,9 +51,9 @@ const MeetTheTeamCloud = ({
                 isHidden={selectedMemberIdx !== null}
             />
 
-            {displayMembers.map((committeeMember, idx) => (
+            {committeeMembers.map((committeeMember, idx) => (
                 <CommitteeMemberInfo
-                    key={idx}
+                    key={committeeMember.name}
                     committeeMember={committeeMember}
                     isHidden={selectedMemberIdx !== idx}
                     onClose={handleDeselect}
