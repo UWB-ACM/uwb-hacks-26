@@ -1,7 +1,7 @@
 import { getSession, redirectToLogin } from "@/src/util/session";
 import { getPermissionLevel } from "@/src/util/db/user";
 import { hasPermissions, PermissionLevel } from "@/src/util/dataTypes";
-import JudgingAdminClient from "./JudgingAdminClient"; 
+import JudgingAdminClient from "./JudgingAdminClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,15 +19,21 @@ export default async function Page() {
 
     // 2. Authorization Check (matches Dashboard pattern)
     const permission = await getPermissionLevel(session.user.id);
-    const isAdmin = permission != null && hasPermissions(permission, {
-        has: PermissionLevel.Admin,
-    });
+    const isAdmin =
+        permission != null &&
+        hasPermissions(permission, {
+            has: PermissionLevel.Admin,
+        });
 
     if (!isAdmin) {
         return (
             <div className="min-h-screen grid place-content-center text-center text-black">
-                <h1 className="text-2xl font-black text-red-600 uppercase italic">Access Denied</h1>
-                <p className="mt-2 font-bold">Admin permissions are required for auto-assignment.</p>
+                <h1 className="text-2xl font-black text-red-600 uppercase italic">
+                    Access Denied
+                </h1>
+                <p className="mt-2 font-bold">
+                    Admin permissions are required for auto-assignment.
+                </p>
             </div>
         );
     }
