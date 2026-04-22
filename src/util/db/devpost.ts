@@ -69,7 +69,8 @@ export async function syncDevpostEmailsToUsers() {
         UPDATE users 
         SET devpost_email = email 
         WHERE devpost_email IS NULL 
-          AND email IN (SELECT email FROM devpost_users);
+          AND email IN (SELECT email FROM devpost_users)
+          AND email NOT IN (SELECT devpost_email FROM users WHERE devpost_email IS NOT NULL);
     `;
 
     // 2. Inserting into devpost_codes for unlinked devpost_users (if they are in users table with a linked devpost_email, we ignore them).
