@@ -131,12 +131,6 @@ export const committeeMembers: CommitteeMember[] = [
         link: "https://www.linkedin.com/in/parkseyeon/",
     },
     {
-        name: "Ayaan Ali",
-        image_path: "/MeetTheTeamPhotos/AyaanAli.jpg",
-        roles: ["Production Management"],
-        link: "https://www.linkedin.com/in/ayaan-ali30/",
-    },
-    {
         name: "Prashamsa Bandarapu",
         image_path: "/MeetTheTeamPhotos/PrashamsaBandarapu.png",
         roles: ["Production Management"],
