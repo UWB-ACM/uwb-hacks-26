@@ -107,13 +107,19 @@ const MeetTheTeamSection = () => {
 
     return (
         <div className="mt-[10vmin] relative mx-auto w-[90%] max-w-[750px]">
-            <Image src={FlyingCarCloudTop} alt="" className="w-full" />
+            <Image
+                src={FlyingCarCloudTop}
+                alt=""
+                className="w-full"
+                sizes="(max-width: 834px) 90vw, 750px"
+            />
 
             <div className="relative w-full">
                 <Image
                     src={FlyingCarCloudBody}
                     alt=""
                     className="z-0 absolute top-0 w-full h-full"
+                    sizes="(max-width: 834px) 90vw, 750px"
                 />
 
                 <Panel id={"meetTheTeamPanel"} className={cn("px-[10%]")}>
@@ -139,7 +145,12 @@ const MeetTheTeamSection = () => {
                 </Panel>
             </div>
 
-            <Image src={FlyingCarCloudBottom} alt="" className="w-full" />
+            <Image
+                src={FlyingCarCloudBottom}
+                alt=""
+                className="w-full"
+                sizes="(max-width: 834px) 90vw, 750px"
+            />
         </div>
     );
 };
