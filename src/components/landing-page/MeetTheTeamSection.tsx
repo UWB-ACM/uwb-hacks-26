@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-// import MeetTheTeamCloud from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloud";
+import MeetTheTeamCloud from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloud";
 import gsap from "gsap";
 
 import Image from "next/image";
@@ -17,12 +17,7 @@ import { cn } from "@/src/util/utils";
 const MeetTheTeamSection = () => {
     const panelHeaderStyles =
         "border-0 lg:border-0 font-glacial-indifference font-semibold text-[#0078d0] p-0 pb-3 bg-transparent";
-    const panelContentStyles = "relative grow flex p-0 md:p-0 overflow-hidden";
-
-    // passed into mobile/tablet and desktop versions as prop to get...
-    // - height of panelContent element on desktop
-    // - width of panelContent elemnent on mobile/tablet
-    const panelContentRef = useRef<HTMLDivElement | null>(null);
+    const panelContentStyles = "p-0 md:p-0";
 
     // keeps track of currently selected memberIcon
     // set to null when no one is selected
@@ -111,7 +106,7 @@ const MeetTheTeamSection = () => {
     }, [selectedMemberIdx, handleDeselect]);
 
     return (
-        <div className="mt-[10vmin] relative mx-auto w-[90%] md:w-[75%] lg:w-[80%] xl:w-[60%]">
+        <div className="mt-[10vmin] relative mx-auto w-[90%] max-w-[750px]">
             <Image src={FlyingCarCloudTop} alt="" className="w-full" />
 
             <div className="relative w-full">
@@ -121,7 +116,7 @@ const MeetTheTeamSection = () => {
                     className="z-0 absolute top-0 w-full h-full"
                 />
 
-                <Panel id={"meetTheTeamPanel"} className={cn("px-6 md:px-10")}>
+                <Panel id={"meetTheTeamPanel"} className={cn("px-[10%]")}>
                     <PanelHeader
                         parentPanelId={"meetTheTeamPanel"}
                         as={"h2"}
@@ -134,7 +129,12 @@ const MeetTheTeamSection = () => {
                         parentPanelId={"meetTheTeamPanel"}
                         className={cn(panelContentStyles)}
                     >
-                        bleh
+                        <MeetTheTeamCloud
+                            committeeMemberIconsRef={committeeMemberIconsRef}
+                            handleClick={handleClick}
+                            handleDeselect={handleDeselect}
+                            selectedMemberIdx={selectedMemberIdx}
+                        />
                     </PanelContent>
                 </Panel>
             </div>
