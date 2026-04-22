@@ -12,11 +12,11 @@ import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
+import { cn } from "@/src/util/utils";
+
 const MeetTheTeamSection = () => {
-    const panelStyles =
-        "flex flex-col absolute top-0 left-1/2 border-0 translate-y-[40%] md:translate-y-[41%] lg:translate-y-[70%] xl:translate-y-[65%] -translate-x-1/2 w-[78%] md:w-[70%] lg:w-[85%] xl:w-[85%] h-[65%] md:h-[65%] lg:h-[51.5%] xl:h-[54%]";
     const panelHeaderStyles =
-        "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent";
+        "border-0 lg:border-0 font-glacial-indifference font-semibold text-[#0078d0] p-0 pb-3 bg-transparent";
     const panelContentStyles = "relative grow flex p-0 md:p-0 overflow-hidden";
 
     // passed into mobile/tablet and desktop versions as prop to get...
@@ -121,7 +121,22 @@ const MeetTheTeamSection = () => {
                     className="z-0 absolute top-0 w-full h-full"
                 />
 
-                <p className="relative z-5 h-[600px]">bleh</p>
+                <Panel id={"meetTheTeamPanel"} className={cn("px-6 md:px-10")}>
+                    <PanelHeader
+                        parentPanelId={"meetTheTeamPanel"}
+                        as={"h2"}
+                        isSectionHeader
+                        className={cn(panelHeaderStyles)}
+                    >
+                        MEET THE TEAM
+                    </PanelHeader>
+                    <PanelContent
+                        parentPanelId={"meetTheTeamPanel"}
+                        className={cn(panelContentStyles)}
+                    >
+                        bleh
+                    </PanelContent>
+                </Panel>
             </div>
 
             <Image src={FlyingCarCloudBottom} alt="" className="w-full" />
