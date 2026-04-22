@@ -10,6 +10,39 @@ const MeetTheTeamCloud = ({
     handleDeselect,
     selectedMemberIdx,
 }: MeetTheTeamCloudProps) => {
+    const infoRef = useRef<HTMLDivElement | null>(null);
+    const prevHeightRef = useRef<number>(0);
+
+    useLayoutEffect(() => {
+        const el = infoRef.current;
+        if (!el) return;
+
+        // don't need to animate height on lg and xl screens as height is dictated by flex container
+        if (window.matchMedia("(min-width: 1000px)").matches) {
+            prevHeightRef.current = 0;
+            return;
+        }
+
+        const newHeight = el.scrollHeight;
+
+        if (prevHeightRef.current > 0 && prevHeightRef.current !== newHeight) {
+            gsap.fromTo(
+                el,
+                { height: prevHeightRef.current },
+                {
+                    height: newHeight,
+                    duration: 0.2,
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        gsap.set(el, { height: "auto" });
+                    },
+                },
+            );
+        }
+
+        prevHeightRef.current = newHeight;
+    }, [selectedMemberIdx]);
+
     return (
         <div className="w-full flex flex-col lg:flex-row">
             {/* Committee Member Icons */}
@@ -46,10 +79,7 @@ const MeetTheTeamCloud = ({
             </div>
 
             {/* Selected Committee Member Info */}
-            <CommitteeMemberInfo
-                committeeMember={null}
-                isHidden={selectedMemberIdx !== null}
-            />
+            <div ref={infoRef} className="grow lg:w-0 overflow-hidden">
                 <CommitteeMemberInfo
                     committeeMember={null}
                     isHidden={selectedMemberIdx !== null}
