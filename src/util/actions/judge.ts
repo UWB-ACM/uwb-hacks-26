@@ -7,13 +7,28 @@ import {
     upsertScore,
     completeAssignment,
     assignJudgeToProject,
+    setProjectTable,
 } from "@/src/util/db/judge";
 import sql from "@/src/util/database";
-import { getPermissionLevel } from "@/src/util/db/user";
-import { hasPermissions, PermissionLevel } from "@/src/util/dataTypes";
+import { computeTableAssignments } from "@/src/util/judging/tableAssignment";
+import {
+    analyzeCollisions,
+    computeJudgeAssignments,
+    AssignProject,
+    AssignTrack,
+    AssignJudge,
+    AssignJudgeAssignment,
+} from "@/src/util/judging/judgeAssignment";
+import { ensureAdminPermission } from "@/src/util/staff";
 
-const JUDGES_PER_TRACK = 2;
-
+/**
+ * Submits a single score for one question on one project by the
+ * currently-logged-in judge. Called as the judge moves sliders in the
+ * scoring UI.
+ * @param projectId - is the project being scored.
+ * @param questionId - is the judging question being answered.
+ * @param score - is the score the judge gave (0 to 10, inclusive).
+ */
 export async function actionSubmitScore(
     projectId: number,
     questionId: number,
@@ -25,6 +40,14 @@ export async function actionSubmitScore(
     await upsertScore(session.user!.id, projectId, questionId, score);
 }
 
+/**
+ * Writes every score in the provided array and then marks the judge's
+ * assignment for the project complete. Called when the judge finishes
+ * scoring a project in the scoring UI.
+ * @param projectId - is the project being finalized.
+ * @param scoreQuestionArray - is the list of (questionId, score) pairs
+ *     to persist before marking the assignment complete.
+ */
 export async function actionCompleteAssignment(
     projectId: number,
     scoreQuestionArray: [number, number][],
@@ -40,162 +63,155 @@ export async function actionCompleteAssignment(
     await completeAssignment(session.user!.id, projectId);
 }
 
-export async function actionAssignJudges() {
+/**
+ * The result returned by `actionAssignJudges` to the admin UI.
+ */
+export interface AutoAssignResult {
+    /**
+     * Whether the run finished successfully. When false, `error` is set.
+     */
+    success: boolean;
+
+    /**
+     * A human-readable error message, when `success` is false.
+     */
+    error?: string;
+
+    /**
+     * The number of projects that were newly placed at a table this run.
+     */
+    tableAssignmentsCount?: number;
+
+    /**
+     * The number of (judge, project) assignments newly created this run.
+     */
+    judgeAssignmentsCount?: number;
+
+    /**
+     * The number of projects that have 3+ judges scheduled on them at
+     * the same round in the staggered walk order.
+     */
+    collisionCount?: number;
+
+    /**
+     * Non-fatal warnings collected across all three phases.
+     */
+    warnings?: string[];
+}
+
+/**
+ * Runs the full auto-assignment pipeline in three phases:
+ *   - Table assignment: places any unplaced projects at a (room,
+ *     tableNum), respecting track room affinities.
+ *   - Judge assignment: assigns judges to projects so every
+ *     (project, track) pair gets JUDGES_PER_TRACK judges.
+ *   - Collision analysis: builds each judge's staggered walk order
+ *     and flags any project that has 3+ judges arriving at the same
+ *     round (usually caused by projects in multiple tracks).
+ *
+ * All three phases share one warnings bag, surfaced on the admin UI.
+ * The action is idempotent - safe to re-run after adding late projects
+ * or judges.
+ */
+export async function actionAssignJudges(): Promise<AutoAssignResult> {
     try {
-        // 1. SECURITY: Check if user is logged in and is an Admin
         const session = await getSession();
-        if (session.user?.id == null) {
-            return {
-                success: false,
-                error: "You must be logged in to perform this action.",
-            };
+        await ensureAdminPermission(session);
+
+        const rawProjects = await sql`
+            SELECT id, main_track, side_tracks, room, table_num
+            FROM projects
+            WHERE submitted = true
+        `;
+        const projectsForTables = rawProjects.map((p) => ({
+            id: p.id,
+            mainTrack: p.main_track,
+            room: p.room,
+            tableNum: p.table_num,
+        }));
+        const tableResult = computeTableAssignments(projectsForTables);
+
+        for (const placement of tableResult.placements) {
+            await setProjectTable(
+                placement.projectId,
+                placement.room,
+                placement.tableNum,
+            );
         }
 
-        const permission = await getPermissionLevel(session.user.id);
-        const isAdmin =
-            permission != null &&
-            hasPermissions(permission, {
-                has: PermissionLevel.Admin,
-            });
-
-        if (!isAdmin) {
+        // Merge new placements back into our in-memory view so judge
+        // assignment has up-to-date (room, tableNum) for ranking.
+        const placementByProjectId = new Map(
+            tableResult.placements.map((p) => [
+                p.projectId,
+                { room: p.room, tableNum: p.tableNum },
+            ]),
+        );
+        const projectsForJudges: AssignProject[] = rawProjects.map((p) => {
+            const np = placementByProjectId.get(p.id);
             return {
-                success: false,
-                error: "Unauthorized: Admin permission level required.",
+                id: p.id,
+                mainTrack: p.main_track,
+                sideTracks: p.side_tracks ?? [],
+                room: np?.room ?? p.room,
+                tableNum: np?.tableNum ?? p.table_num,
             };
-        }
+        });
 
-        // 2. DATA FETCHING: Pull raw data from Supabase
         const rawTracks = await sql`SELECT id, devpost_tag FROM tracks`;
-        const rawProjects =
-            await sql`SELECT id, main_track, side_tracks FROM projects`;
         const rawJudges = await sql`SELECT id, track_ids FROM judge_info`;
         const rawAssignments =
             await sql`SELECT judge_id, project_id FROM judge_assignments`;
 
-        // 3. SANITIZATION: Ensure IDs are Numbers and structures are clean
-        const allTracks = rawTracks.map((t) => ({
+        const tracks: AssignTrack[] = rawTracks.map((t) => ({
             id: t.id,
-            devpost_tag: t.devpost_tag,
+            devpostTag: t.devpost_tag,
         }));
-        const allProjects = rawProjects.map((p) => ({
-            id: p.id,
-            main_track: p.main_track,
-            side_tracks: p.side_tracks,
-        }));
-        const allJudges = rawJudges.map((j) => ({
+        const judges: AssignJudge[] = rawJudges.map((j) => ({
             id: j.id,
-            track_ids: j.track_ids || [],
+            trackIds: j.track_ids ?? [],
         }));
-        const assignments = rawAssignments.map((a) => ({
-            judge_id: a.judge_id,
-            project_id: a.project_id,
+        const existing: AssignJudgeAssignment[] = rawAssignments.map((a) => ({
+            judgeId: a.judge_id,
+            projectId: a.project_id,
         }));
 
-        // 4. INDEXING: Create Maps for high-performance O(1) lookups
-        const judgeMap = new Map(allJudges.map((j) => [j.id, j]));
-        const trackMap = new Map(allTracks.map((t) => [t.devpost_tag, t]));
+        const judgeResult = computeJudgeAssignments(
+            tracks,
+            projectsForJudges,
+            judges,
+            existing,
+        );
 
-        const judgeWorkload = new Map<number, number>();
-        for (const j of allJudges) judgeWorkload.set(j.id, 0);
-        for (const a of assignments) {
-            judgeWorkload.set(
-                a.judge_id,
-                (judgeWorkload.get(a.judge_id) || 0) + 1,
-            );
+        for (const a of judgeResult.newAssignments) {
+            await assignJudgeToProject(a.judgeId, a.projectId);
         }
 
-        let newAssignmentsCount = 0;
-        const warnings: string[] = [];
+        // Run collision analysis on the combined assignment set
+        // (pre-existing rows plus the ones we just created) so the
+        // warning reflects what the judge portal will actually show.
+        const allAssignments: AssignJudgeAssignment[] = [
+            ...existing,
+            ...judgeResult.newAssignments,
+        ];
+        const collisions = analyzeCollisions(projectsForJudges, allAssignments);
 
-        // 5. ASSIGNMENT ENGINE
-        for (const project of allProjects) {
-            const projectTrackTags = Array.from(
-                new Set([project.main_track, ...project.side_tracks]),
-            );
+        const warnings = [
+            ...tableResult.warnings,
+            ...judgeResult.warnings,
+            ...collisions.map(
+                (c) =>
+                    `Collision: project ${c.projectId} at round ${c.round} has ${c.judgeIds.length} judges (${c.judgeIds.join(", ")}).`,
+            ),
+        ];
 
-            for (const tag of projectTrackTags) {
-                if (!tag) {
-                    warnings.push(
-                        `Project ${project.id} has an empty track tag.`,
-                    );
-                    continue;
-                }
-
-                const track = trackMap.get(tag);
-                if (!track) {
-                    warnings.push(
-                        `Track tag "${tag}" (Project ${project.id}) not found.`,
-                    );
-                    continue;
-                }
-
-                const projectAssignments = assignments.filter(
-                    (a) => a.project_id === project.id,
-                );
-
-                // Note: Count judge contributions across tracks for the same project
-                const trackJudgesAssignedCount = projectAssignments.filter(
-                    (a) => {
-                        const judge = judgeMap.get(a.judge_id);
-                        return judge?.track_ids.includes(track.id);
-                    },
-                ).length;
-
-                if (trackJudgesAssignedCount < JUDGES_PER_TRACK) {
-                    const needed = JUDGES_PER_TRACK - trackJudgesAssignedCount;
-
-                    const candidates = allJudges
-                        .filter((j) => {
-                            return (
-                                j.track_ids.includes(track.id) &&
-                                !projectAssignments.some(
-                                    (a) => a.judge_id === j.id,
-                                )
-                            );
-                        })
-                        .sort((a, b) =>
-                            (judgeWorkload.get(a.id) || 0) <
-                            (judgeWorkload.get(b.id) || 0)
-                                ? -1
-                                : 1,
-                        );
-
-                    if (candidates.length < needed) {
-                        warnings.push(
-                            `Insufficient judges for track "${tag}" (Project ${project.id}). Found ${candidates.length}/${needed}.`,
-                        );
-                    }
-
-                    for (
-                        let i = 0;
-                        i < Math.min(needed, candidates.length);
-                        i++
-                    ) {
-                        const selectedJudge = candidates[i];
-
-                        await assignJudgeToProject(
-                            selectedJudge.id,
-                            project.id,
-                        );
-
-                        newAssignmentsCount++;
-
-                        // Update local tracking maps
-                        judgeWorkload.set(
-                            selectedJudge.id,
-                            (judgeWorkload.get(selectedJudge.id) || 0) + 1,
-                        );
-                        assignments.push({
-                            judge_id: selectedJudge.id,
-                            project_id: project.id,
-                        });
-                    }
-                }
-            }
-        }
-
-        return { success: true, count: newAssignmentsCount, warnings };
+        return {
+            success: true,
+            tableAssignmentsCount: tableResult.placements.length,
+            judgeAssignmentsCount: judgeResult.newAssignments.length,
+            collisionCount: collisions.length,
+            warnings,
+        };
     } catch (error) {
         console.error("Assignment Error:", error);
         return { success: false, error: "A database error occurred." };

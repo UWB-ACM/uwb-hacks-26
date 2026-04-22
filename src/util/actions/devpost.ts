@@ -203,7 +203,11 @@ async function actionImportProjects(
 
         const projectTitle = row["Project Title"]?.trim() ?? "";
         const projectStatus = row["Project Status"]?.trim() ?? "";
-        const submitted = projectStatus.toLowerCase().includes("submitted");
+        // We select by visible so that we can manually review projects and
+        // remove ones we don't want to judge (devpost doesn't allow us to delete projects).
+        const submitted =
+            projectStatus.toLowerCase().includes("submitted") &&
+            projectStatus.toLowerCase().includes("visible");
         const tryUrl = row['"Try it out" Links']?.trim() || null;
         const videoUrl = row["Video Demo Link"]?.trim() || null;
         const mainTrack = row["What Main Track Have You Chosen?"]?.trim() ?? "";
@@ -260,7 +264,7 @@ async function actionImportProjects(
             );
         }
 
-        const project: Omit<Project, "id"> = {
+        const project: Omit<Project, "id" | "room" | "tableNum"> = {
             devpostId,
             projectTitle,
             submissionUrl,
