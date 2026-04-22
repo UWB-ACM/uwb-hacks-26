@@ -9,6 +9,7 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import FAQSection from "@/src/components/landing-page/FAQSection";
 import { LeaderboardRecord, Prize } from "../util/dataTypes";
 import TracksSection from "../components/landing-page/TrackSection";
+import ScheduleSection from "../components/landing-page/ScheduleSection";
 
 type HomePageProps = {
     hackeroonPrizes: Promise<Prize[]>;
@@ -44,6 +45,7 @@ export default function HomePage({
                         leaderboardData={leaderboardData}
                     />
                     <TracksSection noTrackAnimation={false}></TracksSection>
+                    <ScheduleSection />
                     <SponsorsSection />
                     <FAQSection />
 
