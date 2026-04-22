@@ -15,12 +15,16 @@ const CommitteeMemberInfo = ({
     onClose,
 }: CommitteeMemberInfoProps) => {
     const roles =
-        committeeMember !== null ? committeeMember.roles.join(", ") : null;
+        committeeMember !== null
+            ? committeeMember.roles.map((role, idx) => (
+                  <li key={idx}>{role}</li>
+              ))
+            : null;
 
     return (
         <div
             className={cn(
-                "relative flex h-full min-h-0 grow flex-col overflow-y-auto overflow-x-hidden text-shadow-md text-center lg:text-left",
+                "w-full h-full flex flex-col text-shadow-md lg:text-left",
                 isHidden ? "hidden" : "flex",
             )}
         >
@@ -31,12 +35,12 @@ const CommitteeMemberInfo = ({
                             type="button"
                             onClick={onClose}
                             aria-label="Close committeeMemberInfo"
-                            className="absolute top-2 right-2 rounded-full p-1 hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black cursor-pointer"
+                            className="ml-auto rounded-full p-1 hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black cursor-pointer"
                         >
                             <X size={22} />
                         </button>
                     )}
-                    <div className="m-auto w-full max-w-full p-3">
+                    <div className="max-w-[300px] m-auto pt-1 lg:pt-0">
                         <Link
                             href={committeeMember.link}
                             target="_blank"
@@ -44,11 +48,13 @@ const CommitteeMemberInfo = ({
                         >
                             {committeeMember.name}
                         </Link>
-                        <p className="text-base md:text-lg">{roles}</p>
+                        <ul className="pl-5 text-base md:text-lg list-disc">
+                            {roles}
+                        </ul>
                     </div>
                 </>
             ) : (
-                <p className="m-auto p-3 text-base md:text-lg lg:text-center">
+                <p className="max-w-[300px] m-auto pt-2 lg:pt-0 text-base md:text-lg text-center">
                     Select one of our wonderful hackathon organizers to learn
                     more about them!
                 </p>

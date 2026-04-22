@@ -145,7 +145,6 @@ export const committeeMembers: CommitteeMember[] = [
 ];
 
 export interface MeetTheTeamCloudProps {
-    panelContentRef: RefObject<HTMLDivElement | null>;
     committeeMemberIconsRef: RefObject<HTMLDivElement | null>;
     handleClick: (selectedIdx: number) => void;
     handleDeselect: () => void;

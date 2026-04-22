@@ -1,30 +1,23 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-// import MeetTheTeamCloud from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloud";
+import MeetTheTeamCloud from "./(MeetTheTeamSectionComponents)/MeetTheTeamCloud";
 import gsap from "gsap";
 
 import Image from "next/image";
-import FlyingCarDesktop from "@/public/clouds/FlyingCarCloud_Desktop.png";
-import FlyingCarMobileTablet from "@/public/clouds/FlyingCarCloud_MobileTablet.png";
+import FlyingCarCloudTop from "@/public/MeetTheTeamSection/FlyingCarCloudTop.png";
+import FlyingCarCloudBody from "@/public/MeetTheTeamSection/FlyingCarCloudBody.png";
+import FlyingCarCloudBottom from "@/public/MeetTheTeamSection/FlyingCarCloudBottom.png";
 
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
 import { cn } from "@/src/util/utils";
-import { LuClock } from "react-icons/lu";
 
 const MeetTheTeamSection = () => {
-    const panelStyles =
-        "flex flex-col absolute top-0 left-1/2 border-0 translate-y-[40%] md:translate-y-[41%] lg:translate-y-[70%] xl:translate-y-[65%] -translate-x-1/2 w-[78%] md:w-[70%] lg:w-[85%] xl:w-[85%] h-[65%] md:h-[65%] lg:h-[51.5%] xl:h-[54%]";
     const panelHeaderStyles =
-        "border-0 lg:border-0 w-full lg:w-full font-glacial-indifference font-semibold text-[#2b3244] p-3 bg-transparent";
-    const panelContentStyles = "relative grow flex p-0 md:p-0 overflow-hidden";
-
-    // passed into mobile/tablet and desktop versions as prop to get...
-    // - height of panelContent element on desktop
-    // - width of panelContent elemnent on mobile/tablet
-    const panelContentRef = useRef<HTMLDivElement | null>(null);
+        "border-0 lg:border-0 font-glacial-indifference font-semibold text-[#0078d0] p-0 pb-3 bg-transparent";
+    const panelContentStyles = "p-0 md:p-0";
 
     // keeps track of currently selected memberIcon
     // set to null when no one is selected
@@ -113,54 +106,51 @@ const MeetTheTeamSection = () => {
     }, [selectedMemberIdx, handleDeselect]);
 
     return (
-        <div className="mt-[10vmin] relative mx-auto w-[90%] md:w-[75%] lg:w-[80%] xl:w-[60%]">
-            {/* conditionally render respective FlyingCar image */}
+        <div className="mt-[10vmin] relative mx-auto w-[90%] max-w-[750px]">
             <Image
-                src={FlyingCarMobileTablet}
+                src={FlyingCarCloudTop}
                 alt=""
-                sizes="(min-width: 1280px) 60vw, (min-width: 1024px) 80vw, (min-width: 768px) 75vw, 90vw"
-                className="w-full h-full block lg:hidden"
+                className="w-full"
+                sizes="(max-width: 834px) 90vw, 750px"
             />
 
-            <Image
-                src={FlyingCarDesktop}
-                alt=""
-                sizes="(min-width: 1280px) 60vw, (min-width: 1024px) 80vw, (min-width: 768px) 75vw, 90vw"
-                className="w-full h-full hidden lg:block"
-            />
+            <div className="relative w-full">
+                <Image
+                    src={FlyingCarCloudBody}
+                    alt=""
+                    className="z-0 absolute top-0 w-full h-full"
+                    sizes="(max-width: 834px) 90vw, 750px"
+                />
 
-            {/*
-                Panel component is absolutely positioned on top of FlyingCar image
-                
-                safe content area is established via panelStyles variable through all the "translate-y"s, "w-[XX%]"s, and "h-[XX%]"s. makes sure that all content never overflows out of cloud image
-            */}
-            <Panel id={"meetTheTeamPanel"} className={panelStyles}>
-                <PanelHeader
-                    parentPanelId={"meetTheTeamPanel"}
-                    as={"h2"}
-                    className={panelHeaderStyles}
-                >
-                    MEET THE TEAM
-                </PanelHeader>
-                <PanelContent
-                    parentPanelId={"meetTheTeamPanel"}
-                    className={cn(panelContentStyles, "flex-col lg:flex-row")}
-                >
-                    {/* <MeetTheTeamCloud
-                        panelContentRef={panelContentRef}
-                        committeeMemberIconsRef={committeeMemberIconsRef}
-                        handleClick={handleClick}
-                        handleDeselect={handleDeselect}
-                        selectedMemberIdx={selectedMemberIdx}
-                    /> */}
-                    <div className="w-full h-full flex flex-col justify-center items-center">
-                        <LuClock className="h-[50px] w-[50px] lg:h-[100px] lg:w-[100px]" />
-                        <p className="text-center">
-                            Stay tuned, the team is on their way!
-                        </p>
-                    </div>
-                </PanelContent>
-            </Panel>
+                <Panel id={"meetTheTeamPanel"} className={cn("px-[10%]")}>
+                    <PanelHeader
+                        parentPanelId={"meetTheTeamPanel"}
+                        as={"h2"}
+                        isSectionHeader
+                        className={cn(panelHeaderStyles)}
+                    >
+                        MEET THE TEAM
+                    </PanelHeader>
+                    <PanelContent
+                        parentPanelId={"meetTheTeamPanel"}
+                        className={cn(panelContentStyles)}
+                    >
+                        <MeetTheTeamCloud
+                            committeeMemberIconsRef={committeeMemberIconsRef}
+                            handleClick={handleClick}
+                            handleDeselect={handleDeselect}
+                            selectedMemberIdx={selectedMemberIdx}
+                        />
+                    </PanelContent>
+                </Panel>
+            </div>
+
+            <Image
+                src={FlyingCarCloudBottom}
+                alt=""
+                className="w-full"
+                sizes="(max-width: 834px) 90vw, 750px"
+            />
         </div>
     );
 };
