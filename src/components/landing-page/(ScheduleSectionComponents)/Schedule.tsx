@@ -1,122 +1,199 @@
 export interface Event {
-    time: string;
+    startTime: Date;
+    endTime?: Date;
     name: string;
     location: string;
 }
 
-export const events: Record<"4/24" | "4/25" | "4/26", Event[]> = {
-    "4/24": [
-        {
-            time: "10:00 AM - 11:35 AM",
-            name: "Check-In",
-            location: "ARC Overlook",
-        },
-        {
-            time: "10:00 AM - 11:00 AM",
-            name: "Snacks",
-            location: "ARC Overlook",
-        },
-        {
-            time: "11:00 AM - 12:00 PM",
-            name: "Opening Ceremony",
-            location: "ARC Overlook",
-        },
-        {
-            time: "12:30 PM - 2:00 PM",
-            name: "Brunch",
-            location: "ARC Overlook",
-        },
-        {
-            time: "2:00 PM - 3:00 PM",
-            name: "Avanade Fireside Chat",
-            location: "ARC Overlook",
-        },
-        {
-            time: "3:30 PM - 4:30 PM",
-            name: "Prototype & Pitch Workshop",
-            location: "ARC Overlook",
-        },
-        { time: "4:45 PM - 5:30 PM", name: "Dinner", location: "ARC Overlook" },
-    ],
-    "4/25": [
-        {
-            time: "9:30 AM - 11:30 AM",
-            name: "Check-In",
-            location: "ARC Overlook",
-        },
-        {
-            time: "12:00 PM - 1:30 PM",
-            name: "Networking Luncheon",
-            location: "ARC Overlook",
-        },
-        {
-            time: "1:30 PM - 2:30 PM",
-            name: "WSECU Credit Talk",
-            location: "NCEC",
-        },
-        {
-            time: "2:00 PM - 3:30 PM",
-            name: "Club + Special Guests Tabling",
-            location: "ARC Overlook",
-        },
-        {
-            time: "2:45 PM - 3:15 PM",
-            name: "Grayhats CTF Drop In Event",
-            location: "NCEC",
-        },
-        {
-            time: "3:30 PM - 4:30 PM",
-            name: "InclusiveAI Workshop",
-            location: "NCEC",
-        },
-        {
-            time: "4:00 PM - 5:30 PM",
-            name: "Hackeroon Stand Opens",
-            location: "ARC Overlook",
-        },
-        { time: "4:30 PM - 5:30 PM", name: "Dinner", location: "ARC Overlook" },
-        {
-            time: "11:59 PM",
-            name: "Devpost Initial Project Submission Due",
-            location: "ARC Overlook",
-        },
-    ],
-    "4/26": [
-        {
-            time: "9:00 AM - 10:00 AM",
-            name: "Check-In",
-            location: "ARC Overlook",
-        },
-        {
-            time: "10:00 AM",
-            name: "Hacking Concludes",
-            location: "ARC Overlook",
-        },
-        {
-            time: "10:50 AM - 12:50 PM",
-            name: "Judging",
-            location: "ARC Overlook",
-        },
-        { time: "1:00 PM - 2:30 PM", name: "Lunch", location: "ARC Overlook" },
-        {
-            time: "1:00 PM - 2:30 PM",
-            name: "Hackeroon Stand Opens",
-            location: "ARC Overlook",
-        },
-        {
-            time: "2:00 PM - 2:30 PM",
-            name: "Group Photo",
-            location: "ARC Overlook",
-        },
-        {
-            time: "2:45 PM - 4:15 PM",
-            name: "Closing Ceremony + Winners",
-            location: "ARC Overlook",
-        },
-        {
-            time: "4:15 PM - 4:45 PM",
-            name: "Last Chance Hackeroon Stand",
-            location: "ARC Overlook",
-        },
-    ],
+export interface DaySchedule {
+    date: string;
+    spirit: string;
+    events: Event[];
+}
+
+export const schedule: Record<1 | 2 | 3, DaySchedule> = {
+    1: {
+        date: "4/24",
+        spirit: "Twin Day",
+        events: [
+            {
+                startTime: new Date(2026, 3, 24, 10, 0),
+                endTime: new Date(2026, 3, 24, 11, 35),
+                name: "Check-In",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 10, 0),
+                endTime: new Date(2026, 3, 24, 11, 0),
+                name: "Snacks",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 11, 0),
+                endTime: new Date(2026, 3, 24, 12, 0),
+                name: "Opening Ceremony",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 12, 15),
+                endTime: new Date(2026, 3, 24, 13, 0),
+                name: "Intro to Google AI Studio",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 12, 30),
+                endTime: new Date(2026, 3, 24, 14, 0),
+                name: "Brunch",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 14, 0),
+                endTime: new Date(2026, 3, 24, 15, 0),
+                name: "Avanade Fireside Chat",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 15, 30),
+                endTime: new Date(2026, 3, 24, 16, 30),
+                name: "Prototype & Pitch Workshop",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 16, 0),
+                endTime: new Date(2026, 3, 24, 16, 45),
+                name: "Hacking with GitHub Copilot",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 16, 45),
+                endTime: new Date(2026, 3, 24, 17, 30),
+                name: "Dinner",
+                location: "ARC Overlook",
+            },
+        ],
+    },
+    2: {
+        date: "4/25",
+        spirit: "Husky Spirit Wear Day",
+        events: [
+            {
+                startTime: new Date(2026, 3, 25, 9, 30),
+                endTime: new Date(2026, 3, 25, 11, 30),
+                name: "Check-In",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 11, 30),
+                endTime: new Date(2026, 3, 25, 18, 0),
+                name: "In-Person Work Time",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 12, 0),
+                endTime: new Date(2026, 3, 25, 13, 30),
+                name: "Networking Luncheon",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 13, 30),
+                endTime: new Date(2026, 3, 25, 14, 30),
+                name: "WSECU Credit Talk",
+                location: "NCEC",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 14, 0),
+                endTime: new Date(2026, 3, 25, 15, 30),
+                name: "Club + Special Guests Tabling",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 14, 45),
+                endTime: new Date(2026, 3, 25, 15, 15),
+                name: "Grayhats CTF Drop In Event",
+                location: "NCEC",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 15, 30),
+                endTime: new Date(2026, 3, 25, 16, 30),
+                name: "InclusiveAI Workshop",
+                location: "NCEC",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 16, 0),
+                endTime: new Date(2026, 3, 25, 17, 30),
+                name: "Dinner",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 16, 0),
+                endTime: new Date(2026, 3, 25, 17, 30),
+                name: "Hackeroon Stand",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 17, 0),
+                endTime: new Date(2026, 3, 25, 17, 45),
+                name: "MLH Slideshow Karaoke",
+                location: "NCEC",
+            },
+            {
+                startTime: new Date(2026, 3, 25, 23, 59),
+                name: "Devpost Initial Project Submission Due",
+                location: "ARC Overlook",
+            },
+        ],
+    },
+    3: {
+        date: "4/26",
+        spirit: "Professional Attire Day",
+        events: [
+            {
+                startTime: new Date(2026, 3, 26, 9, 0),
+                endTime: new Date(2026, 3, 26, 10, 0),
+                name: "Check-In",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 26, 10, 0),
+                name: "Hacking Concludes",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 26, 10, 50),
+                endTime: new Date(2026, 3, 26, 12, 50),
+                name: "Judging",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 26, 13, 0),
+                endTime: new Date(2026, 3, 26, 14, 0),
+                name: "Lunch",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 26, 13, 0),
+                endTime: new Date(2026, 3, 26, 14, 0),
+                name: "Hackeroon Stand Opens",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 26, 14, 0),
+                endTime: new Date(2026, 3, 26, 14, 30),
+                name: "Group Photo",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 26, 14, 45),
+                endTime: new Date(2026, 3, 26, 16, 15),
+                name: "Closing Ceremony + Winners",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 26, 16, 15),
+                endTime: new Date(2026, 3, 26, 16, 45),
+                name: "Last Chance Hackeroon Stand",
+                location: "ARC Overlook",
+            },
+        ],
+    },
 };
