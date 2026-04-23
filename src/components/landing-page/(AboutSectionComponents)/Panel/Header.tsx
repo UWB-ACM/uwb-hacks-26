@@ -33,19 +33,19 @@ export default function PanelHeader({
 
         const header = headerRef.current;
 
-        gsap.set(header, { y: "-100%" });
+        gsap.set(header, { y: "-100%", opacity: 0 });
 
         gsap.to(header, {
             duration: 0.2,
             ease: "expo.out",
             y: 0,
+            opacity: 1,
             scrollTrigger: {
                 trigger: `#${parentPanelId}`,
                 // Long panels need to kick in earlier
                 // to avoid an uncomfortable delay.
                 start: long ? "10% 80%" : "30% 80%",
             },
-            opacity: 1,
         });
         // parentPanelId only passed into dependency array to satisfy ESLint. value of parentPanelId will never be changed within this component
     }, [long, parentPanelId]);
