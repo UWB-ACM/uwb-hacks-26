@@ -27,6 +27,29 @@ export async function ensureStaffPermission(
 }
 
 /**
+ * This validates that the requesting user has Admin level permissions.
+ * If the user does not meet these requirements, they will be redirected.
+ * @param session - is the session of the requester.
+ * @returns the user's permissions.
+ */
+export async function ensureAdminPermission(
+    session: Session,
+): Promise<PermissionLevel | never> {
+    if (!session.user?.id) return redirect("/");
+
+    // Ensure that the user has permission.
+    const permission = await getPermissionLevel(session.user.id);
+    if (
+        permission == null ||
+        !hasPermissions(permission, { has: PermissionLevel.Admin })
+    ) {
+        return redirect("/");
+    }
+
+    return permission;
+}
+
+/**
  * This does the following:
  * - Validates that the user parameter is valid.
  * - Extracts the user data for the user in the user parameter and returns it.

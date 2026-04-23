@@ -60,7 +60,7 @@ const ScheduleSection: React.FC = () => {
     };
 
     return (
-        <div className="mx-auto w-[90%] max-w-[850px]">
+        <div className="mx-auto w-[90%] max-w-[850px] mt-[10vmin]">
             <Image
                 src={ScheduleCloudTop}
                 alt=""

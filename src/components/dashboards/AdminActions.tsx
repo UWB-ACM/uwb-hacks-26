@@ -1,5 +1,5 @@
 import React from "react";
-import { FaGift, FaFileImport, FaGavel } from "react-icons/fa6"; // Added FaGavel for a "Judging" icon
+import { FaGift, FaFileImport, FaGavel } from "react-icons/fa6";
 import DashboardButton from "@/src/components/dashboards/DashboardButton";
 
 function AdminActions() {
