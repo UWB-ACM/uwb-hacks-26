@@ -14,11 +14,13 @@ import TracksSection from "../components/landing-page/TrackSection";
 type HomePageProps = {
     hackeroonPrizes: Promise<Prize[]>;
     leaderboardData: Promise<LeaderboardRecord[]>;
+    isJudge: boolean;
 };
 
 export default function HomePage({
     hackeroonPrizes,
     leaderboardData,
+    isJudge,
 }: HomePageProps) {
     return (
         <div className="flex flex-col items-center overflow-hidden">
@@ -39,7 +41,7 @@ export default function HomePage({
                         banner={true}
                     />
 
-                    <HeroSection />
+                    <HeroSection isJudge={isJudge} />
                     <AboutSection
                         hackeroonPrizes={hackeroonPrizes}
                         leaderboardData={leaderboardData}
