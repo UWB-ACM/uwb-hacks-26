@@ -73,7 +73,11 @@ const ScheduleSection: React.FC = () => {
                     variants={{ hidden: { x: "100%" }, visible: { x: 0 } }}
                     transition={{ duration: 1, ease: "easeInOut" }}
                 >
-                    <Image src={Cloud3} alt="" />
+                    <Image
+                        src={Cloud3}
+                        alt=""
+                        sizes="(max-width: 800px) 75vw, 50vw"
+                    />
                 </motion.div>
                 <motion.h2
                     className="relative z-5 w-full pt-6 font-glacial-indifference text-center text-4xl md:text-5xl font-semibold text-white"
@@ -90,7 +94,11 @@ const ScheduleSection: React.FC = () => {
                     variants={{ hidden: { x: "100%" }, visible: { x: 0 } }}
                     transition={{ duration: 1, ease: "easeInOut" }}
                 >
-                    <Image src={Cloud3} alt="" />
+                    <Image
+                        src={Cloud3}
+                        alt=""
+                        sizes="(max-width: 800px) 75vw, 50vw"
+                    />
                 </motion.div>
             </motion.div>
 
@@ -99,6 +107,7 @@ const ScheduleSection: React.FC = () => {
                     src={ScheduleCloudTop}
                     alt=""
                     className="relative z-5 w-full"
+                    sizes="(max-width: 944px) 90vw, 850px"
                 />
                 <div className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none">
                     <Image
@@ -106,12 +115,14 @@ const ScheduleSection: React.FC = () => {
                         alt=""
                         fill
                         className="block md:hidden absolute top-0 object-fill"
+                        sizes="90vw"
                     />
                     <Image
                         src={ScheduleCloudBody}
                         alt=""
                         fill
                         className="hidden md:block absolute top-0 object-fill"
+                        sizes="(max-width: 800px) 0vw, min(90vw, 850px)"
                     />
 
                     <Panel id={"scheduleSectionPanel"}>
@@ -158,6 +169,7 @@ const ScheduleSection: React.FC = () => {
                     src={ScheduleCloudBottom}
                     alt=""
                     className="relative z-5 w-full -translate-y-1 md:translate-x-0.25"
+                    sizes="(max-width: 944px) 90vw, 850px"
                 />
             </div>
         </div>
