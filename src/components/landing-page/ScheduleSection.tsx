@@ -40,6 +40,14 @@ const ScheduleSection: React.FC = () => {
     const daySchedule: DaySchedule = schedule[day];
 
     const handleSwitchDay = (direction: "prev" | "next") => {
+        const el = document.getElementById("scheduleSectionPanel");
+        if (el) {
+            window.scrollTo({
+                top: el.getBoundingClientRect().top + window.scrollY - 100,
+                behavior: "smooth",
+            });
+        }
+
         let newDay = day + (direction == "prev" ? -1 : 1);
 
         if (newDay == 0) {
@@ -122,6 +130,15 @@ const ScheduleSection: React.FC = () => {
                         {daySchedule.events.map((e, idx) => (
                             <EventItem key={idx} event={e} />
                         ))}
+                        <div className="flex justify-between items-center font-glacial-indifference font-semibold text-[#0078d0] text-lg md:text-xl lg:text-2xl">
+                            <button onClick={() => handleSwitchDay("prev")}>
+                                <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                            </button>
+                            DAY {day}
+                            <button onClick={() => handleSwitchDay("next")}>
+                                <FaLongArrowAltRight className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                            </button>
+                        </div>
                     </PanelContent>
                 </Panel>
             </div>
