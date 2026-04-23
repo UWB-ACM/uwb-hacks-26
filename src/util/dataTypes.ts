@@ -688,6 +688,17 @@ export interface Project {
      * email in our account system.
      */
     userEmails: string[];
+
+    /**
+     * Room the project has been placed in (if assigned).
+     */
+    room: string | null;
+
+    /**
+     * Table number within the room (if assigned). Multiple projects
+     * may share the same (room, tableNum) when projectsPerTable > 1.
+     */
+    tableNum: number | null;
 }
 
 /**
