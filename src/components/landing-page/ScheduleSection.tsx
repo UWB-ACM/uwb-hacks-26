@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 
 import Image from "next/image";
 import ScheduleCloudTop from "@/public/scheduleSection/ScheduleCloudTop.svg";
@@ -14,6 +14,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 
 import { schedule, DaySchedule } from "./(ScheduleSectionComponents)/Schedule";
 import EventItem from "./(ScheduleSectionComponents)/EventItem";
+import gsap from "gsap";
 
 const ScheduleSection: React.FC = () => {
     const [day, setDay] = useState<1 | 2 | 3>(() => {
@@ -50,6 +51,33 @@ const ScheduleSection: React.FC = () => {
         setDay(newDay as 1 | 2 | 3);
     };
 
+    const scheduleContainerRef = useRef<HTMLDivElement | null>(null);
+    const prevHeightRef = useRef<number>(0);
+
+    useLayoutEffect(() => {
+        const el = scheduleContainerRef.current;
+        if (!el) return;
+
+        const newHeight = el.scrollHeight;
+
+        if (prevHeightRef.current > 0 && prevHeightRef.current !== newHeight) {
+            gsap.fromTo(
+                el,
+                { height: prevHeightRef.current },
+                {
+                    height: newHeight,
+                    duration: 0.2,
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        gsap.set(el, { height: "auto" });
+                    },
+                },
+            );
+        }
+
+        prevHeightRef.current = newHeight;
+    }, [day]);
+
     return (
         <div className="mx-auto w-[90%] max-w-[850px]">
             <Image
@@ -57,7 +85,10 @@ const ScheduleSection: React.FC = () => {
                 alt=""
                 className="relative z-5 w-full"
             />
-            <div className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none">
+            <div
+                ref={scheduleContainerRef}
+                className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none"
+            >
                 <Image
                     src={ScheduleCloudBody}
                     alt=""
