@@ -5,6 +5,7 @@ import ScheduleCloudTop from "@/public/scheduleSection/ScheduleCloudTop.svg";
 import ScheduleCloudBodyMobile from "@/public/scheduleSection/ScheduleCloudBodyMobile.svg";
 import ScheduleCloudBody from "@/public/scheduleSection/ScheduleCloudBody.svg";
 import ScheduleCloudBottom from "@/public/scheduleSection/ScheduleCloudBottom.svg";
+import Cloud3 from "@/public/clouds/Cloud3.png";
 
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
@@ -15,6 +16,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 
 import { schedule, DaySchedule } from "./(ScheduleSectionComponents)/Schedule";
 import EventItem from "./(ScheduleSectionComponents)/EventItem";
+import { motion } from "motion/react";
 
 const ScheduleSection: React.FC = () => {
     const [day, setDay] = useState<1 | 2 | 3>(() => {
@@ -60,55 +62,66 @@ const ScheduleSection: React.FC = () => {
     };
 
     return (
-        <div className="mx-auto w-[90%] max-w-[850px] mt-[10vmin]">
-            <Image
-                src={ScheduleCloudTop}
-                alt=""
-                className="relative z-5 w-full"
-            />
-            <div className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none">
-                <Image
-                    src={ScheduleCloudBodyMobile}
-                    alt=""
-                    fill
-                    className="block md:hidden absolute top-0 object-fill"
-                />
-                <Image
-                    src={ScheduleCloudBody}
-                    alt=""
-                    fill
-                    className="hidden md:block absolute top-0 object-fill"
-                />
+        <div className="w-full">
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.5 }}
+            >
+                <motion.div
+                    className="relative z-0 w-3/4 md:w-1/2 pt-6 -scale-x-100 -translate-x-1/3 opacity-80"
+                    variants={{ hidden: { x: "100%" }, visible: { x: 0 } }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                >
+                    <Image src={Cloud3} alt="" />
+                </motion.div>
+                <motion.h2
+                    className="relative z-5 w-full pt-6 font-glacial-indifference text-center text-4xl md:text-5xl font-semibold text-white"
+                    variants={{
+                        hidden: { y: "-100%", opacity: 0 },
+                        visible: { y: 0, opacity: 1 },
+                    }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                >
+                    SCHEDULE
+                </motion.h2>
+                <motion.div
+                    className="relative z-0 w-3/4 md:w-1/2 ml-auto translate-x-1/3 opacity-80 -translate-y-[25px]"
+                    variants={{ hidden: { x: "100%" }, visible: { x: 0 } }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                >
+                    <Image src={Cloud3} alt="" />
+                </motion.div>
+            </motion.div>
 
-                <Panel id={"scheduleSectionPanel"}>
-                    <PanelHeader
-                        parentPanelId={"scheduleSectionPanel"}
-                        as="h3"
-                        isSectionHeader
-                        long
-                        className="font-glacial-indifference font-semibold text-[#0078d0] px-0 md:px-0 pb-2 md:pb-2 flex justify-between items-center bg-transparent"
-                    >
-                        <button onClick={() => handleSwitchDay("prev")}>
-                            <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
-                        </button>
-                        DAY {day}
-                        <button onClick={() => handleSwitchDay("next")}>
-                            <FaLongArrowAltRight className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
-                        </button>
-                    </PanelHeader>
-                    <PanelContent
-                        parentPanelId={"scheduleSectionPanel"}
-                        long
-                        className="p-0 md:p-0 pb-4 md:pb-4 flex flex-col gap-y-3"
-                    >
-                        <div className="w-full flex flex-col gap-y-1 justify-center items-center text-lg lg:text-xl font-bold text-blue-500/60 text-center">
-                            <span>( {daySchedule.date} )</span>{" "}
-                            <span>{daySchedule.spirit.toUpperCase()}</span>
-                        </div>
-                        {daySchedule.events.map((e, idx) => (
-                            <EventItem key={idx} event={e} />
-                        ))}
-                        <div className="flex justify-between items-center font-glacial-indifference font-semibold text-[#0078d0] text-lg md:text-xl lg:text-2xl">
+            <div className="mx-auto w-[90%] max-w-[850px] mt-[10vmin]">
+                <Image
+                    src={ScheduleCloudTop}
+                    alt=""
+                    className="relative z-5 w-full"
+                />
+                <div className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none">
+                    <Image
+                        src={ScheduleCloudBodyMobile}
+                        alt=""
+                        fill
+                        className="block md:hidden absolute top-0 object-fill"
+                    />
+                    <Image
+                        src={ScheduleCloudBody}
+                        alt=""
+                        fill
+                        className="hidden md:block absolute top-0 object-fill"
+                    />
+
+                    <Panel id={"scheduleSectionPanel"}>
+                        <PanelHeader
+                            parentPanelId={"scheduleSectionPanel"}
+                            as="h3"
+                            isSectionHeader
+                            long
+                            className="font-glacial-indifference font-semibold text-[#0078d0] px-0 md:px-0 pb-2 md:pb-2 flex justify-between items-center bg-transparent"
+                        >
                             <button onClick={() => handleSwitchDay("prev")}>
                                 <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
                             </button>
@@ -116,15 +129,37 @@ const ScheduleSection: React.FC = () => {
                             <button onClick={() => handleSwitchDay("next")}>
                                 <FaLongArrowAltRight className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
                             </button>
-                        </div>
-                    </PanelContent>
-                </Panel>
+                        </PanelHeader>
+                        <PanelContent
+                            parentPanelId={"scheduleSectionPanel"}
+                            long
+                            className="p-0 md:p-0 pb-4 md:pb-4 flex flex-col gap-y-3"
+                        >
+                            <div className="w-full flex flex-col gap-y-1 justify-center items-center text-lg lg:text-xl font-bold text-blue-500/60 text-center">
+                                <span>( {daySchedule.date} )</span>{" "}
+                                <span>{daySchedule.spirit.toUpperCase()}</span>
+                            </div>
+                            {daySchedule.events.map((e, idx) => (
+                                <EventItem key={idx} event={e} />
+                            ))}
+                            <div className="flex justify-between items-center font-glacial-indifference font-semibold text-[#0078d0] text-lg md:text-xl lg:text-2xl">
+                                <button onClick={() => handleSwitchDay("prev")}>
+                                    <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                                </button>
+                                DAY {day}
+                                <button onClick={() => handleSwitchDay("next")}>
+                                    <FaLongArrowAltRight className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                                </button>
+                            </div>
+                        </PanelContent>
+                    </Panel>
+                </div>
+                <Image
+                    src={ScheduleCloudBottom}
+                    alt=""
+                    className="relative z-5 w-full -translate-y-1 md:translate-x-0.25"
+                />
             </div>
-            <Image
-                src={ScheduleCloudBottom}
-                alt=""
-                className="relative z-5 w-full -translate-y-1 md:translate-x-0.25"
-            />
         </div>
     );
 };
