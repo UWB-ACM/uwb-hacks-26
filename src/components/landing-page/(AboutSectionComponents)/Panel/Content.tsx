@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import clsx from "clsx";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { cn } from "@/src/util/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,7 +47,7 @@ export default function PanelContent({
     }, [long, parentPanelId]);
 
     return (
-        <div ref={panelContentRef} className={clsx("p-6 md:p-10", className)}>
+        <div ref={panelContentRef} className={cn("p-6 md:p-10", className)}>
             {children}
         </div>
     );

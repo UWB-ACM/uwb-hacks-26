@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 import ScheduleCloudTop from "@/public/scheduleSection/ScheduleCloudTop.svg";
@@ -9,7 +9,47 @@ import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { FaLongArrowAltRight } from "react-icons/fa";
+
+import { schedule, DaySchedule } from "./(ScheduleSectionComponents)/Schedule";
+import EventItem from "./(ScheduleSectionComponents)/EventItem";
+
 const ScheduleSection: React.FC = () => {
+    const [day, setDay] = useState<1 | 2 | 3>(() => {
+        const currDate = new Date();
+
+        // If the current date is...
+        // - before, after, or on the first day of the hackthon, set to 1 (1st day of the hackathon)
+        // - before the third day of the hackthon (April 26, midnight), set to 2 (2nd day of hackathon)
+        // - otherwise, set to 3 (3rd day of hackathon)
+        const apr25 = new Date(2026, 3, 25, 0, 0, 0, 0);
+        const apr26 = new Date(2026, 3, 26, 0, 0, 0, 0);
+        const apr27 = new Date(2026, 3, 27, 0, 0, 0, 0);
+
+        if (currDate < apr25 || currDate >= apr27) {
+            return 1;
+        } else if (currDate < apr26) {
+            return 2;
+        } else {
+            return 3;
+        }
+    });
+
+    const daySchedule: DaySchedule = schedule[day];
+
+    const handleSwitchDay = (direction: "prev" | "next") => {
+        let newDay = day + (direction == "prev" ? -1 : 1);
+
+        if (newDay == 0) {
+            newDay = 3;
+        } else if (newDay == 4) {
+            newDay = 1;
+        }
+
+        setDay(newDay as 1 | 2 | 3);
+    };
+
     return (
         <div className="mx-auto w-[90%] max-w-[850px]">
             <Image
@@ -17,7 +57,7 @@ const ScheduleSection: React.FC = () => {
                 alt=""
                 className="relative z-5 w-full"
             />
-            <div className="relative z-0 w-full -translate-y-0.5 px-[15%]">
+            <div className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none">
                 <Image
                     src={ScheduleCloudBody}
                     alt=""
@@ -25,87 +65,40 @@ const ScheduleSection: React.FC = () => {
                     className="absolute top-0 object-fill"
                 />
 
-                <div className="relative z-5 w-full h-[600px]">bleh</div>
+                <Panel id={"scheduleSectionPanel"} className="overflow-visible">
+                    <PanelHeader
+                        parentPanelId={"scheduleSectionPanel"}
+                        as="h3"
+                        isSectionHeader
+                        className="font-glacial-indifference font-semibold text-[#0078d0] px-0 md:px-0 pb-2 md:pb-2 flex justify-between items-center"
+                    >
+                        <button onClick={() => handleSwitchDay("prev")}>
+                            <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                        </button>
+                        DAY {day}
+                        <button onClick={() => handleSwitchDay("next")}>
+                            <FaLongArrowAltRight className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                        </button>
+                    </PanelHeader>
+                    <PanelContent
+                        parentPanelId={"scheduleSectionPanel"}
+                        className="p-0 md:p-0 pb-4 md:pb-4 flex flex-col gap-y-3"
+                    >
+                        <div className="w-full flex flex-col gap-y-1 justify-center items-center text-lg lg:text-xl font-bold text-blue-500/60 text-center">
+                            <span>( {daySchedule.date} )</span>{" "}
+                            <span>{daySchedule.spirit.toUpperCase()}</span>
+                        </div>
+                        {daySchedule.events.map((e, idx) => (
+                            <EventItem key={idx} event={e} />
+                        ))}
+                    </PanelContent>
+                </Panel>
             </div>
             <Image
                 src={ScheduleCloudBottom}
                 alt=""
                 className="relative z-5 w-full -translate-y-0.5"
             />
-        </div>
-    );
-};
-
-interface ScheduleCardProps {
-    day: string;
-    date: string;
-    spirit: string;
-    events: {
-        time: string;
-        name: string;
-        description: string;
-        location: string;
-    }[];
-}
-
-const ScheduleCard: React.FC<ScheduleCardProps> = ({
-    day,
-    date,
-    spirit,
-    events,
-}) => {
-    return (
-        <div className="relative border-2 border-black bg-white p-4 md:p-5 flex flex-col min-h-[350px] md:min-h-[450px] overflow-hidden schedule-card transition-transform">
-            <div className="flex justify-between items-start mb-2 relative">
-                <h2 className="text-xl md:text-3xl font-light text-black">
-                    {day}
-                </h2>
-
-                <div className="flex flex-col items-end -mt-2">
-                    <span className="text-base md:text-lg font-bold text-yellow-500">
-                        {date.split(" ")[0]}
-                    </span>
-                    <span className="text-lg md:text-xl font-bold text-yellow-500 uppercase">
-                        {date.split(" ")[1]}
-                    </span>
-                </div>
-            </div>
-
-            <div className="border-t border-black mb-4"></div>
-
-            {events.length > 0 ? (
-                <div className="grow space-y-2 mb-2">
-                    <p className="text-base md:text-2xl font-edge-of-the-galaxy text-yellow-500 text-center my-2">
-                        {spirit}
-                    </p>
-
-                    {events.map((event, index) => (
-                        <div
-                            key={index}
-                            className="border-gray-300 hover:scale-[102%] transition cursor-pointer hover:border-yellow-500 hover:bg-[#fdf4c5] bg-white border "
-                        >
-                            <div className="flex w-full">
-                                <div className="justify-items-center w-full bg-orange-400 flex shadow-sm p-2 px-4">
-                                    <span className="grow text-xs text-white font-bold w-[45%] pr-2 shrink-0">
-                                        {event.time}
-                                    </span>
-                                    <span className="text-xs self-end font-bold text-white ">
-                                        {event.name}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="px-2 pt-2 font-bold text-sm text-gray-500">
-                                Location: {event.location}
-                            </div>
-                            <div className="p-2 text-sm text-gray-500">
-                                {event.description}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p className="text-gray-400 italic">No events scheduled</p>
-            )}
         </div>
     );
 };
