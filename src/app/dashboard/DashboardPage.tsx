@@ -15,6 +15,8 @@ import StaffQRScanner from "@/src/components/dashboards/staff/StaffQRScanner";
 import StaffUserSelector from "@/src/components/dashboards/staff/StaffUserSelector";
 import DeleteAccountButton from "@/src/components/dashboards/userdashboard/DeleteAccountButton";
 
+import BroadcastPanel from "./notifications/BroadcastPanel";
+
 export default async function DashboardPage({
     selectedID,
 }: {
@@ -72,6 +74,7 @@ export default async function DashboardPage({
                                 <StaffUserSelector users={userList} />
                             </div>
                         </div>
+                        <BroadcastPanel></BroadcastPanel>
                         {/* Container for Buttons */}
                         {selectedUser != null && (
                             <div className="w-[95vw] flex flex-col items-center md:flex-row gap-y-4 md:gap-x-4 justify-center mt-6 flex-wrap">
@@ -84,6 +87,8 @@ export default async function DashboardPage({
                                 )}
                             </div>
                         )}
+
+                        {/* <BroadcastPanel></BroadcastPanel> */}
                     </div>
 
                     <div className="w-full py-4 px-8 grid place-content-center">
