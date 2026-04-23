@@ -1,7 +1,8 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 import ScheduleCloudTop from "@/public/scheduleSection/ScheduleCloudTop.svg";
+import ScheduleCloudBodyMobile from "@/public/scheduleSection/ScheduleCloudBodyMobile.svg";
 import ScheduleCloudBody from "@/public/scheduleSection/ScheduleCloudBody.svg";
 import ScheduleCloudBottom from "@/public/scheduleSection/ScheduleCloudBottom.svg";
 
@@ -14,7 +15,6 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 
 import { schedule, DaySchedule } from "./(ScheduleSectionComponents)/Schedule";
 import EventItem from "./(ScheduleSectionComponents)/EventItem";
-import gsap from "gsap";
 
 const ScheduleSection: React.FC = () => {
     const [day, setDay] = useState<1 | 2 | 3>(() => {
@@ -59,33 +59,6 @@ const ScheduleSection: React.FC = () => {
         setDay(newDay as 1 | 2 | 3);
     };
 
-    const scheduleContainerRef = useRef<HTMLDivElement | null>(null);
-    const prevHeightRef = useRef<number>(0);
-
-    useLayoutEffect(() => {
-        const el = scheduleContainerRef.current;
-        if (!el) return;
-
-        const newHeight = el.scrollHeight;
-
-        if (prevHeightRef.current > 0 && prevHeightRef.current !== newHeight) {
-            gsap.fromTo(
-                el,
-                { height: prevHeightRef.current },
-                {
-                    height: newHeight,
-                    duration: 0.2,
-                    ease: "power2.inOut",
-                    onComplete: () => {
-                        gsap.set(el, { height: "auto" });
-                    },
-                },
-            );
-        }
-
-        prevHeightRef.current = newHeight;
-    }, [day]);
-
     return (
         <div className="mx-auto w-[90%] max-w-[850px]">
             <Image
@@ -93,23 +66,27 @@ const ScheduleSection: React.FC = () => {
                 alt=""
                 className="relative z-5 w-full"
             />
-            <div
-                ref={scheduleContainerRef}
-                className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none"
-            >
+            <div className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none">
+                <Image
+                    src={ScheduleCloudBodyMobile}
+                    alt=""
+                    fill
+                    className="block md:hidden absolute top-0 object-fill"
+                />
                 <Image
                     src={ScheduleCloudBody}
                     alt=""
                     fill
-                    className="absolute top-0 object-fill"
+                    className="hidden md:block absolute top-0 object-fill"
                 />
 
-                <Panel id={"scheduleSectionPanel"} className="overflow-visible">
+                <Panel id={"scheduleSectionPanel"}>
                     <PanelHeader
                         parentPanelId={"scheduleSectionPanel"}
                         as="h3"
                         isSectionHeader
-                        className="font-glacial-indifference font-semibold text-[#0078d0] px-0 md:px-0 pb-2 md:pb-2 flex justify-between items-center"
+                        long
+                        className="font-glacial-indifference font-semibold text-[#0078d0] px-0 md:px-0 pb-2 md:pb-2 flex justify-between items-center bg-transparent"
                     >
                         <button onClick={() => handleSwitchDay("prev")}>
                             <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
@@ -121,6 +98,7 @@ const ScheduleSection: React.FC = () => {
                     </PanelHeader>
                     <PanelContent
                         parentPanelId={"scheduleSectionPanel"}
+                        long
                         className="p-0 md:p-0 pb-4 md:pb-4 flex flex-col gap-y-3"
                     >
                         <div className="w-full flex flex-col gap-y-1 justify-center items-center text-lg lg:text-xl font-bold text-blue-500/60 text-center">
@@ -145,7 +123,7 @@ const ScheduleSection: React.FC = () => {
             <Image
                 src={ScheduleCloudBottom}
                 alt=""
-                className="relative z-5 w-full -translate-y-0.5"
+                className="relative z-5 w-full -translate-y-1 md:translate-x-0.25"
             />
         </div>
     );
