@@ -6,7 +6,11 @@ import Header from "@/src/components/header/Header";
 
 const HEADER_LINKS = [{ id: "Home", name: "Home", url: "/" }];
 
-export function JudgingPage({ projects }: { projects: Project[] }) {
+export function JudgingPage({
+    projects,
+}: {
+    projects: Array<Project & { completedAt: Date | null }>;
+}) {
     const ANY_PROJECTS = projects.length === 0;
 
     return (
@@ -25,7 +29,11 @@ export function JudgingPage({ projects }: { projects: Project[] }) {
             ) : (
                 <div className="grow p-8 overflow-scroll overflow-x-hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {projects.map((project) => (
-                        <ProjectCard key={project.id} project={project} />
+                        <ProjectCard
+                            key={project.id}
+                            project={project}
+                            completedAt={project.completedAt}
+                        />
                     ))}
                 </div>
             )}
