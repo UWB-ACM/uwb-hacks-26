@@ -317,15 +317,11 @@ export default function AboutSection({
                             parentPanelId="leaderboardPanel"
                             className="w-full overflow-hidden grid place-content-center grow"
                         >
-                            {/* <Suspense>
+                            <Suspense>
                                 <Leaderboard
                                     leaderboardData={leaderboardData}
                                 ></Leaderboard>
-                            </Suspense> */}
-                            <FaLock size={50} className="m-5 mx-auto" />
-                            <div className="font-bold text-xl text-center">
-                                Leaderboard Opens On 4/24!
-                            </div>
+                            </Suspense>
                         </PanelContent>
                         <div className="w-full flex justify-between">
                             <Image
