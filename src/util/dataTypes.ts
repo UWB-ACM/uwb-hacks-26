@@ -353,6 +353,8 @@ export enum TransactionType {
 
     SaturdayBadmintonSocial = 15,
 
+    SaturdayProjectSubmission = 25,
+
     /** Sunday Transactions! */
     SundayCostumeProfessional = 7,
 
@@ -389,16 +391,17 @@ export const valuedTransactionAmounts = {
     [TransactionType.FridayHollyTheHusky]: 50,
 
     [TransactionType.SaturdayCheckinLanyard]: 50,
-    [TransactionType.SaturdayCostumeHusky]: 100,
+    [TransactionType.SaturdayCostumeHusky]: 25,
     [TransactionType.SaturdayTalkWithDanTerry]: 100,
     [TransactionType.SaturdayTalkWithArmoraRama]: 100,
     [TransactionType.SaturdayPhotoWithHolly]: 50,
     [TransactionType.SaturdayTalkToKody]: 50,
     [TransactionType.SaturdaySandbox]: 50,
     [TransactionType.SaturdayBadmintonSocial]: 100,
+    [TransactionType.SaturdayProjectSubmission]: 200,
 
     [TransactionType.SundayCheckinLanyard]: 50,
-    [TransactionType.SundayCostumeProfessional]: 100,
+    [TransactionType.SundayCostumeProfessional]: 25,
     [TransactionType.SundayDemoDay]: 100,
     [TransactionType.SundayAdmissionsBoothPhoto]: 50,
 
@@ -432,6 +435,7 @@ export const valuedTransactionLimits: Record<
     [TransactionType.SaturdayTalkToKody]: 1,
     [TransactionType.SaturdaySandbox]: 1,
     [TransactionType.SaturdayBadmintonSocial]: 1,
+    [TransactionType.SaturdayProjectSubmission]: 1,
 
     [TransactionType.SundayCheckinLanyard]: 1,
     [TransactionType.SundayCostumeProfessional]: 1,
@@ -460,6 +464,7 @@ export const reasonTypeMap = {
     "saturday-sandbox": TransactionType.SaturdaySandbox,
     "saturday-talk-kody": TransactionType.SaturdayTalkToKody,
     "saturday-badminton": TransactionType.SaturdayBadmintonSocial,
+    "saturday-project-submission": TransactionType.SaturdayProjectSubmission,
 
     "sunday-checkin-lanyard": TransactionType.SundayCheckinLanyard,
     "sunday-costume-professional": TransactionType.SundayCostumeProfessional,
@@ -488,6 +493,7 @@ export const reasonNameMap: Record<keyof typeof reasonTypeMap, string> = {
     "saturday-talk-kody": "Talk with Kody (Saturday)",
     "saturday-sandbox": "Sandbox VR Demo (Saturday)",
     "saturday-badminton": "Badminton Social (Saturday)",
+    "saturday-project-submission": "Project Submission (Saturday)",
 
     "sunday-checkin-lanyard": "Check-in with Lanyard (Sunday)",
     "sunday-costume-professional": "Professional Costume (Sunday)",
@@ -521,6 +527,8 @@ export const typeNameMap: Record<TransactionType, string> = {
     [TransactionType.SaturdayTalkToKody]: "Talk with Kody (Saturday)",
     [TransactionType.SaturdaySandbox]: "Sandbox VR Demo (Saturday)",
     [TransactionType.SaturdayBadmintonSocial]: "Badminton Social (Saturday)",
+    [TransactionType.SaturdayProjectSubmission]:
+        "Project Submission (Saturday)",
 
     [TransactionType.SundayCheckinLanyard]: "Check-in with Lanyard (Sunday)",
     [TransactionType.SundayCostumeProfessional]:
