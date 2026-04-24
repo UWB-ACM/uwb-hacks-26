@@ -64,7 +64,7 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <div className="relative mt-4 md:mt-6 lg:mt-8">
+            <div className="relative mt-[18vw] md:mt-[15vh] lg:mt-[10vh]">
                 <Parallax className="w-full" translateY={[0, 30]}>
                     {/* Train */}
                     <motion.div
