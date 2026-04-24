@@ -2,9 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Cloud3 from "@/public/clouds/Cloud3.png";
 import Bridge from "@/public/Bridge-Background.png";
-import City1 from "@/public/City-Background-1.png";
-import City2 from "@/public/City-Background-2.png";
-import City3 from "@/public/City-Background-3.png";
 import { Parallax } from "react-scroll-parallax";
 import { daysUntilEvent } from "@/src/util/date";
 import { motion } from "motion/react";
@@ -68,11 +65,8 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <div className="relative mt-4 md:mt-6 lg:mt-8 overflow-hidden">
-                <Parallax
-                    className="absolute bottom-0 w-full"
-                    translateY={[0, 30]}
-                >
+            <div className="relative mt-4 md:mt-6 lg:mt-8">
+                <Parallax className="w-full" translateY={[0, 30]}>
                     {/* Train */}
                     <motion.div
                         className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] ml-auto"
@@ -99,13 +93,18 @@ export default function HeroSection() {
                         />
                     </motion.div>
                     {/* Bridge */}
-                    <div className="w-full">
-                        <Image src={Bridge} alt="" className="w-full h-auto" />
+                    <div className="relative w-full h-[3.5vmin] md:h-[4vmin] lg:h-[4.25vmin] xl:h-[5.25vmin]">
+                        <Image
+                            src={Bridge}
+                            alt=""
+                            className="w-full h-auto"
+                            fill
+                        />
                     </div>
                 </Parallax>
 
                 {/* Left & Right Buildings */}
-                <div className="flex justify-between">
+                <div className="absolute -top-[14vw] md:-top-[14vw] lg:-top-[10.75vw] xl:-top-[10.5vw] w-full flex justify-between">
                     <div className="relative w-[40%] lg:w-1/3 aspect-square -translate-x-2/5">
                         <Image src={FloatingCity} alt="" fill />
                     </div>
@@ -115,23 +114,5 @@ export default function HeroSection() {
                 </div>
             </div>
         </div>
-    );
-}
-
-function City() {
-    return (
-        <>
-            <Parallax className="absolute w-full h-full" translateY={[0, 50]}>
-                <Image src={City3} alt="" fill />
-            </Parallax>
-
-            <Parallax className="absolute w-full h-full" translateY={[0, 15]}>
-                <Image src={City2} alt="" fill />
-            </Parallax>
-
-            <div className="absolute w-full h-full mt-[5px]">
-                <Image src={City1} alt="" fill />
-            </div>
-        </>
     );
 }
