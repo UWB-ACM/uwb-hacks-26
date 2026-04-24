@@ -282,12 +282,12 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="hackeroonPrizePanel"
-                            className="w-full h-full flex justify-center font-bold text-4xl text-center grow p-0 md:p-0"
+                            className="w-full h-full flex justify-center font-bold text-center grow p-0 md:p-0"
                         >
                             <Suspense fallback={<div>Loading...</div>}>
                                 <HackeroonCarousel
                                     hackeroonPrizes={hackeroonPrizes}
-                                ></HackeroonCarousel>
+                                />
                             </Suspense>
                         </PanelContent>
                         <div className="w-full">
