@@ -89,34 +89,32 @@ function Card<T>(
     },
 ) {
     return (
-        <div className="flex flex-row justify-between p-5 min-h-[150px] max-h-[150px] bg-neutral-200 rounded-lg border-2 border-neutral-400 shadow-md">
-            <div className="flex flex-row gap-3">
-                {props.imageURL && (
-                    <div className="h-full flex flex-col justify-center">
-                        <div className="rounded-full overflow-hidden w-[40px] md:w-[80px]">
-                            <Image
-                                src={props.imageURL(props.item)}
-                                width={128}
-                                height={128}
-                                alt=""
-                                className="object-cover"
-                            />
-                        </div>
+        <div className="flex flex-col justify-between gap-y-3 p-5 bg-neutral-200 rounded-lg border-2 border-neutral-400 shadow-md">
+            {props.imageURL && (
+                <div className="h-full flex flex-col justify-center">
+                    <div className="rounded-full overflow-hidden w-[40px] md:w-[80px]">
+                        <Image
+                            src={props.imageURL(props.item)}
+                            width={128}
+                            height={128}
+                            alt=""
+                            className="object-cover"
+                        />
                     </div>
-                )}
-
-                <div className="flex flex-col justify-center pr-[10px]">
-                    <p className="text-md md:text-xl break-all">
-                        {props.title(props.item)}
-                    </p>
-                    <p className="text-xs md:text-sm break-all">
-                        {props.description(props.item)}
-                    </p>
                 </div>
+            )}
+
+            <div className="flex flex-col justify-center">
+                <p className="text-md md:text-xl break-all font-bold">
+                    {props.title(props.item)}
+                </p>
+                <p className="text-xs md:text-sm break-all">
+                    {props.description(props.item)}
+                </p>
             </div>
 
             <button
-                className="bg-blue-500 border border-black rounded-xl p-4 h-min my-auto"
+                className="bg-blue-500 border border-black rounded-xl p-2 h-min my-auto text-white"
                 onClick={() => {
                     props.onClick(props.item);
                     props.setIsOpen(false);
