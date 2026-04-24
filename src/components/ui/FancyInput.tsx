@@ -20,10 +20,19 @@ const FancyInput: FC<FancyInputProps> = ({
     return (
         <div className="relative max-w-[350px] border-2 border-black bg-[#48B2F8] p-5 flex items-center gap-4 rounded-tr-[25px] rounded-bl-[25px] rounded-tl-[10px] rounded-br-[10px] shadow-[3px_3px_0_0_#000] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:rotate-x-[5deg] hover:shadow-[10px_10px_0_-4px_#FFCA3A,10px_10px_0_0_#000]">
             <input
-                type="number"
+                // Can't use type=number because it sets its value to "" if any
+                // invalid characters are found.
+                type="text"
                 value={value}
                 onPaste={(e) => e.preventDefault()}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => {
+                    // Allow spaces for readability.
+                    if (e.target.value.match(/^[0-9 ]+$/)) {
+                        onChange(e.target.value);
+                    } else {
+                        e.preventDefault();
+                    }
+                }}
                 placeholder={placeholder || "Enter Code #"}
                 className="text-base sm:text-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-full border-2 border-black bg-white px-4 py-2 text-black outline-none transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] translate-z-[10px] z-10 placeholder:uppercase placeholder:font-bold placeholder:text-[#666] hover:bg-[#f0f0f0] focus:bg-[#f0f0f0] hover:-translate-x-px hover:shadow-[3px_3px_0_0_#000]"
             />
