@@ -40,7 +40,6 @@ export default function HomePage({
                         banner={true}
                     />
 
-                    {/* bg-[linear-gradient(180deg,#1382DC_0%,#16C2F7_50%,#C3EFFE_100%)] */}
                     <div className="bg-[linear-gradient(180deg,#0d83db_0%,#14c5f8_15%,#ffffff_100%)]">
                         <HeroSection />
                         <AboutSection
