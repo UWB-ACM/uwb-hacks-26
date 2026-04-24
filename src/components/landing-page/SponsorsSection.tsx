@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from "next/image";
-import Grass from "@/public/Grass.png";
+import Grass from "@/public/Grass.svg";
 import CityBackground2 from "@/public/City-Background-2.png";
-import CitySkylineLightBlue from "@/public/sponsorsSection/City-Skyline-LightBlue.png";
+import CitySkylineLightBlue from "@/public/sponsorsSection/City-Skyline-LightBlue.svg";
 
 // Billboard Parts
 // Sponsor logos go inside BillboardBody
@@ -152,30 +152,33 @@ const SponsorsSection = () => {
                     />
                 </div>
 
-                <Image
-                    src={CitySkylineLightBlue}
-                    alt=""
-                    className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
-                    sizes="100vw"
-                />
+                <div className="w-screen z-0 absolute bottom-0 -translate-y-[25px]">
+                    <Image
+                        src={CitySkylineLightBlue}
+                        alt=""
+                        className="w-full h-[28vw] lg:h-[35vw] xl:h-[33vw] translate-y-1"
+                        sizes="100vw"
+                    />
+                    <div className="w-full h-[18vmin] md:h-[175px] lg:h-[200px] bg-[#10c6f9]" />
+                </div>
 
-                <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
+                <div className="z-5 absolute bottom-0 w-screen h-[38vw] md:h-[38vw] lg:h-[36vw] xl:h-[39vw] flex -translate-y-[10px] md:-translate-y-[25px]">
                     <Image
                         src={CityBackground2}
                         alt=""
-                        className="w-1/3"
+                        className="w-1/3 h-full"
                         sizes="33vw"
                     />
                     <Image
                         src={CityBackground2}
                         alt=""
-                        className="w-1/3"
+                        className="w-1/3 h-full"
                         sizes="33vw"
                     />
                     <Image
                         src={CityBackground2}
                         alt=""
-                        className="w-1/3"
+                        className="w-1/3 h-full"
                         sizes="33vw"
                     />
                 </div>
@@ -188,41 +191,43 @@ const SponsorsSection = () => {
             </div>
 
             {/* City and Grass Reflection */}
-            <div className="w-screen min-h-[30vw] md:min-h-[30vh] lg:min-h-[35vh] xl:min-h-[50vh] -scale-y-100 -translate-y-1 opacity-60 brightness-75 saturate-150">
-                <Image
-                    src={CitySkylineLightBlue}
-                    alt=""
-                    className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
-                    sizes="100vw"
-                />
+            <div className="bg-[#0d83db]">
+                <div className="w-screen min-h-[30vw] md:min-h-[30vh] lg:min-h-[35vh] xl:min-h-[50vh] -scale-y-100 opacity-60 brightness-75 saturate-150">
+                    <Image
+                        src={CitySkylineLightBlue}
+                        alt=""
+                        className="z-0 absolute bottom-0 w-screen -translate-y-[25px]"
+                        sizes="100vw"
+                    />
 
-                <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
+                    <div className="z-5 absolute bottom-0 w-screen flex -translate-y-[10px] md:-translate-y-[25px]">
+                        <Image
+                            src={CityBackground2}
+                            alt=""
+                            className="w-1/3"
+                            sizes="33vw"
+                        />
+                        <Image
+                            src={CityBackground2}
+                            alt=""
+                            className="w-1/3"
+                            sizes="33vw"
+                        />
+                        <Image
+                            src={CityBackground2}
+                            alt=""
+                            className="w-1/3"
+                            sizes="33vw"
+                        />
+                    </div>
+
                     <Image
-                        src={CityBackground2}
+                        src={Grass}
                         alt=""
-                        className="w-1/3"
-                        sizes="33vw"
-                    />
-                    <Image
-                        src={CityBackground2}
-                        alt=""
-                        className="w-1/3"
-                        sizes="33vw"
-                    />
-                    <Image
-                        src={CityBackground2}
-                        alt=""
-                        className="w-1/3"
-                        sizes="33vw"
+                        className="z-5 absolute bottom-0 w-screen"
+                        sizes="100vw"
                     />
                 </div>
-
-                <Image
-                    src={Grass}
-                    alt=""
-                    className="z-5 absolute bottom-0 w-screen"
-                    sizes="100vw"
-                />
             </div>
         </>
     );
