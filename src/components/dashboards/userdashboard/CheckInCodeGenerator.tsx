@@ -26,7 +26,7 @@ export default function CheckInCodeGenerator({
 }: {
     events: Promise<Event[]>;
 }) {
-    const [duration, setDuration] = useState(0);
+    const [duration, setDuration] = useState(3600);
     const [eventId, setEventId] = useState<number | null>(null);
     const [eventName, setEventName] = useState<string | null>(null);
 
