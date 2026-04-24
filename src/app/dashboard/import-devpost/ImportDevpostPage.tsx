@@ -4,10 +4,36 @@ import React, { useRef, useState } from "react";
 import Link from "next/link";
 import actionImportProjects, {
     actionImportRegistrants,
+    actionSyncDevpostEmails,
     ImportResult,
 } from "@/src/util/actions/devpost";
 
 export default function ImportDevpostPage() {
+    const [syncLoading, setSyncLoading] = useState(false);
+    const [syncResult, setSyncResult] = useState("");
+
+    const handleManualSync = async () => {
+        setSyncLoading(true);
+        setSyncResult("");
+
+        try {
+            const result = await actionSyncDevpostEmails();
+            if (result?.error) {
+                setSyncResult(`Error: ${result.error}`);
+            } else if (result) {
+                setSyncResult(`Success: Queued ${result.sent} emails.`);
+            }
+        } catch (e) {
+            console.error("Manual sync failed:", e);
+            setSyncLoading(false);
+            setSyncResult(
+                "Error: Network error or server is down. Please try again later.",
+            );
+            return;
+        }
+        setSyncLoading(false);
+    };
+
     return (
         <div className="min-h-[80vh] w-full grid place-content-center">
             <div className="flex flex-col gap-6 max-w-lg w-full">
@@ -19,6 +45,29 @@ export default function ImportDevpostPage() {
                     title="Import Projects"
                     onImport={actionImportProjects}
                 />
+                <div className="p-4 border-black border rounded-lg bg-white flex flex-col gap-4">
+                    <h2 className="text-xl md:text-2xl text-center font-semibold">
+                        Sync Devpost Emails
+                    </h2>
+                    <p className="text-sm text-center text-gray-600">
+                        Manually trigger the sync logic. Matches known emails,
+                        generates codes, and sends emails to unlinked users.
+                    </p>
+                    <button
+                        onClick={handleManualSync}
+                        disabled={syncLoading}
+                        className="py-2 px-4 rounded-md bg-blue-600 hover:bg-blue-500 text-white duration-200 border-black border disabled:opacity-50"
+                    >
+                        {syncLoading ? "Syncing..." : "Run Devpost Sync"}
+                    </button>
+                    {syncResult && (
+                        <p
+                            className={`text-center font-bold ${syncResult.startsWith("Error") ? "text-red-600" : "text-green-700"}`}
+                        >
+                            {syncResult}
+                        </p>
+                    )}
+                </div>
                 <Link
                     href="/dashboard"
                     className="py-2 px-4 rounded-md bg-red-500 text-white text-center"

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import FormBody from "./FormBody";
 import Image from "next/image";
-import GrassBackground from "@/public/Grass.png";
+import GrassBackground from "@/public/Grass.svg";
 import { ApplicationData } from "@/src/util/dataTypes";
 import { actionSaveApplication } from "@/src/util/actions/application";
 import ConfirmSubmit from "./ConfirmSubmit";

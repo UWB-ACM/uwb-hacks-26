@@ -49,7 +49,8 @@ export async function GET(request: Request) {
             (await createUser(
                 data.id,
                 data.name,
-                data.email,
+                // Emails need to be normalized for consistency.
+                data.email.trim().toLowerCase(),
                 data.picture || null,
             ));
 

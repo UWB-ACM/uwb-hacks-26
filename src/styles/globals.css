@@ -180,3 +180,39 @@ body {
         transform: translateY(3%);
     }
 }
+
+.river-shimmer {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(
+        108deg,
+        transparent 15%,
+        rgba(255, 255, 255, 0.18) 50%,
+        transparent 85%
+    );
+    animation: river-shimmer 16.5s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes river-shimmer {
+    0%,
+    55% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    62% {
+        opacity: 1;
+    }
+    82% {
+        opacity: 1;
+    }
+    92%,
+    100% {
+        transform: translateX(380%);
+        opacity: 0;
+    }
+}
