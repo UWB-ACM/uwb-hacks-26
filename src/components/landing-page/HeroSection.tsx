@@ -8,6 +8,7 @@ import City3 from "@/public/City-Background-3.png";
 import { Parallax } from "react-scroll-parallax";
 import { daysUntilEvent } from "@/src/util/date";
 import { motion } from "motion/react";
+import FloatingCity from "@/public/FloatingCity.png";
 
 export default function HeroSection() {
     const daysLeft = daysUntilEvent();
@@ -105,11 +106,11 @@ export default function HeroSection() {
 
                 {/* Left & Right Buildings */}
                 <div className="flex justify-between">
-                    <div className="relative w-1/3 lg:w-1/4 aspect-square -ml-12 md:-ml-14 lg:-ml-16 overflow-hidden">
-                        <City />
+                    <div className="relative w-[40%] lg:w-1/3 aspect-square -translate-x-2/5">
+                        <Image src={FloatingCity} alt="" fill />
                     </div>
-                    <div className="relative w-1/3 lg:w-1/4 aspect-square -mr-12 md:-mr-14 lg:-mr-16 scale-x-[-1] overflow-hidden">
-                        <City />
+                    <div className="relative w-[40%] lg:w-1/3 aspect-square scale-x-[-1] translate-x-2/5">
+                        <Image src={FloatingCity} alt="" fill />
                     </div>
                 </div>
             </div>
