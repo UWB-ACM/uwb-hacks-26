@@ -53,22 +53,23 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "ARC Overlook",
             },
             {
-                startTime: new Date(2026, 3, 24, 15, 30),
-                endTime: new Date(2026, 3, 24, 16, 30),
+                startTime: new Date(2026, 3, 24, 16, 0),
+                endTime: new Date(2026, 3, 24, 16, 45),
+                name: "Dinner",
+                location: "ARC Overlook",
+            },
+            {
+                startTime: new Date(2026, 3, 24, 16, 15),
+                endTime: new Date(2026, 3, 24, 17, 15),
                 name: "Prototype & Pitch Workshop",
                 location: "ARC Overlook",
             },
+
             {
-                startTime: new Date(2026, 3, 24, 16, 0),
-                endTime: new Date(2026, 3, 24, 16, 45),
+                startTime: new Date(2026, 3, 24, 17, 30),
+                endTime: new Date(2026, 3, 24, 18, 15),
                 name: "Hacking with GitHub Copilot",
                 location: "UW2-005",
-            },
-            {
-                startTime: new Date(2026, 3, 24, 16, 45),
-                endTime: new Date(2026, 3, 24, 17, 30),
-                name: "Dinner",
-                location: "ARC Overlook",
             },
         ],
     },
