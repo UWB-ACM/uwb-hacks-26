@@ -357,6 +357,10 @@ export default function AboutSection({
                             parentPanelId="lastYearsWinnersPanel"
                             className="flex-1 overflow-hidden pt-0 md:pt-0 w-full"
                         >
+                            <p className="text-center text-xl font-bold text-[var(--grass-color)]">
+                                Note: this year&apos;s tracks are different (see
+                                below)
+                            </p>
                             <PrevWinners></PrevWinners>
                         </PanelContent>
 
