@@ -109,7 +109,7 @@ const ScheduleSection: React.FC = () => {
                     className="relative z-5 w-full"
                     sizes="(max-width: 944px) 90vw, 850px"
                 />
-                <div className="relative z-0 w-full -translate-y-0.5 px-[15%] select-none">
+                <div className="relative z-0 w-full -translate-y-0.5 px-[15%]">
                     <Image
                         src={ScheduleCloudBodyMobile}
                         alt=""
