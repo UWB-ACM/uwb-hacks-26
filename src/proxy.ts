@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { ensureSession } from "@/src/util/session";
+import { ensureSession, SESSION_DATA_HEADER } from "@/src/util/session";
 import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { ipAddress } from "@vercel/functions";
 import { ratelimit, rateLimitKey } from "@/src/util/ratelimit";
@@ -25,11 +25,30 @@ export async function proxy(req: NextRequest) {
     // otherwise.
     req.headers.set("x-current-url", req.url);
 
+    // Forward the already-fetched session so that downstream getSession()
+    // calls can skip their own Redis read entirely.
+    req.headers.set(SESSION_DATA_HEADER, JSON.stringify(session));
+
     const res = NextResponse.next({ request: { headers: req.headers } });
     cookies.apply(res);
 
     return res;
 }
+
+export const config = {
+    /**
+     * Run on all routes except:
+     * - /_next/static  — pre-built JS/CSS bundles (fetched many times per page load)
+     * - /_next/image   — image optimisation endpoint
+     * - /favicon.ico and common static file extensions
+     *
+     * Without this exclusion, every asset fetch would trigger ensureSession +
+     * ratelimit.limit(), each of which costs Redis commands.
+     */
+    matcher: [
+        "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    ],
+};
 
 /**
  * For some reason, NextJS has decided that to set cookies in the middleware and have
