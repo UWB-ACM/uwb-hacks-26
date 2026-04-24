@@ -163,11 +163,25 @@ export default function AboutSection({
                 />
             </div>
 
+            <div className="w-full h-[5vmin] bg-[#bebebe]" />
+
             <div className="bg-[var(--grass-color)]">
                 {/* Flower bushes */}
-                <div className="w-full bottom-0 left-0 bg-[var(--grass-color)]">
-                    <div className="flex justify-center w-full bottom-0 left-0">
-                        <div className="flex w-[120vw] shrink-0">
+                <div className="flex flex-col items-center">
+                    <div className="relative flex justify-center w-full bg-blue-500/95 pt-[4vh] md:pt-[6vh] lg:pt-[8vh] xl:pt-[10vh] overflow-hidden">
+                        <div
+                            className="river-shimmer"
+                            style={{ animationDelay: "-9s" }}
+                        />
+                        <div
+                            className="river-shimmer"
+                            style={{ animationDelay: "-5.5s" }}
+                        />
+                        <div
+                            className="river-shimmer"
+                            style={{ animationDelay: "-2.2s", width: "20%" }}
+                        />
+                        <div className="relative z-5 flex w-[120vw] shrink-0">
                             <Image
                                 src={FlowerBushes}
                                 alt=""
@@ -182,21 +196,19 @@ export default function AboutSection({
                             />
                         </div>
                     </div>
-                    <div className="flex justify-center rotate-180 w-full bottom-0 left-0 bg-[#bebebe]">
-                        <div className="flex w-[120vw] shrink-0">
-                            <Image
-                                src={FlowerBushes}
-                                alt=""
-                                className="w-1/2 h-auto sm:translate-x-5"
-                                sizes="100vw"
-                            />
-                            <Image
-                                src={FlowerBushes}
-                                alt=""
-                                className="w-1/2 h-auto "
-                                sizes="100vw"
-                            />
-                        </div>
+                    <div className="relative z-5 flex w-[120vw] shrink-0 -scale-y-100 -scale-x-100 bg-[#bebebe]">
+                        <Image
+                            src={FlowerBushes}
+                            alt=""
+                            className="w-1/2 h-auto sm:translate-x-5"
+                            sizes="100vw"
+                        />
+                        <Image
+                            src={FlowerBushes}
+                            alt=""
+                            className="w-1/2 h-auto "
+                            sizes="100vw"
+                        />
                     </div>
                 </div>
 
