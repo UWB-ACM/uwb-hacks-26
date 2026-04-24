@@ -21,16 +21,8 @@ export default function TransferHackaroonsPage({
     staffPerms: PermissionLevel;
 }) {
     const excludedTypes: (keyof typeof reasonTypeMap)[] = [
-        "friday-costume-fandom",
-        "friday-holly-the-husky",
-        "saturday-talk-armora-rama",
-        "saturday-badminton",
+        "friday-costume-twin",
         "saturday-checkin-lanyard",
-        "saturday-sandbox",
-        "saturday-costume-husky",
-        "saturday-talk-dan-terry",
-        "saturday-holly-photo",
-        "saturday-talk-kody",
     ];
 
     const [isModalOpen, setIsModalOpen] = useState(false);

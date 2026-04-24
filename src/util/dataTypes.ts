@@ -330,7 +330,7 @@ export enum TransactionType {
     MonthOfHackingActivityWinner = 4,
 
     /** Friday Transactions! */
-    FridayCostumeFandom = 5,
+    FridayCostumeTwin = 5,
 
     // FridayFireSideChat = 8,
 
@@ -384,7 +384,7 @@ export const valuedTransactionAmounts = {
     [TransactionType.StudentInterview]: 50,
     [TransactionType.KeyboardCompetition]: 100,
 
-    [TransactionType.FridayCostumeFandom]: 100,
+    [TransactionType.FridayCostumeTwin]: 25,
     // [TransactionType.FridayFireSideChat]: 100,
     [TransactionType.FridayHollyTheHusky]: 50,
 
@@ -420,7 +420,7 @@ export const valuedTransactionLimits: Record<
     [TransactionType.StudentInterview]: 1,
     [TransactionType.KeyboardCompetition]: 1,
 
-    [TransactionType.FridayCostumeFandom]: 1,
+    [TransactionType.FridayCostumeTwin]: 1,
     // [TransactionType.FridayFireSideChat]: 1,
     [TransactionType.FridayHollyTheHusky]: 1,
 
@@ -448,7 +448,7 @@ export const reasonTypeMap = {
     "student-interview": TransactionType.StudentInterview,
     "keyboard-comp": TransactionType.KeyboardCompetition,
 
-    "friday-costume-fandom": TransactionType.FridayCostumeFandom,
+    "friday-costume-twin": TransactionType.FridayCostumeTwin,
     // "friday-fire-side-chat": TransactionType.FridayFireSideChat,
     "friday-holly-the-husky": TransactionType.FridayHollyTheHusky,
 
@@ -476,7 +476,7 @@ export const reasonNameMap: Record<keyof typeof reasonTypeMap, string> = {
     "student-interview": "Student Interview",
     "keyboard-comp": "Keyboard Competition",
 
-    "friday-costume-fandom": "Fandom Costume (Friday)",
+    "friday-costume-twin": "Twin Costume (Friday)",
     // "friday-fire-side-chat": "Fire Side Chat (Friday)",
     "friday-holly-the-husky": "Picture with Holly (Friday)",
 
@@ -506,7 +506,7 @@ export const typeNameMap: Record<TransactionType, string> = {
     [TransactionType.StudentInterview]: "Student Interview",
     [TransactionType.KeyboardCompetition]: "Keyboard Competition",
 
-    [TransactionType.FridayCostumeFandom]: "Fandom Costume (Friday)",
+    [TransactionType.FridayCostumeTwin]: "Twin Costume (Friday)",
     // [TransactionType.FridayFireSideChat]: "Fire Side Chat (Friday)",
     [TransactionType.FridayHollyTheHusky]: "Picture with Holly (Friday)",
 

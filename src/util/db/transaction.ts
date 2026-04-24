@@ -63,7 +63,7 @@ export async function createTransaction(
         case TransactionType.StudentInterview:
         case TransactionType.KeyboardCompetition:
 
-        case TransactionType.FridayCostumeFandom:
+        case TransactionType.FridayCostumeTwin:
         // case TransactionType.FridayFireSideChat:
         case TransactionType.FridayHollyTheHusky:
 
