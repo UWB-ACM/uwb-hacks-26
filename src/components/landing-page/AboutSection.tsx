@@ -315,7 +315,7 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="leaderboardPanel"
-                            className="w-full overflow-hidden grid place-content-center grow"
+                            className="w-full overflow-hidden pt-2 md:pt-2"
                         >
                             <Suspense>
                                 <Leaderboard

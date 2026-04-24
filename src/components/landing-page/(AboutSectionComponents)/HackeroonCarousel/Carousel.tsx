@@ -83,7 +83,7 @@ export default function HackeroonCarousel({
     };
 
     return (
-        <div className="w-full pt-[5vh]">
+        <div className="w-full pt-[5vh] flex flex-col justify-center">
             <div
                 ref={containerRef}
                 className="relative w-full flex items-center"
@@ -110,7 +110,7 @@ export default function HackeroonCarousel({
                 <div className="absolute right-0 top-0 w-[10%] h-full bg-[linear-gradient(270deg,rgba(244,253,255,1)_0%,rgba(244,253,255,1)_50%,rgba(244,253,255,0.7)_68%,rgba(244,253,255,0.3)_84%,rgba(244,253,255,0)_100%)]" />
             </div>
 
-            <div className="w-full flex justify-between items-center gap-x-6 pt-[5vh] px-4 md:px-4 lg:px-6 xl:px-8">
+            <div className="w-full flex justify-between items-center gap-x-6 pt-[8vh] px-4 md:px-4 lg:px-6 xl:px-8">
                 <CarouselControls onClick={handlePrev}>
                     <ChevronLeft className="w-full h-full text-black" />
                 </CarouselControls>
