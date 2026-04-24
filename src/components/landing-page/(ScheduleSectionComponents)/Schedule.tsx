@@ -35,10 +35,10 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "ARC Overlook",
             },
             {
-                startTime: new Date(2026, 3, 24, 12, 15),
+                startTime: new Date(2026, 3, 24, 12, 30),
                 endTime: new Date(2026, 3, 24, 13, 0),
                 name: "Intro to Google AI Studio",
-                location: "ARC Overlook",
+                location: "UW2-005",
             },
             {
                 startTime: new Date(2026, 3, 24, 12, 30),
@@ -62,7 +62,7 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 startTime: new Date(2026, 3, 24, 16, 0),
                 endTime: new Date(2026, 3, 24, 16, 45),
                 name: "Hacking with GitHub Copilot",
-                location: "ARC Overlook",
+                location: "UW2-005",
             },
             {
                 startTime: new Date(2026, 3, 24, 16, 45),
