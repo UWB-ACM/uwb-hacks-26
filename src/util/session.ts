@@ -72,7 +72,8 @@ export const getSession = cache(async function getSession(): Promise<Session> {
     const sessionHeader = headerList.get(SESSION_DATA_HEADER);
     if (sessionHeader) {
         try {
-            const parsed = JSON.parse(sessionHeader);
+            // TODO: See proxy.ts for info about the decoding.
+            const parsed = JSON.parse(atob(sessionHeader));
             if (parsed && typeof parsed === "object") {
                 return parsed as Session;
             }

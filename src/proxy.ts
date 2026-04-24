@@ -27,7 +27,10 @@ export async function proxy(req: NextRequest) {
 
     // Forward the already-fetched session so that downstream getSession()
     // calls can skip their own Redis read entirely.
-    req.headers.set(SESSION_DATA_HEADER, JSON.stringify(session));
+    //
+    // TODO: Encoding in base64 is a hack to force it to ASCII, since
+    //       we hit errors with non-ASCII chars.
+    req.headers.set(SESSION_DATA_HEADER, btoa(JSON.stringify(session)));
 
     const res = NextResponse.next({ request: { headers: req.headers } });
     cookies.apply(res);
