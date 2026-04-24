@@ -59,8 +59,8 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "ARC Overlook",
             },
             {
-                startTime: new Date(2026, 3, 24, 16, 15),
-                endTime: new Date(2026, 3, 24, 17, 15),
+                startTime: new Date(2026, 3, 24, 16, 20),
+                endTime: new Date(2026, 3, 24, 17, 20),
                 name: "Prototype & Pitch Workshop",
                 location: "ARC Overlook",
             },
