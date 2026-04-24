@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { ensureSession } from "@/src/util/session";
+import { ensureSession, SESSION_DATA_HEADER } from "@/src/util/session";
 import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { ipAddress } from "@vercel/functions";
 import { ratelimit, rateLimitKey } from "@/src/util/ratelimit";
@@ -24,6 +24,10 @@ export async function proxy(req: NextRequest) {
     // doesn't allow us to access it in server components
     // otherwise.
     req.headers.set("x-current-url", req.url);
+
+    // Forward the already-fetched session so that downstream getSession()
+    // calls can skip their own Redis read entirely.
+    req.headers.set(SESSION_DATA_HEADER, JSON.stringify(session));
 
     const res = NextResponse.next({ request: { headers: req.headers } });
     cookies.apply(res);
