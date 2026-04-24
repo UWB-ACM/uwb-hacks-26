@@ -23,8 +23,8 @@ const EventItem = ({ event }: EventProps) => {
         event.startTime.getTime() - now.getTime() <= 15 * 60 * 1000 &&
         event.startTime > now;
 
-    const soonStyles = "scale-105 bg-blue-50 text-blue-400 border-blue-300";
-    const activeStyles = "scale-105 bg-blue-400 text-white border-blue-200";
+    const soonStyles = "bg-blue-50 text-blue-400 border-blue-300";
+    const activeStyles = "bg-blue-400 text-white border-blue-200";
 
     const timeDisplay = event.endTime
         ? `${formatTime(event.startTime)} - ${formatTime(event.endTime)}`
