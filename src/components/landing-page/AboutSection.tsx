@@ -112,7 +112,7 @@ export default function AboutSection({
         [checkPattern],
     );
     return (
-        <div className="bg-[linear-gradient(180deg,#1382DC_0%,#16C2F7_50%,#C3EFFE_100%)]">
+        <>
             {/* Statistics */}
             <div className="mt-[10vmin] space-y-[8vmin] xl:space-y-[4vmin]">
                 <CloudSlideIn
@@ -430,6 +430,6 @@ export default function AboutSection({
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-        </div>
+        </>
     );
 }

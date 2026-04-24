@@ -11,8 +11,7 @@ export default function HeroSection() {
     const daysLeft = daysUntilEvent();
 
     return (
-        // Gradient backgroup wrapper div
-        <div className="bg-[linear-gradient(180deg,#0d83db,#14c5f8)]">
+        <>
             {/* Main Content */}
             <div className="relative flex justify-center">
                 {/* Left Cloud */}
@@ -113,6 +112,6 @@ export default function HeroSection() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
