@@ -35,6 +35,21 @@ export async function proxy(req: NextRequest) {
     return res;
 }
 
+export const config = {
+    /**
+     * Run on all routes except:
+     * - /_next/static  — pre-built JS/CSS bundles (fetched many times per page load)
+     * - /_next/image   — image optimisation endpoint
+     * - /favicon.ico and common static file extensions
+     *
+     * Without this exclusion, every asset fetch would trigger ensureSession +
+     * ratelimit.limit(), each of which costs Redis commands.
+     */
+    matcher: [
+        "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    ],
+};
+
 /**
  * For some reason, NextJS has decided that to set cookies in the middleware and have
  * them appear in both the browser and downstream server code, we must do the following:
