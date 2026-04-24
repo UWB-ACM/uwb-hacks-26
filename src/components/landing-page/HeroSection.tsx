@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Cloud3 from "@/public/clouds/Cloud3.png";
 import Bridge from "@/public/Bridge-Background.png";
-import { Parallax } from "react-scroll-parallax";
 import { daysUntilEvent } from "@/src/util/date";
 import { motion } from "motion/react";
 import FloatingCity from "@/public/FloatingCity.png";
@@ -64,46 +63,39 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <div className="relative mt-[18vw] md:mt-[15vh] lg:mt-[10vh]">
-                <Parallax className="w-full" translateY={[0, 30]}>
-                    {/* Train */}
-                    <motion.div
-                        className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] ml-auto"
-                        initial={{ x: "100%" }} // offscreen to the right
-                        animate={{ x: "-100%", marginLeft: 0 }} // translates 100% to the left and completely reduces left margin; final position will be offscreen to the left
-                        transition={{
-                            duration: 5, // in seconds
-                            repeat: Infinity, // loop forever
-                            repeatType: "loop", // resets to start instantly
-                            repeatDelay: 1,
-                            ease: [0.33, 0.67, 0.67, 0.33], // train slows down in the middle of the bridge when "X-days count shows up" to emphasize how many days are left, then speeds up along both ends of the bridge
-                        }}
-                    >
-                        <Image
-                            src="/train.svg"
-                            alt={
-                                daysLeft +
-                                (daysLeft === 1 ? " day " : " days ") +
-                                "left"
-                            }
-                            width={1100}
-                            height={88}
-                            className="w-full h-auto"
-                        />
-                    </motion.div>
-                    {/* Bridge */}
-                    <div className="relative w-full h-[3.5vmin] md:h-[4vmin] lg:h-[4.25vmin] xl:h-[5.25vmin]">
-                        <Image
-                            src={Bridge}
-                            alt=""
-                            className="w-full h-auto"
-                            fill
-                        />
-                    </div>
-                </Parallax>
+            <div className="w-full relative mt-[18vw] md:mt-[15vh] lg:mt-[10vh]">
+                {/* Train */}
+                <motion.div
+                    className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] ml-auto"
+                    initial={{ x: "100%" }} // offscreen to the right
+                    animate={{ x: "-100%", marginLeft: 0 }} // translates 100% to the left and completely reduces left margin; final position will be offscreen to the left
+                    transition={{
+                        duration: 5, // in seconds
+                        repeat: Infinity, // loop forever
+                        repeatType: "loop", // resets to start instantly
+                        repeatDelay: 1,
+                        ease: [0.33, 0.67, 0.67, 0.33], // train slows down in the middle of the bridge when "X-days count shows up" to emphasize how many days are left, then speeds up along both ends of the bridge
+                    }}
+                >
+                    <Image
+                        src="/train.svg"
+                        alt={
+                            daysLeft +
+                            (daysLeft === 1 ? " day " : " days ") +
+                            "left"
+                        }
+                        width={1100}
+                        height={88}
+                        className="w-full h-auto"
+                    />
+                </motion.div>
+                {/* Bridge */}
+                <div className="relative w-full h-[3.5vmin] md:h-[4vmin] lg:h-[4.25vmin] xl:h-[5.25vmin]">
+                    <Image src={Bridge} alt="" className="w-full h-auto" fill />
+                </div>
 
                 {/* Left & Right Buildings */}
-                <div className="absolute -top-[14vw] md:-top-[14vw] lg:-top-[10.75vw] xl:-top-[10.5vw] w-full flex justify-between">
+                <div className="absolute -top-[16vw] lg:-top-[12.5vw] xl:-top-[11.75vw] w-full flex justify-between">
                     <div className="relative w-[40%] lg:w-1/3 aspect-square -translate-x-2/5">
                         <Image src={FloatingCity} alt="" fill />
                     </div>
