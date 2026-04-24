@@ -49,9 +49,11 @@ export default function HomePage({
                         />
                     </div>
                     <TracksSection noTrackAnimation={false} />
-                    <ScheduleSection />
-                    <MeetTheTeamSection />
-                    <SponsorsSection />
+                    <div className="bg-[linear-gradient(180deg,#0d83db_0%,#14c5f8_80%,#ffffff_100%)] md:bg-[linear-gradient(180deg,#0d83db_0%,#14c5f8_75%,#ffffff_100%)]">
+                        <ScheduleSection />
+                        <MeetTheTeamSection />
+                        <SponsorsSection />
+                    </div>
                     <FAQSection />
 
                     <Footer className={"bg-[#14c5f8] text-white"} />
