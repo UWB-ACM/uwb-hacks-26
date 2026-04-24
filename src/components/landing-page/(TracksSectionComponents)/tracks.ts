@@ -7,16 +7,16 @@ export const tracks_data: DisplayTrack[] = [
     {
         name: "Cities and Societies",
         description:
-            "This will focus on large scale solutions for society at large (or any other large group of people, like organizations or universities). It's a broad category that's meant to challenge you to find ways to improve the world when looking at the big picture. Think: app that tells you about the air quality where you live and gives you suggestions on how to help improve it.",
+            "Build solutions that create impact at a community or system level, such as cities, campuses, workplaces, or large organizations. This track is about big-picture thinking and designing tools that improve how groups of people live, work, and make decisions. Think: an app that tracks local air quality and offers practical actions people can take to improve it.",
     },
     {
         name: "Human Experience",
         description:
-            "This will focus on solutions at the scale of individual people or small groups. How can we improve the experience of others, giving them the individual attention they deserve? Think: social video game that pairs people up based on common interests.",
+            "Design solutions centered on individuals or small groups. Focus on making everyday experiences more personal, inclusive, supportive, or meaningful through thoughtful product design. Think: a social game that matches people based on shared interests to help them connect.",
     },
     {
         name: "Avanade Business Solutions",
         description:
-            "This is a no-code track focused on pitching a product to help with real business challenges. Think: Slack bot that gives a daily report of meetings and how much they cost.",
+            "This no-code track challenges you to pitch a practical product idea that solves a real business problem. Prioritize clear value, realistic implementation, and a strong business case. Think: a Slack assistant that sends a daily summary of meetings and their estimated cost.",
     },
 ];
