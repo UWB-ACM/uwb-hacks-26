@@ -23,11 +23,12 @@ export default function HackeroonItemCard({
                 {hackeroonPrize.name}
             </p>
             {/* Prize Image */}
-            <div className="w-full p-4 mt-2 bg-white flex justify-center rounded-md border-2 border-black aspect-square">
+            <div className="relative w-[150px] h-[150px] mx-auto p-4 mt-2 bg-white rounded-md border-2 border-black aspect-square">
                 <Image
                     src={retrievePrizeImage(hackeroonPrize.imageName)}
                     alt={"Image of " + hackeroonPrize.name}
-                    style={{ objectFit: "contain" }}
+                    fill
+                    className="object-contain p-4"
                     sizes="(min-width: 1000px) 25vw, (min-width: 800px) 35vw, (min-width: 450px) 45vw, 55vw"
                 />
             </div>
