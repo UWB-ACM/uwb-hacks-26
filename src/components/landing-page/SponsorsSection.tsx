@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from "next/image";
-import Grass from "@/public/Grass.png";
+import Grass from "@/public/Grass.svg";
 import CityBackground2 from "@/public/City-Background-2.png";
 import CitySkylineLightBlue from "@/public/sponsorsSection/City-Skyline-LightBlue.png";
 

@@ -12,7 +12,7 @@ import WeekendEventsCloud from "@/public/about/WeekendEventsCloud.svg";
 import FlyingCarWithBanner from "@/src/components/landing-page/(AboutSectionComponents)/FlyingCarWithBanner";
 
 import CitySkyline from "@/public/about/skyline.png";
-import Grass from "@/public/Grass.png";
+import Grass from "@/public/Grass.svg";
 import Bushes from "@/public/about/Bushes.png";
 import FlowerBushes from "@/public/about/FlowerBushes.png";
 import GrassTuft1 from "@/public/about/Grass1-Dark-Green.png";
