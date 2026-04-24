@@ -274,7 +274,7 @@ export default function AboutSection({
                         <PanelHeader
                             parentPanelId="hackeroonPrizePanel"
                             as="h2"
-                            className={`text-[var(--grass-color)] ${panelHeader}`}
+                            className={`text-[var(--grass-color)] pb-0 ${panelHeader}`}
                         >
                             HACKEROON
                             <br />
@@ -282,9 +282,9 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="hackeroonPrizePanel"
-                            className="w-full h-full overflow-hidden flex justify-center font-bold text-4xl text-center grow"
+                            className="w-full h-full flex justify-center font-bold text-4xl text-center grow p-0 md:p-0"
                         >
-                            <Suspense fallback={<div>Loading</div>}>
+                            <Suspense fallback={<div>Loading...</div>}>
                                 <HackeroonCarousel
                                     hackeroonPrizes={hackeroonPrizes}
                                 ></HackeroonCarousel>
