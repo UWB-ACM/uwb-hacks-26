@@ -185,13 +185,13 @@ export default function AboutSection({
                             <Image
                                 src={FlowerBushes}
                                 alt=""
-                                className="w-1/2 h-auto sm:translate-x-5"
+                                className="relative translate-x-2 w-1/2 h-auto"
                                 sizes="100vw"
                             />
                             <Image
                                 src={FlowerBushes}
                                 alt=""
-                                className="w-1/2 h-auto "
+                                className="relative -translate-x-2 w-1/2 h-auto"
                                 sizes="100vw"
                             />
                         </div>
@@ -200,13 +200,13 @@ export default function AboutSection({
                         <Image
                             src={FlowerBushes}
                             alt=""
-                            className="w-1/2 h-auto sm:translate-x-5"
+                            className="relative translate-x-2 w-1/2 h-auto"
                             sizes="100vw"
                         />
                         <Image
                             src={FlowerBushes}
                             alt=""
-                            className="w-1/2 h-auto "
+                            className="relative -translate-x-2 w-1/2 h-auto"
                             sizes="100vw"
                         />
                     </div>
