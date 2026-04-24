@@ -1,4 +1,5 @@
 import "server-only";
+import { setTimeout as delay } from "node:timers/promises";
 
 const botToken = process.env.DISCORD_BOT_TOKEN!;
 
@@ -18,7 +19,6 @@ async function sendDM(userId: string, message: string) {
     );
 
     const dm = await dmRes.json(); // stores DM channel ID (used to send a message) and type
-    console.log("DM channel info: " + dm.id + " " + dm.type);
 
     // sends a message through the DM channel
     await fetch(`https://discord.com/api/v10/channels/${dm.id}/messages`, {
@@ -40,7 +40,7 @@ export async function broadcastDM(userIds: string[], message: string) {
             await sendDM(id, message);
 
             // basic rate limit safety
-            await new Promise((r) => setTimeout(r, 1100));
+            delay(50); // 20 requests per second (safely under Discord's limit: 50 per second)
         } catch (err) {
             console.error(`Failed to DM ${id}`, err);
         }

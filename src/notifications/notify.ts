@@ -6,8 +6,6 @@ import { broadcastDM } from "./discord";
 export async function notifyAll(message: string) {
     const members = await getGuildMembers();
 
-    console.log("members in notify: " + members);
-    console.log("message in notify: " + message);
     const users: string[] = members
         .filter((m) => m.user && !m.user.bot)
         .map((m) => m.user.id);
