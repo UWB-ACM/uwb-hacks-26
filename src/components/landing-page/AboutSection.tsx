@@ -270,7 +270,7 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="hackeroonPrizePanel"
-                            className="w-full h-full overflow-hidden flex justify-center font-bold text-4xl text-center"
+                            className="w-full h-full overflow-hidden flex justify-center font-bold text-4xl text-center grow"
                         >
                             <Suspense fallback={<div>Loading</div>}>
                                 <HackeroonCarousel
@@ -303,7 +303,7 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="leaderboardPanel"
-                            className="w-full overflow-hidden grid place-content-center"
+                            className="w-full overflow-hidden grid place-content-center grow"
                         >
                             {/* <Suspense>
                                 <Leaderboard
