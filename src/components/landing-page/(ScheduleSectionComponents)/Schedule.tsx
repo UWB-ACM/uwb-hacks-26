@@ -35,8 +35,8 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "ARC Overlook",
             },
             {
-                startTime: new Date(2026, 3, 24, 12, 30),
-                endTime: new Date(2026, 3, 24, 13, 0),
+                startTime: new Date(2026, 3, 24, 13, 0),
+                endTime: new Date(2026, 3, 24, 13, 30),
                 name: "Intro to Google AI Studio",
                 location: "UW2-005",
             },
