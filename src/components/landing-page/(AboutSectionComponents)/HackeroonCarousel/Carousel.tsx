@@ -28,7 +28,7 @@ export default function HackeroonCarousel({
 
         gsap.to(cardRef.current, {
             x: "-200%",
-            duration: 0.25,
+            duration: 0.35,
             ease: "power3.inOut",
             onComplete: () => {
                 if (currIdx == prizes.length - 1) {
@@ -41,7 +41,7 @@ export default function HackeroonCarousel({
 
                 gsap.to(cardRef.current, {
                     x: 0,
-                    duration: 0.25,
+                    duration: 0.35,
                     ease: "power3.inOut",
                     onComplete: () => setIsAnimating(false),
                 });
@@ -91,6 +91,13 @@ export default function HackeroonCarousel({
                     />
                 )}
             </div>
+
+            {/* Preload the next image to avoid a flash when it loads */}
+            {prizes[currIdx + 1] && (
+                <div className="w-0 h-0 hidden" aria-hidden="true">
+                    <HackeroonItemCard hackeroonPrize={prizes[currIdx + 1]} />
+                </div>
+            )}
 
             {/* Next Button */}
             <CarouselControls onClick={handleNext}>

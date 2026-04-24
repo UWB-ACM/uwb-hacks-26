@@ -4,7 +4,7 @@ import { Prize } from "@/src/util/dataTypes";
 import { retrievePrizeImage } from "@/src/util/prizeImage";
 
 type HackeroonItemCardProps = {
-    cardRef: React.RefObject<HTMLDivElement | null>;
+    cardRef?: React.RefObject<HTMLDivElement | null>;
     hackeroonPrize: Prize;
 };
 
@@ -22,12 +22,12 @@ export default function HackeroonItemCard({
                 {hackeroonPrize.name}
             </p>
             {/* Prize Image */}
-            <div className="w-full p-4 mt-2 bg-white flex justify-center rounded-md border border-black">
+            <div className="w-full p-4 mt-2 bg-white flex justify-center rounded-md border border-black aspect-square">
                 <Image
                     src={retrievePrizeImage(hackeroonPrize.imageName)}
                     alt={"Image of " + hackeroonPrize.name}
-                    width={100}
-                    height={100}
+                    style={{ objectFit: "contain" }}
+                    sizes="(min-width: 1000px) 25vw, (min-width: 800px) 35vw, (min-width: 450px) 45vw, 55vw"
                 />
             </div>
             {/* Prize Prize */}
