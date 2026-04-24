@@ -265,7 +265,7 @@ export default function AboutSection({
                 </Panel>
 
                 {/* Hackathon Information Grid */}
-                <div className="grid py-15 px-[5vw] sm:grid-cols-1 md:grid-cols-2 gap-y-[10vw] md:gap-y-[5vw] gap-[5vw]">
+                <div className="grid py-15 px-[5vw] sm:grid-cols-1 lg:grid-cols-2 gap-y-[10vw] md:gap-y-[5vw] gap-[5vw]">
                     <Panel
                         id="hackeroonPrizePanel"
                         panelBackground="white"
