@@ -32,6 +32,7 @@ export default function BroadcastPanel() {
             setMessage("");
             setStatus("Broadcast sent successfully.");
         } catch (err) {
+            console.error(err);
             setStatus("Failed to send broadcast.");
         } finally {
             setLoading(false);

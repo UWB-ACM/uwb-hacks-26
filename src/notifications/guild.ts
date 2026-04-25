@@ -6,7 +6,7 @@ const batchLength = 1000;
 
 export async function getGuildMembers() {
     let after = "0";
-    let allMembers: any[] = [];
+    const allMembers: { user: { bot: boolean; id: string } }[] = [];
 
     while (true) {
         const res = await fetch(

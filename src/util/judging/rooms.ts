@@ -53,11 +53,3 @@ export const TRACK_ROOM_AFFINITY: Record<
     "Human Experience (Code)": "ARC",
     "Avanade Business Solutions (No Code)": "NCEC",
 };
-
-/**
- * Returns the maximum number of projects that can be placed in a room.
- * @param room - is the room whose capacity to compute.
- */
-export function roomCapacity(room: RoomConfig): number {
-    return room.numTables * room.projectsPerTable;
-}

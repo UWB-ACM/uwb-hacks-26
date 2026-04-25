@@ -1,4 +1,4 @@
-import { ROOMS, TRACK_ROOM_AFFINITY, roomCapacity } from "./rooms";
+import { ROOMS, TRACK_ROOM_AFFINITY } from "./rooms";
 
 /**
  * The minimal shape of a project needed for table assignment.
@@ -152,18 +152,6 @@ function takeSeat(state: RoomState): { tableNum: number } | null {
     state.nextSeat++;
 
     return { tableNum: seatToTable(seat, state.projectsPerTable) };
-}
-
-/**
- * Returns the number of remaining free seats in the room.
- *
- * @param state - is the room's current fill state.
- */
-function remainingCapacity(state: RoomState): number {
-    return Math.max(
-        0,
-        state.numTables * state.projectsPerTable - state.nextSeat,
-    );
 }
 
 /**
