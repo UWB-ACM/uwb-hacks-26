@@ -6,15 +6,13 @@ import { Project } from "@/src/util/dataTypes";
 
 export default function ProjectCard({
     project,
-    completedAt,
 }: {
-    project: Project;
-    completedAt: Date | null;
+    project: Project & { completedAt: Date | null };
 }) {
     return (
         <Link href={`/judging/${project.id}`} className="h-min">
             <div
-                className={`flex flex-col items-center p-6 rounded-lg border-4 border-black shadow-comic ${completedAt !== null ? "bg-green-500" : "bg-neutral-200"}`}
+                className={`flex flex-col items-center p-6 rounded-lg border-4 border-black shadow-comic ${project.completedAt !== null ? "bg-green-500" : "bg-neutral-200"}`}
             >
                 <p className="font-bold text-2xl">{project.projectTitle}</p>
                 <p>{project.mainTrack}</p>

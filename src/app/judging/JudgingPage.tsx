@@ -29,11 +29,7 @@ export function JudgingPage({
             ) : (
                 <div className="grow p-8 overflow-scroll overflow-x-hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {projects.map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            completedAt={project.completedAt}
-                        />
+                        <ProjectCard key={project.id} project={project} />
                     ))}
                 </div>
             )}
