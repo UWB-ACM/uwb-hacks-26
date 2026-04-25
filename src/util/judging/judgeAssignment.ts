@@ -4,7 +4,7 @@ import { JudgeAssignment, Project, Track } from "@/src/util/dataTypes";
 /**
  * The number of judges that should score each (project, track) pair.
  */
-export const JUDGES_PER_TRACK = 2;
+export const JUDGES_PER_TRACK = 5;
 
 /**
  * The minimum count of judges simultaneously scheduled at the same
@@ -60,6 +60,13 @@ export interface JudgeAssignmentResult {
     newAssignments: AssignJudgeAssignment[];
 
     /**
+     * The number of rounds needed to handle judging.
+     * This is the maximum of the number of projects assigned
+     * to a single judge.
+     */
+    neededRounds: number;
+
+    /**
      * Non-fatal issues (unknown track tags, empty tags, insufficient
      * judges for a track, etc.). Shown to the admin after the run.
      */
@@ -100,6 +107,7 @@ export function computeJudgeAssignments(
     const trackMap = new Map(tracks.map((t) => [t.devpostTag, t]));
     const projectMap = new Map(projects.map((p) => [p.id, p]));
 
+    // Judge ID -> # of assigned projects.
     const judgeWorkload = new Map<number, number>();
     for (const j of judges) judgeWorkload.set(j.id, 0);
     for (const a of existing) {
@@ -245,7 +253,9 @@ export function computeJudgeAssignments(
         }
     }
 
-    return { newAssignments, warnings };
+    const neededRounds = Math.max(...judgeWorkload.values());
+
+    return { newAssignments, neededRounds, warnings };
 }
 
 /**

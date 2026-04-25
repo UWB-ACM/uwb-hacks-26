@@ -94,6 +94,11 @@ export interface AutoAssignResult {
     collisionCount?: number;
 
     /**
+     * The number of rounds needed for everyone to get judged.
+     */
+    neededRounds?: number;
+
+    /**
      * Non-fatal warnings collected across all three phases.
      */
     warnings?: string[];
@@ -210,6 +215,7 @@ export async function actionAssignJudges(): Promise<AutoAssignResult> {
             tableAssignmentsCount: tableResult.placements.length,
             judgeAssignmentsCount: judgeResult.newAssignments.length,
             collisionCount: collisions.length,
+            neededRounds: judgeResult.neededRounds,
             warnings,
         };
     } catch (error) {

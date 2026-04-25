@@ -11,6 +11,7 @@ export default function JudgingAdminClient() {
     const [tableCount, setTableCount] = useState(0);
     const [judgeCount, setJudgeCount] = useState(0);
     const [collisionCount, setCollisionCount] = useState(0);
+    const [neededRounds, setNeededRounds] = useState(0);
     const [warnings, setWarnings] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -26,6 +27,7 @@ export default function JudgingAdminClient() {
             setTableCount(result.tableAssignmentsCount ?? 0);
             setJudgeCount(result.judgeAssignmentsCount ?? 0);
             setCollisionCount(result.collisionCount ?? 0);
+            setNeededRounds(result.neededRounds ?? 0);
             setWarnings(result.warnings || []);
         } else {
             setStatus("error");
@@ -73,6 +75,9 @@ export default function JudgingAdminClient() {
                                 ✅ No round collisions.
                             </p>
                         )}
+                        <p className="text-green-600 font-bold mt-2">
+                            ✅ {neededRounds} round(s) needed.
+                        </p>
 
                         {warnings.length > 0 && (
                             <div className="mt-4 p-4 bg-orange-50 border-2 border-orange-200 rounded-md text-left">
