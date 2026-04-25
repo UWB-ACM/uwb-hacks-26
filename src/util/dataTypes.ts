@@ -373,6 +373,8 @@ export enum TransactionType {
      * 1010 in binary = 10 in decimal = 10th annual hackathon!
      */
     EasterEgg1010 = 24,
+
+    SlideshowKaraokePresenter = 26,
 }
 
 /**
@@ -385,6 +387,7 @@ export const valuedTransactionAmounts = {
     [TransactionType.MonthOfHackingActivityWinner]: 100,
     [TransactionType.StudentInterview]: 50,
     [TransactionType.KeyboardCompetition]: 100,
+    [TransactionType.SlideshowKaraokePresenter]: 100,
 
     [TransactionType.FridayCostumeTwin]: 25,
     // [TransactionType.FridayFireSideChat]: 100,
@@ -422,6 +425,7 @@ export const valuedTransactionLimits: Record<
     [TransactionType.MonthOfHackingActivityWinner]: 3,
     [TransactionType.StudentInterview]: 1,
     [TransactionType.KeyboardCompetition]: 1,
+    [TransactionType.SlideshowKaraokePresenter]: 1,
 
     [TransactionType.FridayCostumeTwin]: 1,
     // [TransactionType.FridayFireSideChat]: 1,
@@ -451,6 +455,7 @@ export const reasonTypeMap = {
     "activity-winner": TransactionType.MonthOfHackingActivityWinner,
     "student-interview": TransactionType.StudentInterview,
     "keyboard-comp": TransactionType.KeyboardCompetition,
+    "slideshow-karaoke-presenter": TransactionType.SlideshowKaraokePresenter,
 
     "friday-costume-twin": TransactionType.FridayCostumeTwin,
     // "friday-fire-side-chat": TransactionType.FridayFireSideChat,
@@ -480,6 +485,7 @@ export const reasonNameMap: Record<keyof typeof reasonTypeMap, string> = {
     "activity-winner": "Activity Winner",
     "student-interview": "Student Interview",
     "keyboard-comp": "Keyboard Competition",
+    "slideshow-karaoke-presenter": "Slideshow Karaoke Presenter",
 
     "friday-costume-twin": "Twin Costume (Friday)",
     // "friday-fire-side-chat": "Fire Side Chat (Friday)",
@@ -511,6 +517,7 @@ export const typeNameMap: Record<TransactionType, string> = {
     [TransactionType.MonthOfHackingActivityWinner]: "Activity Winner",
     [TransactionType.StudentInterview]: "Student Interview",
     [TransactionType.KeyboardCompetition]: "Keyboard Competition",
+    [TransactionType.SlideshowKaraokePresenter]: "Slideshow Karaoke Presenter",
 
     [TransactionType.FridayCostumeTwin]: "Twin Costume (Friday)",
     // [TransactionType.FridayFireSideChat]: "Fire Side Chat (Friday)",
