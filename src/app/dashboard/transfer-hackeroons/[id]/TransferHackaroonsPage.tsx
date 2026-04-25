@@ -94,8 +94,8 @@ export default function TransferHackaroonsPage({
             const trueAmount =
                 reasonType in valuedTransactionAmounts
                     ? valuedTransactionAmounts[
-                    reasonType as keyof typeof valuedTransactionAmounts
-                    ]
+                          reasonType as keyof typeof valuedTransactionAmounts
+                      ]
                     : amount;
 
             const data = await actionCreateTransaction(
@@ -140,46 +140,41 @@ export default function TransferHackaroonsPage({
                         {reason === "unknown" && (
                             <div className="flex flex-col w-full mt-4 md:text-sm lg:text-md">
                                 <span className="text-red-600">
-                                    I have disabled Unknown for non-admins
-                                    as it
-                                    {"'"}s been causing issues with our
-                                    systems and makes it difficult to
-                                    understand transactions. If you{"'"}re
-                                    trying to give a user Hackeroons for
-                                    attending an event, please make an event
-                                    code for them and have them enter it. If
-                                    you have a legitimate need, please copy
-                                    the URL in the address bar and send a
-                                    message to Jonah discussing it.
+                                    I have disabled Unknown for non-admins as it
+                                    {"'"}s been causing issues with our systems
+                                    and makes it difficult to understand
+                                    transactions. If you{"'"}re trying to give a
+                                    user Hackeroons for attending an event,
+                                    please make an event code for them and have
+                                    them enter it. If you have a legitimate
+                                    need, please copy the URL in the address bar
+                                    and send a message to Jonah discussing it.
                                 </span>
                             </div>
                         )}
 
                         {/* Only show amount for transaction types with no prescribed value. */}
                         {!(
-                            reasonTypeMap[reason] in
-                            valuedTransactionAmounts
+                            reasonTypeMap[reason] in valuedTransactionAmounts
                         ) && (
-                                <>
-                                    <div className="flex flex-col w-full mt-4 md:text-lg lg:text-xl">
-                                        <label htmlFor="amount">Amount</label>
-                                        <input
-                                            required
-                                            id="amount"
-                                            type="number"
-                                            min={0}
-                                            step={5}
-                                            value={amount.toString()}
-                                            className="px-4 py-3 border border-black rounded-md"
-                                            onChange={(e) =>
-                                                setAmount(
-                                                    Number(e.target.value),
-                                                )
-                                            }
-                                        />
-                                    </div>
-                                </>
-                            )}
+                            <>
+                                <div className="flex flex-col w-full mt-4 md:text-lg lg:text-xl">
+                                    <label htmlFor="amount">Amount</label>
+                                    <input
+                                        required
+                                        id="amount"
+                                        type="number"
+                                        min={0}
+                                        step={5}
+                                        value={amount.toString()}
+                                        className="px-4 py-3 border border-black rounded-md"
+                                        onChange={(e) =>
+                                            setAmount(Number(e.target.value))
+                                        }
+                                    />
+                                </div>
+                            </>
+                        )}
                         <div className="flex flex-col w-full mt-4 md:text-lg lg:text-xl">
                             <label htmlFor="reason">Reason</label>
                             <select
@@ -204,7 +199,7 @@ export default function TransferHackaroonsPage({
                                         <option key={key} value={key}>
                                             {
                                                 reasonNameMap[
-                                                key as keyof typeof reasonTypeMap
+                                                    key as keyof typeof reasonTypeMap
                                                 ]
                                             }
                                         </option>

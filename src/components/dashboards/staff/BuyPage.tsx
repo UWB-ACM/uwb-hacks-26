@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import PrizeCard from "@/src/components/dashboards/staff/PrizeCard";
 import { Prize, TransactionType, User } from "@/src/util/dataTypes";
 import { actionCreateTransaction } from "@/src/util/actions/transactions";
@@ -24,6 +24,9 @@ export default function BuyPage({
     const [hackeroonAmount, setHackeroonAmount] = useState(balance);
     const [selectedItems, setSelectedItems] = useState<Prize[]>([]);
     const [currentPrizes, setCurrentPrizes] = useState<Prize[]>(prizes);
+    const [prizesHeaderHeight, setPrizesHeaderHeight] = useState(0);
+    const [dashboardHeaderOffset, setDashboardHeaderOffset] = useState(0);
+    const prizesHeaderRef = useRef<HTMLDivElement | null>(null);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -155,8 +158,29 @@ export default function BuyPage({
         );
     }, [buyResponse]);
 
+    useEffect(() => {
+        const headerElement = prizesHeaderRef.current;
+        if (!headerElement) return;
+
+        const updateHeight = () => {
+            setPrizesHeaderHeight(headerElement.getBoundingClientRect().height);
+            setDashboardHeaderOffset(window.innerWidth >= 1024 ? 112 : 0);
+        };
+
+        updateHeight();
+
+        const resizeObserver = new ResizeObserver(updateHeight);
+        resizeObserver.observe(headerElement);
+        window.addEventListener("resize", updateHeight);
+
+        return () => {
+            resizeObserver.disconnect();
+            window.removeEventListener("resize", updateHeight);
+        };
+    }, []);
+
     return (
-        <>
+        <div className="relative">
             {/*
                 Header
 
@@ -165,11 +189,14 @@ export default function BuyPage({
                     - Person you're buying prizes for
                     - Person's current total hackeroon amount
             */}
-            <div className="h-[15vh] flex flex-col justify-center bg-neutral-100 py-4 px-6 border-b border-black">
-                <h1 className="text-center text-2xl md:text-3xl pb-4">
+            <div
+                ref={prizesHeaderRef}
+                className="sticky top-0 lg:top-28 z-100 flex flex-col justify-center bg-neutral-100 py-4 px-6 border-b border-black gap-y-2"
+            >
+                <h1 className="text-center text-2xl md:text-3xl font-bold">
                     Prizes
                 </h1>
-                <div className="flex justify-around gap-x-4 text-center text-xl md:text-2xl">
+                <div className="flex flex-col lg:flex-row justify-around gap-x-4 text-center text-xl md:text-2xl gap-y-2">
                     <h2>
                         Buying for{" "}
                         <span className="font-bold">{user.name}</span>
@@ -190,7 +217,7 @@ export default function BuyPage({
             */}
             <div className="flex">
                 {/* Prize Cards */}
-                <div className="w-[70vw] md:w-[80vw] lg:w-[85vw] p-8 overflow-x-hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="w-[75vw] md:w-[73vw] lg:w-[75vw] xl:w-[75vw] p-4 overflow-x-hidden grid md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {currentPrizes.map((prize, index) => (
                         <PrizeCard
                             key={index}
@@ -205,9 +232,15 @@ export default function BuyPage({
                 </div>
 
                 {/* Shopping Cart / Selected Items */}
-                <div className="h-[71vh] w-[30vw] md:w-[20vw] lg:w-[15vw] flex flex-col justify-between bg-neutral-100 border-l border-black sticky top-0 lg:top-28">
+                <div
+                    className="w-[25vw] md:w-[27vw] lg:w-[25vw] xl:w-[25vw] flex flex-col justify-between bg-neutral-100 border-l-2 border-black sticky"
+                    style={{
+                        top: `${prizesHeaderHeight + dashboardHeaderOffset}px`,
+                        height: `calc(100vh - ${prizesHeaderHeight + 123.2}px)`,
+                    }}
+                >
                     {/* Selected Items */}
-                    <div className="p-4">
+                    <div className="p-2">
                         <h2 className="text-center text-xl md:text-2xl">
                             Selected Items
                         </h2>
@@ -221,7 +254,7 @@ export default function BuyPage({
                     <div className="flex flex-col">
                         {/* Complete Button */}
                         <button
-                            className="p-4 bg-green-500 hover:bg-green-600/90 duration-300 border border-black text-white"
+                            className="p-3 bg-green-500 hover:bg-green-600/90 duration-300 text-center text-white border-y-2 border-black"
                             onClick={handleSubmit}
                         >
                             Complete
@@ -229,7 +262,7 @@ export default function BuyPage({
 
                         {/* exit button that returns user back to staff dashboard */}
                         <Link
-                            className="p-4 bg-red-500 hover:bg-red-600/90 duration-300 border border-black text-center text-white"
+                            className="p-3 bg-red-500 hover:bg-red-600/90 duration-300 text-center text-white border-b-2 border-black"
                             href={`/dashboard/${user.id}`}
                         >
                             Exit
@@ -245,6 +278,6 @@ export default function BuyPage({
                 description={transactionBody}
                 className={transactionColor}
             />
-        </>
+        </div>
     );
 }

@@ -35,7 +35,8 @@ export function ModifyUserPage({
             <div>
                 {/* displaying name and email of user, will have to change once database integrated*/}
                 <div className="py-2 text-lg md:text-xl lg:text-2xl">
-                    <span className="font-bold">{user.name}</span> | {user.email}
+                    <span className="font-bold">{user.name}</span> |{" "}
+                    {user.email}
                 </div>
                 {/* displaying number of hackeroons user has */}
                 <div className="py-2">
@@ -44,9 +45,7 @@ export function ModifyUserPage({
                 </div>
                 {/* displaying user transactions */}
                 <div className="py-2">
-                    <p className="font-bold">
-                        Transactions
-                    </p>
+                    <p className="font-bold">Transactions</p>
                     <TransactionList
                         history={curHistory}
                         setHistory={setCurHistory}
@@ -187,7 +186,8 @@ function TransactionItem({
                 {canRevert && (
                     <button
                         className={
-                            buttonColor + " border border-black rounded-xl p-2 text-white"
+                            buttonColor +
+                            " border border-black rounded-xl p-2 text-white"
                         }
                         onClick={async () => {
                             if (!canRevert || !canRevertWithBalance) return;
