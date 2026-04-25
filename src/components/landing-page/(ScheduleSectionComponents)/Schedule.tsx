@@ -108,8 +108,8 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "ARC Overlook",
             },
             {
-                startTime: new Date(2026, 3, 25, 14, 15),
-                endTime: new Date(2026, 3, 25, 15, 15),
+                startTime: new Date(2026, 3, 25, 14, 30),
+                endTime: new Date(2026, 3, 25, 15, 30),
                 name: "Grayhats CTF Drop In Event",
                 location: "NCEC",
             },
