@@ -49,10 +49,9 @@ export const TRACK_ROOM_AFFINITY: Record<
     string,
     (typeof ROOMS)[number]["name"]
 > = {
-    // TODO: fill in once the real devpost tags are finalized.
-    // Example:
-    // "ai-ml": "A",
-    // "sustainability": "N",
+    "Cities & Societies (Code)": "ARC",
+    "Human Experience (Code)": "ARC",
+    "Avanade Business Solutions (No Code)": "NCEC",
 };
 
 /**
