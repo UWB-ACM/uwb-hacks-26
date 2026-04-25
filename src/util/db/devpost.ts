@@ -89,7 +89,7 @@ export async function syncDevpostEmailsToUsers() {
         FROM devpost_codes dc
         LEFT JOIN users u ON u.devpost_email = dc.devpost_email
         WHERE u.id IS NULL 
-          AND (dc.last_sent_at IS NULL OR dc.last_sent_at <= now() - interval '7 days');
+          AND (dc.last_sent_at IS NULL OR dc.last_sent_at <= now() - interval '1 days');
     `;
 
     return toEmail.map((row) => ({
