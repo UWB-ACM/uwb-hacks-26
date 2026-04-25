@@ -115,7 +115,7 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
             },
             {
                 startTime: new Date(2026, 3, 25, 15, 30),
-                endTime: new Date(2026, 3, 25, 16, 30),
+                endTime: new Date(2026, 3, 25, 16, 15),
                 name: "InclusiveAI Workshop",
                 location: "NCEC",
             },
@@ -126,8 +126,8 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "ARC Overlook",
             },
             {
-                startTime: new Date(2026, 3, 25, 16, 0),
-                endTime: new Date(2026, 3, 25, 17, 30),
+                startTime: new Date(2026, 3, 25, 16, 15),
+                endTime: new Date(2026, 3, 25, 17, 45),
                 name: "Hackeroon Stand",
                 location: "ARC Overlook",
             },
