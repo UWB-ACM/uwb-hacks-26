@@ -27,7 +27,7 @@ const FancyInput: FC<FancyInputProps> = ({
                 onPaste={(e) => e.preventDefault()}
                 onChange={(e) => {
                     // Allow spaces for readability.
-                    if (e.target.value.match(/^[0-9 ]+$/)) {
+                    if (e.target.value.match(/^[0-9 ]*$/)) {
                         onChange(e.target.value);
                     } else {
                         e.preventDefault();
