@@ -184,9 +184,11 @@ function TransactionItem({
                 [{typeNameMap[transaction.type as TransactionType]}] H$
                 {transaction.amount}{" "}
                 {transaction.event !== null &&
-                    `${transaction.event} (${transaction.eventName})`}{" "}
+                    `${transaction.event} (${transaction.eventName})`}
+                {transaction.prize !== null &&
+                    `${transaction.prize} (${transaction.prizeName})`}
                 <br />
-                {transaction.prize} {transaction.time.toString()}
+                {transaction.time.toString()}
             </p>
             <div>
                 {canRevert && (
