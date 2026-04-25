@@ -128,7 +128,7 @@ export default function TransferHackaroonsPage({
     return (
         <>
             {/* Container for "Transfer Hackeroons" Content */}
-            <div className="w-[90vw] max-w-[700px] p-5 mx-auto my-2 rounded-xl border border-black grid place-content-center">
+            <div className="w-[90vw] max-w-[700px] bg-white p-5 mx-auto my-2 rounded-xl border border-black grid place-content-center">
                 <form onSubmit={handleSubmit}>
                     <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">
                         Transferring Hackeroons to{" "}
