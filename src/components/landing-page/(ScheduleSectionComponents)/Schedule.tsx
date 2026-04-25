@@ -120,8 +120,8 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "NCEC",
             },
             {
-                startTime: new Date(2026, 3, 25, 16, 0),
-                endTime: new Date(2026, 3, 25, 17, 30),
+                startTime: new Date(2026, 3, 25, 16, 45),
+                endTime: new Date(2026, 3, 25, 18, 0),
                 name: "Dinner",
                 location: "ARC Overlook",
             },
@@ -132,8 +132,8 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 location: "ARC Overlook",
             },
             {
-                startTime: new Date(2026, 3, 25, 17, 0),
-                endTime: new Date(2026, 3, 25, 17, 45),
+                startTime: new Date(2026, 3, 25, 17, 15),
+                endTime: new Date(2026, 3, 25, 18, 0),
                 name: "MLH Slideshow Karaoke",
                 location: "NCEC",
             },
