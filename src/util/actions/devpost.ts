@@ -212,12 +212,20 @@ async function actionImportProjects(
         const videoUrl = row["Video Demo Link"]?.trim() || null;
         const mainTrack = row["What Main Track Have You Chosen?"]?.trim() ?? "";
         const sideTracks = parseHumanList(
-            row["What Sub Tracks Have You Chosen (Max 2, Optional)?"]?.trim() ??
-                "",
+            row[
+                "Which Mlh Prizes Would You Like To Enter Your Project In?"
+            ]?.trim() ?? "",
         );
 
+        if (!mainTrack) {
+            result.errors.push(
+                `Row ${i + 2}: Missing main track for project "${projectTitle}"!`,
+            );
+            continue;
+        }
+
         // If any selected track isn't a known tag, something has gone wrong.
-        if (mainTrack && !knownTags.includes(mainTrack)) {
+        if (!knownTags.includes(mainTrack)) {
             result.warnings.push(
                 `Row ${i + 2}: Unknown main track "${mainTrack}" for project "${projectTitle}"`,
             );
