@@ -30,42 +30,40 @@ export function ModifyUserPage({
     const [curBalance, setCurBalance] = useState(balance);
 
     return (
-        // centering all the content on the screen
-        <div className="grid place-content-center">
-            {/* the actual card with all the user data */}
-            <div className="w-[90vw] lg:w-[40vw] bg-neutral-100 p-5 flex flex-col justify-between rounded-md border-2 border-black shadow-lg">
-                {/* main content of the user, separate from the exit button */}
-                <div>
-                    {/* displaying name and email of user, will have to change once database integrated*/}
-                    <div className="py-2">
-                        {user.name} | {user.email}
-                    </div>
-                    {/* displaying number of hackeroons user has */}
-                    <div className="py-2">
-                        Hackeroons{" "}
-                        <span className="text-2xl font-bold">{curBalance}</span>
-                    </div>
-                    {/* displaying user transactions */}
-                    <div className="py-2">
-                        Transactions
-                        <TransactionList
-                            history={curHistory}
-                            setHistory={setCurHistory}
-                            setBalance={setCurBalance}
-                            permission={permission}
-                            sessionUser={session.user!}
-                            balance={curBalance}
-                        />
-                    </div>
+        <div className="w-[90vw] max-w-[700px] mx-auto bg-neutral-100 p-5 flex flex-col justify-between rounded-md border-2 border-black shadow-lg">
+            {/* main content of the user, separate from the exit button */}
+            <div>
+                {/* displaying name and email of user, will have to change once database integrated*/}
+                <div className="py-2 text-lg md:text-xl lg:text-2xl">
+                    <span className="font-bold">{user.name}</span> | {user.email}
                 </div>
-                {/* exit button that returns user back to staff dashboard */}
-                <Link
-                    className="mt-4 py-3 rounded-lg text-center bg-red-500 text-white"
-                    href={`/dashboard/${user.id}`}
-                >
-                    Exit
-                </Link>
+                {/* displaying number of hackeroons user has */}
+                <div className="py-2">
+                    Hackeroons{" "}
+                    <span className="text-2xl font-bold">{curBalance}</span>
+                </div>
+                {/* displaying user transactions */}
+                <div className="py-2">
+                    <p className="font-bold">
+                        Transactions
+                    </p>
+                    <TransactionList
+                        history={curHistory}
+                        setHistory={setCurHistory}
+                        setBalance={setCurBalance}
+                        permission={permission}
+                        sessionUser={session.user!}
+                        balance={curBalance}
+                    />
+                </div>
             </div>
+            {/* exit button that returns user back to staff dashboard */}
+            <Link
+                className="mt-4 py-3 rounded-lg text-center bg-red-500 text-white"
+                href={`/dashboard/${user.id}`}
+            >
+                Exit
+            </Link>
         </div>
     );
 }
@@ -86,10 +84,10 @@ function TransactionList({
     balance: number;
 }) {
     return (
-        <ul>
+        <ul className="flex flex-col gap-y-4">
             {/* iterating through user's transaction list */}
             {history.map((transaction) => (
-                <li className="mt-4" key={transaction.id}>
+                <li className="" key={transaction.id}>
                     <TransactionItem
                         transaction={transaction}
                         permission={permission}
@@ -174,7 +172,7 @@ function TransactionItem({
     }
 
     return (
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between items-center gap-x-4">
             <p
                 className={
                     (transaction.reverted ? "line-through" : "") +
@@ -189,7 +187,7 @@ function TransactionItem({
                 {canRevert && (
                     <button
                         className={
-                            buttonColor + " border border-black rounded-xl p-2"
+                            buttonColor + " border border-black rounded-xl p-2 text-white"
                         }
                         onClick={async () => {
                             if (!canRevert || !canRevertWithBalance) return;
