@@ -191,7 +191,7 @@ const SponsorsSection = () => {
             </div>
 
             {/* City and Grass Reflection */}
-            <div className="bg-[#0d83db]">
+            <div className="bg-[#0d83db] pointer-events-none">
                 <div className="w-screen min-h-[30vw] md:min-h-[30vh] lg:min-h-[35vh] xl:min-h-[50vh] -scale-y-100 opacity-60 brightness-75 saturate-150">
                     <Image
                         src={CitySkylineLightBlue}
