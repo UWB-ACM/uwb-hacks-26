@@ -80,9 +80,13 @@ export interface JudgeAssignmentResult {
  * Candidate ranking, in order:
  *   1. Workload ascending - the judge with the fewest existing
  *      assignments is preferred (primary fairness knob).
- *   2. Minimum table distance ascending - among judges with equal
- *      workload, the one whose closest existing table sits nearest
- *      to the project's table wins. Judges with no assignment in the
+ *   2. Shared main track - among judges with equal workload, those
+ *      who already have an assignment to a project in the current
+ *      project's main track come first, so judges concentrate within
+ *      a single main track when possible.
+ *   3. Minimum table distance ascending - among judges still tied,
+ *      the one whose closest existing table sits nearest to the
+ *      project's table wins. Judges with no assignment in the
  *      project's room (or with no table data) are treated as
  *      infinitely far, so the same-room preference falls out for free.
  *
@@ -125,6 +129,17 @@ export function computeJudgeAssignments(
         judgeTables
             .get(a.judgeId)
             ?.push({ room: p.room, tableNum: p.tableNum });
+    }
+
+    // For each judge, the set of main tracks of every project they're
+    // already assigned to. Used by the shared-main-track tiebreak below.
+    const judgeMainTracks = new Map<number, Set<string>>();
+    for (const j of judges) judgeMainTracks.set(j.id, new Set());
+    for (const a of existing) {
+        const p = projectMap.get(a.projectId);
+        if (!p || !p.mainTrack) continue;
+
+        judgeMainTracks.get(a.judgeId)?.add(p.mainTrack);
     }
 
     /**
@@ -208,7 +223,22 @@ export function computeJudgeAssignments(
                         const wb = judgeWorkload.get(b.id) ?? 0;
                         if (wa !== wb) return wa < wb ? -1 : 1;
 
-                        // (2) closest existing table to the project's table,
+                        // (2) judges who already have a project in this
+                        //     project's main track come first, so judges
+                        //     stay concentrated within a main track.
+                        const sa =
+                            project.mainTrack &&
+                            judgeMainTracks.get(a.id)?.has(project.mainTrack)
+                                ? 0
+                                : 1;
+                        const sb =
+                            project.mainTrack &&
+                            judgeMainTracks.get(b.id)?.has(project.mainTrack)
+                                ? 0
+                                : 1;
+                        if (sa !== sb) return sa < sb ? -1 : 1;
+
+                        // (3) closest existing table to the project's table,
                         //     to minimize judge walking distance.
                         const da = minTableDistance(a.id, project);
                         const db = minTableDistance(b.id, project);
@@ -247,6 +277,11 @@ export function computeJudgeAssignments(
                             room: project.room,
                             tableNum: project.tableNum,
                         });
+                    }
+                    if (project.mainTrack) {
+                        judgeMainTracks
+                            .get(selectedJudge.id)!
+                            .add(project.mainTrack);
                     }
                 }
             }
