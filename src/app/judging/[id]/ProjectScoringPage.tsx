@@ -157,42 +157,101 @@ export default function ProjectScoringPage({
                         <h2 className="font-h1 text-2xl text-[#ffffff] text-center text-4xl">
                             Scoring
                         </h2>
-                        {questions.map((question) => (
-                            <div
-                                key={question.id}
-                                className="bg-neutral-200 rounded-lg border-4 border-black shadow-comic p-6 flex flex-col gap-3"
-                            >
-                                <p className="font-h2 text-lg font-bold">
-                                    {question.questionText}
-                                </p>
-                                <div className="flex flex-col gap-1">
-                                    <div className="flex items-center gap-4">
-                                        <input
-                                            type="range"
-                                            min={0}
-                                            max={10}
-                                            value={scores[question.id] ?? 0}
-                                            onChange={(e) =>
-                                                handleChange(
-                                                    question.id,
-                                                    e.target.value,
-                                                )
-                                            }
-                                            onMouseUp={() =>
-                                                handleMouseUp(question.id)
-                                            }
-                                            className="flex-1 accent-[#2886c4] h-3 cursor-pointer"
-                                        />
+                        {questions.map((question) => {
+                            const currentScore = scores[question.id];
+                            return (
+                                <div
+                                    key={question.id}
+                                    className="bg-neutral-200 rounded-lg border-4 border-black shadow-comic p-6 flex flex-col gap-3"
+                                >
+                                    <p className="font-h2 text-lg font-bold">
+                                        {question.questionText}
+                                    </p>
+                                    {question.description && (
+                                        <p className="font-h2 text-sm italic text-neutral-700">
+                                            {question.description}
+                                        </p>
+                                    )}
+                                    <div className="flex flex-col gap-1">
+                                        <div className="flex items-center gap-4">
+                                            <input
+                                                type="range"
+                                                min={0}
+                                                max={10}
+                                                value={currentScore ?? 0}
+                                                onChange={(e) =>
+                                                    handleChange(
+                                                        question.id,
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                onMouseUp={() =>
+                                                    handleMouseUp(question.id)
+                                                }
+                                                className="flex-1 accent-[#2886c4] h-3 cursor-pointer"
+                                            />
 
-                                        <span className="font-h2 font-bold text-xl w-8 text-center border-2 border-black rounded bg-white">
-                                            {scores[question.id] !== undefined
-                                                ? scores[question.id]
-                                                : "—"}
-                                        </span>
+                                            <span className="font-h2 font-bold text-xl w-8 text-center border-2 border-black rounded bg-white">
+                                                {currentScore !== undefined
+                                                    ? currentScore
+                                                    : "—"}
+                                            </span>
+                                        </div>
                                     </div>
+                                    {question.scoreFormat &&
+                                        question.scoreFormat.rows.length >
+                                            0 && (
+                                            <table className="w-full mt-2 border-2 border-black bg-white text-sm font-h2 table-fixed">
+                                                <thead>
+                                                    <tr className="bg-[#2886c4] text-white">
+                                                        <th className="border-2 border-black px-2 py-1 w-20 text-center">
+                                                            Score
+                                                        </th>
+                                                        <th className="border-2 border-black px-2 py-1 text-left">
+                                                            Description
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {question.scoreFormat.rows.map(
+                                                        (row, i) => {
+                                                            const highlight =
+                                                                currentScore !==
+                                                                    undefined &&
+                                                                currentScore >=
+                                                                    row.min &&
+                                                                currentScore <=
+                                                                    row.max;
+                                                            return (
+                                                                <tr
+                                                                    key={i}
+                                                                    className={
+                                                                        highlight
+                                                                            ? "bg-yellow-200 font-bold"
+                                                                            : ""
+                                                                    }
+                                                                >
+                                                                    <td className="border-2 border-black px-2 py-1 text-center">
+                                                                        {row.min ===
+                                                                        row.max
+                                                                            ? row.min
+                                                                            : `${row.min}-${row.max}`}
+                                                                    </td>
+                                                                    <td className="border-2 border-black px-2 py-1">
+                                                                        {
+                                                                            row.label
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        },
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        )}
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
                 {error && (

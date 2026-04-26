@@ -579,6 +579,37 @@ export interface Track {
 }
 
 /**
+ * A single row in a judging question's score rubric.
+ */
+export interface ScoreFormatRow {
+    /**
+     * The minimum score (inclusive) this row applies to.
+     */
+    min: number;
+
+    /**
+     * The maximum score (inclusive) this row applies to.
+     */
+    max: number;
+
+    /**
+     * The descriptive label for this score range.
+     */
+    label: string;
+}
+
+/**
+ * A scoring rubric for a judging question, rendered as a table
+ * below the score input.
+ */
+export interface ScoreFormat {
+    /**
+     * The rubric rows, in display order.
+     */
+    rows: ScoreFormatRow[];
+}
+
+/**
  * A judging question record in the database.
  */
 export interface JudgingQuestion {
@@ -591,6 +622,17 @@ export interface JudgingQuestion {
      * The question body displayed to the judge.
      */
     questionText: string;
+
+    /**
+     * An optional subtitle/clarification rendered under the question
+     * and above the rubric table.
+     */
+    description: string | null;
+
+    /**
+     * The scoring rubric to display below the input (if it exists).
+     */
+    scoreFormat: ScoreFormat | null;
 }
 
 /**

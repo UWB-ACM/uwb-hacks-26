@@ -191,6 +191,8 @@ export async function getJudgingQuestions(
     return data.map((row) => ({
         id: row.id,
         questionText: row.question_text,
+        description: row.description ?? null,
+        scoreFormat: row.score_format ?? null,
     }));
 }
 
@@ -228,6 +230,8 @@ export async function getTrackQuestions(
     return data.map((row) => ({
         id: row.id,
         questionText: row.question_text,
+        description: row.description ?? null,
+        scoreFormat: row.score_format ?? null,
     }));
 }
 
