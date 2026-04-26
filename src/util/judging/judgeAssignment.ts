@@ -60,11 +60,15 @@ export interface JudgeAssignmentResult {
     newAssignments: AssignJudgeAssignment[];
 
     /**
-     * The number of rounds needed to handle judging.
-     * This is the maximum of the number of projects assigned
-     * to a single judge.
+     * The top 3 highest project counts assigned to a single judge, in
+     * descending order. The first entry is the worst-case round count
+     * (the old `max workload` number). Surfacing the top 3 lets admins
+     * spot a single outlier judge - e.g. one handling all sidetracks -
+     * inflating the perceived round count beyond what the rest of the
+     * pool actually needs. Has up to 3 entries; fewer if there are
+     * fewer than 3 judges.
      */
-    neededRounds: number;
+    neededRounds: number[];
 
     /**
      * Non-fatal issues (unknown track tags, empty tags, insufficient
@@ -288,7 +292,10 @@ export function computeJudgeAssignments(
         }
     }
 
-    const neededRounds = Math.max(...judgeWorkload.values());
+    const neededRounds = [...judgeWorkload.values()]
+        // Sort descending.
+        .sort((a, b) => (b < a ? -1 : 1))
+        .slice(0, 3);
 
     return { newAssignments, neededRounds, warnings };
 }

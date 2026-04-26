@@ -111,9 +111,13 @@ export interface AutoAssignResult {
     collisionCount?: number;
 
     /**
-     * The number of rounds needed for everyone to get judged.
+     * The top 3 highest project counts assigned to a single judge, in
+     * descending order. Reported as a list (rather than a single max)
+     * so an outlier judge - e.g. one handling all sidetracks - doesn't
+     * make the round count look much worse than the rest of the pool
+     * actually needs.
      */
-    neededRounds?: number;
+    neededRounds?: number[];
 
     /**
      * Non-fatal warnings collected across all three phases.
