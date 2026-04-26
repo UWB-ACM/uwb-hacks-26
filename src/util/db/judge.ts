@@ -236,6 +236,20 @@ export async function getTrackQuestions(
 }
 
 /**
+ * This function will take the feedback from the judge and update the judgeAssignments table with the feedback data alone
+ * @param judgeId This is the ID Of the judge who's assessing the project
+ * @param projectId This is the ID of the project that's being assessed
+ * @param feedback This is the feedback that the judge is submitting
+ */
+export async function submitFeedbackForProject(
+    judgeId: number,
+    projectId: number,
+    feedback: string,
+) {
+    await sql`UPDATE judge_assignments SET feedback = ${feedback} WHERE project_id = ${projectId} AND judge_id = ${judgeId}`;
+}
+
+/**
  * Assigns a judge to a project, does nothing if the judge is already assigned to the project.
  * @param judgeID - is the judge's user ID.
  * @param projectID - is the project's ID.

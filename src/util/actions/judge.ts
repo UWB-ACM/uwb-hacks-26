@@ -8,6 +8,7 @@ import {
     completeAssignment,
     assignJudgeToProject,
     setProjectTable,
+    submitFeedbackForProject,
 } from "@/src/util/db/judge";
 import sql from "@/src/util/database";
 import { computeTableAssignments } from "@/src/util/judging/tableAssignment";
@@ -47,10 +48,12 @@ export async function actionSubmitScore(
  * @param projectId - is the project being finalized.
  * @param scoreQuestionArray - is the list of (questionId, score) pairs
  *     to persist before marking the assignment complete.
+ * @param feedback - is the feedback the judge gave for the project (may be empty).
  */
 export async function actionCompleteAssignment(
     projectId: number,
     scoreQuestionArray: [number, number][],
+    feedback: string,
 ): Promise<void | null> {
     const session = await getSession();
 
@@ -60,7 +63,21 @@ export async function actionCompleteAssignment(
             upsertScore(session.user!.id, projectId, questionId, score),
         ),
     );
+    await submitFeedbackForProject(session.user!.id, projectId, feedback);
     await completeAssignment(session.user!.id, projectId);
+}
+/**
+ * Submits feedback that the judge leaves for the projects into the database
+ * @param projectId  This is the Id for the project that is being asssessed
+ * @param feedback   This is the feedback that needs to be inserted into the database.
+ */
+export async function actionSubmitFeedback(
+    projectId: number,
+    feedback: string,
+): Promise<void | null> {
+    const session = await getSession();
+    await ensureJudgePermission(session);
+    await submitFeedbackForProject(session.user!.id, projectId, feedback);
 }
 
 /**
