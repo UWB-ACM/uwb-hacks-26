@@ -158,6 +158,37 @@ export async function getUserIdByDevpostEmail(
 }
 
 /**
+ * Fetches the room and table assignment for a user's project.
+ * A project belongs to the user when their devpost_email matches one
+ * of the project's user_emails. Only returns a result when both room
+ * and table are assigned, just in case.
+ *
+ * @param userId - is the ID of the user to look up a project placement for.
+ * @returns the room and table number, or null if none is found.
+ */
+export async function getProjectPlacementForUser(
+    userId: number,
+): Promise<{ room: string; tableNum: number } | null> {
+    const result = await sql`
+        SELECT p.room, p.table_num
+        FROM projects p
+        INNER JOIN users u ON u.devpost_email = ANY(p.user_emails)
+        WHERE u.id = ${userId}
+          AND p.room IS NOT NULL
+          AND p.table_num IS NOT NULL
+        LIMIT 1
+    `;
+
+    if (result.length === 0) {
+        return null;
+    }
+    return {
+        room: result[0].room,
+        tableNum: result[0].table_num,
+    };
+}
+
+/**
  * Links a Devpost email to a user's account. This function first removes the devpost email from any other user that currently has it linked to prevent UNIQUE constraint errors, and then links it to the specified user.
  *
  * @param devpostEmail - the Devpost email to link.

@@ -13,11 +13,13 @@ import SupportSection from "@/src/components/dashboards/userdashboard/SupportSec
 import { getUserConsent } from "@/src/util/db/user";
 import LeaderboardConsent from "@/src/components/dashboards/userdashboard/LeaderboardConsent";
 import TransactionTable from "./userdashboard/TransactionTable";
+import { getProjectPlacementForUser } from "@/src/util/db/devpost";
 
 async function UserDashboard({ user }: { user: SessionUser }) {
-    const [transactions, consent] = await Promise.all([
+    const [transactions, consent, projectPlacement] = await Promise.all([
         getTransactionsForUser(user.id),
         getUserConsent(user.id),
+        getProjectPlacementForUser(user.id),
     ]);
 
     if (!consent) return null;
@@ -25,6 +27,21 @@ async function UserDashboard({ user }: { user: SessionUser }) {
     return (
         // User Dashboard Container
         <div className="w-[90%] mx-auto rounded-md sm:mt-12">
+            {projectPlacement && (
+                <div className="mb-6 rounded-xl border-4 border-black bg-yellow-300 shadow-comic p-6 text-center">
+                    <h2 className="text-xl md:text-2xl font-bold uppercase tracking-wide">
+                        Your Project Location
+                    </h2>
+                    <p className="mt-2 text-3xl md:text-5xl font-extrabold text-[#2886c4]">
+                        Room {projectPlacement.room} · Table{" "}
+                        {projectPlacement.tableNum}
+                    </p>
+                    <p className="mt-2 text-base md:text-lg">
+                        Head here to set up for judging!
+                    </p>
+                </div>
+            )}
+
             {/* General User Information */}
             <div className="w-full flex flex-col gap-y-8 md:flex-row justify-around items-center md:px-14 lg:px-20">
                 {/* User PFP, First and Last Name, & Hackeroon Amount */}
