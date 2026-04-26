@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { actionAssignJudges } from "@/src/util/actions/judge";
-import { sendAllTableAssignments } from "@/src/util/actions/sendAllTableAssignments";
+import { actionSendTableAssignments } from "@/src/util/actions/actionSendTableAssignments";
 
 export default function JudgingAdminClient() {
     const [status, setStatus] = useState<
@@ -45,7 +45,7 @@ export default function JudgingAdminClient() {
     const handleNotification = async () => {
         setEmailStatus("loading");
 
-        const result = await sendAllTableAssignments();
+        const result = await actionSendTableAssignments();
 
         if (result.success) {
             setEmailStatus("success");

@@ -1,5 +1,6 @@
 import "server-only";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { Html } from "next/document";
 
 const ses = new SESClient({
     region: process.env.AWS_REGION as string,
@@ -12,12 +13,12 @@ const ses = new SESClient({
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
- *
+ * sends the users of a project the room and table number they will present at
  * @param targets - is the list of targets to send emails to.
  * Each target should have a devpost_email and a message to output.
  */
 export async function sendTableAssignmentEmails(
-    devpost_emails: string[],
+    emails: string[],
     message: string,
 ) {
     const successfulEmails: string[] = [];
@@ -30,10 +31,70 @@ export async function sendTableAssignmentEmails(
 
     // TEST OVERRIDE: Limit to 1 email maximum during testing so you don't get spammed
     if (TEST_MODE) {
-        devpost_emails = devpost_emails.slice(0, 1);
+        emails = emails.slice(0, 1);
     }
 
-    for (const email of devpost_emails) {
+    const htmlBody = `
+<!DOCTYPE html>
+<html>
+<body style="margin: 0; padding: 0; background-color: #f4f8fe; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f8fe; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+
+        <!-- Card -->
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+
+          <!-- Header -->
+          <tr>
+            <td align="center" style="background-color: #0a84dc; padding: 40px 20px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: 1px;">UWB HACKS 2026</h1>
+               <p style="color: #84c6ff; font-size: 16px; margin: 8px 0 0 0; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;">The Future</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:32px;">
+
+              <h2 style="margin:0 0 10px; font-size:18px; color:#111;">
+                Your Presentation Details Are Ready 🎤
+              </h2>
+
+              <p style="font-size:16px; color:#444; line-height:1.6;">
+                Hello hacker!
+              </p>
+
+              <!-- Main message box -->
+              <div style="margin:20px 0; padding:16px; background:#f0f7ff; border-left:4px solid #0a84dc;">
+                <p style="margin:0; font-size:16px; color:#1d4ed8; line-height:1.5;">
+                  ${message}
+                </p>
+              </div>
+
+              <p style="font-size:16px; color:#555; line-height:1.6;">
+                Please arrive at your assigned table at least 10 minutes early.
+              </p>
+
+              <p style="font-size:16px; color:#555; line-height:1.6;">
+                If you have any issues finding your location, please a UWB Hacks staff member.
+              </p>
+            </td>
+          </tr>
+        </table>
+                 <!-- Outer Footer -->
+            <p style="color: #a0aec0; font-size: 12px; text-align: center; margin-top: 20px;">
+                &copy; 2026 UWB Hacks. All rights reserved.
+            </p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
+
+    for (const email of emails) {
         const destinationEmail = TEST_MODE ? "testerEmail@gmail.com" : email;
 
         const command = new SendEmailCommand({
@@ -45,7 +106,10 @@ export async function sendTableAssignmentEmails(
                 },
                 Body: {
                     Text: {
-                        Data: `${message}`,
+                        Data: message,
+                    },
+                    Html: {
+                        Data: htmlBody,
                     },
                 },
             },
