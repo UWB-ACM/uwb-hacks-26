@@ -34,7 +34,7 @@ export interface RoomConfig {
  * so put the "preferred overflow" rooms first.
  */
 export const ROOMS = [
-    { name: "ARC", numTables: 28, projectsPerTable: 2 },
+    { name: "ARC", numTables: 53, projectsPerTable: 1 },
     { name: "NCEC", numTables: 12, projectsPerTable: 2 },
 ] as const satisfies RoomConfig[];
 
