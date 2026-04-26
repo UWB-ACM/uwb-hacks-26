@@ -14,7 +14,7 @@ import TracksSection from "../components/landing-page/TrackSection";
 type HomePageProps = {
     hackeroonPrizes: Promise<Prize[]>;
     leaderboardData: Promise<LeaderboardRecord[]>;
-    isJudge: boolean;
+    isJudge: Promise<boolean>;
 };
 
 export default function HomePage({
