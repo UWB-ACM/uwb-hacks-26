@@ -16,7 +16,7 @@ export default function JudgingAdminClient() {
     const [tableCount, setTableCount] = useState(0);
     const [judgeCount, setJudgeCount] = useState(0);
     const [collisionCount, setCollisionCount] = useState(0);
-    const [neededRounds, setNeededRounds] = useState(0);
+    const [neededRounds, setNeededRounds] = useState<number[]>([]);
     const [warnings, setWarnings] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [emailWarnings, setEmailWarnings] = useState<string[]>([]);
@@ -36,7 +36,7 @@ export default function JudgingAdminClient() {
             setTableCount(result.tableAssignmentsCount ?? 0);
             setJudgeCount(result.judgeAssignmentsCount ?? 0);
             setCollisionCount(result.collisionCount ?? 0);
-            setNeededRounds(result.neededRounds ?? 0);
+            setNeededRounds(result.neededRounds ?? []);
             setWarnings(result.warnings || []);
         } else {
             setStatus("error");
@@ -104,9 +104,12 @@ export default function JudgingAdminClient() {
                                 ✅ No round collisions.
                             </p>
                         )}
-                        <p className="text-green-600 font-bold mt-2">
-                            ✅ {neededRounds} round(s) needed.
-                        </p>
+                        {neededRounds.length > 0 && (
+                            <p className="text-green-600 font-bold mt-2">
+                                ✅ Top judge workloads:{" "}
+                                {neededRounds.join(", ")} round(s).
+                            </p>
+                        )}
 
                         {warnings.length > 0 && (
                             <div className="mt-4 p-4 bg-orange-50 border-2 border-orange-200 rounded-md text-left">
