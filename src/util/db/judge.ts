@@ -5,9 +5,11 @@ import sql from "@/src/util/database";
  * Returns an array of Project objects associated with the Judge
  * @param judgeId - is the user id that corresponds to the judge's id
  */
-export async function getJudgeAssignments(judgeId: number): Promise<Project[]> {
+export async function getJudgeAssignments(
+    judgeId: number,
+): Promise<Array<Project & { completedAt: Date | null }>> {
     const data =
-        await sql`SELECT projects.* FROM judge_assignments INNER JOIN projects ON judge_assignments.project_id = projects.id WHERE judge_id=${judgeId};`;
+        await sql`SELECT projects.*, judge_assignments.completed_at FROM judge_assignments INNER JOIN projects ON judge_assignments.project_id = projects.id WHERE judge_id=${judgeId};`;
 
     return data.map((row) => ({
         id: row.id,
@@ -23,6 +25,7 @@ export async function getJudgeAssignments(judgeId: number): Promise<Project[]> {
         userEmails: row.user_emails,
         room: row.room,
         tableNum: row.table_num,
+        completedAt: row.completed_at ?? null,
     }));
 }
 

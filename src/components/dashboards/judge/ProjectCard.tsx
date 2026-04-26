@@ -11,11 +11,17 @@ import { Project } from "@/src/util/dataTypes";
  *
  * @param project - is the project to render a card for.
  */
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({
+    project,
+}: {
+    project: Project & { completedAt: Date | null };
+}) {
     const hasLocation = project.room && project.tableNum != null;
     return (
         <Link href={`/judging/${project.id}`} className="h-min">
-            <div className="flex flex-col items-center p-6 bg-neutral-200 rounded-lg border-4 border-black shadow-comic">
+            <div
+                className={`flex flex-col items-center p-6 rounded-lg border-4 border-black shadow-comic ${project.completedAt !== null ? "bg-green-500" : "bg-neutral-200"}`}
+            >
                 <p className="font-bold text-2xl">{project.projectTitle}</p>
                 {hasLocation ? (
                     <p className="font-bold text-lg text-[#2886c4]">

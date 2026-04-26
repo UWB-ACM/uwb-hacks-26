@@ -4,9 +4,15 @@ import Cloud3 from "@/public/clouds/Cloud3.png";
 import Bridge from "@/public/Bridge-Background.png";
 import { daysUntilEvent } from "@/src/util/date";
 import { motion } from "motion/react";
+import { Suspense } from "react";
+import JudgeButton from "./(HeroSectionComponents)/JudgeButtonComponent";
 import FloatingCity from "@/public/FloatingCity.png";
 
-export default function HeroSection() {
+export default function HeroSection({
+    isJudge,
+}: {
+    isJudge: Promise<boolean>;
+}) {
     const daysLeft = daysUntilEvent();
 
     return (
@@ -60,6 +66,9 @@ export default function HeroSection() {
                             SPONSOR US
                         </Link>
                     </div>
+                    <Suspense>
+                        <JudgeButton isJudge={isJudge}></JudgeButton>
+                    </Suspense>
                 </div>
             </div>
 

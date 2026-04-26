@@ -24,7 +24,7 @@ export function JudgingPage({
     projects,
 }: {
     judgeId: number;
-    projects: Project[];
+    projects: Array<Project & { completedAt: Date | null }>;
 }) {
     const ANY_PROJECTS = projects.length === 0;
 
