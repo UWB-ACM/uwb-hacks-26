@@ -9,26 +9,14 @@ export async function actionSendTableAssignments() {
     try {
         const session = await getSession();
         await ensureAdminPermission(session);
-
         const projects = await getAllProjects();
 
-        const results = [];
-
-        for (const p of projects) {
-            const message = `Your project has been assigned to present in the following room: \n${p.room} at table ${p.tableNum}.`;
-
-            const result = await sendTableAssignmentEmails(
-                p.userEmails,
-                message,
-            );
-
-            results.push(result);
-        }
+        const results = await sendTableAssignmentEmails(projects);
 
         return {
             success: true,
-            sent: results.reduce((a, r) => a + r.successfulEmails.length, 0),
-            failed: results.reduce((a, r) => a + r.failedEmails.length, 0),
+            sent: results.successfulEmails.length,
+            failed: results.failedEmails.length,
         };
     } catch (error) {
         console.error("actionSendTableAssignments error:", error);
