@@ -7,6 +7,7 @@ import { Project, JudgingQuestion, JudgingScore } from "@/src/util/dataTypes";
 import {
     actionSubmitScore,
     actionCompleteAssignment,
+    actionSubmitFeedback,
 } from "@/src/util/actions/judge";
 import Header from "@/src/components/header/Header";
 
@@ -28,6 +29,7 @@ export default function ProjectScoringPage({
         Object.fromEntries(existingScores.map((s) => [s.questionId, s.score])),
     );
     const [completing, setCompleting] = useState(false);
+    const [feedback, setFeedback] = useState<string>("");
 
     // All questions must have a defined score before the judge can mark complete.
     const allScored =
@@ -71,6 +73,7 @@ export default function ProjectScoringPage({
 
         try {
             await actionCompleteAssignment(project.id, scoreQuestionArray);
+            await actionSubmitFeedback(project.id, feedback);
             router.push("/judging");
         } catch (e) {
             setError(
@@ -254,6 +257,21 @@ export default function ProjectScoringPage({
                         })}
                     </div>
                 )}
+                {/* Feedback — special case, not part of scored questions */}
+                <div className="bg-neutral-200 rounded-lg border-4 border-black shadow-comic p-6 flex flex-col gap-3">
+                    <h2 className="font-h2 text-lg font-bold">
+                        Feedback for the team (optional)
+                    </h2>
+                    <textarea
+                        value={feedback}
+                        onChange={(e) => setFeedback(e.target.value)}
+                        onBlur={() => actionSubmitFeedback(project.id, feedback)}
+                        rows={4}
+                        placeholder="Leave constructive feedback for the team..."
+                        className="w-full border-2 border-black rounded p-2 font-h2 text-sm resize-none bg-white"
+                    />
+                </div>
+
                 {error && (
                     <p className="font-h2 text-red-500 font-bold text-center text-5xl">
                         {error}
