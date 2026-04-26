@@ -214,7 +214,7 @@ export async function sendTableAssignmentEmails(projects: Project[]) {
             <td style="padding:32px;">
 
               <h2 style="margin:0 0 10px; font-size:18px; color:#111;">
-                Your Official Presentation Details are Ready
+                Your <strong>Official</strong> Presentation Details are Ready
               </h2>
 
               <p style="font-size:16px; color:#444; line-height:1.6;">
