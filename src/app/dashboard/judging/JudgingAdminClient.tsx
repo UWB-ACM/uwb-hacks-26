@@ -2,11 +2,17 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { actionAssignJudges } from "@/src/util/actions/judge";
+import {
+    actionAssignJudges,
+    actionAssignTables,
+} from "@/src/util/actions/judge";
 import { actionSendTableAssignments } from "@/src/util/actions/actionSendTableAssignments";
 
 export default function JudgingAdminClient() {
-    const [status, setStatus] = useState<
+    const [tableStatus, setTableStatus] = useState<
+        "idle" | "loading" | "success" | "error"
+    >("idle");
+    const [judgeStatus, setJudgeStatus] = useState<
         "idle" | "loading" | "success" | "error"
     >("idle");
     const [emailStatus, setEmailStatus] = useState<
@@ -14,33 +20,52 @@ export default function JudgingAdminClient() {
     >("idle");
 
     const [tableCount, setTableCount] = useState(0);
-    const [judgeCount, setJudgeCount] = useState(0);
-    const [collisionCount, setCollisionCount] = useState(0);
-    const [neededRounds, setNeededRounds] = useState<number[]>([]);
-    const [warnings, setWarnings] = useState<string[]>([]);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [emailWarnings, setEmailWarnings] = useState<string[]>([]);
-    const [emailErrorMessage, setEmailErrorMessage] = useState<string | null>(
+    const [tableWarnings, setTableWarnings] = useState<string[]>([]);
+    const [tableErrorMessage, setTableErrorMessage] = useState<string | null>(
         null,
     );
 
-    const handleAssign = async () => {
-        setStatus("loading");
-        setErrorMessage(null);
-        setWarnings([]);
+    const [judgeCount, setJudgeCount] = useState(0);
+    const [collisionCount, setCollisionCount] = useState(0);
+    const [neededRounds, setNeededRounds] = useState<number[]>([]);
+    const [judgeWarnings, setJudgeWarnings] = useState<string[]>([]);
+    const [judgeErrorMessage, setJudgeErrorMessage] = useState<string | null>(
+        null,
+    );
+
+    const handleAssignTables = async () => {
+        setTableStatus("loading");
+        setTableErrorMessage(null);
+        setTableWarnings([]);
+
+        const result = await actionAssignTables();
+
+        if (result.success) {
+            setTableStatus("success");
+            setTableCount(result.tableAssignmentsCount ?? 0);
+            setTableWarnings(result.warnings || []);
+        } else {
+            setTableStatus("error");
+            setTableErrorMessage(result.error ?? "Something went wrong.");
+        }
+    };
+
+    const handleAssignJudges = async () => {
+        setJudgeStatus("loading");
+        setJudgeErrorMessage(null);
+        setJudgeWarnings([]);
 
         const result = await actionAssignJudges();
 
         if (result.success) {
-            setStatus("success");
-            setTableCount(result.tableAssignmentsCount ?? 0);
+            setJudgeStatus("success");
             setJudgeCount(result.judgeAssignmentsCount ?? 0);
             setCollisionCount(result.collisionCount ?? 0);
             setNeededRounds(result.neededRounds ?? []);
-            setWarnings(result.warnings || []);
+            setJudgeWarnings(result.warnings || []);
         } else {
-            setStatus("error");
-            setErrorMessage(result.error ?? "Something went wrong.");
+            setJudgeStatus("error");
+            setJudgeErrorMessage(result.error ?? "Something went wrong.");
         }
     };
 
@@ -64,18 +89,28 @@ export default function JudgingAdminClient() {
                 </h1>
 
                 <div className="bg-yellow-100 border-2 border-black p-4 mb-8 text-sm font-bold">
-                    ⚠️ ATTENTION: This places unassigned projects at tables,
-                    then assigns judges to every track for every project.
+                    ⚠️ ATTENTION: Run table assignment first to place
+                    unassigned projects, then judge assignment to assign judges
+                    to every track for every project.
                 </div>
 
                 <button
-                    onClick={handleAssign}
-                    disabled={status === "loading"}
+                    onClick={handleAssignTables}
+                    disabled={tableStatus === "loading"}
                     className="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 px-6 my-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all disabled:opacity-50 uppercase italic"
                 >
-                    {status === "loading"
+                    {tableStatus === "loading"
                         ? "Assigning..."
-                        : "Run Auto-Assignment"}
+                        : "Assign Tables"}
+                </button>
+                <button
+                    onClick={handleAssignJudges}
+                    disabled={judgeStatus === "loading"}
+                    className="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 px-6 my-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all disabled:opacity-50 uppercase italic"
+                >
+                    {judgeStatus === "loading"
+                        ? "Assigning..."
+                        : "Assign Judges"}
                 </button>
                 <button
                     onClick={handleNotification}
@@ -86,11 +121,37 @@ export default function JudgingAdminClient() {
                         : "Send Email Notification"}
                 </button>
 
-                {status === "success" && (
+                {tableStatus === "success" && (
                     <div className="mt-6 text-center">
                         <p className="text-green-600 font-bold">
                             ✅ Placed {tableCount} project(s) at tables.
                         </p>
+
+                        {tableWarnings.length > 0 && (
+                            <div className="mt-4 p-4 bg-orange-50 border-2 border-orange-200 rounded-md text-left">
+                                <p className="text-orange-700 font-bold text-sm mb-2">
+                                    ⚠️ Warnings ({tableWarnings.length}):
+                                </p>
+                                <ul className="text-xs text-orange-600 list-disc ml-4 space-y-1">
+                                    {tableWarnings.map((w, i) => (
+                                        <li key={i}>{w}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {tableStatus === "error" && (
+                    <div className="mt-6 p-4 bg-red-50 border-2 border-red-200 rounded-md">
+                        <p className="text-red-600 font-bold text-center">
+                            {tableErrorMessage}
+                        </p>
+                    </div>
+                )}
+
+                {judgeStatus === "success" && (
+                    <div className="mt-6 text-center">
                         <p className="text-green-600 font-bold">
                             ✅ Created {judgeCount} judge assignment(s).
                         </p>
@@ -111,13 +172,13 @@ export default function JudgingAdminClient() {
                             </p>
                         )}
 
-                        {warnings.length > 0 && (
+                        {judgeWarnings.length > 0 && (
                             <div className="mt-4 p-4 bg-orange-50 border-2 border-orange-200 rounded-md text-left">
                                 <p className="text-orange-700 font-bold text-sm mb-2">
-                                    ⚠️ Warnings ({warnings.length}):
+                                    ⚠️ Warnings ({judgeWarnings.length}):
                                 </p>
                                 <ul className="text-xs text-orange-600 list-disc ml-4 space-y-1">
-                                    {warnings.map((w, i) => (
+                                    {judgeWarnings.map((w, i) => (
                                         <li key={i}>{w}</li>
                                     ))}
                                 </ul>
@@ -126,10 +187,10 @@ export default function JudgingAdminClient() {
                     </div>
                 )}
 
-                {status === "error" && (
+                {judgeStatus === "error" && (
                     <div className="mt-6 p-4 bg-red-50 border-2 border-red-200 rounded-md">
                         <p className="text-red-600 font-bold text-center">
-                            {errorMessage}
+                            {judgeErrorMessage}
                         </p>
                     </div>
                 )}

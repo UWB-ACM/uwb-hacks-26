@@ -81,9 +81,9 @@ export async function actionSubmitFeedback(
 }
 
 /**
- * The result returned by `actionAssignJudges` to the admin UI.
+ * The result returned by `actionAssignTables` to the admin UI.
  */
-export interface AutoAssignResult {
+export interface TableAssignResult {
     /**
      * Whether the run finished successfully. When false, `error` is set.
      */
@@ -98,6 +98,26 @@ export interface AutoAssignResult {
      * The number of projects that were newly placed at a table this run.
      */
     tableAssignmentsCount?: number;
+
+    /**
+     * Non-fatal warnings emitted by the table-assignment phase.
+     */
+    warnings?: string[];
+}
+
+/**
+ * The result returned by `actionAssignJudges` to the admin UI.
+ */
+export interface JudgeAssignResult {
+    /**
+     * Whether the run finished successfully. When false, `error` is set.
+     */
+    success: boolean;
+
+    /**
+     * A human-readable error message, when `success` is false.
+     */
+    error?: string;
 
     /**
      * The number of (judge, project) assignments newly created this run.
@@ -120,32 +140,25 @@ export interface AutoAssignResult {
     neededRounds?: number[];
 
     /**
-     * Non-fatal warnings collected across all three phases.
+     * Non-fatal warnings emitted by the judge-assignment and collision
+     * analysis phases.
      */
     warnings?: string[];
 }
 
 /**
- * Runs the full auto-assignment pipeline in three phases:
- *   - Table assignment: places any unplaced projects at a (room,
- *     tableNum), respecting track room affinities.
- *   - Judge assignment: assigns judges to projects so every
- *     (project, track) pair gets JUDGES_PER_TRACK judges.
- *   - Collision analysis: builds each judge's staggered walk order
- *     and flags any project that has 3+ judges arriving at the same
- *     round (usually caused by projects in multiple tracks).
+ * Places any unplaced projects at a (room, tableNum), respecting track
+ * room affinities, and persists the placements to the projects table.
  *
- * All three phases share one warnings bag, surfaced on the admin UI.
- * The action is idempotent - safe to re-run after adding late projects
- * or judges.
+ * Idempotent - safe to re-run after adding late projects.
  */
-export async function actionAssignJudges(): Promise<AutoAssignResult> {
+export async function actionAssignTables(): Promise<TableAssignResult> {
     try {
         const session = await getSession();
         await ensureAdminPermission(session);
 
         const rawProjects = await sql`
-            SELECT id, main_track, side_tracks, room, table_num
+            SELECT id, main_track, room, table_num
             FROM projects
             WHERE submitted = true
         `;
@@ -165,24 +178,45 @@ export async function actionAssignJudges(): Promise<AutoAssignResult> {
             );
         }
 
-        // Merge new placements back into our in-memory view so judge
-        // assignment has up-to-date (room, tableNum) for ranking.
-        const placementByProjectId = new Map(
-            tableResult.placements.map((p) => [
-                p.projectId,
-                { room: p.room, tableNum: p.tableNum },
-            ]),
-        );
-        const projectsForJudges: AssignProject[] = rawProjects.map((p) => {
-            const np = placementByProjectId.get(p.id);
-            return {
-                id: p.id,
-                mainTrack: p.main_track,
-                sideTracks: p.side_tracks ?? [],
-                room: np?.room ?? p.room,
-                tableNum: np?.tableNum ?? p.table_num,
-            };
-        });
+        return {
+            success: true,
+            tableAssignmentsCount: tableResult.placements.length,
+            warnings: tableResult.warnings,
+        };
+    } catch (error) {
+        console.error("Table Assignment Error:", error);
+        return { success: false, error: "A database error occurred." };
+    }
+}
+
+/**
+ * Assigns judges to projects so every (project, track) pair gets
+ * JUDGES_PER_TRACK judges, then runs collision analysis to flag any
+ * project that has 3+ judges arriving at the same round in each
+ * judge's staggered walk order (usually caused by projects in multiple
+ * tracks).
+ *
+ * Reads each project's current (room, tableNum) from the DB, so for
+ * best results run `actionAssignTables` first. Idempotent - safe to
+ * re-run after adding late projects or judges.
+ */
+export async function actionAssignJudges(): Promise<JudgeAssignResult> {
+    try {
+        const session = await getSession();
+        await ensureAdminPermission(session);
+
+        const rawProjects = await sql`
+            SELECT id, main_track, side_tracks, room, table_num
+            FROM projects
+            WHERE submitted = true
+        `;
+        const projectsForJudges: AssignProject[] = rawProjects.map((p) => ({
+            id: p.id,
+            mainTrack: p.main_track,
+            sideTracks: p.side_tracks ?? [],
+            room: p.room,
+            tableNum: p.table_num,
+        }));
 
         const rawTracks = await sql`SELECT id, devpost_tag FROM tracks`;
         const rawJudges = await sql`SELECT id, track_ids FROM judge_info`;
@@ -223,7 +257,6 @@ export async function actionAssignJudges(): Promise<AutoAssignResult> {
         const collisions = analyzeCollisions(projectsForJudges, allAssignments);
 
         const warnings = [
-            ...tableResult.warnings,
             ...judgeResult.warnings,
             ...collisions.map(
                 (c) =>
@@ -233,14 +266,13 @@ export async function actionAssignJudges(): Promise<AutoAssignResult> {
 
         return {
             success: true,
-            tableAssignmentsCount: tableResult.placements.length,
             judgeAssignmentsCount: judgeResult.newAssignments.length,
             collisionCount: collisions.length,
             neededRounds: judgeResult.neededRounds,
             warnings,
         };
     } catch (error) {
-        console.error("Assignment Error:", error);
+        console.error("Judge Assignment Error:", error);
         return { success: false, error: "A database error occurred." };
     }
 }
