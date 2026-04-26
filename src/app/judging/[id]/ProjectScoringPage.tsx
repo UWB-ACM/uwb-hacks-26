@@ -185,7 +185,10 @@ export default function ProjectScoringPage({
                                                         e.target.value,
                                                     )
                                                 }
-                                                onMouseUp={() =>
+                                                onPointerUp={() =>
+                                                    handleMouseUp(question.id)
+                                                }
+                                                onKeyUp={() =>
                                                     handleMouseUp(question.id)
                                                 }
                                                 className="flex-1 accent-[#2886c4] h-3 cursor-pointer"

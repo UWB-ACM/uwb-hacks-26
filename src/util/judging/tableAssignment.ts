@@ -73,9 +73,10 @@ export interface TableAssignmentResult {
 /**
  * The live fill state of one room during a single assignment pass.
  *
- * Seats are indexed [0, (numTables * projectsPerTable - 1)]; seat i
- * sits at table (i / projectsPerTable) + 1. We fill seats in order
- * so same-track blocks land on consecutive tables.
+ * Tables are visited in numeric order so same-track blocks land on
+ * consecutive tables. Each table is filled up to `projectsPerTable`
+ * (counting any pre-existing placements) before we advance, so
+ * partially-occupied tables get topped up rather than wasted.
  */
 interface RoomState {
     /**
@@ -94,25 +95,26 @@ interface RoomState {
     projectsPerTable: number;
 
     /**
-     * The next available seat index.
-     * If it isn't in bounds, the room is full.
+     * The next table (1-indexed) to consider for placement. Every
+     * table strictly less than this is full. If it exceeds
+     * `numTables`, the room is full.
      */
-    nextSeat: number;
+    nextTable: number;
+
+    /**
+     * Map from 1-indexed table number to the number of projects
+     * currently placed there (counting both pre-existing placements
+     * and ones added during this pass). `takeSeat` advances past any
+     * table whose count has reached `projectsPerTable`.
+     */
+    seatsByTable: Map<number, number>;
 }
 
 /**
- * Converts a 0-based seat index into a 1-based table number.
- *
- * @param seatIdx - is the seat's zero-based index within the room.
- * @param projectsPerTable - is how many projects share one table.
- */
-function seatToTable(seatIdx: number, projectsPerTable: number): number {
-    return Math.floor(seatIdx / projectsPerTable) + 1;
-}
-
-/**
- * Builds the initial RoomState for every configured room, marking the
- * seats already taken by projects whose placement we're preserving.
+ * Builds the initial RoomState for every configured room, seeding
+ * each room's per-table occupancy from the projects already placed
+ * there so partial tables get filled the rest of the way before we
+ * move on.
  *
  * @param occupiedByRoom - is a map from room name to a map from table
  *     number to the count of projects already placed at that table.
@@ -122,18 +124,19 @@ function initRoomStates(
 ): RoomState[] {
     return ROOMS.map((r) => {
         const occ = occupiedByRoom.get(r.name);
-        const nextSeat = occ
-            ? occ
-                  .entries()
-                  .map(([_table, count]) => count)
-                  .reduce((a, b) => a + b, 0)
-            : 0;
+        const seatsByTable = new Map<number, number>();
+        if (occ) {
+            for (const [tableNum, count] of occ.entries()) {
+                seatsByTable.set(tableNum, count);
+            }
+        }
 
         return {
             name: r.name,
             numTables: r.numTables,
             projectsPerTable: r.projectsPerTable,
-            nextSeat: nextSeat,
+            nextTable: 1,
+            seatsByTable,
         };
     });
 }
@@ -142,16 +145,30 @@ function initRoomStates(
  * Claims the next free seat in a room and returns its table number,
  * or null if the room is full.
  *
+ * Walks tables in numeric order, topping up partially-occupied tables
+ * (including ones with pre-existing placements) before advancing, so
+ * we never collide with existing placements and never waste a slot.
+ *
  * @param state - is the mutable fill state of the room to claim from.
  */
 function takeSeat(state: RoomState): { tableNum: number } | null {
-    const capacity = state.numTables * state.projectsPerTable;
-    if (state.nextSeat >= capacity) return null;
+    while (state.nextTable <= state.numTables) {
+        const taken = state.seatsByTable.get(state.nextTable) ?? 0;
+        if (taken >= state.projectsPerTable) {
+            state.nextTable++;
+            continue;
+        }
 
-    const seat = state.nextSeat;
-    state.nextSeat++;
+        const tableNum = state.nextTable;
+        state.seatsByTable.set(tableNum, taken + 1);
+        if (taken + 1 >= state.projectsPerTable) {
+            state.nextTable++;
+        }
 
-    return { tableNum: seatToTable(seat, state.projectsPerTable) };
+        return { tableNum };
+    }
+
+    return null;
 }
 
 /**
