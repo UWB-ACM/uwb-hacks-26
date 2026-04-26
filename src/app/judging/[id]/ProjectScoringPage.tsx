@@ -265,7 +265,9 @@ export default function ProjectScoringPage({
                     <textarea
                         value={feedback}
                         onChange={(e) => setFeedback(e.target.value)}
-                        onBlur={() => actionSubmitFeedback(project.id, feedback)}
+                        onBlur={() =>
+                            actionSubmitFeedback(project.id, feedback)
+                        }
                         rows={4}
                         placeholder="Leave constructive feedback for the team..."
                         className="w-full border-2 border-black rounded p-2 font-h2 text-sm resize-none bg-white"
