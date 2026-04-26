@@ -151,7 +151,26 @@ async function actionImportProjects(
 
     const result: ImportResult = { imported: 0, warnings: [], errors: [] };
 
-    const parsed = Papa.parse<Record<string, string>>(csvText, {
+    // This is a hack, since Devpost puts in the first additional team member as a header
+    // and leaves the rest as "...".
+    // This just fixes the header so it includes up to a certain number of team member columns.
+    // The 5 is completely arbitrary.
+    const csvParts = csvText.split("\n");
+    csvParts[0] = csvParts[0].replace(
+        /,\.\.\.$/,
+        "," +
+            Array(5)
+                .fill("")
+                .map(
+                    (_, idx) =>
+                        `Team Member ${idx + 2} First Name,Team Member ${idx + 2} Last Name,Team Member ${idx + 2} Email`,
+                )
+                .join(","),
+    );
+    console.log(csvParts[0]);
+    const fixedCSVText = csvParts.join("\n");
+
+    const parsed = Papa.parse<Record<string, string>>(fixedCSVText, {
         header: true,
         skipEmptyLines: true,
     });
