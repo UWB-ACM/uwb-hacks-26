@@ -162,6 +162,29 @@ export async function getTrack(trackId: number): Promise<Track | null> {
 }
 
 /**
+ * This function returns the feedback that a specific judge left on a specific project
+ *
+ * @param projectId This is the id of the project
+ * @param judgeId This is the id of the judge
+ * @returns String that is the feedback
+ */
+export async function getFeedback(
+    projectId: number,
+    judgeId: number,
+): Promise<string | null> {
+    const data =
+        await sql`SELECT feedback FROM judge_assignments WHERE project_id = ${projectId} and judge_id = ${judgeId}`;
+
+    if (data.length === 0) {
+        return null;
+    }
+
+    const row = data[0];
+
+    return row.feedback;
+}
+
+/**
  * Returns all tracks.
  */
 export async function getAllTracks(): Promise<Track[]> {
