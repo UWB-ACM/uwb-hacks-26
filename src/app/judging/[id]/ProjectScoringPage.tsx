@@ -72,8 +72,11 @@ export default function ProjectScoringPage({
             .map((q) => [q.id, scores[q.id]] as [number, number]);
 
         try {
-            await actionCompleteAssignment(project.id, scoreQuestionArray);
-            await actionSubmitFeedback(project.id, feedback);
+            await actionCompleteAssignment(
+                project.id,
+                scoreQuestionArray,
+                feedback,
+            );
             router.push("/judging");
         } catch (e) {
             setError(

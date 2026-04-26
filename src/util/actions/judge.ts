@@ -48,10 +48,12 @@ export async function actionSubmitScore(
  * @param projectId - is the project being finalized.
  * @param scoreQuestionArray - is the list of (questionId, score) pairs
  *     to persist before marking the assignment complete.
+ * @param feedback - is the feedback the judge gave for the project (may be empty).
  */
 export async function actionCompleteAssignment(
     projectId: number,
     scoreQuestionArray: [number, number][],
+    feedback: string,
 ): Promise<void | null> {
     const session = await getSession();
 
@@ -61,6 +63,7 @@ export async function actionCompleteAssignment(
             upsertScore(session.user!.id, projectId, questionId, score),
         ),
     );
+    await submitFeedbackForProject(session.user!.id, projectId, feedback);
     await completeAssignment(session.user!.id, projectId);
 }
 /**
