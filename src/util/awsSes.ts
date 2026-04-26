@@ -12,6 +12,70 @@ const ses = new SESClient({
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
+ *
+ * @param targets - is the list of targets to send emails to.
+ * Each target should have a devpost_email and a message to output.
+ */
+export async function sendTableAssignmentEmails(
+    devpost_emails: string[],
+    message: string,
+) {
+    const successfulEmails: string[] = [];
+    const failedEmails: { email: string; error: unknown }[] = [];
+
+    const fromEmail = "noreply@uwbhacks.com";
+
+    // TEMPORARY OVERRIDE FOR TESTING: If TEST_MODE is true, we will only send one email to a test address to avoid spamming real users while testing. Remember to set this back to false in production!
+    const TEST_MODE = false;
+
+    // TEST OVERRIDE: Limit to 1 email maximum during testing so you don't get spammed
+    if (TEST_MODE) {
+        devpost_emails = devpost_emails.slice(0, 1);
+    }
+
+    for (const email of devpost_emails) {
+        const destinationEmail = TEST_MODE ? "testerEmail@gmail.com" : email;
+
+        const command = new SendEmailCommand({
+            Source: `UWB Hacks <${fromEmail}>`,
+            Destination: { ToAddresses: [destinationEmail] },
+            Message: {
+                Subject: {
+                    Data: "[URGENT] Presentation Location Assignment | UWB Hacks 26",
+                },
+                Body: {
+                    Text: {
+                        Data: `${message}`,
+                    },
+                },
+            },
+        });
+
+        // send email
+        try {
+            await ses.send(command);
+            if (TEST_MODE) {
+                // temporary manual failure for test mode so we don't accidentally update the DB
+                failedEmails.push({
+                    email: email,
+                    error: "TEST MODE: sent to test email instead of real target",
+                });
+            } else {
+                successfulEmails.push(email);
+            }
+        } catch (error) {
+            console.error("Detailed SES Send Error for", email, error);
+            failedEmails.push({ email: email, error });
+        }
+
+        // Add a short delay between sends to avoid hitting SES rate limits
+        await delay(100);
+    }
+
+    return { successfulEmails, failedEmails };
+}
+
+/**
  * Sends Devpost linking emails to a list of targets.
  * @param targets - is the list of targets to send emails to.
  * Each target should have a devpost_email and a code for linking.
@@ -28,7 +92,7 @@ export async function sendDevpostLinkingEmails(
     const fromEmail = "noreply@uwbhacks.com";
 
     // TEMPORARY OVERRIDE FOR TESTING: If TEST_MODE is true, we will only send one email to a test address to avoid spamming real users while testing. Remember to set this back to false in production!
-    const TEST_MODE = false;
+    const TEST_MODE = true;
 
     // TEST OVERRIDE: Limit to 1 email maximum during testing so you don't get spammed
     if (TEST_MODE) {
@@ -127,6 +191,7 @@ export async function sendDevpostLinkingEmails(
             },
         });
 
+        // actually send email
         try {
             await ses.send(command);
             if (TEST_MODE) {
