@@ -5,7 +5,7 @@ import { Project } from "./dataTypes";
 const FROM_EMAIL = "noreply@uwbhacks.com";
 const EMAIL_SRC = `UWB Hacks <${FROM_EMAIL}>`;
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 const TEST_EMAIL = "testEmail@gmail.com";
 const SEND_DELAY_MS = 100;
 
