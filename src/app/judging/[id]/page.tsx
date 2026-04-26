@@ -4,6 +4,7 @@ import {
     getProject,
     getJudgingQuestions,
     getScoresForProject,
+    getFeedback,
 } from "@/src/util/db/judge";
 import ProjectScoringPage from "./ProjectScoringPage";
 import { ensureJudgePermission } from "@/src/util/judge";
@@ -28,11 +29,14 @@ export default async function Page({
         getScoresForProject(session.user!.id, projectId),
     ]);
 
+    const existingFeedback = await getFeedback(projectId, session.user!.id);
+
     return (
         <ProjectScoringPage
             project={project}
             questions={questions}
             existingScores={existingScores}
+            existingFeedback={existingFeedback}
         />
     );
 }

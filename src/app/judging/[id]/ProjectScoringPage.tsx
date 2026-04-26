@@ -17,10 +17,12 @@ export default function ProjectScoringPage({
     project,
     questions,
     existingScores,
+    existingFeedback,
 }: {
     project: Project;
     questions: JudgingQuestion[];
     existingScores: JudgingScore[];
+    existingFeedback: string | null;
 }) {
     const router = useRouter();
 
@@ -28,8 +30,11 @@ export default function ProjectScoringPage({
     const [scores, setScores] = useState<Record<number, number>>(
         Object.fromEntries(existingScores.map((s) => [s.questionId, s.score])),
     );
+    const [feedback, setFeedback] = useState<string>(
+        existingFeedback === null ? "" : existingFeedback,
+    );
+
     const [completing, setCompleting] = useState(false);
-    const [feedback, setFeedback] = useState<string>("");
 
     // All questions must have a defined score before the judge can mark complete.
     const allScored =
