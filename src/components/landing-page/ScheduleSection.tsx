@@ -1,350 +1,177 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Image from "next/image";
-import AccentImage from "@/public/accent.webp";
+import ScheduleCloudTop from "@/public/scheduleSection/ScheduleCloudTop.svg";
+import ScheduleCloudBodyMobile from "@/public/scheduleSection/ScheduleCloudBodyMobile.svg";
+import ScheduleCloudBody from "@/public/scheduleSection/ScheduleCloudBody.svg";
+import ScheduleCloudBottom from "@/public/scheduleSection/ScheduleCloudBottom.svg";
+import Cloud3 from "@/public/clouds/Cloud3.png";
+
 import Panel from "./(AboutSectionComponents)/Panel/Panel";
 import PanelHeader from "./(AboutSectionComponents)/Panel/Header";
 import PanelContent from "./(AboutSectionComponents)/Panel/Content";
 
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { FaLongArrowAltRight } from "react-icons/fa";
+
+import { schedule, DaySchedule } from "./(ScheduleSectionComponents)/Schedule";
+import EventItem from "./(ScheduleSectionComponents)/EventItem";
+import { motion } from "motion/react";
+
 const ScheduleSection: React.FC = () => {
-    const panelMargin = "mt-12 md:mt-16";
+    const [day, setDay] = useState<1 | 2 | 3>(() => {
+        const currDate = new Date();
+
+        // If the current date is...
+        // - before, after, or on the first day of the hackthon, set to 1 (1st day of the hackathon)
+        // - before the third day of the hackthon (April 26, midnight), set to 2 (2nd day of hackathon)
+        // - otherwise, set to 3 (3rd day of hackathon)
+        const apr25 = new Date(2026, 3, 25, 0, 0, 0, 0);
+        const apr26 = new Date(2026, 3, 26, 0, 0, 0, 0);
+        const apr27 = new Date(2026, 3, 27, 0, 0, 0, 0);
+
+        if (currDate < apr25 || currDate >= apr27) {
+            return 1;
+        } else if (currDate < apr26) {
+            return 2;
+        } else {
+            return 3;
+        }
+    });
+
+    const daySchedule: DaySchedule = schedule[day];
+
+    const handleSwitchDay = (direction: "prev" | "next") => {
+        const el = document.getElementById("scheduleSectionPanel");
+        if (el) {
+            window.scrollTo({
+                top: el.getBoundingClientRect().top + window.scrollY - 100,
+                behavior: "smooth",
+            });
+        }
+
+        let newDay = day + (direction == "prev" ? -1 : 1);
+
+        if (newDay == 0) {
+            newDay = 3;
+        } else if (newDay == 4) {
+            newDay = 1;
+        }
+
+        setDay(newDay as 1 | 2 | 3);
+    };
 
     return (
-        <Panel id="schedulePanel" panelColor="white" className={panelMargin}>
-            <PanelHeader
-                parentPanelId="schedulePanel"
-                className="text-[#49B2F8] border-none lg:w-full pb-0 bg-transparent"
-                isSectionHeader
-                long
+        <div className="w-full">
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.5 }}
             >
-                Schedule
-            </PanelHeader>
-            <PanelContent
-                parentPanelId="schedulePanel"
-                className="grid gap-y-6 gap-x-6 md:grid-cols-3"
-                long
-            >
-                <ScheduleCard
-                    day="DAY 1"
-                    date="4/25 FRI"
-                    spirit="Fandom Day"
-                    events={[
-                        {
-                            time: "9:30 AM - 11:45 AM",
-                            name: "Check-In",
-                            description:
-                                "Participants check in and enjoy snacks.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "10:00 AM - 11:30 AM",
-                            name: "Team Formation",
-                            description:
-                                "Optional Activity: No team? No problem! Come build your dream team and network with your peers during this activity hosted by Google Developer Group (GDG).",
-                            location: "North Creek Event Center (NCEC)",
-                        },
-                        {
-                            time: "12:00 PM - 1:30 PM",
-                            name: "Opening Ceremony",
-                            description:
-                                "Kick-off the event with an exciting opening ceremony.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "1:30 PM - 2:30 PM",
-                            name: "Lunch",
-                            description:
-                                "Grab lunch in the Codex with fellow participants.",
-                            location: "Codex",
-                        },
-                        {
-                            time: "1:30 PM - 4:00 PM",
-                            name: "ARC Closes for Setup",
-                            description: `The ARC will be closed for event setup. Enjoy lunch in the Plaza while relocating to any of these overflow spaces: 
-                                NCEC, DISC-061, DISC 165B, UW2-005, UW2-031, DISC-152 (The Collaboratory): Mentoring Space`,
-                            location: "Relocate to NCEC or other locations",
-                        },
-                        {
-                            time: "3:00 PM - 4:00 PM",
-                            name: "Photo Ops w/ Holly the Husky",
-                            description:
-                                "Optional: Take pictures with Holly the Husky!",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "4:30 PM - 5:30 PM",
-                            name: "Fireside Chat w/ Cameron Bielstein and Armora Rama",
-                            description:
-                                "Optional: Join Cameron Bielstein, Engineering Manager at Allen Institute, and Armora Rama, Founder at ThinkCyber and Researcher at Microsoft, for an engaging fireside chat.",
-                            location: "North Creek Event Center (NCEC)",
-                        },
-                        {
-                            time: "4:00 PM - 8:00 PM",
-                            name: "ARC Reopens, In-Person Work Time",
-                            description:
-                                "The ARC reopens for continued in-person work. Food and drinks will be provided.",
-                            location: "ARC Overlook",
-                        },
-                    ]}
-                    accentPosition="bottom-left"
+                <motion.div
+                    className="relative z-0 w-3/4 md:w-1/2 pt-6 -scale-x-100 -translate-x-1/3 opacity-80"
+                    variants={{ hidden: { x: "100%" }, visible: { x: 0 } }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                >
+                    <Image
+                        src={Cloud3}
+                        alt=""
+                        sizes="(max-width: 800px) 75vw, 50vw"
+                    />
+                </motion.div>
+                <motion.h2
+                    className="relative z-5 w-full pt-6 font-glacial-indifference text-center text-4xl md:text-5xl font-semibold text-white"
+                    variants={{
+                        hidden: { y: "-100%", opacity: 0 },
+                        visible: { y: 0, opacity: 1 },
+                    }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                >
+                    SCHEDULE
+                </motion.h2>
+                <motion.div
+                    className="relative z-0 w-3/4 md:w-1/2 ml-auto translate-x-1/3 opacity-80 -translate-y-[25px]"
+                    variants={{ hidden: { x: "100%" }, visible: { x: 0 } }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                >
+                    <Image
+                        src={Cloud3}
+                        alt=""
+                        sizes="(max-width: 800px) 75vw, 50vw"
+                    />
+                </motion.div>
+            </motion.div>
+
+            <div className="mx-auto w-[90%] max-w-[850px] mt-[10vmin]">
+                <Image
+                    src={ScheduleCloudTop}
+                    alt=""
+                    className="relative z-5 w-full"
+                    sizes="(max-width: 944px) 90vw, 850px"
                 />
-                <ScheduleCard
-                    day="DAY 2"
-                    date="4/26 SAT"
-                    spirit="Husky Spirit Day"
-                    events={[
-                        {
-                            time: "10:00 AM - 11:30 AM",
-                            name: "Check-In",
-                            description:
-                                "Participants check in for the second day of the event.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "12:00 PM - 12:30 PM",
-                            name: "Fireside Chat w/ Corporate Partners",
-                            description:
-                                "Optional: Tune in for a fireside chat with industry leaders to learn about their experiences and insights.",
-                            location: "North Creek Event Center (NCEC)",
-                        },
-                        {
-                            time: "12:00 PM - 6:00 PM",
-                            name: "Entrepreneur in the Corner",
-                            description:
-                                "Optional: Talk one-on-one with Dan Terry, founder of BRIOTECH Inc. and seriel entrepreneur.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "12:30 PM - 1:00 PM",
-                            name: "Lunch",
-                            description: "Lunch break for participants.",
-                            location: "ARC Overlook + NCEC",
-                        },
-                        {
-                            time: "1:00 PM - 3:00 PM",
-                            name: "Talk with Kody the Chatbot",
-                            description:
-                                "Optional: Cascadia Programmers will be hosting a talk with Kody the Chatbot.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "1:00 PM - 3:00 PM",
-                            name: "Sandbox: AR Terrain in Action",
-                            description:
-                                "Optional: Explore an interactive AR Sandbox that transforms sand into real-time contour-mapped terrain! (Redeem once).",
-                            location: "DISC - 152",
-                        },
-                        {
-                            time: "2:00 PM - 5:00 PM",
-                            name: "ThinkCyber in the Corner",
-                            description:
-                                "Optional: Talk one-on-one with Armora Rama, founder of ThinkCyber and researcher at Microsoft.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "2:00 PM - 4:00 PM",
-                            name: "Photo Ops w/ Holly the Husky",
-                            description:
-                                "Optional: Take pictures with Holly the Husky!",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "4:00 PM - 6:00 PM",
-                            name: "Badminton Social",
-                            description:
-                                "Take a break and enjoy some badminton!",
-                            location: "Sports Field",
-                        },
-                        {
-                            time: "4:00 PM - 8:00 PM",
-                            name: "In-Person Work Time",
-                            description:
-                                "Teams continue working on their projects in person.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "6:00 PM - 8:00 PM",
-                            name: "Hackeroon Shop Opens",
-                            description:
-                                "The Hackeroon Shop opens for participants to redeem hackeroons for prizes.",
-                            location: "ARC Overlook",
-                        },
-                    ]}
-                    accentPosition="bottom-left"
-                />
-                <ScheduleCard
-                    day="DAY 3"
-                    date="4/27 SUN"
-                    spirit="Professional Day"
-                    events={[
-                        {
-                            time: "9:00 AM - 10:00 AM",
-                            name: "Check-In",
-                            description:
-                                "Participants check in for the final day of the event.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "10:00 AM",
-                            name: "HACKING CONCLUDES. SUBMIT YOUR PROJECT!",
-                            description: "All teams submit their projects",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "9:00 AM - 2:00 PM",
-                            name: "Hackeroon Shop Opens",
-                            description:
-                                "Participants can redeem Hackeroon tickets for prizes",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "10:00 AM - 10:30 AM",
-                            name: "Closing Ceremony",
-                            description:
-                                "Learn more about the judging process and final announcements.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "10:50 AM - 12:50 PM",
-                            name: "Judging, Demo Day, and Tabling",
-                            description:
-                                "Industry tabling will be in the ARC, optionally teams can show off their projects in the NCEC. Judging will be happening concurrently.",
-                            location: "ARC Overlook and NCEC",
-                        },
-                        {
-                            time: "1:00 PM - 2:00 PM",
-                            name: "Networking Luncheon",
-                            description:
-                                "During lunch, participants can network with judges and industry professionals.",
-                            location: "Plaza",
-                        },
-                        {
-                            time: "2:00 PM - 2:30 PM",
-                            name: "Massive Group Photo",
-                            description:
-                                "Take a group photo to commemorate the event.",
-                            location: "Sports Field",
-                        },
-                        {
-                            time: "2:30 PM",
-                            name: "Finalists Announced",
-                            description:
-                                "The top teams for each track are announced.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "2:30 PM - 4:00 PM",
-                            name: "Finalists Presentations",
-                            description:
-                                "Finalists present their projects to the judges and crowd.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "4:00 PM - 4:30 PM",
-                            name: "Final Deliberations",
-                            description:
-                                "Judges deliberate to select the winners. Donuts will be served.",
-                            location: "ARC Overlook",
-                        },
-                        {
-                            time: "4:30 PM - 5:00 PM",
-                            name: "Grand Prize Winners Announced",
-                            description: "Winners of the event are announced.",
-                            location: "ARC Overlook",
-                        },
-                    ]}
-                    accentPosition="bottom-left"
-                />
-            </PanelContent>
-        </Panel>
-    );
-};
+                <div className="relative z-0 w-full -translate-y-0.5 px-[15%]">
+                    <Image
+                        src={ScheduleCloudBodyMobile}
+                        alt=""
+                        fill
+                        className="block md:hidden absolute top-0 object-fill"
+                        sizes="90vw"
+                    />
+                    <Image
+                        src={ScheduleCloudBody}
+                        alt=""
+                        fill
+                        className="hidden md:block absolute top-0 object-fill"
+                        sizes="(max-width: 800px) 0vw, min(90vw, 850px)"
+                    />
 
-interface ScheduleCardProps {
-    day: string;
-    date: string;
-    spirit: string;
-    events: {
-        time: string;
-        name: string;
-        description: string;
-        location: string;
-    }[];
-    accentPosition?: "bottom-left" | "bottom-right" | "top-right";
-}
-
-// Small change to force another merge
-
-const ScheduleCard: React.FC<ScheduleCardProps> = ({
-    day,
-    date,
-    spirit,
-    events,
-    accentPosition,
-}) => {
-    return (
-        <div className="relative border-2 border-black bg-white p-4 md:p-5 flex flex-col min-h-[350px] md:min-h-[450px] overflow-hidden schedule-card transition-transform">
-            <Image
-                src={AccentImage || "/placeholder.svg"}
-                alt=""
-                className={`w-[40px] h-[30px] absolute rotate-180 ${
-                    accentPosition === "bottom-left"
-                        ? "bottom-0 left-0"
-                        : accentPosition === "bottom-right"
-                          ? "bottom-0 right-0"
-                          : "top-0 right-0 rotate-180"
-                }`}
-            />
-
-            <div className="flex justify-between items-start mb-2 relative">
-                <h2 className="text-xl md:text-3xl font-light text-black">
-                    {day}
-                </h2>
-
-                <div className="flex flex-col items-end -mt-2">
-                    <span className="text-base md:text-lg font-bold text-yellow-500">
-                        {date.split(" ")[0]}
-                    </span>
-                    <span className="text-lg md:text-xl font-bold text-yellow-500 uppercase">
-                        {date.split(" ")[1]}
-                    </span>
-                </div>
-            </div>
-
-            <div className="border-t border-black mb-4"></div>
-
-            {events.length > 0 ? (
-                <div className="grow space-y-2 mb-2">
-                    <p className="text-base md:text-2xl font-edge-of-the-galaxy text-yellow-500 text-center my-2">
-                        {spirit}
-                    </p>
-
-                    {events.map((event, index) => (
-                        <div
-                            key={index}
-                            className="border-gray-300 hover:scale-[102%] transition cursor-pointer hover:border-yellow-500 hover:bg-[#fdf4c5] bg-white border "
+                    <Panel id={"scheduleSectionPanel"}>
+                        <PanelHeader
+                            parentPanelId={"scheduleSectionPanel"}
+                            as="h3"
+                            isSectionHeader
+                            long
+                            className="font-glacial-indifference font-semibold text-[#0078d0] px-0 md:px-0 pb-2 md:pb-2 flex justify-between items-center bg-transparent"
                         >
-                            <div className="flex w-full">
-                                <div className="justify-items-center w-full bg-orange-400 flex shadow-sm p-2 px-4">
-                                    <span className="grow text-xs text-white font-bold w-[45%] pr-2 shrink-0">
-                                        {event.time}
-                                    </span>
-                                    <span className="text-xs self-end font-bold text-white ">
-                                        {event.name}
-                                    </span>
-                                </div>
+                            <button onClick={() => handleSwitchDay("prev")}>
+                                <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                            </button>
+                            DAY {day}
+                            <button onClick={() => handleSwitchDay("next")}>
+                                <FaLongArrowAltRight className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                            </button>
+                        </PanelHeader>
+                        <PanelContent
+                            parentPanelId={"scheduleSectionPanel"}
+                            long
+                            className="p-0 md:p-0 pb-4 md:pb-4 flex flex-col gap-y-3"
+                        >
+                            <div className="w-full flex flex-col gap-y-1 justify-center items-center text-lg lg:text-xl font-bold text-blue-500/60 text-center">
+                                <span>( {daySchedule.date} )</span>{" "}
+                                <span>{daySchedule.spirit.toUpperCase()}</span>
                             </div>
-                            <div className="px-2 pt-2 font-bold text-sm text-gray-500">
-                                Location: {event.location}
+                            {daySchedule.events.map((e, idx) => (
+                                <EventItem key={idx} event={e} />
+                            ))}
+                            <div className="flex justify-between items-center font-glacial-indifference font-semibold text-[#0078d0] text-lg md:text-xl lg:text-2xl">
+                                <button onClick={() => handleSwitchDay("prev")}>
+                                    <FaLongArrowAltLeft className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                                </button>
+                                DAY {day}
+                                <button onClick={() => handleSwitchDay("next")}>
+                                    <FaLongArrowAltRight className="h-[30px] md:h-[45px] w-[30px] md:w-[45px] text-[#0078d0]/40 hover:text-[#0078d0] duration-300" />
+                                </button>
                             </div>
-                            <div className="p-2 text-sm text-gray-500">
-                                {event.description}
-                            </div>
-                        </div>
-                    ))}
+                        </PanelContent>
+                    </Panel>
                 </div>
-            ) : (
-                <p className="text-gray-400 italic">No events scheduled</p>
-            )}
+                <Image
+                    src={ScheduleCloudBottom}
+                    alt=""
+                    className="relative z-5 w-full -translate-y-1 md:translate-x-0.25"
+                    sizes="(max-width: 944px) 90vw, 850px"
+                />
+            </div>
         </div>
     );
 };

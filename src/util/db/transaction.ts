@@ -62,8 +62,9 @@ export async function createTransaction(
         case TransactionType.Performance:
         case TransactionType.StudentInterview:
         case TransactionType.KeyboardCompetition:
+        case TransactionType.SlideshowKaraokePresenter:
 
-        case TransactionType.FridayCostumeFandom:
+        case TransactionType.FridayCostumeTwin:
         // case TransactionType.FridayFireSideChat:
         case TransactionType.FridayHollyTheHusky:
 
@@ -75,6 +76,7 @@ export async function createTransaction(
         case TransactionType.SaturdayTalkToKody:
         case TransactionType.SaturdaySandbox:
         case TransactionType.SaturdayBadmintonSocial:
+        case TransactionType.SaturdayProjectSubmission:
 
         case TransactionType.SundayCheckinLanyard:
         case TransactionType.SundayCostumeProfessional:

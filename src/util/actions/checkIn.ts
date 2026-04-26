@@ -30,7 +30,8 @@ export async function actionValidateCheckin(
      *  Although only a single event happens at a time and only 1 staff member will make a checkin code at once.
      *  The chances of guessing the code is 1 / 1,000,000. We should be good.
      */
-    const codeData = await getCodeData(code);
+    // Allow spaces since it makes it more readable.
+    const codeData = await getCodeData(code.replaceAll(" ", ""));
     if (codeData == null || codeData.event == null) {
         return null;
     }

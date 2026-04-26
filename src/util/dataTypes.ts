@@ -330,7 +330,7 @@ export enum TransactionType {
     MonthOfHackingActivityWinner = 4,
 
     /** Friday Transactions! */
-    FridayCostumeFandom = 5,
+    FridayCostumeTwin = 5,
 
     // FridayFireSideChat = 8,
 
@@ -353,6 +353,8 @@ export enum TransactionType {
 
     SaturdayBadmintonSocial = 15,
 
+    SaturdayProjectSubmission = 25,
+
     /** Sunday Transactions! */
     SundayCostumeProfessional = 7,
 
@@ -371,6 +373,8 @@ export enum TransactionType {
      * 1010 in binary = 10 in decimal = 10th annual hackathon!
      */
     EasterEgg1010 = 24,
+
+    SlideshowKaraokePresenter = 26,
 }
 
 /**
@@ -383,22 +387,24 @@ export const valuedTransactionAmounts = {
     [TransactionType.MonthOfHackingActivityWinner]: 100,
     [TransactionType.StudentInterview]: 50,
     [TransactionType.KeyboardCompetition]: 100,
+    [TransactionType.SlideshowKaraokePresenter]: 100,
 
-    [TransactionType.FridayCostumeFandom]: 100,
+    [TransactionType.FridayCostumeTwin]: 25,
     // [TransactionType.FridayFireSideChat]: 100,
     [TransactionType.FridayHollyTheHusky]: 50,
 
     [TransactionType.SaturdayCheckinLanyard]: 50,
-    [TransactionType.SaturdayCostumeHusky]: 100,
+    [TransactionType.SaturdayCostumeHusky]: 25,
     [TransactionType.SaturdayTalkWithDanTerry]: 100,
     [TransactionType.SaturdayTalkWithArmoraRama]: 100,
     [TransactionType.SaturdayPhotoWithHolly]: 50,
     [TransactionType.SaturdayTalkToKody]: 50,
     [TransactionType.SaturdaySandbox]: 50,
     [TransactionType.SaturdayBadmintonSocial]: 100,
+    [TransactionType.SaturdayProjectSubmission]: 200,
 
     [TransactionType.SundayCheckinLanyard]: 50,
-    [TransactionType.SundayCostumeProfessional]: 100,
+    [TransactionType.SundayCostumeProfessional]: 25,
     [TransactionType.SundayDemoDay]: 100,
     [TransactionType.SundayAdmissionsBoothPhoto]: 50,
 
@@ -419,8 +425,9 @@ export const valuedTransactionLimits: Record<
     [TransactionType.MonthOfHackingActivityWinner]: 3,
     [TransactionType.StudentInterview]: 1,
     [TransactionType.KeyboardCompetition]: 1,
+    [TransactionType.SlideshowKaraokePresenter]: 1,
 
-    [TransactionType.FridayCostumeFandom]: 1,
+    [TransactionType.FridayCostumeTwin]: 1,
     // [TransactionType.FridayFireSideChat]: 1,
     [TransactionType.FridayHollyTheHusky]: 1,
 
@@ -432,6 +439,7 @@ export const valuedTransactionLimits: Record<
     [TransactionType.SaturdayTalkToKody]: 1,
     [TransactionType.SaturdaySandbox]: 1,
     [TransactionType.SaturdayBadmintonSocial]: 1,
+    [TransactionType.SaturdayProjectSubmission]: 1,
 
     [TransactionType.SundayCheckinLanyard]: 1,
     [TransactionType.SundayCostumeProfessional]: 1,
@@ -447,8 +455,9 @@ export const reasonTypeMap = {
     "activity-winner": TransactionType.MonthOfHackingActivityWinner,
     "student-interview": TransactionType.StudentInterview,
     "keyboard-comp": TransactionType.KeyboardCompetition,
+    "slideshow-karaoke-presenter": TransactionType.SlideshowKaraokePresenter,
 
-    "friday-costume-fandom": TransactionType.FridayCostumeFandom,
+    "friday-costume-twin": TransactionType.FridayCostumeTwin,
     // "friday-fire-side-chat": TransactionType.FridayFireSideChat,
     "friday-holly-the-husky": TransactionType.FridayHollyTheHusky,
 
@@ -460,6 +469,7 @@ export const reasonTypeMap = {
     "saturday-sandbox": TransactionType.SaturdaySandbox,
     "saturday-talk-kody": TransactionType.SaturdayTalkToKody,
     "saturday-badminton": TransactionType.SaturdayBadmintonSocial,
+    "saturday-project-submission": TransactionType.SaturdayProjectSubmission,
 
     "sunday-checkin-lanyard": TransactionType.SundayCheckinLanyard,
     "sunday-costume-professional": TransactionType.SundayCostumeProfessional,
@@ -475,8 +485,9 @@ export const reasonNameMap: Record<keyof typeof reasonTypeMap, string> = {
     "activity-winner": "Activity Winner",
     "student-interview": "Student Interview",
     "keyboard-comp": "Keyboard Competition",
+    "slideshow-karaoke-presenter": "Slideshow Karaoke Presenter",
 
-    "friday-costume-fandom": "Fandom Costume (Friday)",
+    "friday-costume-twin": "Twin Costume (Friday)",
     // "friday-fire-side-chat": "Fire Side Chat (Friday)",
     "friday-holly-the-husky": "Picture with Holly (Friday)",
 
@@ -488,6 +499,7 @@ export const reasonNameMap: Record<keyof typeof reasonTypeMap, string> = {
     "saturday-talk-kody": "Talk with Kody (Saturday)",
     "saturday-sandbox": "Sandbox VR Demo (Saturday)",
     "saturday-badminton": "Badminton Social (Saturday)",
+    "saturday-project-submission": "Project Submission (Saturday)",
 
     "sunday-checkin-lanyard": "Check-in with Lanyard (Sunday)",
     "sunday-costume-professional": "Professional Costume (Sunday)",
@@ -505,8 +517,9 @@ export const typeNameMap: Record<TransactionType, string> = {
     [TransactionType.MonthOfHackingActivityWinner]: "Activity Winner",
     [TransactionType.StudentInterview]: "Student Interview",
     [TransactionType.KeyboardCompetition]: "Keyboard Competition",
+    [TransactionType.SlideshowKaraokePresenter]: "Slideshow Karaoke Presenter",
 
-    [TransactionType.FridayCostumeFandom]: "Fandom Costume (Friday)",
+    [TransactionType.FridayCostumeTwin]: "Twin Costume (Friday)",
     // [TransactionType.FridayFireSideChat]: "Fire Side Chat (Friday)",
     [TransactionType.FridayHollyTheHusky]: "Picture with Holly (Friday)",
 
@@ -521,6 +534,8 @@ export const typeNameMap: Record<TransactionType, string> = {
     [TransactionType.SaturdayTalkToKody]: "Talk with Kody (Saturday)",
     [TransactionType.SaturdaySandbox]: "Sandbox VR Demo (Saturday)",
     [TransactionType.SaturdayBadmintonSocial]: "Badminton Social (Saturday)",
+    [TransactionType.SaturdayProjectSubmission]:
+        "Project Submission (Saturday)",
 
     [TransactionType.SundayCheckinLanyard]: "Check-in with Lanyard (Sunday)",
     [TransactionType.SundayCostumeProfessional]:
@@ -688,6 +703,17 @@ export interface Project {
      * email in our account system.
      */
     userEmails: string[];
+
+    /**
+     * Room the project has been placed in (if assigned).
+     */
+    room: string | null;
+
+    /**
+     * Table number within the room (if assigned). Multiple projects
+     * may share the same (room, tableNum) when projectsPerTable > 1.
+     */
+    tableNum: number | null;
 }
 
 /**

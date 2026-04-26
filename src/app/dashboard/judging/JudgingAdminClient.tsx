@@ -8,7 +8,10 @@ export default function JudgingAdminClient() {
     const [status, setStatus] = useState<
         "idle" | "loading" | "success" | "error"
     >("idle");
-    const [newCount, setNewCount] = useState(0);
+    const [tableCount, setTableCount] = useState(0);
+    const [judgeCount, setJudgeCount] = useState(0);
+    const [collisionCount, setCollisionCount] = useState(0);
+    const [neededRounds, setNeededRounds] = useState(0);
     const [warnings, setWarnings] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -21,7 +24,10 @@ export default function JudgingAdminClient() {
 
         if (result.success) {
             setStatus("success");
-            setNewCount(result.count ?? 0);
+            setTableCount(result.tableAssignmentsCount ?? 0);
+            setJudgeCount(result.judgeAssignmentsCount ?? 0);
+            setCollisionCount(result.collisionCount ?? 0);
+            setNeededRounds(result.neededRounds ?? 0);
             setWarnings(result.warnings || []);
         } else {
             setStatus("error");
@@ -37,8 +43,8 @@ export default function JudgingAdminClient() {
                 </h1>
 
                 <div className="bg-yellow-100 border-2 border-black p-4 mb-8 text-sm font-bold">
-                    ⚠️ ATTENTION: This will assign judges to every track for
-                    every project.
+                    ⚠️ ATTENTION: This places unassigned projects at tables,
+                    then assigns judges to every track for every project.
                 </div>
 
                 <button
@@ -54,13 +60,29 @@ export default function JudgingAdminClient() {
                 {status === "success" && (
                     <div className="mt-6 text-center">
                         <p className="text-green-600 font-bold">
-                            ✅ Created {newCount} assignments.
+                            ✅ Placed {tableCount} project(s) at tables.
+                        </p>
+                        <p className="text-green-600 font-bold">
+                            ✅ Created {judgeCount} judge assignment(s).
+                        </p>
+                        {collisionCount > 0 ? (
+                            <p className="text-orange-600 font-bold mt-2">
+                                ⚠️ {collisionCount} round collision(s) detected
+                                (3+ judges at the same project).
+                            </p>
+                        ) : (
+                            <p className="text-green-600 font-bold mt-2">
+                                ✅ No round collisions.
+                            </p>
+                        )}
+                        <p className="text-green-600 font-bold mt-2">
+                            ✅ {neededRounds} round(s) needed.
                         </p>
 
                         {warnings.length > 0 && (
                             <div className="mt-4 p-4 bg-orange-50 border-2 border-orange-200 rounded-md text-left">
                                 <p className="text-orange-700 font-bold text-sm mb-2">
-                                    ⚠️ Data Warnings:
+                                    ⚠️ Warnings ({warnings.length}):
                                 </p>
                                 <ul className="text-xs text-orange-600 list-disc ml-4 space-y-1">
                                     {warnings.map((w, i) => (

@@ -10,6 +10,7 @@ import FAQSection from "@/src/components/landing-page/FAQSection";
 import Footer from "@/src/components/Footer";
 import { LeaderboardRecord, Prize } from "../util/dataTypes";
 import TracksSection from "../components/landing-page/TrackSection";
+import ScheduleSection from "../components/landing-page/ScheduleSection";
 
 type HomePageProps = {
     hackeroonPrizes: Promise<Prize[]>;
@@ -41,14 +42,19 @@ export default function HomePage({
                         banner={true}
                     />
 
-                    <HeroSection isJudge={isJudge} />
-                    <AboutSection
-                        hackeroonPrizes={hackeroonPrizes}
-                        leaderboardData={leaderboardData}
-                    />
+                    <div className="bg-[linear-gradient(180deg,#0d83db_0%,#14c5f8_15%,#ffffff_100%)]">
+                        <HeroSection isJudge={isJudge} />
+                        <AboutSection
+                            hackeroonPrizes={hackeroonPrizes}
+                            leaderboardData={leaderboardData}
+                        />
+                    </div>
                     <TracksSection noTrackAnimation={false} />
-                    <MeetTheTeamSection />
-                    <SponsorsSection />
+                    <div className="bg-[linear-gradient(180deg,#0d83db_0%,#14c5f8_77%,#ffffff_100%)] md:bg-[linear-gradient(180deg,#0d83db_0%,#14c5f8_65%,#ffffff_100%)]">
+                        <ScheduleSection />
+                        <MeetTheTeamSection />
+                        <SponsorsSection />
+                    </div>
                     <FAQSection />
 
                     <Footer className={"bg-[#14c5f8] text-white"} />

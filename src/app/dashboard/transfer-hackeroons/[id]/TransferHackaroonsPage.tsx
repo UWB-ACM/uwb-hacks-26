@@ -21,16 +21,21 @@ export default function TransferHackaroonsPage({
     staffPerms: PermissionLevel;
 }) {
     const excludedTypes: (keyof typeof reasonTypeMap)[] = [
-        "friday-costume-fandom",
+        "student-interview",
+        "keyboard-comp",
         "friday-holly-the-husky",
-        "saturday-talk-armora-rama",
-        "saturday-badminton",
         "saturday-checkin-lanyard",
-        "saturday-sandbox",
-        "saturday-costume-husky",
         "saturday-talk-dan-terry",
+        "saturday-talk-armora-rama",
         "saturday-holly-photo",
+        "saturday-sandbox",
         "saturday-talk-kody",
+        "saturday-badminton",
+        "saturday-project-submission",
+        "sunday-checkin-lanyard",
+        "sunday-demo-day",
+        "sunday-admissions-photo",
+        "easter-egg-1010",
     ];
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -122,106 +127,99 @@ export default function TransferHackaroonsPage({
 
     return (
         <>
-            <div className="h-screen grid place-content-center">
-                {/* Container for "Transfer Hackeroons" Content */}
-                <div className="h-[80vh] w-[80vw] max-w-[70vh] rounded-xl p-5 border border-black shadow-xl grid place-content-center">
-                    <form onSubmit={handleSubmit}>
-                        <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">
-                            Transferring Hackeroons to{" "}
-                            <span className="font-bold whitespace-nowrap">
-                                {user.name}
-                            </span>
-                        </h1>
-                        <div className="grid place-content-center">
-                            {reason === "unknown" && (
-                                <div className="flex flex-col w-[60vw] max-w-[50vh] mt-4 md:text-sm lg:text-md">
-                                    <span className="text-red-600">
-                                        I have disabled Unknown for non-admins
-                                        as it
-                                        {"'"}s been causing issues with our
-                                        systems and makes it difficult to
-                                        understand transactions. If you{"'"}re
-                                        trying to give a user Hackeroons for
-                                        attending an event, please make an event
-                                        code for them and have them enter it. If
-                                        you have a legitimate need, please copy
-                                        the URL in the address bar and send a
-                                        message to Jonah discussing it.
-                                    </span>
-                                </div>
-                            )}
-
-                            {/* Only show amount for transaction types with no prescribed value. */}
-                            {!(
-                                reasonTypeMap[reason] in
-                                valuedTransactionAmounts
-                            ) && (
-                                <>
-                                    <div className="flex flex-col w-[60vw] max-w-[50vh] mt-4 md:text-lg lg:text-xl">
-                                        <label htmlFor="amount">Amount</label>
-                                        <input
-                                            required
-                                            id="amount"
-                                            type="number"
-                                            min={0}
-                                            step={5}
-                                            value={amount.toString()}
-                                            className="px-4 py-3 border border-black rounded-md"
-                                            onChange={(e) =>
-                                                setAmount(
-                                                    Number(e.target.value),
-                                                )
-                                            }
-                                        />
-                                    </div>
-                                </>
-                            )}
-                            <div className="flex flex-col w-[60vw] max-w-[50vh] mt-4 md:text-lg lg:text-xl">
-                                <label htmlFor="reason">Reason</label>
-                                <select
-                                    id="reason"
-                                    value={reason}
-                                    className="px-4 py-3 border border-black rounded-md"
-                                    onChange={(e) =>
-                                        setReason(
-                                            e.target
-                                                .value as keyof typeof reasonTypeMap,
-                                        )
-                                    }
-                                >
-                                    {Object.keys(reasonTypeMap)
-                                        .filter(
-                                            (el) =>
-                                                !excludedTypes.includes(
-                                                    el as keyof typeof reasonTypeMap,
-                                                ),
-                                        )
-                                        .map((key) => (
-                                            <option key={key} value={key}>
-                                                {
-                                                    reasonNameMap[
-                                                        key as keyof typeof reasonTypeMap
-                                                    ]
-                                                }
-                                            </option>
-                                        ))}
-                                </select>
+            {/* Container for "Transfer Hackeroons" Content */}
+            <div className="w-[90vw] max-w-[700px] bg-white p-5 mx-auto my-2 rounded-xl border border-black grid place-content-center">
+                <form onSubmit={handleSubmit}>
+                    <h1 className="text-center text-2xl md:text-3xl lg:text-4xl">
+                        Transferring Hackeroons to{" "}
+                        <span className="font-bold whitespace-nowrap">
+                            {user.name}
+                        </span>
+                    </h1>
+                    <div className="grid place-content-center">
+                        {reason === "unknown" && (
+                            <div className="flex flex-col w-full mt-4 md:text-sm lg:text-md">
+                                <span className="text-red-600">
+                                    I have disabled Unknown for non-admins as it
+                                    {"'"}s been causing issues with our systems
+                                    and makes it difficult to understand
+                                    transactions. If you{"'"}re trying to give a
+                                    user Hackeroons for attending an event,
+                                    please make an event code for them and have
+                                    them enter it. If you have a legitimate
+                                    need, please copy the URL in the address bar
+                                    and send a message to Jonah discussing it.
+                                </span>
                             </div>
-                            <input
-                                className="mt-4 py-3 bg-green-500 hover:bg-green-600 duration-200 rounded-md border border-black text-white cursor-pointer"
-                                type="submit"
-                            />
+                        )}
 
-                            {/* exit button that returns user back to staff dashboard */}
-                            <Link
-                                className="mt-4 py-3 bg-red-500 hover:bg-red-600 duration-200 rounded-md border border-black text-white text-center cursor-pointer"
-                                href={`/dashboard/${user.id}`}
+                        {/* Only show amount for transaction types with no prescribed value. */}
+                        {!(
+                            reasonTypeMap[reason] in valuedTransactionAmounts
+                        ) && (
+                            <>
+                                <div className="flex flex-col w-full mt-4 md:text-lg lg:text-xl">
+                                    <label htmlFor="amount">Amount</label>
+                                    <input
+                                        required
+                                        id="amount"
+                                        type="number"
+                                        min={0}
+                                        step={5}
+                                        value={amount.toString()}
+                                        className="px-4 py-3 border border-black rounded-md"
+                                        onChange={(e) =>
+                                            setAmount(Number(e.target.value))
+                                        }
+                                    />
+                                </div>
+                            </>
+                        )}
+                        <div className="flex flex-col w-full mt-4 md:text-lg lg:text-xl">
+                            <label htmlFor="reason">Reason</label>
+                            <select
+                                id="reason"
+                                value={reason}
+                                className="px-4 py-3 border border-black rounded-md"
+                                onChange={(e) =>
+                                    setReason(
+                                        e.target
+                                            .value as keyof typeof reasonTypeMap,
+                                    )
+                                }
                             >
-                                Exit
-                            </Link>
+                                {Object.keys(reasonTypeMap)
+                                    .filter(
+                                        (el) =>
+                                            !excludedTypes.includes(
+                                                el as keyof typeof reasonTypeMap,
+                                            ),
+                                    )
+                                    .map((key) => (
+                                        <option key={key} value={key}>
+                                            {
+                                                reasonNameMap[
+                                                    key as keyof typeof reasonTypeMap
+                                                ]
+                                            }
+                                        </option>
+                                    ))}
+                            </select>
                         </div>
-                    </form>
-                </div>
+                        <input
+                            className="mt-4 py-3 bg-green-500 hover:bg-green-600 duration-200 rounded-md border border-black text-white cursor-pointer"
+                            type="submit"
+                        />
+
+                        {/* exit button that returns user back to staff dashboard */}
+                        <Link
+                            className="mt-4 py-3 bg-red-500 hover:bg-red-600 duration-200 rounded-md border border-black text-white text-center cursor-pointer"
+                            href={`/dashboard/${user.id}`}
+                        >
+                            Exit
+                        </Link>
+                    </div>
+                </form>
             </div>
 
             <DashboardFeedback

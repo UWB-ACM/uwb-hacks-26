@@ -12,7 +12,7 @@ import WeekendEventsCloud from "@/public/about/WeekendEventsCloud.svg";
 import FlyingCarWithBanner from "@/src/components/landing-page/(AboutSectionComponents)/FlyingCarWithBanner";
 
 import CitySkyline from "@/public/about/skyline.png";
-import Grass from "@/public/Grass.png";
+import Grass from "@/public/Grass.svg";
 import Bushes from "@/public/about/Bushes.png";
 import FlowerBushes from "@/public/about/FlowerBushes.png";
 import GrassTuft1 from "@/public/about/Grass1-Dark-Green.png";
@@ -112,7 +112,7 @@ export default function AboutSection({
         [checkPattern],
     );
     return (
-        <div className="bg-[linear-gradient(180deg,#1382DC_0%,#16C2F7_50%,#C3EFFE_100%)]">
+        <>
             {/* Statistics */}
             <div className="mt-[10vmin] space-y-[8vmin] xl:space-y-[4vmin]">
                 <CloudSlideIn
@@ -163,40 +163,52 @@ export default function AboutSection({
                 />
             </div>
 
+            <div className="w-full h-[5vmin] bg-[#bebebe]" />
+
             <div className="bg-[var(--grass-color)]">
                 {/* Flower bushes */}
-                <div className="w-full bottom-0 left-0 bg-[var(--grass-color)]">
-                    <div className="flex justify-center w-full bottom-0 left-0">
-                        <div className="flex w-[120vw] shrink-0">
+                <div className="flex flex-col items-center">
+                    <div className="relative flex justify-center w-full bg-blue-500/95 pt-[4vh] md:pt-[6vh] lg:pt-[8vh] xl:pt-[10vh] overflow-hidden">
+                        <div
+                            className="river-shimmer"
+                            style={{ animationDelay: "-9s" }}
+                        />
+                        <div
+                            className="river-shimmer"
+                            style={{ animationDelay: "-5.5s" }}
+                        />
+                        <div
+                            className="river-shimmer"
+                            style={{ animationDelay: "-2.2s", width: "20%" }}
+                        />
+                        <div className="relative z-5 flex w-[120vw] shrink-0">
                             <Image
                                 src={FlowerBushes}
                                 alt=""
-                                className="w-1/2 h-auto sm:translate-x-5"
+                                className="relative translate-x-2 w-1/2 h-auto"
                                 sizes="100vw"
                             />
                             <Image
                                 src={FlowerBushes}
                                 alt=""
-                                className="w-1/2 h-auto "
+                                className="relative -translate-x-2 w-1/2 h-auto"
                                 sizes="100vw"
                             />
                         </div>
                     </div>
-                    <div className="flex justify-center rotate-180 w-full bottom-0 left-0 bg-[#bebebe]">
-                        <div className="flex w-[120vw] shrink-0">
-                            <Image
-                                src={FlowerBushes}
-                                alt=""
-                                className="w-1/2 h-auto sm:translate-x-5"
-                                sizes="100vw"
-                            />
-                            <Image
-                                src={FlowerBushes}
-                                alt=""
-                                className="w-1/2 h-auto "
-                                sizes="100vw"
-                            />
-                        </div>
+                    <div className="relative z-5 flex w-[120vw] shrink-0 -scale-y-100 -scale-x-100 bg-[#bebebe]">
+                        <Image
+                            src={FlowerBushes}
+                            alt=""
+                            className="relative translate-x-2 w-1/2 h-auto"
+                            sizes="100vw"
+                        />
+                        <Image
+                            src={FlowerBushes}
+                            alt=""
+                            className="relative -translate-x-2 w-1/2 h-auto"
+                            sizes="100vw"
+                        />
                     </div>
                 </div>
 
@@ -253,7 +265,7 @@ export default function AboutSection({
                 </Panel>
 
                 {/* Hackathon Information Grid */}
-                <div className="grid py-15 px-[5vw] sm:grid-cols-1 md:grid-cols-2 gap-y-[10vw] md:gap-y-[5vw] gap-[5vw]">
+                <div className="grid py-15 px-[5vw] sm:grid-cols-1 lg:grid-cols-2 gap-y-[10vw] md:gap-y-[5vw] gap-[5vw]">
                     <Panel
                         id="hackeroonPrizePanel"
                         panelBackground="white"
@@ -262,7 +274,7 @@ export default function AboutSection({
                         <PanelHeader
                             parentPanelId="hackeroonPrizePanel"
                             as="h2"
-                            className={`text-[var(--grass-color)] ${panelHeader}`}
+                            className={`text-[var(--grass-color)] pb-0 ${panelHeader}`}
                         >
                             HACKEROON
                             <br />
@@ -270,14 +282,13 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="hackeroonPrizePanel"
-                            className="w-full h-full overflow-hidden grid place-content-center font-bold text-4xl text-center"
+                            className="w-full h-full flex justify-center font-bold text-center grow p-0 md:p-0"
                         >
-                            {/* <Suspense fallback={<div>Loading</div>}>
+                            <Suspense fallback={<div>Loading...</div>}>
                                 <HackeroonCarousel
                                     hackeroonPrizes={hackeroonPrizes}
-                                ></HackeroonCarousel>
-                            </Suspense> */}
-                            Coming Soon!
+                                />
+                            </Suspense>
                         </PanelContent>
                         <div className="w-full">
                             <Image
@@ -304,17 +315,13 @@ export default function AboutSection({
                         </PanelHeader>
                         <PanelContent
                             parentPanelId="leaderboardPanel"
-                            className="w-full overflow-hidden grid place-content-center"
+                            className="w-full overflow-hidden pt-2 md:pt-2"
                         >
-                            {/* <Suspense>
+                            <Suspense>
                                 <Leaderboard
                                     leaderboardData={leaderboardData}
                                 ></Leaderboard>
-                            </Suspense> */}
-                            <FaLock size={50} className="m-5 mx-auto" />
-                            <div className="font-bold text-xl text-center">
-                                Leaderboard Opens On 4/24!
-                            </div>
+                            </Suspense>
                         </PanelContent>
                         <div className="w-full flex justify-between">
                             <Image
@@ -350,6 +357,10 @@ export default function AboutSection({
                             parentPanelId="lastYearsWinnersPanel"
                             className="flex-1 overflow-hidden pt-0 md:pt-0 w-full"
                         >
+                            <p className="text-center text-xl font-bold text-[var(--grass-color)]">
+                                Note: this year&apos;s tracks are different (see
+                                below)
+                            </p>
                             <PrevWinners></PrevWinners>
                         </PanelContent>
 
@@ -430,6 +441,6 @@ export default function AboutSection({
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-        </div>
+        </>
     );
 }

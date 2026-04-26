@@ -1,5 +1,6 @@
 import React from "react";
-import { FaGift, FaFileImport, FaGavel } from "react-icons/fa6";
+import { FaGift, FaFileImport, FaGavel } from "react-icons/fa6"; // Added FaGavel for a "Judging" icon
+import { HiSpeakerphone } from "react-icons/hi";
 import DashboardButton from "@/src/components/dashboards/DashboardButton";
 
 function AdminActions() {
@@ -28,6 +29,10 @@ function AdminActions() {
             <DashboardButton href="/dashboard/judging">
                 <FaGavel className="h-[30px] w-[30px]" />
                 Judging Admin
+            </DashboardButton>
+            <DashboardButton href="/dashboard/notifications">
+                <HiSpeakerphone className="h-[30px] w-[30px]" />
+                Broadcast Notification
             </DashboardButton>
         </>
     );

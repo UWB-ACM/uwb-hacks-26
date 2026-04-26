@@ -1,4 +1,4 @@
-import { use } from "react";
+import { use, Fragment } from "react";
 import { LeaderboardRecord } from "@/src/util/dataTypes";
 import LeaderboardUserRecord from "./LeaderboardRecord";
 
@@ -12,16 +12,16 @@ export default function Leaderboard({
 
     // Render leaderboard records!!
     return (
-        <div className="grid text-white text-center gap-y-2 md:gap-y-4">
+        <div className="w-full grid text-white text-center gap-y-2 md:gap-y-4">
             {leaderboard.map((user, index) => (
-                <div key={index}>
+                <Fragment key={index}>
                     <LeaderboardUserRecord
                         ranking={index + 1}
                         name={user.name}
                         hackeroonAmount={user.balance}
                         picture={user.picture}
                     />
-                </div>
+                </Fragment>
             ))}
         </div>
     );

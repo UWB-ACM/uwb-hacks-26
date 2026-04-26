@@ -1,11 +1,15 @@
 import "server-only";
 
+import { cache } from "react";
 import { cookies, headers } from "next/headers";
 import { buildKey, redis } from "@/src/util/redis";
 import { NextRequest } from "next/server";
 import { User } from "./dataTypes";
 import { redirect } from "next/navigation";
 import { CookieSync } from "@/src/proxy";
+
+/** Header name used to pass session data from middleware to RSC without a second Redis fetch. */
+export const SESSION_DATA_HEADER = "x-session-data";
 
 export const cookieName =
     process.env.NODE_ENV === "development"
@@ -56,8 +60,28 @@ export interface Session {
  * Gets the user's session.
  * If it can't be loaded for some reason, this returns
  * an empty session.
+ *
+ * Results are deduplicated per render via React cache(), so calling this
+ * multiple times in the same render tree costs only one Redis read.
+ * When middleware is active it passes the already-fetched session via the
+ * x-session-data header, eliminating the Redis read entirely.
  */
-export async function getSession(): Promise<Session> {
+export const getSession = cache(async function getSession(): Promise<Session> {
+    // If middleware already fetched the session, use that instead of Redis.
+    const headerList = await headers();
+    const sessionHeader = headerList.get(SESSION_DATA_HEADER);
+    if (sessionHeader) {
+        try {
+            // TODO: See proxy.ts for info about the decoding.
+            const parsed = JSON.parse(atob(sessionHeader));
+            if (parsed && typeof parsed === "object") {
+                return parsed as Session;
+            }
+        } catch {
+            // Fall through to the Redis read if the header is malformed.
+        }
+    }
+
     const cookieStore = await cookies();
 
     const cookie = cookieStore.get(cookieName);
@@ -74,7 +98,7 @@ export async function getSession(): Promise<Session> {
     }
 
     return data;
-}
+});
 
 /**
  * Ensures that a request/response has a session, and returns it.

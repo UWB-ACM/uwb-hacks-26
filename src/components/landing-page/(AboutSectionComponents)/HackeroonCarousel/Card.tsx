@@ -4,34 +4,36 @@ import { Prize } from "@/src/util/dataTypes";
 import { retrievePrizeImage } from "@/src/util/prizeImage";
 
 type HackeroonItemCardProps = {
-    cardRef: React.RefObject<HTMLDivElement | null>;
     hackeroonPrize: Prize;
+    isActive?: boolean;
 };
 
 export default function HackeroonItemCard({
-    cardRef,
     hackeroonPrize,
+    isActive = false,
 }: HackeroonItemCardProps) {
     return (
         <div
-            ref={cardRef}
-            className="item-card w-[80%] p-4 shadow-[3px_3px_0_rgb(0,0,0,1)] rounded-tr-lg rounded-bl-lg border-black border-2 bg-[#FFCA3A]"
+            className={`h-full p-4 flex flex-col justify-center shadow-[3px_3px_0_rgb(0,0,0,1)] rounded-2xl border-black border-2 bg-green-500/90 text-white transition-all duration-300 ${
+                isActive ? "scale-110 opacity-100" : "scale-95 opacity-50"
+            }`}
         >
             {/* Prize Name */}
-            <p className="font-edge-of-the-galaxy text-center text-lg md:text-xl lg:text-2xl">
+            <p className="font-glacial-indifference text-center text-base md:text-lg lg:text-xl">
                 {hackeroonPrize.name}
             </p>
             {/* Prize Image */}
-            <div className="w-full p-4 mt-2 bg-white flex justify-center rounded-md border border-black">
+            <div className="relative w-[150px] h-[150px] mx-auto p-4 mt-2 bg-white rounded-md border-2 border-black aspect-square">
                 <Image
                     src={retrievePrizeImage(hackeroonPrize.imageName)}
                     alt={"Image of " + hackeroonPrize.name}
-                    width={100}
-                    height={100}
+                    fill
+                    className="object-contain p-4"
+                    sizes="(min-width: 1000px) 25vw, (min-width: 800px) 35vw, (min-width: 450px) 45vw, 55vw"
                 />
             </div>
-            {/* Prize Prize */}
-            <p className="text-center mt-2 text-xs md:text-md lg:text-lg">
+            {/* Prize Cost */}
+            <p className="text-center mt-2 text-xs lg:text-base">
                 {hackeroonPrize.price} Hackeroons
             </p>
         </div>

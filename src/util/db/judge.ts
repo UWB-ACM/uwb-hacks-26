@@ -23,6 +23,8 @@ export async function getJudgeAssignments(
         mainTrack: row.main_track,
         sideTracks: row.side_tracks,
         userEmails: row.user_emails,
+        room: row.room,
+        tableNum: row.table_num,
         completedAt: row.completed_at ?? null,
     }));
 }
@@ -50,6 +52,8 @@ export async function getProject(projectId: number): Promise<Project | null> {
         mainTrack: data[0].main_track,
         sideTracks: data[0].side_tracks,
         userEmails: data[0].user_emails,
+        room: data[0].room,
+        tableNum: data[0].table_num,
     };
 }
 
@@ -237,5 +241,22 @@ export async function assignJudgeToProject(judgeID: number, projectID: number) {
         INSERT INTO judge_assignments (judge_id, project_id)
         VALUES (${judgeID}, ${projectID})
         ON CONFLICT (judge_id, project_id) DO NOTHING
+    `;
+}
+
+/**
+ * Writes the room + table_num placement for a project.
+ * @param projectId - is the project to update.
+ * @param room - is the room label to place the project in.
+ * @param tableNum - is the table number within that room.
+ */
+export async function setProjectTable(
+    projectId: number,
+    room: string,
+    tableNum: number,
+): Promise<void> {
+    await sql`
+        UPDATE projects SET room = ${room}, table_num = ${tableNum}
+        WHERE id = ${projectId}
     `;
 }

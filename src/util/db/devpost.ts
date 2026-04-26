@@ -25,7 +25,7 @@ export async function upsertDevpostUser(
  * @param project - is the project to upsert.
  */
 export async function upsertProject(
-    project: Omit<Project, "id">,
+    project: Omit<Project, "id" | "room" | "tableNum">,
 ): Promise<void> {
     await sql`
         INSERT INTO projects (devpost_id, project_title, submission_url, submitted, devpost_image, try_url, video_url, main_track, side_tracks, user_emails)
@@ -89,7 +89,7 @@ export async function syncDevpostEmailsToUsers() {
         FROM devpost_codes dc
         LEFT JOIN users u ON u.devpost_email = dc.devpost_email
         WHERE u.id IS NULL 
-          AND (dc.last_sent_at IS NULL OR dc.last_sent_at <= now() - interval '7 days');
+          AND (dc.last_sent_at IS NULL OR dc.last_sent_at <= now() - interval '1 days');
     `;
 
     return toEmail.map((row) => ({
