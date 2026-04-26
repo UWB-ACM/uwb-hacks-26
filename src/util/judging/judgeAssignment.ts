@@ -4,7 +4,7 @@ import { JudgeAssignment, Project, Track } from "@/src/util/dataTypes";
 /**
  * The number of judges that should score each (project, track) pair.
  */
-export const JUDGES_PER_TRACK = 5;
+export const JUDGES_PER_TRACK = 3;
 
 /**
  * The minimum count of judges simultaneously scheduled at the same
