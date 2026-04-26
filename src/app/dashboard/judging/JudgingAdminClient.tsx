@@ -3,17 +3,26 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { actionAssignJudges } from "@/src/util/actions/judge";
+import { actionSendTableAssignments } from "@/src/util/actions/actionSendTableAssignments";
 
 export default function JudgingAdminClient() {
     const [status, setStatus] = useState<
         "idle" | "loading" | "success" | "error"
     >("idle");
+    const [emailStatus, setEmailStatus] = useState<
+        "idle" | "loading" | "success" | "error"
+    >("idle");
+
     const [tableCount, setTableCount] = useState(0);
     const [judgeCount, setJudgeCount] = useState(0);
     const [collisionCount, setCollisionCount] = useState(0);
     const [neededRounds, setNeededRounds] = useState(0);
     const [warnings, setWarnings] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [emailWarnings, setEmailWarnings] = useState<string[]>([]);
+    const [emailErrorMessage, setEmailErrorMessage] = useState<string | null>(
+        null,
+    );
 
     const handleAssign = async () => {
         setStatus("loading");
@@ -35,6 +44,18 @@ export default function JudgingAdminClient() {
         }
     };
 
+    const handleNotification = async () => {
+        setEmailStatus("loading");
+
+        const result = await actionSendTableAssignments();
+
+        if (result.success) {
+            setEmailStatus("success");
+        } else {
+            setEmailStatus("error");
+        }
+    };
+
     return (
         <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 text-black">
             <div className="w-full max-w-md bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] rounded-xl">
@@ -50,11 +71,19 @@ export default function JudgingAdminClient() {
                 <button
                     onClick={handleAssign}
                     disabled={status === "loading"}
-                    className="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 px-6 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all disabled:opacity-50 uppercase italic"
+                    className="w-full bg-red-500 hover:bg-red-600 text-white font-black py-4 px-6 my-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all disabled:opacity-50 uppercase italic"
                 >
                     {status === "loading"
                         ? "Assigning..."
                         : "Run Auto-Assignment"}
+                </button>
+                <button
+                    onClick={handleNotification}
+                    className="w-full bg-blue-300 hover:bg-blue-400 text-white font-black py-4 px-6 my-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all disabled:opacity-50 uppercase italic"
+                >
+                    {emailStatus === "loading"
+                        ? "Sending..."
+                        : "Send Email Notification"}
                 </button>
 
                 {status === "success" && (
