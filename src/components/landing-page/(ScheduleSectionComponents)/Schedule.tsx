@@ -141,13 +141,13 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 startTime: new Date(2026, 3, 25, 18, 30),
                 endTime: new Date(2026, 3, 25, 20, 0),
                 name: "Clean Up",
-                location: "ARC Overlook & NCEC"
+                location: "ARC Overlook & NCEC",
             },
             {
                 startTime: new Date(2026, 3, 25, 23, 59),
                 name: "Devpost Initial Project Submission Due",
                 location: "ARC Overlook",
-            }
+            },
         ],
     },
     3: {
@@ -205,8 +205,8 @@ export const schedule: Record<1 | 2 | 3, DaySchedule> = {
                 startTime: new Date(2026, 3, 26, 17, 0),
                 endTime: new Date(2026, 3, 26, 18, 0),
                 name: "Clean Up",
-                location: "ARC Overlook & NCEC"
-            }
+                location: "ARC Overlook & NCEC",
+            },
         ],
     },
 };
