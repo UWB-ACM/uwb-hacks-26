@@ -43,6 +43,7 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function getAllProjectFeedback(): Promise<
     ProjectWithJudgeFeedback[]
 > {
+    // TODO: add join to add judge names along with feedback
     const data = await sql`
         SELECT
             p.id,

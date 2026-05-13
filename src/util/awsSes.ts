@@ -11,7 +11,7 @@ const FROM_EMAIL = "noreply@uwbhacks.com";
 const EMAIL_SRC = `UWB Hacks <${FROM_EMAIL}>`;
 
 const TEST_MODE = true;
-const TEST_EMAIL = "phohanhtran@gmail.com";
+const TEST_EMAIL = "test@test.com";
 const SEND_DELAY_MS = 100;
 
 // const EMAIL_TEMPLATE = CreateTemplateCommand();
@@ -315,8 +315,9 @@ export async function sendProjectFeedbackEmails(projectsWithFeedback: ProjectWit
 
     const recipientProjects = TEST_MODE ? projectsWithFeedback.slice(0, 10) : projectsWithFeedback;
     for (const p of recipientProjects) {
-        const destinationEmails = TEST_MODE ? [TEST_EMAIL] : ["phohanhtran@gmail.com"];// : p.project.userEmails;
+        const destinationEmails = TEST_MODE ? [TEST_EMAIL] : p.project.userEmails;
        
+        // TODO: add newline between each judge's feedback in htmlBody & add logic to skip displaying feedback for NULL or empty feedback
         const textBody = `Here is your project feedback:
         ${p.judgeAssignments.map((ja) => `Judge ${ja.judgeId}: ${ja.feedback}`).join("\n")}
         `;
