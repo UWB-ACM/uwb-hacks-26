@@ -1,13 +1,20 @@
 import "server-only";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import {
+    CreateTemplateCommand,
+    SESClient,
+    SendEmailCommand,
+} from "@aws-sdk/client-ses";
 import { Project } from "./dataTypes";
+import { ProjectWithJudgeFeedback } from "./db/project";
 
 const FROM_EMAIL = "noreply@uwbhacks.com";
 const EMAIL_SRC = `UWB Hacks <${FROM_EMAIL}>`;
 
-const TEST_MODE = false;
-const TEST_EMAIL = "testEmail@gmail.com";
+const TEST_MODE = true;
+const TEST_EMAIL = "phohanhtran@gmail.com";
 const SEND_DELAY_MS = 100;
+
+// const EMAIL_TEMPLATE = CreateTemplateCommand();
 
 const ses = new SESClient({
     region: process.env.AWS_REGION as string,
@@ -19,11 +26,16 @@ const ses = new SESClient({
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// AWS SES email bodies use HTML and a Text fallback for older email clients
+// Charset specifies character encoding. Can be changed to support special characters
 export type EmailBody = {
-    Text: { Data: string };
-    Html?: { Data: string };
+    Text: { Data: string; Charset?: string };
+    Html?: { Data: string; Charset?: string };
 };
 
+// to send an email, there must be a recipient/destination email address (to), email subject,
+// and email body sender/source email is not included because we will be sending all emails
+// using the same source email: EMAIL_SRC
 type SendEmailParams = {
     to: string;
     subject: string;
@@ -106,7 +118,7 @@ export async function sendDevpostLinkingEmails(
         const link = `${baseUrl}/link-devpost?code=${target.code}`;
 
         const subject =
-            "Action Required: Link your Devpost Account | UWB Hacks 26";
+            "Action Required: Link your Devpost Account | UWB Hacks";
 
         const textBody = `
 Please link your Devpost account (${target.devpost_email}) here:
@@ -183,7 +195,7 @@ export async function sendTableAssignmentEmails(projects: Project[]) {
     const successfulEmails: string[] = [];
     const failedEmails: { email: string; error: unknown }[] = [];
 
-    const subject = "[URGENT] UWB Hacks 2026 Presentation Location";
+    const subject = "[URGENT] UWB Hacks Presentation Location";
 
     const recipientProjects = TEST_MODE ? projects.slice(0, 1) : projects;
 
@@ -292,4 +304,108 @@ export async function sendTableAssignmentEmails(projects: Project[]) {
     }
 
     return { successfulEmails, failedEmails };
+}
+
+// send hackathon participants feedback provided by judges after the hackathon concludes
+export async function sendProjectFeedbackEmails(projectsWithFeedback: ProjectWithJudgeFeedback[]) {
+    const allSuccessfulEmails: string[] = [];
+    const allFailedEmails: { email: string; error: unknown }[] = [];
+
+    const subject = "UWB Hacks Project Feedback";
+
+    const recipientProjects = TEST_MODE ? projectsWithFeedback.slice(0, 10) : projectsWithFeedback;
+    for (const p of recipientProjects) {
+        const destinationEmails = TEST_MODE ? [TEST_EMAIL] : ["phohanhtran@gmail.com"];// : p.project.userEmails;
+       
+        const textBody = `Here is your project feedback:
+        ${p.judgeAssignments.map((ja) => `Judge ${ja.judgeId}: ${ja.feedback}`).join("\n")}
+        `;
+        const htmlBody = `<!DOCTYPE html>
+        <html>
+        <body style="margin: 0; padding: 0; background-color: #f4f8fe; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f8fe; padding: 40px 20px;">
+            <tr>
+            <td align="center">
+        
+                <!-- Card -->
+                <table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+        
+                <!-- Header -->
+                <tr>
+                    <td align="center" style="background-color: #0a84dc; padding: 40px 20px; text-align: center;">
+                    <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: 1px;">UWB HACKS 2026</h1>
+                    <p style="color: #84c6ff; font-size: 16px; margin: 8px 0 0 0; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;">The Future</p>
+                    </td>
+                </tr>
+        
+                <!-- Body -->
+                <tr>
+                    <td style="padding:32px;">
+        
+                    <h2 style="margin:0 0 10px; font-size:18px; color:#111;">
+                        Your Project Feedback is Ready
+                    </h2>
+        
+                    <p style="font-size:16px; color:#444; line-height:1.6;">
+                        Hello Hacker! 
+                        <br><br>
+                        Below is your feedback for UWB Hacks submission!
+                    </p>
+        
+                    <!-- Main message box -->
+                    <div style="margin:20px 0; padding:16px; background:#f0f7ff; border-left:4px solid #0a84dc;">
+                        <p style="margin:0; font-size:16px; color:#1d4ed8; line-height:1.5;">
+                            ${textBody}
+                        </p>
+                        <br>
+                        <p style="margin:0; font-size:16px; color:#1d4ed8; line-height:1.5;">
+                            Please nominate ACMUWB and UWB Hacks for Club Awards!
+                            <br>
+                            <br>
+                            Categories:
+                            <br>
+                        </p>
+                        <ul>
+                            <li>Academic Club of the Year: Association for Computing Machinery</li>
+                            <li>Best Event Collaboration: UWB Hacks (ACM, ACM-W, BCA, Trickfire Robotics, Inclusive AI, GrayHats)</li>
+                            <li>Standout Event of the Year: UWB Hacks</li>
+                            <li>Legacy Award: Association for Computing Machinery</li>
+                        </ul>
+                        <br>
+                        <p style="margin:0; font-size:16px; color:#1d4ed8; line-height:1.5;">
+                            Please vote for us at <a href="https://tinyurl.com/4e6untvf">https://tinyurl.com/4e6untvf</a>
+                        </p>
+                    </div>
+        
+                    <p style="font-size:16px; color:#555; line-height:1.6;">
+                        Thank you so much for participating in UWB Hacks, and for sharing your work. We hope you had an great experience!
+                    </p>
+                    </td>
+                </tr>
+                </table>
+                        <!-- Outer Footer -->
+                    <p style="color: #a0aec0; font-size: 12px; text-align: center; margin-top: 20px;">
+                        &copy; 2026 UWB Hacks. All rights reserved.
+                    </p>
+            </td>
+            </tr>
+        </table>
+        </body>
+        </html>`;
+
+        const emailBody: EmailBody = {
+            Text: { Data: textBody },
+            Html: { Data: htmlBody },
+        };
+        const { successfulEmails, failedEmails } = await sendEmails(
+            destinationEmails,
+            subject,
+            emailBody,
+        );
+
+        allSuccessfulEmails.push(...successfulEmails);
+        allFailedEmails.push(...failedEmails);
+    }
+    return { allSuccessfulEmails, allFailedEmails };
 }
