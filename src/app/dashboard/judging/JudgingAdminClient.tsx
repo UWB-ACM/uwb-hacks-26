@@ -6,7 +6,7 @@ import {
     actionAssignJudges,
     actionAssignTables,
 } from "@/src/util/actions/judge";
-import { actionSendTableAssignments } from "@/src/util/actions/actionSendTableAssignments";
+import { actionSendTableAssignments } from "@/src/util/actions/tableAssignments";
 
 export default function JudgingAdminClient() {
     const [tableStatus, setTableStatus] = useState<
