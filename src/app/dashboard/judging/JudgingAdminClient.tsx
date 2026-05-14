@@ -89,9 +89,9 @@ export default function JudgingAdminClient() {
                 </h1>
 
                 <div className="bg-yellow-100 border-2 border-black p-4 mb-8 text-sm font-bold">
-                    ⚠️ ATTENTION: Run table assignment first to place
-                    unassigned projects, then judge assignment to assign judges
-                    to every track for every project.
+                    ⚠️ ATTENTION: Run table assignment first to place unassigned
+                    projects, then judge assignment to assign judges to every
+                    track for every project.
                 </div>
 
                 <button

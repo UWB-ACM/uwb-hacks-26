@@ -49,9 +49,10 @@ export default function BroadcastPanel() {
 
         const result = await actionSendProjectFeedback();
 
-        if (result.success) {
+        if (result.success && result.failed && result.failed.length == 0) {
             setEmailStatus("success");
         } else {
+            console.error("Sending feedback emails failed:", result);
             setEmailStatus("error");
         }
     };
@@ -110,7 +111,7 @@ export default function BroadcastPanel() {
                     </div>
                 )}
             </div>
-            
+
             {/* Broadcast feedback emails */}
             <div className="flex flex-col text-center w-full max-w-lg mx-auto bg-white border border-black rounded-2xl shadow-sm p-6 mt-4 space-y-4">
                 <div>
@@ -121,16 +122,31 @@ export default function BroadcastPanel() {
                         Send a message to all users via email.
                     </p>
                     <button
-                    onClick={sendFeedbackEmail}
-                    className={`py-2 px-4 w-full rounded-md bg-green-600 hover:bg-green-500 text-white duration-200 border-black border disabled:opacity-50 ${
-                        loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"
-                    }`}
+                        onClick={sendFeedbackEmail}
+                        disabled={emailStatus === "loading"}
+                        className={`py-2 px-4 w-full rounded-md bg-green-600 hover:bg-green-500 text-white duration-200 border-black border disabled:opacity-50 ${
+                            emailStatus === "loading"
+                                ? "bg-blue-300 cursor-not-allowed"
+                                : "bg-blue-600 hover:bg-blue-700 text-white"
+                        }`}
                     >
-                        {loading ? "Sending..." : "Send Feedback via Email"}
+                        {emailStatus === "loading"
+                            ? "Sending..."
+                            : "Send Feedback via Email"}
                     </button>
+
+                    {emailStatus === "success" && (
+                        <div className="mt-3 text-sm px-3 py-2 rounded-lg bg-green-50 text-green-700 border border-green-200">
+                            Feedback emails sent successfully.
+                        </div>
+                    )}
+                    {emailStatus === "error" && (
+                        <div className="mt-3 text-sm px-3 py-2 rounded-lg bg-red-50 text-red-700 border border-red-200">
+                            Failed to send feedback emails.
+                        </div>
+                    )}
                 </div>
             </div>
-
 
             <Link
                 href="/dashboard"

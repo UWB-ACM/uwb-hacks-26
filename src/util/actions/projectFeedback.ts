@@ -8,7 +8,7 @@ export async function actionSendProjectFeedback() {
     try {
         const session = await getSession();
         await ensureAdminPermission(session);
-    
+
         const projectsWithFeedback = await getAllProjectFeedback();
 
         const results = await sendProjectFeedbackEmails(projectsWithFeedback);
@@ -16,7 +16,7 @@ export async function actionSendProjectFeedback() {
         return {
             success: true,
             sent: results.allSuccessfulEmails.length,
-            failed: results.allFailedEmails.length,
+            failed: results.allFailedEmails,
         };
     } catch (error) {
         console.error("actionSendProjectFeedback error:", error);

@@ -5,13 +5,22 @@ import { Project } from "../dataTypes";
 
 export interface ProjectJudgeFeedback {
     judgeId: number;
+    judgeName: string | null;
     feedback: string | null;
-    completedAt: Date | null;
+}
+
+export interface ProjectJudgeScore {
+    judgeId: number;
+    questionId: number;
+    questionText: string;
+    score: number;
 }
 
 export interface ProjectWithJudgeFeedback {
-    project: Project;
+    projectId: number;
+    userEmails: string[];
     judgeAssignments: ProjectJudgeFeedback[];
+    judgeScores: ProjectJudgeScore[];
 }
 
 /**
@@ -43,75 +52,67 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function getAllProjectFeedback(): Promise<
     ProjectWithJudgeFeedback[]
 > {
-    // TODO: add join to add judge names along with feedback
-    const data = await sql`
+    const assignmentRows = await sql`
         SELECT
-            p.id,
-            p.devpost_id,
-            p.project_title,
-            p.submission_url,
-            p.submitted,
-            p.devpost_image,
-            p.try_url,
-            p.video_url,
-            p.main_track,
-            p.side_tracks,
+            p.id AS project_id,
             p.user_emails,
-            p.room,
-            p.table_num,
             ja.judge_id,
             ja.feedback,
-            ja.completed_at
+            u.name AS judge_name
         FROM projects p
-        LEFT JOIN judge_assignments ja ON p.id = ja.project_id
+        INNER JOIN judge_assignments ja ON p.id = ja.project_id
+        INNER JOIN users u ON ja.judge_id = u.id
         ORDER BY p.id, ja.judge_id
+    `;
+
+    const scoreRows = await sql`
+        SELECT
+            js.project_id,
+            js.judge_id,
+            js.question_id,
+            js.score,
+            q.question_text
+        FROM judging_scores js
+        INNER JOIN judging_questions q ON js.question_id = q.id
     `;
 
     const projectsById = new Map<number, ProjectWithJudgeFeedback>();
 
-    for (const judgeAssignment of data) {
-        let projectWithFeedback = projectsById.get(judgeAssignment.id);
-
-        if (!projectWithFeedback) {
-            const project: Project = {
-                id: judgeAssignment.id,
-                devpostId: judgeAssignment.devpost_id,
-                projectTitle: judgeAssignment.project_title,
-                submissionUrl: judgeAssignment.submission_url,
-                submitted: judgeAssignment.submitted,
-                devpostImage: judgeAssignment.devpost_image,
-                tryUrl: judgeAssignment.try_url,
-                videoUrl: judgeAssignment.video_url,
-                mainTrack: judgeAssignment.main_track,
-                sideTracks: judgeAssignment.side_tracks ?? [],
-                userEmails: judgeAssignment.user_emails ?? [],
-                room: judgeAssignment.room,
-                tableNum: judgeAssignment.table_num,
-            };
-
-            // initialize projects w/out judge assignments
-            projectWithFeedback = {
-                project,
+    const getOrCreate = (projectId: number, userEmails: string[] | null) => {
+        let project = projectsById.get(projectId);
+        if (!project) {
+            project = {
+                projectId,
+                userEmails: userEmails ?? [],
                 judgeAssignments: [],
+                judgeScores: [],
             };
 
-            projectsById.set(judgeAssignment.id, projectWithFeedback);
+            projectsById.set(projectId, project);
         }
 
-        // if no judge id, skip
-        if (judgeAssignment.judge_id == null) {
-            continue;
-        }
-        // otherwise, add the judge assignment to the project
+        return project;
+    };
 
-        // trim and add feedback if exists
+    for (const row of assignmentRows) {
+        const project = getOrCreate(row.project_id, row.user_emails);
         const trimmedFeedback =
-            typeof judgeAssignment.feedback === "string" ? judgeAssignment.feedback.trim() : null;
+            typeof row.feedback === "string" ? row.feedback.trim() : null;
 
-        projectWithFeedback.judgeAssignments.push({
-            judgeId: judgeAssignment.judge_id,
-            feedback: trimmedFeedback ? trimmedFeedback : null,
-            completedAt: judgeAssignment.completed_at ?? null,
+        project.judgeAssignments.push({
+            judgeId: row.judge_id,
+            judgeName: row.judge_name ?? null,
+            feedback: trimmedFeedback,
+        });
+    }
+
+    for (const row of scoreRows) {
+        const project = getOrCreate(row.project_id, null);
+        project.judgeScores.push({
+            judgeId: row.judge_id,
+            questionId: row.question_id,
+            questionText: row.question_text ?? "",
+            score: Number(row.score),
         });
     }
 
